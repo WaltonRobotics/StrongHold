@@ -4,7 +4,7 @@ public class Position {
 	private double s;
 	private double deltaLength;
 	private double deltaTime;
-	private double totalTime;
+	private double totalTime;//time until the start of this 
 	private double velocity;
 	//TODO fix acceleration-- limit velocity function in segment.java throws this off
 	private double acceleration;

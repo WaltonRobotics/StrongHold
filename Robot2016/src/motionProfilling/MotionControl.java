@@ -8,7 +8,6 @@ public class MotionControl {
 	public static final double Robot_Width = 10;
 	public static final double Robot_Max_Speed = 10;
 	public static final double Robot_Max_Acceleration = 5;
-	public double startTime;
 	public MotionControl(String s)
 	{
 		states = InputText.parseInput(s);
@@ -23,11 +22,31 @@ public class MotionControl {
 			segments.add(new Segment(states.get(i),states.get(i+1)));
 			states.get(i).setTrajectory(segments.get(i).getTrajectory());
 		}
-		
+		calculateTotalTimesForStates();
+		calculateTimesForPositions();
 	}
-	public void setStartTime(double time)
+	private void calculateTimesForPositions()
 	{
-		startTime = time;
+		for(int i=0; i<states.size(); i++)
+		{
+			double time = states.get(i).getTime();
+			for(Position p: states.get(i).getTrajectory())
+			{
+				p.setTime(time);
+				time+=p.getDeltaTime();
+			}
+		}
+	}
+	private void calculateTotalTimesForStates()
+	{
+		double time = 0;
+		states.get(0).setTime(0);
+		for(int i=1; i<states.size(); i++)
+		{
+			time+=segments.get(i-1).getTrajectory().getDeltaTime();
+			states.get(i).setTime(time);
+			
+		}
 	}
 	public Position getPosition(double time)
 	{
@@ -35,19 +54,29 @@ public class MotionControl {
 	}
 	public double velocityLeft(double time)
 	{
-		return 0;
+		return getPosition(time).getVelocityLeft();
 	}
 	public double velocityRight(double time)
 	{
-		return 0;
+		return getPosition(time).getVelocityRight();
 	}
 	public double distanceleft(double  time)
 	{
-		return 0;
+		Position p = getPosition(time);
+		double distanceLeft = time - p.getTime();
+		distanceLeft = distanceLeft/p.getDeltaTime();
+		distanceLeft*=p.getDeltaLegthLeft();
+		distanceLeft+=p.getTotalDistanceLeft();
+		return distanceLeft;
 	}
 	public double distanceRight(double time)
 	{
-		return 0;
+		Position p = getPosition(time);
+		double distanceRight = time - p.getTime();
+		distanceRight = distanceRight/p.getDeltaTime();
+		distanceRight*=p.getDeltaLegthRight();
+		distanceRight+=p.getTotalDistanceRight();
+		return distanceRight;
 	}
 	private void calculateDirections()
 	{
