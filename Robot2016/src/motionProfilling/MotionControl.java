@@ -8,7 +8,7 @@ public class MotionControl {
 	public static final double Robot_Width = 10;
 	public static final double Robot_Max_Speed = 10;
 	public static final double Robot_Max_Acceleration = 5;
-	
+	public double startTime;
 	public MotionControl(String s)
 	{
 		states = InputText.parseInput(s);
@@ -21,11 +21,33 @@ public class MotionControl {
 		for(int i=0; i<states.size()-1; i++)
 		{
 			segments.add(new Segment(states.get(i),states.get(i+1)));
+			states.get(i).setTrajectory(segments.get(i).getTrajectory());
 		}
-		for(Segment segment: segments)
-		{
-			
-		}
+		
+	}
+	public void setStartTime(double time)
+	{
+		startTime = time;
+	}
+	public Position getPosition(double time)
+	{
+		return null;
+	}
+	public double velocityLeft(double time)
+	{
+		return 0;
+	}
+	public double velocityRight(double time)
+	{
+		return 0;
+	}
+	public double distanceleft(double  time)
+	{
+		return 0;
+	}
+	public double distanceRight(double time)
+	{
+		return 0;
 	}
 	private void calculateDirections()
 	{
@@ -33,6 +55,12 @@ public class MotionControl {
 		{
 			double direction1 = states.get(i-1).getDirection();
 			double direction2 = Math.toDegrees(calculateTheta(states.get(i),states.get(i+1)));
+			if(direction1==0||direction2==0)
+				if(direction2>=180)
+					direction1=360;
+				else
+					direction2=360;
+			
 			double computedDirection = (direction1-direction2)/2;
 			states.get(i).setDirection(computedDirection+direction2);
 		}

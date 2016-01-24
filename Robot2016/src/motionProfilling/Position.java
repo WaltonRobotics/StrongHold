@@ -4,12 +4,22 @@ public class Position {
 	private double s;
 	private double deltaLength;
 	private double deltaTime;
-	private double time;
+	private double totalTime;
 	private double velocity;
 	//TODO fix acceleration-- limit velocity function in segment.java throws this off
 	private double acceleration;
 	private double curvature;
 	private boolean turningRight;
+	private double totalDistanceLeft;
+	private double totalDistanceRight;
+
+	public double getTotalDistanceRight() {
+		return totalDistanceRight;
+	}
+
+	public void setTotalDistanceRight(double totalDistanceRight) {
+		this.totalDistanceRight = totalDistanceRight;
+	}
 
 	public double getDeltaLegthLeft() {
 		if (turningRight)
@@ -103,12 +113,20 @@ public class Position {
 	
 	public void setTime(double time)
 	{
-		this.time = time;
+		totalTime = time;
 	}
 	
+	public double getTotalDistanceLeft() {
+		return totalDistanceLeft;
+	}
+
+	public void setTotalDistanceLeft(double totalDistance) {
+		this.totalDistanceLeft = totalDistance;
+	}	
+
 	public double getTime()
 	{
-		return time;
+		return totalTime;
 	}
 	
 	public void setDeltaTime(double dtime)

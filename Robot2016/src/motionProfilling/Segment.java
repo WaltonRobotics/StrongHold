@@ -1,23 +1,21 @@
 package motionProfilling;
 
-import java.util.ArrayList;
-
 public class Segment {
 	private State start;
 	private State end;
-	private State point1;
-	private State point2;
-	private ArrayList<Position> trajectory;
+	private Coordinate point1;
+	private Coordinate point2;
+	private Trajectory trajectory;
 	private double deltaS = .05;
 
 	public Segment(State start, State end) {
 		this.start = start;
 		this.end = end;
 		choosePoints();
-		trajectory = new ArrayList<Position>();
+		trajectory = new Trajectory();
 		generatePositions();
 	}
-	public ArrayList<Position> getTrajectory()
+	public Trajectory getTrajectory()
 	{
 		return trajectory;
 	}
@@ -110,7 +108,7 @@ public class Segment {
 	private void choosePoints() {
 		Line line1 = new Line(start);
 		Line line2 = new Line(end);
-		State intersection = getIntersection(line1, line2);
+		Coordinate intersection = getIntersection(line1, line2);
 
 		double x1 = (intersection.getX() - start.getX()) * 2.0 / 3 + start.getX();// x
 																					// point
@@ -121,7 +119,7 @@ public class Segment {
 																					// start
 																					// to
 																					// intersection
-		point1 = new State(x1, line1.getY(x1));
+		point1 = new Coordinate(x1, line1.getY(x1));
 
 		double x2 = (end.getX() - intersection.getX()) * 2.0 / 3 + intersection.getX();// x
 																						// point
@@ -132,14 +130,14 @@ public class Segment {
 																						// intersection
 																						// to
 																						// end
-		point2 = new State(x2, line2.getY(x2));
+		point2 = new Coordinate(x2, line2.getY(x2));
 
 	}
 
-	private State getIntersection(Line line1, Line line2) {
+	private Coordinate getIntersection(Line line1, Line line2) {
 		double x = (line2.getB() - line1.getB()) / (line1.getM() - line2.getM());
 		double y = line1.getM() * x + line1.getB();
-		return new State(x, y);
+		return new Coordinate(x, y);
 	}
 
 	public double getPX(double s) {// bezier curve stuffs
