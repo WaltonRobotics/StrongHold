@@ -9,9 +9,11 @@ private ArrayList<Severity> severityList;
 	public void Passthrough (Severity pass){
 		severityList.add(pass);
 	}
-public void LogCall(LogMessage message){
+public boolean LogCall(LogMessage message){
 		if (severityList.contains(message.time)) {
 			LogPostFilter(message);
+			return true;
 		}
+		return false;
 	}
 }
