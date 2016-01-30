@@ -8,7 +8,7 @@ public class DashboardSink extends LogFilter {
 
 	@Override
 	public boolean LogCall(LogMessage message) {
-		SmartDashboard.putString("message:", message);
+		SmartDashboard.putString("message:", message.getMessage());
 		return true;
 	}
 

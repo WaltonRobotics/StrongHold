@@ -10,7 +10,7 @@ private ArrayList<Severity> subSystemList;
 		subSystemList.add(pass);
 	}
 public boolean LogCall(LogMessage message){
-		if (subSystemList.contains(message.subSystem)){
+		if (subSystemList.contains(message.getSubSystem())){
 			LogPostFilter(message);
 			return true;
 		}

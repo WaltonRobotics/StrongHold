@@ -17,4 +17,16 @@ public class LogMessage {
 		this.message = message;
 		// make it get the time
 	}
+	public Severity getSeverity(){
+		return this.severity;
+	}
+	public SubSystem getSubSystem(){
+		return this.subSystem;
+	}
+	public String getCommand(){
+		return this.command;
+	}
+	public String getMessage(){
+		return this.message;
+	}
 }
