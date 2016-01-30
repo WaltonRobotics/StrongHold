@@ -35,7 +35,10 @@ public class Robot extends IterativeRobot {
         chooser.addDefault("Default Auto", new ExampleCommand());
 //        chooser.addObject("My Auto", new MyAutoCommand());
         SmartDashboard.putData("Auto mode", chooser);
-        //Do a bunch of LogCalls here to test our LogCall stuff.
+        SmartDashboard.putString("DriveTrain", "Driving");
+        SmartDashboard.putString("Shooter", "Shooting");
+        SmartDashboard.putString("Intake", "Taking");
+        SmartDashboard.putString("Manipulator", "Taking");
     }
 	
 	/**
