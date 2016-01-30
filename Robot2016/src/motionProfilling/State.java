@@ -11,6 +11,43 @@ public class State {
 	private double velocity = -1;
 	
 	private double time;
+	private double distanceLeft;
+	private double deltaDistanceLeft;
+	private double deltaDistanceRight;
+	
+	public double getDeltaDistanceLeft() {
+		return deltaDistanceLeft;
+	}
+
+	public void setDeltaDistanceLeft(double deltaDistanceLeft) {
+		this.deltaDistanceLeft = deltaDistanceLeft;
+	}
+
+	public double getDeltaDistanceRight() {
+		return deltaDistanceRight;
+	}
+
+	public void setDeltaDistanceRight(double deltaDistanceRight) {
+		this.deltaDistanceRight = deltaDistanceRight;
+	}
+
+	public double getDistanceLeft() {
+		return distanceLeft;
+	}
+
+	public void setDistanceLeft(double distanceLeft) {
+		this.distanceLeft = distanceLeft;
+	}
+
+	public double getDistanceRight() {
+		return distanceRight;
+	}
+
+	public void setDistanceRight(double distanceRight) {
+		this.distanceRight = distanceRight;
+	}
+
+	private double distanceRight;
 	//trajectory from this state to next one
 	private Trajectory trajectory;
 	/**
@@ -103,5 +140,9 @@ public class State {
 	public void setTime(double time)
 	{
 		this.time = time;
+	}
+	@Override
+	public String toString() {
+		return "State [coord=" + coord + ", theta=" + theta + ", velocity=" + velocity + "]";
 	}
 }

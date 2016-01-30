@@ -1,6 +1,11 @@
 package motionProfilling;
 
 public class Coordinate {
+	@Override
+	public String toString() {
+		return "Coordinate [x=" + x + ", y=" + y + "]";
+	}
+
 	private double x;
 	private double y;
 

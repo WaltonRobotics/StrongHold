@@ -1,13 +1,17 @@
 package motionProfilling;
 
 import java.util.ArrayList;
-
+//todo fix end condition
 public class MotionControl {
 	private ArrayList<State> states= new ArrayList<State>();
 	private ArrayList<Segment> segments = new ArrayList<Segment>();
-	public static final double Robot_Width = 10;
-	public static final double Robot_Max_Speed = 10;
-	public static final double Robot_Max_Acceleration = 5;
+	public static final double Robot_Width = 1;
+	public static final double Robot_Max_Speed = 1;
+	public static final double Robot_Max_Acceleration = 1;
+
+	public static final int numPoints = 20;
+	private int trajIndex;
+	private int stateIndex;
 	public MotionControl(String s)
 	{
 		states = InputText.parseInput(s);
@@ -23,18 +27,35 @@ public class MotionControl {
 			states.get(i).setTrajectory(segments.get(i).getTrajectory());
 		}
 		calculateTotalTimesForStates();
-		calculateTimesForPositions();
-	}
-	private void calculateTimesForPositions()
-	{
-		for(int i=0; i<states.size(); i++)
+		calculateDistanceLeft();
+		calculateDistanceRight();
+		
+		for(Segment seg: segments)
 		{
-			double time = states.get(i).getTime();
-			for(Position p: states.get(i).getTrajectory())
-			{
-				p.setTime(time);
-				time+=p.getDeltaTime();
-			}
+			seg.getTrajectory().setTotals();
+		}
+		stateIndex = 0;
+		trajIndex = 0;
+		
+	}
+	private void calculateDistanceLeft()
+	{
+		double dl = 0;
+		states.get(0).setDistanceLeft(0);
+		for(int i=1; i<states.size(); i++)
+		{
+			dl+=segments.get(i-1).getTrajectory().getDeltaDistanceLeft();
+			states.get(i).setDistanceLeft(dl);		
+		}
+	}
+	private void calculateDistanceRight()
+	{
+		double dr = 0;
+		states.get(0).setDistanceRight(0);
+		for(int i=1; i<states.size(); i++)
+		{
+			dr+=segments.get(i-1).getTrajectory().getDeltaDistanceRight();
+			states.get(i).setDistanceRight(dr);		
 		}
 	}
 	private void calculateTotalTimesForStates()
@@ -50,32 +71,40 @@ public class MotionControl {
 	}
 	public Position getPosition(double time)
 	{
-		return null;
+		if(trajIndex>=numPoints)
+		{
+			stateIndex++;
+			trajIndex = 0;
+		}
+		
+
+			State state = states.get((int) stateIndex);
+			Trajectory traj = state.getTrajectory();
+			if(traj.get(trajIndex).totalTime<time)
+			{
+				trajIndex++;
+				return getPosition(time);
+			}
+				
+			return traj.get(trajIndex);
 	}
-	public double velocityLeft(double time)
-	{
-		return getPosition(time).getVelocityLeft();
-	}
-	public double velocityRight(double time)
-	{
-		return getPosition(time).getVelocityRight();
-	}
+	
 	public double distanceleft(double  time)
 	{
 		Position p = getPosition(time);
-		double distanceLeft = time - p.getTime();
-		distanceLeft = distanceLeft/p.getDeltaTime();
-		distanceLeft*=p.getDeltaLegthLeft();
-		distanceLeft+=p.getTotalDistanceLeft();
+		double distanceLeft = time- p.totalTime;
+		distanceLeft = distanceLeft/p.deltaTime;
+		distanceLeft*=p.getDeltaLengthLeft();
+		distanceLeft+=p.totalDistanceLeft;
 		return distanceLeft;
 	}
 	public double distanceRight(double time)
 	{
 		Position p = getPosition(time);
-		double distanceRight = time - p.getTime();
-		distanceRight = distanceRight/p.getDeltaTime();
-		distanceRight*=p.getDeltaLegthRight();
-		distanceRight+=p.getTotalDistanceRight();
+		double distanceRight = time- p.totalTime;
+		distanceRight = distanceRight/p.deltaTime;
+		distanceRight*=p.getDeltaLengthRight();
+		distanceRight+=p.totalDistanceRight;
 		return distanceRight;
 	}
 	private void calculateDirections()
