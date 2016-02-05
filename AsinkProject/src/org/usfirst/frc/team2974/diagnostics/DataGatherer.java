@@ -12,12 +12,12 @@ public void detach(DataGatherer dataGatherer){//Remove LongSink from the ArrayLi
 	 dataList.remove(dataGatherer);
 }
 //Parameters of function below should allow it to identify datagatherers.
-public void processDataElement(String message){
+public void processDataElement(Object object){
 	for(DataGatherer dataGathererIterator : dataList){
-		dataGathererIterator.updateDashboard(message);
+		dataGathererIterator.updateDashboard(object);
 	}
 }
-public void updateDashboard(String message) {
+public void updateDashboard(Object object) {
 	
 }
 }
