@@ -17,7 +17,8 @@ public class LogMessage {
 		this.subSystem = subSystem;
 		this.command = command;
 		this.message = message;
-		time = Timer.getFPGATimestamp();
+		//time = Timer.getFPGATimestamp();
+		time = 0;
 	}
 	public Severity getSeverity(){
 		return this.severity;

@@ -14,7 +14,7 @@ import org.usfirst.frc.team2974.logging.messages.LogMessage;
  */
 public class Log {
 	private static Log mLog = null;
-	private ArrayList<LogSink> logSinks;
+	private ArrayList<LogSink> logSinks = new ArrayList<LogSink>();
 
 	public void logCall(LogMessage message) {
 		for(LogSink logSinkIterator : logSinks){

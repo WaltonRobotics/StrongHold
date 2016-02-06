@@ -5,7 +5,7 @@ import org.usfirst.frc.team2974.logging.enumerations.Severity;
 import org.usfirst.frc.team2974.logging.messages.LogMessage;
 
 public class SeverityFilter extends LogFilter {
-private ArrayList<Severity> severityList;
+private ArrayList<Severity> severityList = new ArrayList<Severity>();
 	public void Passthrough (Severity pass){
 		severityList.add(pass);
 	}

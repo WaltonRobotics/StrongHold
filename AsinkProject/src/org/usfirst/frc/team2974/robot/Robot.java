@@ -1,6 +1,7 @@
 
 package org.usfirst.frc.team2974.robot;
 
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
@@ -28,6 +29,8 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  * directory.
  */
 public class Robot extends IterativeRobot {
+	
+	//DriverStation driverstation = new DriverStation();
 
 	public static final ExampleSubsystem exampleSubsystem = new ExampleSubsystem();
 	public static OI oi;
@@ -41,18 +44,33 @@ public class Robot extends IterativeRobot {
      * used for any initialization code.
      */
     public void robotInit() {
-		oi = new OI();
+    	
+    	System.out.println("Actually Started init");
+    	
+    	oi = new OI();
         chooser = new SendableChooser();
         chooser.addDefault("Default Auto", new ExampleCommand());
 //        chooser.addObject("My Auto", new MyAutoCommand());
         SmartDashboard.putData("Auto mode", chooser);
         
+        System.out.println("creating table");
+        
         table = NetworkTable.getTable("datatable");
         
+        System.out.println("Creating filters");
+        
         ThreadFilter threadFilter = new ThreadFilter();
+        
+        System.out.println("Created threaded, creating severity");
+        
         SeverityFilter severityFilter = new SeverityFilter();
         FileSink fileSink = new FileSink();
+        
+        System.out.println("Created filesink, creating dashboardsink");
+        
         DashboardSink dashboardSink = new DashboardSink();
+        
+        System.out.println("Finished dashboardsink,building pipes");
         
         severityFilter.Passthrough(Severity.ERROR);
         Log.instance().attach(threadFilter);
@@ -60,16 +78,19 @@ public class Robot extends IterativeRobot {
         severityFilter.attach(fileSink);
         Log.instance().attach(dashboardSink);
         
+        System.out.println("About to set path");
+		
+        //SET YOUR FILE HERE
+        fileSink.setPath("src/FileDump.txt");
+        
+        System.out.println("Path got set");
+        
         //Start test messages:
         Log.instance().logCall(new LogMessage(Severity.ERROR,SubSystem.DRIVETRAIN,"motionProfileTurn","Syntax Error in equation."));
         Log.instance().logCall(new LogMessage(Severity.INFORMATION,SubSystem.INTAKE,"IntakeLoader","Loaded Sucessfully."));
         Log.instance().logCall(new LogMessage(Severity.DEBUG,SubSystem.CLMBARM,"ArmExtend","Took longer to reach up than expected."));
         Log.instance().logCall(new LogMessage(Severity.WARNING,SubSystem.SHOOTER,"Shoot","Stuck in loop."));
         //End test messages
-    }
-	
-    public static void writeToLocal(LogMessage message){
-    	table.putString("message:", message.getMessage());
     }
     
 	/**

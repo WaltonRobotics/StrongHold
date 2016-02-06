@@ -5,7 +5,7 @@ import org.usfirst.frc.team2974.logging.LogSink;
 import org.usfirst.frc.team2974.logging.messages.LogMessage;
 
 public abstract class LogFilter implements LogSink{
-	private ArrayList<LogSink> logSinks;
+	private ArrayList<LogSink> logSinks = new ArrayList<LogSink>();
 public void attach(LogSink logSink){//Push LogSink to the ArrayList of LogSinks
 	logSinks.add(logSink);
 }
