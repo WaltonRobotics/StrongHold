@@ -55,7 +55,7 @@ public class Robot extends IterativeRobot {
         
         System.out.println("creating table");
         
-        table = NetworkTable.getTable("datatable");
+        //table = NetworkTable.getTable("datatable");
         
         System.out.println("Creating filters");
         
