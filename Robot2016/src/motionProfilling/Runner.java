@@ -3,10 +3,20 @@ package motionProfilling;
 public class Runner {
 
 	public static void main(String[] args) {
-		MotionControl mc = new MotionControl("0,0,0:5,5,90");
-		for(double i=0; i<1; i+=.001)
+		MotionControl mc = new MotionControl("0,0,0:5,5,90",0,0);
+		for(double i=0; i<5.6; i+=.05)
 		{
-			System.out.println("v left"+mc.getPosition(i).getVelocityLeft()+" v right"+mc.getPosition(i).getVelocityRight());
+			Position pos = mc.getPosition(i);
+			if(pos!=null)
+			{
+				
+			System.out.println("total time"+pos.totalTime);
+			System.out.println("dis left"+pos.totalDistanceLeft);
+			System.out.println("dis right"+pos.totalDistanceRight);
+			System.out.println("v left"+pos.getVelocityLeft()+" v right"+pos.getVelocityRight());
+			}
+			else
+				break;
 		}
 	}
 
