@@ -10,14 +10,14 @@ public class LogMessage {
 	SubSystem subSystem;
 	String command;
 	String message;
-	double time = Timer.getFPGATimestamp();
+	double time;
 	
 	public LogMessage(Severity severity, SubSystem subSystem, String command, String message){
 		this.severity = severity;
 		this.subSystem = subSystem;
 		this.command = command;
 		this.message = message;
-		// make it get the time
+		time = Timer.getFPGATimestamp();
 	}
 	public Severity getSeverity(){
 		return this.severity;
