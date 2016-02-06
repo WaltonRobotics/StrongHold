@@ -3,14 +3,12 @@ package org.usfirst.frc.team2974.logging.messages;
 import org.usfirst.frc.team2974.logging.enumerations.Severity;
 import org.usfirst.frc.team2974.logging.enumerations.SubSystem;
 
-import edu.wpi.first.wpilibj.Timer;
-
 public class LogMessage {
 	Severity severity;
 	SubSystem subSystem;
 	String command;
 	String message;
-	double time = Timer.getFPGATimestamp();
+	float time;
 	
 	public LogMessage(Severity severity, SubSystem subSystem, String command, String message){
 		this.severity = severity;
@@ -30,8 +28,5 @@ public class LogMessage {
 	}
 	public String getMessage(){
 		return this.message;
-	}
-	public Double getTime(){
-		return time;
 	}
 }

@@ -10,7 +10,7 @@ private ArrayList<Severity> severityList;
 		severityList.add(pass);
 	}
 public boolean LogCall(LogMessage message){
-		if (severityList.contains(message.time)) {
+		if (severityList.contains(message.getTime())) {
 			LogPostFilter(message);
 			return true;
 		}

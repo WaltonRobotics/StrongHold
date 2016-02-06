@@ -5,15 +5,6 @@ import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
-import edu.wpi.first.wpilibj.networktables.NetworkTable;
-
-import org.usfirst.frc.team2974.logging.DashboardSink;
-import org.usfirst.frc.team2974.logging.FileSink;
-import org.usfirst.frc.team2974.logging.Log;
-import org.usfirst.frc.team2974.logging.enumerations.Severity;
-import org.usfirst.frc.team2974.logging.filters.SeverityFilter;
-import org.usfirst.frc.team2974.logging.filters.ThreadFilter;
-import org.usfirst.frc.team2974.logging.messages.LogMessage;
 import org.usfirst.frc.team2974.robot.commands.ExampleCommand;
 import org.usfirst.frc.team2974.robot.subsystems.ExampleSubsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
@@ -30,8 +21,7 @@ public class Robot extends IterativeRobot {
 
 	public static final ExampleSubsystem exampleSubsystem = new ExampleSubsystem();
 	public static OI oi;
-	
-	static NetworkTable table;
+
     Command autonomousCommand;
     SendableChooser chooser;
 
@@ -45,27 +35,12 @@ public class Robot extends IterativeRobot {
         chooser.addDefault("Default Auto", new ExampleCommand());
 //        chooser.addObject("My Auto", new MyAutoCommand());
         SmartDashboard.putData("Auto mode", chooser);
-        
-        table = NetworkTable.getTable("datatable");
-        
-        ThreadFilter threadfilter = new ThreadFilter();
-        SeverityFilter severityFilter = new SeverityFilter();
-        FileSink fileSink = new FileSink();
-        DashboardSink dashboardSink = new DashboardSink();
-        
-        severityFilter.Passthrough(Severity.ERROR);
-        Log.instance().attach(threadfilter);
-        threadfilter.attach(severityFilter);
-        severityFilter.attach(fileSink);
-        Log.instance().attach(dashboardSink);
-        
-        Log.instance().log(message);
+        SmartDashboard.putString("DriveTrain", "Driving");
+        SmartDashboard.putString("Shooter", "Shooting");
+        SmartDashboard.putString("Intake", "Taking");
+        SmartDashboard.putString("Manipulator", "Taking");
     }
 	
-    public static void writeToLocal(LogMessage message){
-    	table.putString("message:", message.getMessage());
-    }
-    
 	/**
      * This function is called once each time the robot enters Disabled mode.
      * You can use it to reset any subsystem information you want to clear when
