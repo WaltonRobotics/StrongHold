@@ -5,10 +5,13 @@ import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
-import org.usfirst.frc.team2974.robot.commands.ExampleCommand;
-import org.usfirst.frc.team2974.robot.subsystems.ExampleSubsystem;
+import org.usfirst.frc.team2974.robot.commands.ShowInputs;
+import org.usfirst.frc.team2974.robot.subsystems.*;
+
+
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import motionProfilling.MotionControl;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -19,9 +22,10 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  */
 public class Robot extends IterativeRobot {
 
-	public static final ExampleSubsystem exampleSubsystem = new ExampleSubsystem();
+	public static final Inputs exampleSubsystem = new Inputs();
 	public static OI oi;
-
+	public static DriveTrain driveTrain;
+	public static Inputs inputs;
     Command autonomousCommand;
     SendableChooser chooser;
 
@@ -30,11 +34,11 @@ public class Robot extends IterativeRobot {
      * used for any initialization code.
      */
     public void robotInit() {
+    	RobotMap.init();
+    	inputs = new Inputs();
+    	driveTrain = new DriveTrain();
 		oi = new OI();
-        chooser = new SendableChooser();
-        chooser.addDefault("Default Auto", new ExampleCommand());
-//        chooser.addObject("My Auto", new MyAutoCommand());
-        SmartDashboard.putData("Auto mode", chooser);
+
     }
 	
 	/**
@@ -60,28 +64,12 @@ public class Robot extends IterativeRobot {
 	 * or additional comparisons to the switch structure below with additional strings & commands.
 	 */
     public void autonomousInit() {
-        autonomousCommand = (Command) chooser.getSelected();
-        
-		/* String autoSelected = SmartDashboard.getString("Auto Selector", "Default");
-		switch(autoSelected) {
-		case "My Auto":
-			autonomousCommand = new MyAutoCommand();
-			break;
-		case "Default Auto":
-		default:
-			autonomousCommand = new ExampleCommand();
-			break;
-		} */
-    	
-    	// schedule the autonomous command (example)
-        if (autonomousCommand != null) autonomousCommand.start();
     }
 
     /**
      * This function is called periodically during autonomous
      */
     public void autonomousPeriodic() {
-        Scheduler.getInstance().run();
     }
 
     public void teleopInit() {

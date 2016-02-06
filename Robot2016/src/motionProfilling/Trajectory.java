@@ -1,9 +1,6 @@
 package motionProfilling;
 
 public class Trajectory extends java.util.ArrayList<Position> {
-	private double totalDistanceLeft = -1;
-	private double totalDistanceRight = -1;
-	private double totalTime = -1;
 	private State start;
 	private State end;
 	private final double deltaS = 1.0/(MotionControl.numPoints-1);
@@ -17,22 +14,44 @@ public class Trajectory extends java.util.ArrayList<Position> {
 		this.start = start;
 		this.end = end;
 		generatePositions(tr);
+		
 	}
-
+	public void dumpValues()
+	{
+		for(Position p: this)
+			System.out.println(p);
+	}
 	private void generatePositions(TrajectorySpline tr) {
 		for (MathPosition mp: tr) {
 			Position p = new Position();
 			p.s = mp.s;
 			p.curvature = mp.curvature;
-			p.velocity = pythag(mp.dXds,mp.dYds);
-			p.acceleration = pythag(mp.d2Xds2,mp.d2Yds2);
+			p.x = mp.x;
+			p.y = mp.y;
 			add(p);
 		}
-		fixAcceleration();
-		limitVelocity();
 		setDeltaDistances();
+		fixAcceleration();
 		setDeltaTimes();
+		setDeltaV();
+		setA();
 		
+	}
+	public void setDeltaV()
+	{
+		for(int i=0;i<size(); i++)
+		{
+			get(i).deltaVelocityLeft = get(i+1).getVelocityLeft()-get(i).getVelocityLeft();
+			get(i).deltaVelocityRight = get(i+1).getVelocityRight()-get(i).getVelocityRight();
+		}
+	}
+	public void setA()
+	{
+		for(int i=0;i<size(); i++)
+		{
+			get(i).accelerationLeft = get(i).deltaVelocityLeft/get(i).deltaTime;
+			get(i).accelerationRight = get(i).deltaVelocityRight/get(i).deltaTime;
+		}
 	}
 	public void setTotals()
 	{
@@ -45,7 +64,7 @@ public class Trajectory extends java.util.ArrayList<Position> {
 		for(int i=0; i<size();i++)
 		{
 			get(i).totalTime = time;
-			time = get(i).deltaTime;
+			time += get(i).deltaTime;
 		}
 	}
 	private void setTotalDistances()
@@ -54,104 +73,75 @@ public class Trajectory extends java.util.ArrayList<Position> {
 		for(int i=0; i<size();i++)
 		{
 			get(i).totalDistanceLeft = distanceLeft;
-			distanceLeft = get(i).getDeltaLengthLeft();
+			distanceLeft += get(i).getDeltaLengthLeft();
 		}
 		double distanceRight = start.getDistanceRight();
 		for(int i=0; i<size();i++)
 		{
 			get(i).totalDistanceRight = distanceRight;
-			distanceRight = get(i).getDeltaLengthRight();
+			distanceRight += get(i).getDeltaLengthRight();
 		}
 	}
 	private void setDeltaDistances()
 	{
 		for(int i = 1; i<size(); i++)
 		{
-			double distance = get(i).velocity*deltaS;
-			get(i).deltaLength = distance;
+			double dl = pythag(get(i).x-get(i-1).x, get(i).y-get(i-1).y);
+			get(i-1).deltaLength = dl;
 		}
 	}
 	private void setDeltaTimes()
 	{
 		for(int i = 1; i<size(); i++)
 		{
-			double time = get(i).deltaLength/2;
-			time = time/(get(i).velocity + get(i-1).velocity);
-			get(i).deltaTime = time;
+			double time = get(i-1).deltaLength*2; 
+			time /= (get(i).velocity + get(i-1).velocity);
+			get(i-1).deltaTime = time;
 		}
 	}
 	private void fixAcceleration() {
-		get(0).velocity = start.getVelocity();
+		get(0).velocity = 0;
 		for(int i=1; i<size(); i++)
 		{
-			double velocityPossible = get(i-1).velocity+MotionControl.Robot_Max_Acceleration*deltaS;
-			double velocity = Math.min(velocityPossible, get(i).velocity);
-			if(get(i).velocity !=velocity)
-			{
-				get(i).velocity = velocity;
-				get(i).acceleration = MotionControl.Robot_Max_Acceleration;
-			}
+			double velocity1 = Math.pow(get(i-1).velocity*get(i-1).velocity+2*MotionControl.Robot_Max_Acceleration*get(i-1).deltaLength, .5);
+			double velocity2 = MotionControl.Robot_Max_Speed/(1+get(i).curvature*MotionControl.Robot_Width/2);
+			double velocity3 = MotionControl.Robot_Max_Speed/(1-get(i).curvature*MotionControl.Robot_Width/2);
+			System.out.println("v1 "+velocity1+" v2 "+velocity2+" v3 "+velocity3);
+			get(i).velocity = Math.min(velocity1, Math.min(velocity2, velocity3));
 		}
 		if(end.getVelocity()!=-1)
 			get(size()-1).velocity = end.getVelocity();
-		for(int i=size()-2; i>0; i--)
+		for(int i= size()-2; i>=0; i--)
 		{
-			double velocityPossible = get(i+1).velocity-MotionControl.Robot_Max_Acceleration*deltaS;
-			double velocity = Math.min(velocityPossible, get(i).velocity);
-			if(get(i).velocity!=velocity)
-			{
-				get(i).velocity = velocity;
-				get(i).acceleration = -MotionControl.Robot_Max_Acceleration;
-			}
+			double velocity = Math.pow(get(i+1).velocity*get(i+1).velocity+2*MotionControl.Robot_Max_Acceleration*get(i).deltaLength, .5);
+			get(i).velocity = Math.min(get(i).velocity, velocity);
+			System.out.println("v4 "+velocity);
 		}
 	}
-	private void limitVelocity()
-	{
-		for(Position p:this)
-		{
-			double largerVelocity = Math.max(p.getVelocityLeft(),p.getVelocityRight());
-			if(largerVelocity>MotionControl.Robot_Max_Speed)
-					p.velocity = MotionControl.Robot_Max_Speed/(1+MotionControl.Robot_Width/2*p.curvature);
-		}
-	}
-
 	private double pythag(double a, double b)
 	{
 		return Math.pow(a*a+b*b,.5);
 	}
 
 	public double getDeltaTime() {
-
-		if (totalTime == -1) {
-			totalTime += 1;
-			for (int i = 0; i < size(); i++) {
+		double totalTime = 0;
+		for (int i = 0; i < size(); i++) 
 				totalTime += get(i).deltaTime;
-			}
-		}
-
 		return totalTime;
 	}
 
 	public double getDeltaDistanceLeft() {
-
-		if (totalDistanceLeft == -1) {
-			totalDistanceLeft += 1;
-			for (int i = 0; i < size(); i++) {
+		double totalDistanceLeft =0;
+			for (int i = 0; i < size(); i++) 
 				totalDistanceLeft += get(i).getDeltaLengthLeft();
-			}
-		}
 
 		return totalDistanceLeft;
 	}
 
 	public double getDeltaDistanceRight() {
-
-		if (totalDistanceRight == -1) {
-			totalDistanceRight += 1;
-			for (int i = 0; i < size(); i++) {
+		double totalDistanceRight = 0;
+			for (int i = 0; i < size(); i++) 
 				totalDistanceRight += get(i).getDeltaLengthRight();
-			}
-		}
 
 		return totalDistanceRight;
 	}
