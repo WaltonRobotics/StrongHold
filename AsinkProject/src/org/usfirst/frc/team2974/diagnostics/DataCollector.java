@@ -2,6 +2,7 @@ package org.usfirst.frc.team2974.diagnostics;
 
 import java.util.ArrayList;
 
+<<<<<<< HEAD
 import org.usfirst.frc.team2974.logging.LogSink;
 
 public class DataCollector{
@@ -27,4 +28,8 @@ public class DataCollector{
 		
 		}
 	}
+=======
+public class DataCollector extends DataGatherer{
+	
+>>>>>>> 62bb7efc4c56312dab86f6dab1bada4f28c25a29
 }

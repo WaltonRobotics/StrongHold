@@ -16,8 +16,8 @@ public class FileSink extends LogFilter {
 	public boolean LogCall(LogMessage message) {
 		if (writeFile.exists()) {
 			try {
-				writer = new FileWriter(writeFile.getAbsolutePath(),true);
-				writer.write("@" + message.getTime() + " seconds:" + message.getCommand() + ": " + message.getMessage() + "on line " + message.getLine() + "\n");
+				writer = new FileWriter(writeFile.getAbsolutePath());
+				writer.write(message.getMessage() + "\n");
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
