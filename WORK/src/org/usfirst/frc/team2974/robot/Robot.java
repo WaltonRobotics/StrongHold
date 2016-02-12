@@ -1,21 +1,10 @@
 
 package org.usfirst.frc.team2974.robot;
 
-import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
-import edu.wpi.first.wpilibj.networktables.NetworkTable;
-
-import org.usfirst.frc.team2974.logging.DashboardSink;
-import org.usfirst.frc.team2974.logging.FileSink;
-import org.usfirst.frc.team2974.logging.Log;
-import org.usfirst.frc.team2974.logging.enumerations.Severity;
-import org.usfirst.frc.team2974.logging.enumerations.SubSystem;
-import org.usfirst.frc.team2974.logging.filters.SeverityFilter;
-import org.usfirst.frc.team2974.logging.filters.ThreadFilter;
-import org.usfirst.frc.team2974.logging.messages.LogMessage;
 import org.usfirst.frc.team2974.robot.commands.ExampleCommand;
 import org.usfirst.frc.team2974.robot.subsystems.ExampleSubsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
@@ -29,12 +18,10 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  * directory.
  */
 public class Robot extends IterativeRobot {
-	
-	//DriverStation driverstation = new DriverStation();
 
 	public static final ExampleSubsystem exampleSubsystem = new ExampleSubsystem();
 	public static OI oi;
-	
+
     Command autonomousCommand;
     SendableChooser chooser;
 
@@ -43,43 +30,13 @@ public class Robot extends IterativeRobot {
      * used for any initialization code.
      */
     public void robotInit() {
-    	
-    	System.out.println("Actually Started init");
-    	
-    	oi = new OI();
+		oi = new OI();
         chooser = new SendableChooser();
         chooser.addDefault("Default Auto", new ExampleCommand());
 //        chooser.addObject("My Auto", new MyAutoCommand());
         SmartDashboard.putData("Auto mode", chooser);
-        
-        System.out.println("creating table");
-        
-        //table = NetworkTable.getTable("datatable");
-        
-        System.out.println("Creating filters");
-        
-        ThreadFilter threadFilter = new ThreadFilter();
-        SeverityFilter severityFilter = new SeverityFilter();
-        FileSink fileSink = new FileSink();
-        DashboardSink dashboardSink = new DashboardSink();
-        
-        severityFilter.Passthrough(Severity.ERROR);
-        Log.instance().attach(threadFilter);
-        threadFilter.attach(severityFilter);
-        severityFilter.attach(fileSink);
-        Log.instance().attach(dashboardSink);
-        
-        //SET YOUR FILE HERE
-        fileSink.setPath("src/FileDump.txt");
-        
-        //Start test messages:
-        Log.instance().logCall(new LogMessage(Severity.ERROR,SubSystem.DRIVETRAIN,"motionProfileTurn","Syntax Error in equation."));
-        Log.instance().logCall(new LogMessage(Severity.INFORMATION,SubSystem.INTAKE,"IntakeLoader","Loaded Sucessfully."));
-        Log.instance().logCall(new LogMessage(Severity.DEBUG,SubSystem.CLMBARM,"ArmExtend","Took longer to reach up than expected."));
-        Log.instance().logCall(new LogMessage(Severity.WARNING,SubSystem.SHOOTER,"Shoot","Stuck in loop."));
-        //End test messages
     }
-    
+	
 	/**
      * This function is called once each time the robot enters Disabled mode.
      * You can use it to reset any subsystem information you want to clear when
