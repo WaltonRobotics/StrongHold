@@ -11,7 +11,7 @@ public class DashboardSink extends LogFilter {
 
 	@Override
 	public boolean LogCall(LogMessage message) {
-		DriverStation.reportError(message.getCommand() + " says:" + message.getMessage() + "\n",false);
+		DriverStation.reportError(message.getCommand() + " says: " + message.getMessage() + "\n",false);
 		return true;
 	}
 
