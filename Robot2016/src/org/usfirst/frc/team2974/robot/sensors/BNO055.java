@@ -259,7 +259,7 @@ public class BNO055 {
 		 * The number is signed
 		 */
 		private final boolean signed;
-		
+
 		/*
 		 * Create a scalar register which represents a byte value
 		 * 
@@ -287,13 +287,16 @@ public class BNO055 {
 		 * bytes (assumed little-endian) which can be signed
 		 * 
 		 * @param address
+		 *            The address of the register
 		 * @param bytes
+		 *            The number of bytes which store the value at the register
 		 * @param signed
+		 *            The value stored at the register is a signed value
 		 */
 		private Register(int address, int bytes, boolean signed) {
 			this(address, bytes, 1, signed);
 		}
-		
+
 		/**
 		 * Create a vector register with an arbitrary number of bytes (assumed
 		 * little-endian)
@@ -304,17 +307,20 @@ public class BNO055 {
 		 *            The number of bytes which store the value at the register
 		 * @param components
 		 *            THe number of components in the vector
+		 * @param signed
+		 * 			  The value stored at the register is a signed value
 		 */
 		private Register(int address, int bytes, int components, boolean signed) {
 			if (bytes < 1 || bytes > 4 || bytes == 3) {
 				throw new IllegalArgumentException("Number of bytes should be 1, 2 or 4");
 			}
-			
+
 			this.address = address;
 			this.bytes = bytes;
 			this.components = components;
 			this.signed = signed;
 		}
+
 		/**
 		 * Read a value from the BNO055
 		 * 
@@ -325,7 +331,7 @@ public class BNO055 {
 		private int read(I2C bno055) throws BNO055Exception {
 			return read(bno055, 0);
 		}
-		
+
 		/**
 		 * Read a component value from a register
 		 * 
@@ -337,16 +343,17 @@ public class BNO055 {
 		 */
 		private int read(I2C bno055, int component) throws BNO055Exception {
 			if (component >= components || component < 0)
-				throw new IndexOutOfBoundsException("Component " + component + " out of bounds for register " + toString());
-	
+				throw new IndexOutOfBoundsException(
+						"Component " + component + " out of bounds for register " + toString());
+
 			byte[] buf = new byte[bytes];
-	
+
 			// Contrary to documentation return value is true on success
 			if (!bno055.read(address + component * bytes, bytes, buf))
 				throw new BNO055Exception("Error whilst reading value from BNO055 for register " + toString());
 			return processBuf(buf, 0);
 		}
-		
+
 		/**
 		 * Read a vector of values from the BNO055
 		 * 
@@ -363,14 +370,14 @@ public class BNO055 {
 			// Contrary to documentation return value is true on success
 			if (!bno055.read(address, bytes * components, buf))
 				throw new BNO055Exception("Error whilst reading vector from BNO055 for register " + toString());
-			
+
 			for (int i = 0; i < components; i++) {
 				result[i] = processBuf(buf, i * bytes);
 			}
-			
+
 			return result;
 		}
-		
+
 		/**
 		 * Read a vector of doubles from BNO055
 		 * 
@@ -383,44 +390,45 @@ public class BNO055 {
 		private double[] readVector(I2C bno055, double scaleFactor) throws BNO055Exception {
 			int[] rawData = readVector(bno055);
 			double[] result = new double[components];
-	
+
 			for (int i = 0; i < components; i++) {
 				result[i] = rawData[i] * scaleFactor;
 			}
-	
+
 			return result;
 		}
-		
+
 		/**
 		 * Process the buffer into the correct int value
 		 * 
-		 * @param buf The buffer contain the value to read
-		 * @param index The location in the buffer containing the LSB
+		 * @param buf
+		 *            The buffer contain the value to read
+		 * @param index
+		 *            The location in the buffer containing the LSB
 		 * @return Integer value containing the processed value
 		 */
 		private int processBuf(byte[] buf, int index) {
 			if (buf.length < index + bytes) {
 				throw new IndexOutOfBoundsException("Index is out of bounds when reading from register " + toString());
 			}
-			
+
 			int value = 0;
-			
-			// Process LSBs leaving msb
+
+			// Process LSBs
 			for (int j = 0; j < bytes - 1; j++) {
 				value |= Byte.toUnsignedInt(buf[index + j]) << (j * 8);
 			}
-			
+
 			// Process MSB independently to get sign right
 			if (signed) {
-				value |= ((int)buf[index + bytes - 1]) << ((bytes - 1) * 8);
-			}
-			else {
+				value |= ((int) buf[index + bytes - 1]) << ((bytes - 1) * 8);
+			} else {
 				value |= Byte.toUnsignedInt(buf[index + bytes - 1]) << ((bytes - 1) * 8);
 			}
 
 			return value;
 		}
-		
+
 		/**
 		 * Write a value to the BNO055
 		 * 
@@ -432,7 +440,7 @@ public class BNO055 {
 		private void write(I2C bno055, int data) throws BNO055Exception {
 			write(bno055, 0, data);
 		}
-		
+
 		/**
 		 * Write a component value to the BNO055
 		 * 
@@ -445,19 +453,20 @@ public class BNO055 {
 		 */
 		private void write(I2C bno055, int component, int data) throws BNO055Exception {
 			if (component >= components || component < 0)
-				throw new IndexOutOfBoundsException("Component " + component + " out of bounds for register " + toString());
+				throw new IndexOutOfBoundsException(
+						"Component " + component + " out of bounds for register " + toString());
 
 			for (int i = 0; i < bytes; i++) {
 				if (bno055.write(address + component * bytes + i, (data >> (i * 8)) & 0x0ff))
 					throw new BNO055Exception("Error whilst writing value to BNO055 for register " + toString());
 			}
 		}
-		
+
 		/**
 		 * Write a vector of values to the BNO055
 		 * 
-		 * Number of bytes written defined by register. Number of elements in vector
-		 * must match.
+		 * Number of bytes written defined by register. Number of elements in
+		 * vector must match.
 		 * 
 		 * @param bno055
 		 *            I2C object connected to the BNO055 chip
@@ -474,7 +483,7 @@ public class BNO055 {
 	/**
 	 * Enumeration defining the various operation modes for the BNO055
 	 */
-	private enum OperationMode {
+	public enum OperationMode {
 		OPERATION_MODE_CONFIG(0X00),
 		OPERATION_MODE_ACCONLY(0X01),
 		OPERATION_MODE_MAGONLY(0X02),
@@ -502,7 +511,7 @@ public class BNO055 {
 	/**
 	 * Enumeration defining the various power modes for the BNO055
 	 */
-	private enum PowerMode {
+	public enum PowerMode {
 		POWER_MODE_NORMAL(0X00),
 		POWER_MODE_LOWPOWER(0X01),
 		POWER_MODE_SUSPEND(0X02);
@@ -520,7 +529,7 @@ public class BNO055 {
 	/**
 	 * Enumeration defining the various vectors the BNO055 can provide
 	 */
-	private enum VectorType {
+	public enum VectorType {
 		VECTOR_ACCELEROMETER,
 		VECTOR_MAGNETOMETER,
 		VECTOR_GYROSCOPE,
@@ -566,8 +575,8 @@ public class BNO055 {
 	 * 
 	 * @return True if initialization succeeded
 	 */
-	public boolean initialize() throws BNO055Exception {
-		return initialize(OperationMode.OPERATION_MODE_NDOF);
+	public void initialize() throws BNO055Exception {
+		initialize(OperationMode.OPERATION_MODE_NDOF);
 	}
 
 	/**
@@ -577,7 +586,7 @@ public class BNO055 {
 	 *            Desired operating mode after initialization
 	 * @return True if initialization succeeded
 	 */
-	public boolean initialize(OperationMode mode) throws BNO055Exception {
+	public void initialize(OperationMode mode) throws BNO055Exception {
 
 		int id;
 
@@ -588,7 +597,8 @@ public class BNO055 {
 			Timer.delay(1);
 			id = Register.CHIP_ID.read(bno055);
 			if (id != BNO055_ID) {
-				return false; // still not? ok bail
+				// Still not? Bail
+				throw new BNO055Exception("BNO055 failed to initialize"); 
 			}
 		}
 
@@ -614,8 +624,6 @@ public class BNO055 {
 		/* Set the requested operating mode (see section 3.3) */
 		setMode(mode);
 		Timer.delay(0.02);
-
-		return true;
 	}
 
 	/**
