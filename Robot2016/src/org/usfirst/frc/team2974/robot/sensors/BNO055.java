@@ -86,8 +86,8 @@ public class BNO055 {
 		public final int[] gyroOffset;
 		public final int[] magOffset;
 
-		public int accelRadius;
-		public int magRadius;
+		public final int accelRadius;
+		public final int magRadius;
 	}
 
 	/**
@@ -112,7 +112,7 @@ public class BNO055 {
 	 */
 	public final class SystemStatus {
 
-		public SystemStatus(int systemStatus, int selfTestResult, int systemError) {
+		private SystemStatus(int systemStatus, int selfTestResult, int systemError) {
 			this.systemStatus = systemStatus;
 			this.selfTestResult = selfTestResult;
 			this.systemError = systemError;
@@ -128,7 +128,7 @@ public class BNO055 {
 	 */
 	public final class RevisionInfo {
 
-		public RevisionInfo(int accel, int mag, int gyro, int software, int bootloader) {
+		private RevisionInfo(int accel, int mag, int gyro, int software, int bootloader) {
 			this.accel = accel;
 			this.mag = mag;
 			this.gyro = gyro;
@@ -148,7 +148,7 @@ public class BNO055 {
 	 */
 	public final class CalibrationStatus {
 
-		public CalibrationStatus(int system, int gyro, int accel, int mag) {
+		private CalibrationStatus(int system, int gyro, int accel, int mag) {
 			this.system = system;
 			this.gyro = gyro;
 			this.accel = accel;
@@ -164,7 +164,7 @@ public class BNO055 {
 	/**
 	 * Enumeration for BNO055 register names
 	 */
-	public enum Register {
+	private enum Register {
 		/* Page id register definition */
 		PAGE_ID(0X07),
 
@@ -243,29 +243,29 @@ public class BNO055 {
 		/**
 		 * The address of the register in the BNO055
 		 */
-		public final int address;
+		private final int address;
 
 		/**
 		 * The number of bytes stored at the register
 		 */
-		public final int bytes;
+		private final int bytes;
 
 		/**
 		 * The number of vector components stored at the register
 		 */
-		public final int components;
+		private final int components;
 
 		/**
 		 * The number is signed
 		 */
-		public final boolean signed;
+		private final boolean signed;
 		
 		/*
 		 * Create a scalar register which represents a byte value
 		 * 
 		 * @param address The address of the register
 		 */
-		Register(int address) {
+		private Register(int address) {
 			this(address, 1, 1, false);
 		}
 
@@ -278,7 +278,7 @@ public class BNO055 {
 		 * @param bytes
 		 *            The number of bytes which store the value at the register
 		 */
-		Register(int address, int bytes) {
+		private Register(int address, int bytes) {
 			this(address, bytes, 1, false);
 		}
 
@@ -290,7 +290,7 @@ public class BNO055 {
 		 * @param bytes
 		 * @param signed
 		 */
-		Register(int address, int bytes, boolean signed) {
+		private Register(int address, int bytes, boolean signed) {
 			this(address, bytes, 1, signed);
 		}
 		
@@ -305,7 +305,7 @@ public class BNO055 {
 		 * @param components
 		 *            THe number of components in the vector
 		 */
-		Register(int address, int bytes, int components, boolean signed) {
+		private Register(int address, int bytes, int components, boolean signed) {
 			if (bytes < 1 || bytes > 4 || bytes == 3) {
 				throw new IllegalArgumentException("Number of bytes should be 1, 2 or 4");
 			}
@@ -315,8 +315,90 @@ public class BNO055 {
 			this.components = components;
 			this.signed = signed;
 		}
+		/**
+		 * Read a value from the BNO055
+		 * 
+		 * @param bno055
+		 *            I2C object connected to the BNO055 chip
+		 * @return Value from BNO055
+		 */
+		private int read(I2C bno055) throws BNO055Exception {
+			return read(bno055, 0);
+		}
 		
-		public int processBuf(byte[] buf, int index) {
+		/**
+		 * Read a component value from a register
+		 * 
+		 * @param bno055
+		 *            I2C object connected to the BNO055 chip
+		 * @param component
+		 *            Component to read
+		 * @return Value from BNO055
+		 */
+		private int read(I2C bno055, int component) throws BNO055Exception {
+			if (component >= components || component < 0)
+				throw new IndexOutOfBoundsException("Component " + component + " out of bounds for register " + toString());
+	
+			byte[] buf = new byte[bytes];
+	
+			// Contrary to documentation return value is true on success
+			if (!bno055.read(address + component * bytes, bytes, buf))
+				throw new BNO055Exception("Error whilst reading value from BNO055 for register " + toString());
+			return processBuf(buf, 0);
+		}
+		
+		/**
+		 * Read a vector of values from the BNO055
+		 * 
+		 * @param bno055
+		 *            I2C object connected to the BNO055 chip
+		 * @param length
+		 *            Number of elements in vector
+		 * @return Vector of values
+		 */
+		private int[] readVector(I2C bno055) throws BNO055Exception {
+			byte[] buf = new byte[bytes * components];
+			int[] result = new int[components];
+
+			// Contrary to documentation return value is true on success
+			if (!bno055.read(address, bytes * components, buf))
+				throw new BNO055Exception("Error whilst reading vector from BNO055 for register " + toString());
+			
+			for (int i = 0; i < components; i++) {
+				result[i] = processBuf(buf, i * bytes);
+			}
+			
+			return result;
+		}
+		
+		/**
+		 * Read a vector of doubles from BNO055
+		 * 
+		 * @param bno055
+		 *            I2C object connected to the BNO055 chip
+		 * @param scaleFactor
+		 *            Scaling factor to apply to values
+		 * @return Vector of values
+		 */
+		private double[] readVector(I2C bno055, double scaleFactor) throws BNO055Exception {
+			int[] rawData = readVector(bno055);
+			double[] result = new double[components];
+	
+			for (int i = 0; i < components; i++) {
+				result[i] = rawData[i] * scaleFactor;
+			}
+	
+			return result;
+		}
+		
+		/**
+		 * Process the buffer into the correct int value
+		 * 
+		 * @param buf The buffer contain the value to read
+		 * @param index The location in the buffer containing the LSB
+		 * @return Integer value containing the processed value
+		 */
+		private int processBuf(byte[] buf, int index) {
 			if (buf.length < index + bytes) {
 				throw new IndexOutOfBoundsException("Index is out of bounds when reading from register " + toString());
 			}
@@ -339,10 +421,52 @@ public class BNO055 {
 			return value;
 		}
 		
-		public void writeBytes(int data, I2C bno055, int component) throws BNO055Exception {
+		/**
+		 * Write a value to the BNO055
+		 * 
+		 * @param bno055
+		 *            I2C object connected to the BNO055 chip
+		 * @param data
+		 *            Value to write
+		 */
+		private void write(I2C bno055, int data) throws BNO055Exception {
+			write(bno055, 0, data);
+		}
+		
+		/**
+		 * Write a component value to the BNO055
+		 * 
+		 * @param bno055
+		 *            I2C object connected to the BNO055 chip
+		 * @param component
+		 *            Component to write
+		 * @param data
+		 *            Value to write
+		 */
+		private void write(I2C bno055, int component, int data) throws BNO055Exception {
+			if (component >= components || component < 0)
+				throw new IndexOutOfBoundsException("Component " + component + " out of bounds for register " + toString());
+
 			for (int i = 0; i < bytes; i++) {
 				if (bno055.write(address + component * bytes + i, (data >> (i * 8)) & 0x0ff))
 					throw new BNO055Exception("Error whilst writing value to BNO055 for register " + toString());
+			}
+		}
+		
+		/**
+		 * Write a vector of values to the BNO055
+		 * 
+		 * Number of bytes written defined by register. Number of elements in vector
+		 * must match.
+		 * 
+		 * @param bno055
+		 *            I2C object connected to the BNO055 chip
+		 * @param vector
+		 *            Values to write
+		 */
+		private void writeVector(I2C bno055, int[] vector) throws BNO055Exception {
+			for (int i = 0; i < vector.length; i++) {
+				write(bno055, i, vector[i]);
 			}
 		}
 	}
@@ -350,7 +474,7 @@ public class BNO055 {
 	/**
 	 * Enumeration defining the various operation modes for the BNO055
 	 */
-	public enum OperationMode {
+	private enum OperationMode {
 		OPERATION_MODE_CONFIG(0X00),
 		OPERATION_MODE_ACCONLY(0X01),
 		OPERATION_MODE_MAGONLY(0X02),
@@ -368,9 +492,9 @@ public class BNO055 {
 		/**
 		 * The number which represents the operation mode on the BNO055
 		 */
-		public final int value;
+		private final int value;
 
-		OperationMode(int value) {
+		private OperationMode(int value) {
 			this.value = value;
 		}
 	}
@@ -378,7 +502,7 @@ public class BNO055 {
 	/**
 	 * Enumeration defining the various power modes for the BNO055
 	 */
-	public enum PowerMode {
+	private enum PowerMode {
 		POWER_MODE_NORMAL(0X00),
 		POWER_MODE_LOWPOWER(0X01),
 		POWER_MODE_SUSPEND(0X02);
@@ -386,9 +510,9 @@ public class BNO055 {
 		/**
 		 * The number which represents the power mode on the BNO055
 		 */
-		public final int value;
+		private final int value;
 
-		PowerMode(int value) {
+		private PowerMode(int value) {
 			this.value = value;
 		}
 	}
@@ -396,7 +520,7 @@ public class BNO055 {
 	/**
 	 * Enumeration defining the various vectors the BNO055 can provide
 	 */
-	public enum VectorType {
+	private enum VectorType {
 		VECTOR_ACCELEROMETER,
 		VECTOR_MAGNETOMETER,
 		VECTOR_GYROSCOPE,
@@ -458,11 +582,11 @@ public class BNO055 {
 		int id;
 
 		/* Make sure we have the right device */
-		id = read(Register.CHIP_ID);
+		id = Register.CHIP_ID.read(bno055);
 		System.out.println("ChipID: " + id);
 		if (id != BNO055_ID) {
 			Timer.delay(1);
-			id = read(Register.CHIP_ID);
+			id = Register.CHIP_ID.read(bno055);
 			if (id != BNO055_ID) {
 				return false; // still not? ok bail
 			}
@@ -472,19 +596,19 @@ public class BNO055 {
 		setMode(OperationMode.OPERATION_MODE_CONFIG);
 
 		/* Reset */
-		write(Register.SYS_TRIGGER, 0x20);
-		while (read(Register.CHIP_ID) != BNO055_ID) {
+		Register.SYS_TRIGGER.write(bno055, 0x20);
+		while (Register.CHIP_ID.read(bno055) != BNO055_ID) {
 			Timer.delay(0.01);
 		}
 		Timer.delay(0.05);
 
 		/* Set to normal power mode */
-		write(Register.PWR_MODE, PowerMode.POWER_MODE_NORMAL.value);
+		Register.PWR_MODE.write(bno055, PowerMode.POWER_MODE_NORMAL.value);
 		Timer.delay(0.01);
 
-		write(Register.PAGE_ID, 0);
+		Register.PAGE_ID.write(bno055, 0);
 
-		write(Register.SYS_TRIGGER, 0x0);
+		Register.SYS_TRIGGER.write(bno055, 0);
 		Timer.delay(0.01);
 
 		/* Set the requested operating mode (see section 3.3) */
@@ -502,7 +626,7 @@ public class BNO055 {
 	 */
 	public void setMode(OperationMode mode) throws BNO055Exception {
 		this.mode = mode;
-		write(Register.OPR_MODE, mode.value);
+		Register.OPR_MODE.write(bno055, mode.value);
 		Timer.delay(0.03);
 	}
 
@@ -518,11 +642,11 @@ public class BNO055 {
 		/* Switch to config mode (just in case since this is the default) */
 		setMode(OperationMode.OPERATION_MODE_CONFIG);
 		Timer.delay(0.025);
-		write(Register.PAGE_ID, 0);
+		Register.PAGE_ID.write(bno055, 0);
 		if (usextal) {
-			write(Register.SYS_TRIGGER, 0x80);
+			Register.SYS_TRIGGER.write(bno055, 0x80);
 		} else {
-			write(Register.SYS_TRIGGER, 0x00);
+			Register.SYS_TRIGGER.write(bno055, 0x00);
 		}
 		Timer.delay(0.01);
 		/* Set the requested operating mode (see section 3.3) */
@@ -537,11 +661,11 @@ public class BNO055 {
 	 */
 	public SystemStatus getSystemStatus() throws BNO055Exception {
 
-		write(Register.PAGE_ID, 0);
+		Register.PAGE_ID.write(bno055, 0);
 
-		int systemStatus = read(Register.SYS_STAT);
-		int selfTestResult = read(Register.SELFTEST_RESULT);
-		int systemError = read(Register.SYS_ERR);
+		int systemStatus = Register.SYS_STAT.read(bno055);
+		int selfTestResult = Register.SELFTEST_RESULT.read(bno055);
+		int systemError = Register.SYS_ERR.read(bno055);
 
 		Timer.delay(0.2);
 		return new SystemStatus(systemStatus, selfTestResult, systemError);
@@ -553,11 +677,11 @@ public class BNO055 {
 	 * @return RevisionInfo object with revision information
 	 */
 	public RevisionInfo getRevInfo() throws BNO055Exception {
-		int accel = read(Register.ACCEL_REV_ID);
-		int mag = read(Register.MAG_REV_ID);
-		int gyro = read(Register.GYRO_REV_ID);
-		int bootloader = read(Register.BL_REV_ID);
-		int software = read(Register.SW_REV_ID);
+		int accel = Register.ACCEL_REV_ID.read(bno055);
+		int mag = Register.MAG_REV_ID.read(bno055);
+		int gyro = Register.GYRO_REV_ID.read(bno055);
+		int bootloader = Register.BL_REV_ID.read(bno055);
+		int software = Register.SW_REV_ID.read(bno055);
 		return new RevisionInfo(accel, mag, gyro, bootloader, software);
 	}
 
@@ -569,7 +693,7 @@ public class BNO055 {
 	 * @return CalibrationStatus object describing current status
 	 */
 	public CalibrationStatus getCalibration() throws BNO055Exception {
-		int calData = read(Register.CALIB_STAT);
+		int calData = Register.CALIB_STAT.read(bno055);
 		int system = (calData >> 6) & 0x03;
 		int gyro = (calData >> 4) & 0x03;
 		int accel = (calData >> 2) & 0x03;
@@ -583,7 +707,7 @@ public class BNO055 {
 	 * @return Temperature reading
 	 */
 	public int getTemp() throws BNO055Exception {
-		return read(Register.TEMP);
+		return Register.TEMP.read(bno055);
 	}
 
 	/**
@@ -599,22 +723,22 @@ public class BNO055 {
 		switch (vectorType) {
 		case VECTOR_MAGNETOMETER:
 			/* 1uT = 16 LSB */
-			return readVector(Register.MAG_DATA, 1.0 / 16.0);
+			return Register.MAG_DATA.readVector(bno055, 1.0 / 16.0);
 		case VECTOR_GYROSCOPE:
 			/* 1rps = 900 LSB */
-			return readVector(Register.GYRO_DATA, 1.0 / 900.0);
+			return Register.GYRO_DATA.readVector(bno055, 1.0 / 900.0);
 		case VECTOR_EULER:
 			/* 1 degree = 16 LSB */
-			return readVector(Register.EULER, 1.0 / 16.0);
+			return Register.EULER.readVector(bno055, 1.0 / 16.0);
 		case VECTOR_ACCELEROMETER:
 			/* 1m/s^2 = 100 LSB */
-			return readVector(Register.ACCEL_DATA, 0.001);
+			return Register.ACCEL_DATA.readVector(bno055, 0.001);
 		case VECTOR_LINEARACCEL:
 			/* 1m/s^2 = 100 LSB */
-			return readVector(Register.LINEAR_ACCEL_DATA, 0.001);
+			return Register.LINEAR_ACCEL_DATA.readVector(bno055, 0.001);
 		case VECTOR_GRAVITY:
 			/* 1m/s^2 = 100 LSB */
-			return readVector(Register.GRAVITY_DATA, 0.001);
+			return Register.GRAVITY_DATA.readVector(bno055, 0.001);
 		default:
 			return new double[0];
 		}
@@ -626,7 +750,7 @@ public class BNO055 {
 	 * @return Quaternion representing current orientation
 	 */
 	public double[] getQuaternion() throws BNO055Exception {
-		return readVector(Register.QUATERNION_DATA, (1.0 / (1 << 14)));
+		return Register.QUATERNION_DATA.readVector(bno055, (1.0 / (1 << 14)));
 	}
 
 	/**
@@ -640,11 +764,11 @@ public class BNO055 {
 			setMode(OperationMode.OPERATION_MODE_CONFIG);
 			Timer.delay(0.025);
 
-			int[] accelOffset = readVector(Register.ACCEL_OFFSET);
-			int[] gyroOffset = readVector(Register.GYRO_OFFSET);
-			int[] magOffset = readVector(Register.MAG_OFFSET);
-			int accelRadius = read(Register.ACCEL_RADIUS);
-			int magRadius = read(Register.MAG_RADIUS);
+			int[] accelOffset = Register.ACCEL_OFFSET.readVector(bno055);
+			int[] gyroOffset = Register.GYRO_OFFSET.readVector(bno055);
+			int[] magOffset = Register.MAG_OFFSET.readVector(bno055);
+			int accelRadius = Register.ACCEL_RADIUS.read(bno055);
+			int magRadius = Register.MAG_RADIUS.read(bno055);
 
 			setMode(lastMode);
 			return new Offsets(accelOffset, gyroOffset, magOffset, accelRadius, magRadius);
@@ -663,11 +787,11 @@ public class BNO055 {
 		setMode(OperationMode.OPERATION_MODE_CONFIG);
 		Timer.delay(0.025);
 
-		writeVector(Register.ACCEL_OFFSET, offsets.accelOffset);
-		writeVector(Register.GYRO_OFFSET, offsets.gyroOffset);
-		writeVector(Register.MAG_OFFSET, offsets.magOffset);
-		write(Register.ACCEL_RADIUS, offsets.accelRadius);
-		write(Register.MAG_RADIUS, offsets.magRadius);
+		Register.ACCEL_OFFSET.writeVector(bno055, offsets.accelOffset);
+		Register.GYRO_OFFSET.writeVector(bno055, offsets.gyroOffset);
+		Register.MAG_OFFSET.writeVector(bno055, offsets.magOffset);
+		Register.ACCEL_RADIUS.write(bno055, offsets.accelRadius);
+		Register.MAG_RADIUS.write(bno055, offsets.magRadius);
 
 		setMode(lastMode);
 	}
@@ -682,129 +806,5 @@ public class BNO055 {
 		if (status.system < 3 || status.gyro < 3 || status.accel < 3 || status.mag < 3)
 			return false;
 		return true;
-	}
-
-	/**
-	 * Read a value from the BNO055
-	 * 
-	 * @param register
-	 *            Register to read. Determines number of bytes read.
-	 * @return Value from BNO055
-	 */
-	private int read(Register register) throws BNO055Exception {
-		return read(register, 0);
-	}
-	
-	/**
-	 * Read a component value from a register
-	 * 
-	 * @param register
-	 *            The register to read. Determines number of bytes read
-	 * @param component
-	 *            Component to read
-	 * @return Value from BNO055
-	 */
-	private int read(Register register, int component) throws BNO055Exception {
-		if (component >= register.components || component < 0)
-			throw new IndexOutOfBoundsException("Component " + component + " out of bounds for register " + register.toString());
-
-		byte[] buf = new byte[register.bytes];
-
-		// Contrary to documentation return value is true on success
-		if (!bno055.read(register.address + component * register.bytes, register.bytes, buf))
-			throw new BNO055Exception("Error whilst reading value from BNO055 for register " + register.toString());
-		
-		return register.processBuf(buf, 0);
-	}
-	
-	/**
-	 * Read a vector of values from the BNO055
-	 * 
-	 * @param register
-	 *            Register to read. Determines length of array
-	 * @param length
-	 *            Number of elements in vector
-	 * @return Vector of values
-	 */
-	private int[] readVector(Register register) throws BNO055Exception {
-		byte[] buf = new byte[register.bytes * register.components];
-		int[] result = new int[register.components];
-
-		// Contrary to documentation return value is true on success
-		if (!bno055.read(register.address, register.bytes * register.components, buf))
-			throw new BNO055Exception("Error whilst reading vector from BNO055 for register " + register.toString());
-		
-		for (int i = 0; i < register.components; i++) {
-			result[i] = register.processBuf(buf, i * register.bytes);
-		}
-		
-		return result;
-	}
-
-	/**
-	 * Read a vector of doubles from BNO055
-	 * 
-	 * @param register
-	 *            Register to read. Determines length of vector
-	 * @param scaleFactor
-	 *            Scaling factor to apply to values
-	 * @return Vector of values
-	 */
-	private double[] readVector(Register register, double scaleFactor) throws BNO055Exception {
-		int[] rawData = readVector(register);
-		double[] result = new double[register.components];
-
-		for (int i = 0; i < register.components; i++) {
-			result[i] = rawData[i] * scaleFactor;
-		}
-
-		return result;
-	}
-
-	/**
-	 * Write a value to the BNO055
-	 * 
-	 * @param register
-	 *            Register to write. Determines number of bytes written
-	 * @param data
-	 *            Value to write
-	 */
-	private void write(Register register, int data) throws BNO055Exception {
-		write(register, 0, data);
-	}
-
-	/**
-	 * Write a component value to the BNO055
-	 * 
-	 * @param register
-	 *            Register to write. Determines number of bytes written
-	 * @param component
-	 *            Component to write
-	 * @param data
-	 *            Value to write
-	 */
-	private void write(Register register, int component, int data) throws BNO055Exception {
-		if (component >= register.components || component < 0)
-			throw new IndexOutOfBoundsException("Component " + component + " out of bounds for register " + register.toString());
-		register.writeBytes(data, bno055, 0);
-	}
-
-	/**
-	 * Write a vector of values to the BNO055
-	 * 
-	 * Number of bytes written defined by register. Number of elements in vector
-	 * must match.
-	 * 
-	 * @param register
-	 *            Register to write.
-	 * @param vector
-	 *            Values to write
-	 */
-	private void writeVector(Register register, int[] vector) throws BNO055Exception {
-		if (vector.length != register.components)
-			throw new IllegalArgumentException("Mismatch between register size and array size for register" + register.toString());
-		for (int i = 0; i < register.components; i++) {
-			register.writeBytes(vector[i], bno055, i);
-		}
 	}
 }
