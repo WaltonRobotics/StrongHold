@@ -9,9 +9,9 @@ private ArrayList<Severity> subSystemList;
 	public void Passthrough (Severity pass){
 		subSystemList.add(pass);
 	}
-public boolean LogCall(LogMessage message){
+public boolean logCall(LogMessage message){
 		if (subSystemList.contains(message.getSubSystem())){
-			LogPostFilter(message);
+			logPostFilter(message);
 			return true;
 		}
 		return false;
