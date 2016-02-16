@@ -44,40 +44,40 @@ public class Robot extends IterativeRobot {
      */
     public void robotInit() {
     	
-    	System.out.println("Actually Started init");
-    	
     	oi = new OI();
         chooser = new SendableChooser();
         chooser.addDefault("Default Auto", new ExampleCommand());
 //        chooser.addObject("My Auto", new MyAutoCommand());
         SmartDashboard.putData("Auto mode", chooser);
         
-        System.out.println("creating table");
-        
         //table = NetworkTable.getTable("datatable");
-        
-        System.out.println("Creating filters");
-        
-        ThreadFilter threadFilter = new ThreadFilter();
-        SeverityFilter severityFilter = new SeverityFilter();
-        FileSink fileSink = new FileSink();
-        DashboardSink dashboardSink = new DashboardSink();
-        
-        severityFilter.Passthrough(Severity.ERROR);
-        Log.instance().attach(threadFilter);
-        threadFilter.attach(severityFilter);
-        severityFilter.attach(fileSink);
-        Log.instance().attach(dashboardSink);
-        
-        //SET YOUR FILE HERE
-        fileSink.setPath("FileDump.txt");
-        
-        //Start test messages:
-        Log.instance().logCall(new LogMessage(Severity.ERROR,SubSystem.DRIVETRAIN,"motionProfileTurn","Syntax Error in equation.",32));
-        Log.instance().logCall(new LogMessage(Severity.INFORMATION,SubSystem.INTAKE,"IntakeLoader","Loaded Sucessfully.",89));
-        Log.instance().logCall(new LogMessage(Severity.DEBUG,SubSystem.CLMBARM,"ArmExtend","Took longer to reach up than expected.",86));
-        Log.instance().logCall(new LogMessage(Severity.WARNING,SubSystem.SHOOTER,"Shoot","Stuck in loop.",99));
-        //End test messages
+        establishLogging();
+    }
+    
+    public void establishLogging(){
+    	 System.out.println("Creating filters");
+         
+         ThreadFilter threadFilter = new ThreadFilter();
+         SeverityFilter severityFilter = new SeverityFilter();
+         FileSink fileSink = new FileSink();
+         DashboardSink dashboardSink = new DashboardSink();
+         
+         severityFilter.Passthrough(Severity.ERROR);
+         Log.instance().attach(threadFilter);
+         Log.instance().attach(dashboardSink);
+         threadFilter.attach(severityFilter);
+         severityFilter.attach(fileSink);
+         
+         //SET YOUR FILE HERE
+         //fileSink.setPath("/home/lvuser/FileDump.txt");
+         fileSink.setPath("FileDump.txt");
+         
+         //Start test messages:
+         Log.instance().logCall(new LogMessage(Severity.ERROR,SubSystem.DRIVETRAIN,"motionProfileTurn","Syntax Error in equation.",32));
+         Log.instance().logCall(new LogMessage(Severity.INFORMATION,SubSystem.INTAKE,"IntakeLoader","Loaded Sucessfully.",89));
+         Log.instance().logCall(new LogMessage(Severity.DEBUG,SubSystem.CLMBARM,"ArmExtend","Took longer to reach up than expected.",86));
+         Log.instance().logCall(new LogMessage(Severity.WARNING,SubSystem.SHOOTER,"Shoot","Stuck in loop.",99));
+         //End test messages
     }
     
 	/**
