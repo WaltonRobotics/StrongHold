@@ -5,9 +5,9 @@ import java.util.ArrayList;
 //todo fix end condition
 public class MotionControl {
 	private ArrayList<State> states = new ArrayList<State>();
-	public static final double Robot_Width = 1;
-	public static final double Robot_Max_Speed = 1000;
-	public static final double Robot_Max_Acceleration = 1;
+	public static final double Robot_Width = .63;
+	public static final double Robot_Max_Speed = 1.5;
+	public static final double Robot_Max_Acceleration = .5;
 
 	public static final int numPoints = 20;
 	private int trajIndex;
@@ -29,28 +29,66 @@ public class MotionControl {
 
 		}
 
-		// calculate total distances and times for each state
-		calculateTotalTimesForStates();
-		calculateDistanceLeft();
-		calculateDistanceRight();
+	// calculate total distances and times for each state
+	calculateTotalTimesForStates();
+	calculateDistanceLeft();
+	calculateDistanceRight();
 
-		// set total distances for each position
-		for (int i = 0; i < states.size() - 1; i++) {
-			states.get(i).getTrajectory().setTotals();
-			states.get(i).getTrajectory().dumpValues();
-		}
+	// set total distances for each position
+	for (int i = 0; i < states.size() - 1; i++) {
+		states.get(i).getTrajectory().setTotals();
+		states.get(i).getTrajectory().dumpValues();
+	}
 
-		// set the starting condition at the start
-		stateIndex = 0;
-		trajIndex = 0;
+	// set the starting condition at the start
+	stateIndex = 0;
+	trajIndex = 0;
+	//createGraphs();
 
 	}
+	
+	public double getMaxTime()
+	{
+		Trajectory traj = states.get(states.size()-2).getTrajectory();
+		return traj.get(traj.size()-1).totalTime;
+	}
+//		public MotionControl(String s, double startVelocity, double endVelocity, Coordinate point1,Coordinate point2 ) {
+//			states = InputText.parseInput(s);// parse input
+//
+//			// set initial and end conditions
+//			states.get(0).setVelocity(startVelocity);
+//			states.get(states.size() - 1).setVelocity(endVelocity);
+//
+//			// calculate directions of each intermediate point
+//			calculateDirections();
+//
+//			// create a segment for each state
+//			for (int i = 0; i < states.size() - 1; i++) {
+//				states.get(i).setTrajectory(new Segment(states.get(i), states.get(i + 1),point1, point2).getTrajectory());
+//			}
+//
+//		// calculate total distances and times for each state
+//		calculateTotalTimesForStates();
+//		calculateDistanceLeft();
+//		calculateDistanceRight();
+//
+//		// set total distances for each position
+//		for (int i = 0; i < states.size() - 1; i++) {
+//			states.get(i).getTrajectory().setTotals();
+//			states.get(i).getTrajectory().dumpValues();
+//		}
+//
+//		// set the starting condition at the start
+//		stateIndex = 0;
+//		trajIndex = 0;
+//
+//	}
 
 	private void calculateDistanceLeft() {
 		double dl = 0;
 		states.get(0).setDistanceLeft(0);
 		for (int i = 1; i < states.size(); i++) {
-			dl += states.get(i - 1).getTrajectory().getDeltaDistanceLeft();
+			dl += states.get(i - 1).getTrajectory().getTotalDistanceLeft();
 			states.get(i).setDistanceLeft(dl);
 		}
 	}
@@ -59,7 +97,7 @@ public class MotionControl {
 		double dr = 0;
 		states.get(0).setDistanceRight(0);
 		for (int i = 1; i < states.size(); i++) {
-			dr += states.get(i - 1).getTrajectory().getDeltaDistanceRight();
+			dr += states.get(i - 1).getTrajectory().getTotalDistanceRight();
 			states.get(i).setDistanceRight(dr);
 		}
 	}
@@ -68,7 +106,7 @@ public class MotionControl {
 		double time = 0;
 		states.get(0).setTime(0);
 		for (int i = 1; i < states.size(); i++) {
-			time += states.get(i - 1).getTrajectory().getDeltaTime();
+			time += states.get(i - 1).getTrajectory().getTotalTime();
 			states.get(i).setTime(time);
 
 		}

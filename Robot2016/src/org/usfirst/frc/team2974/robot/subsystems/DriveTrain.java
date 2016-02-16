@@ -7,6 +7,7 @@ import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.PIDController;
 import edu.wpi.first.wpilibj.PIDOutput;
 import edu.wpi.first.wpilibj.PIDSourceType;
+import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.SpeedController;
 import edu.wpi.first.wpilibj.Talon;
 import edu.wpi.first.wpilibj.Timer;
@@ -23,26 +24,35 @@ public class DriveTrain extends Subsystem {
 	private Talon backRight = RobotMap.driveTrainBackRight;
 	private Talon frontLeft = RobotMap.driveTrainFrontLeft;
 	private Talon backLeft = RobotMap.driveTrainBackLeft;
+	
 	private Encoder encoderLeft = RobotMap.encoderLeft;
 	private Encoder encoderRight = RobotMap.encoderRight;
-	private MotionControl motionControl;
+	
+	Solenoid shifter = RobotMap.pnuematicsShifter;
+	
+	public final double distancePerPulse  = .000515417;
 	private class SharedDrive implements PIDOutput
 	{
 		SpeedController one;
 		SpeedController two;
-		public SharedDrive(SpeedController one, SpeedController two)
+		Boolean isLeft;
+		public SharedDrive(SpeedController one, SpeedController two, boolean isLeft)
 		{
+			this.isLeft = isLeft;
 			this.one = one;
 			this.two = two;
 		}
+		@Override
 		public void pidWrite(double out)
 		{
+			if(!isLeft)out*=-1;
+			System.out.println("pid write"+out);
 			one.set(out);
 			two.set(out);
 		}
 	}
-	public PIDControllerAccel leftController = new PIDControllerAccel(1, 0, 0,1, RobotMap.encoderLeft, (PIDOutput) new SharedDrive(backLeft, frontLeft),1,0,true);
-	public PIDControllerAccel rightController = new PIDControllerAccel(1, 0, 0,1, RobotMap.encoderRight, (PIDOutput) new SharedDrive(backRight, frontRight),1,0,false);
+	public PIDControllerAccel leftController = new PIDControllerAccel(1, 0, 0,1, RobotMap.encoderLeft,  new SharedDrive(backLeft, frontLeft,true),1,0,true);
+	public PIDControllerAccel rightController = new PIDControllerAccel(1, 0, 0,1, RobotMap.encoderRight,  new SharedDrive(backRight, frontRight,false),1,0,false);
 
 	public DriveTrain()
 	{
@@ -52,10 +62,14 @@ public class DriveTrain extends Subsystem {
 		//18 drive shaft
 		//60 wheel
 		//.21*pi/(128*3*60/18) = distance per pulse
-		RobotMap.encoderLeft.setDistancePerPulse(.000515417);
-		RobotMap.encoderRight.setDistancePerPulse(.000515417);
-		RobotMap.encoderLeft.setPIDSourceType(PIDSourceType.kRate);
-		RobotMap.encoderRight.setPIDSourceType(PIDSourceType.kRate);
+		resetEncoders();
+		encoderLeft.setDistancePerPulse(distancePerPulse);
+		encoderRight.setDistancePerPulse(distancePerPulse);
+		encoderLeft.setPIDSourceType(PIDSourceType.kDisplacement);
+		encoderRight.setPIDSourceType(PIDSourceType.kDisplacement);
+		
+
+		
 
 	}
     public void initDefaultCommand() {
@@ -63,20 +77,35 @@ public class DriveTrain extends Subsystem {
     }
     public void setSpeeds(double left, double right)
     {
-    	backRight.set(-right);
-    	backLeft.set(left);
-    	frontRight.set(-right);
-    	frontLeft.set(left);
+    	backRight.set(right);
+    	backLeft.set(-left);
+    	frontRight.set(right);
+    	frontLeft.set(-left);
     }
     public void resetEncoders()
     {
-    	RobotMap.encoderLeft.reset();
-    	RobotMap.encoderLeft.reset();
+    	encoderLeft.reset();
+    	encoderRight.reset();
     }
-    public void setSetPoint(Position pos)
+    public void setSetPoint(MotionControl mc, double time)
     {
-    	leftController.setSetpoint(pos);
-    	rightController.setSetpoint(pos);
+    	leftController.setSetpoint(mc, time);
+    	rightController.setSetpoint(mc, time);
+    }
+    
+    public void shiftDown()
+    {
+    	if(shifter.get())
+    	{
+    		shifter.set(false);
+    	}
+    }
+    public void shiftUp()
+    {
+    	if(!shifter.get())
+    	{
+    		shifter.set(true);
+    	}
     }
     
 }

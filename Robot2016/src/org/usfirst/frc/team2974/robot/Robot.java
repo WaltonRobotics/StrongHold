@@ -22,12 +22,13 @@ import motionProfilling.MotionControl;
  */
 public class Robot extends IterativeRobot {
 
-	public static final Inputs exampleSubsystem = new Inputs();
+
 	public static OI oi;
 	public static DriveTrain driveTrain;
+	public static Arm arm;
 	public static Inputs inputs;
     Command autonomousCommand;
-    SendableChooser chooser;
+   // SendableChooser chooser;
 
     /**
      * This function is run when the robot is first started up and should be
@@ -35,9 +36,17 @@ public class Robot extends IterativeRobot {
      */
     public void robotInit() {
     	RobotMap.init();
-    	inputs = new Inputs();
+    	SmartDashboard.putNumber("kV", 1.0/1.5);
+    	SmartDashboard.putNumber("kA", 0);
+    	SmartDashboard.putNumber("P", 0);
+    	SmartDashboard.putNumber("I", 0);
+    	SmartDashboard.putNumber("D", 0);
+    	
     	driveTrain = new DriveTrain();
-		oi = new OI();
+    	inputs = new Inputs();
+    	arm = new Arm();
+    	oi = new OI();
+    	
 
     }
 	
@@ -51,6 +60,7 @@ public class Robot extends IterativeRobot {
     }
 	
 	public void disabledPeriodic() {
+		Scheduler.getInstance().add(new ShowInputs());
 		Scheduler.getInstance().run();
 	}
 
@@ -84,6 +94,8 @@ public class Robot extends IterativeRobot {
      * This function is called periodically during operator control
      */
     public void teleopPeriodic() {
+        
+        Scheduler.getInstance().add(new ShowInputs());
         Scheduler.getInstance().run();
     }
     

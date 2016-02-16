@@ -10,7 +10,17 @@ public class Spline {
 	public Spline(State start, State end) {
 		this.start = start;
 		this.end = end;
-		choosePoints();
+		choosePoints(start,end);
+		dumpValues();
+		trajectory = new TrajectorySpline();
+		generatePositions();
+		dumpPositions();
+	}
+	public Spline(State start, State end, Coordinate point1, Coordinate point2) {
+		this.start = start;
+		this.end = end;
+		this.point1 = point1;
+		this.point2 = point2;
 		dumpValues();
 		trajectory = new TrajectorySpline();
 		generatePositions();
@@ -53,7 +63,7 @@ public class Spline {
 	public String toString() {
 		return "Spline [start=" + start + ", end=" + end + ", point1=" + point1 + ", point2=" + point2 + "]";
 	}
-	private void choosePoints() {
+	public void choosePoints(State start, State end) {
 		Line line1 = new Line(start);
 		Line line2 = new Line(end);
 		Coordinate intersection = getIntersection(line1, line2);
