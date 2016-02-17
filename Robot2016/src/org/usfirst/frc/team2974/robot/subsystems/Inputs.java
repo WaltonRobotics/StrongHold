@@ -42,6 +42,7 @@ public class Inputs extends Subsystem {
 	
 	public void updateSmartDashboard()
 	{
+		//System.out.println("Im alive");
 		SmartDashboard.putData("Digital In 0", digital0);
 		SmartDashboard.putData("Digital In 1", digital1);
 		SmartDashboard.putData("Digital In 2", digital2);
@@ -58,6 +59,11 @@ public class Inputs extends Subsystem {
 		SmartDashboard.putData("Analog In 2", analog2);
 		SmartDashboard.putData("Analog In 3", analog3);
 		
+		SmartDashboard.putNumber("EncoderLeft", RobotMap.encoderLeft.getDistance());
+		SmartDashboard.putNumber("EncoderRight", RobotMap.encoderRight.getDistance());
+		
+		SmartDashboard.putNumber("Velocity Left", RobotMap.encoderLeft.getRate());
+		SmartDashboard.putNumber("Velocity Right", RobotMap.encoderRight.getRate());
 	}
 	
 
