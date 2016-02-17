@@ -7,19 +7,19 @@ import org.usfirst.frc.team2974.robot.subsystems.DriveTrain;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import motionProfilling.Coordinate;
 import motionProfilling.MotionControl;
-import motionProfilling.Position;
 
 /**
  *
  */
 public class DriveSpline extends Command {
-	MotionControl mc;
-	double offsetTime;
-	DriveTrain drive = Robot.driveTrain;
+	private MotionControl mc;
+	private double offsetTime;
+	private DriveTrain drive; 
+	
     public DriveSpline() {
-    	requires(Robot.driveTrain);
+       	drive = Robot.driveTrain;
+    	requires(drive);
     }
 
     // Called just before this Command runs the first time
@@ -50,12 +50,11 @@ public class DriveSpline extends Command {
     }
     public void dumpSmartDashBoardValuse()
     {
-    	Position pos = mc.getPosition(Math.min(mc.getMaxTime(), Timer.getFPGATimestamp()-offsetTime));
-    	SmartDashboard.putNumber("DistanceLeft", pos.totalDistanceLeft);
-    	SmartDashboard.putNumber("DistanceRight", pos.totalDistanceRight);
-    	SmartDashboard.putNumber("ErrorLeft", pos.totalDistanceLeft-RobotMap.encoderLeft.getDistance());
-    	SmartDashboard.putNumber("ErrorRight", pos.totalDistanceRight-RobotMap.encoderRight.getDistance());
-    	 //System.out.println(Timer.getFPGATimestamp()-offsetTime);
+    	double time = Math.min(mc.getMaxTime(), Timer.getFPGATimestamp()-offsetTime);
+    	SmartDashboard.putNumber("DistanceLeft", mc.distanceleft(time));
+    	SmartDashboard.putNumber("DistanceRight", mc.distanceRight(time));
+    	SmartDashboard.putNumber("ErrorLeft", mc.distanceleft(time)-RobotMap.encoderLeft.getDistance());
+    	SmartDashboard.putNumber("ErrorRight", mc.distanceRight(time)-RobotMap.encoderRight.getDistance());
     }
 
     // Make this return true when this Command no longer needs to run execute()

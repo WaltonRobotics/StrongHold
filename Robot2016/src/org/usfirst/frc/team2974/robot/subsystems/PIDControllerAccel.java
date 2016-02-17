@@ -23,9 +23,7 @@ public class PIDControllerAccel extends PIDController {
 	@Override
 	protected double calculateFeedForward()
 	{
-		//System.out.println("i live");
 		return currentVelocity*kV+ currentAcceleration*kA;
-		
 	}
 	public synchronized void setkV(double kV)
 	{
