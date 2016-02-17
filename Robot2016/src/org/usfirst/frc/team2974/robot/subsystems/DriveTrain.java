@@ -4,16 +4,13 @@ import org.usfirst.frc.team2974.robot.RobotMap;
 import org.usfirst.frc.team2974.robot.commands.Drive;
 
 import edu.wpi.first.wpilibj.Encoder;
-import edu.wpi.first.wpilibj.PIDController;
 import edu.wpi.first.wpilibj.PIDOutput;
 import edu.wpi.first.wpilibj.PIDSourceType;
 import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.SpeedController;
 import edu.wpi.first.wpilibj.Talon;
-import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import motionProfilling.MotionControl;
-import motionProfilling.Position;
 
 /**
  *
@@ -51,8 +48,8 @@ public class DriveTrain extends Subsystem {
 			two.set(out);
 		}
 	}
-	public PIDControllerAccel leftController = new PIDControllerAccel(1, 0, 0,1, RobotMap.encoderLeft,  new SharedDrive(backLeft, frontLeft,true),1,0,true);
-	public PIDControllerAccel rightController = new PIDControllerAccel(1, 0, 0,1, RobotMap.encoderRight,  new SharedDrive(backRight, frontRight,false),1,0,false);
+	public PIDControllerAccel leftController = new PIDControllerAccel(1, 0, 0,1, RobotMap.encoderLeft,  new SharedDrive(backLeft, frontLeft,true),1,0);
+	public PIDControllerAccel rightController = new PIDControllerAccel(1, 0, 0,1, RobotMap.encoderRight,  new SharedDrive(backRight, frontRight,false),1,0);
 
 	public DriveTrain()
 	{
@@ -89,8 +86,9 @@ public class DriveTrain extends Subsystem {
     }
     public void setSetPoint(MotionControl mc, double time)
     {
-    	leftController.setSetpoint(mc, time);
-    	rightController.setSetpoint(mc, time);
+    	//fix acceleration
+    	leftController.setSetpoint(mc.distanceleft(time),mc.velocityLeft(time),0);
+    	rightController.setSetpoint(mc.distanceRight(time),mc.velocityRight(time),0);
     }
     
     public void shiftDown()

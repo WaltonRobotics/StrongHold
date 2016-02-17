@@ -14,7 +14,7 @@ public class Arm extends Subsystem {
 
     public Arm()
     {
-    	//arm.setControlMode();
+    	//arm.setControlMode();?
     }
 
     public void initDefaultCommand() {
