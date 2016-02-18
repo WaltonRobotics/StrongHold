@@ -17,6 +17,7 @@ import org.usfirst.frc.team2974.logging.messages.LogMessage;
 import org.usfirst.frc.team2974.robot.commands.ShowInputs;
 import org.usfirst.frc.team2974.robot.subsystems.*;
 
+import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 
@@ -28,6 +29,14 @@ public class Robot extends IterativeRobot {
 	public static Arm arm;
 	public static Inputs inputs;
     Command autonomousCommand;
+    
+	SendableChooser chooserAUDIT;
+	SendableChooser chooserDEBUG;
+	SendableChooser chooserWARNING;
+	SendableChooser chooserERROR;
+	SendableChooser chooserINFORMATION;
+	
+	SeverityFilter severityFilter;
    // SendableChooser chooser;
 
     /**
@@ -46,33 +55,89 @@ public class Robot extends IterativeRobot {
     	inputs = new Inputs();
     	arm = new Arm();
     	oi = new OI();
-		initLoggingSystem();
+    	
+    	establishLoggingChooser();
+		establishLogging();
+    }
+    
+	public void establishLoggingChooser() {
+		chooserINFORMATION = new SendableChooser();
+		SmartDashboard.putData("INFORMATION", chooserINFORMATION);
 
-    }
-    
-    public void initLoggingSystem() {
-    	ThreadFilter threadFilter = new ThreadFilter();
-        SeverityFilter severityFilter = new SeverityFilter();
-        FileSink fileSink = new FileSink();
-        DashboardSink dashboardSink = new DashboardSink();
-        
-        severityFilter.Passthrough(Severity.ERROR);
-        Log.instance().attach(threadFilter);
-        threadFilter.attach(severityFilter);
-        severityFilter.attach(fileSink);
-        Log.instance().attach(dashboardSink);
-        
-        //SET YOUR FILE HERE
-        fileSink.setPath("src/FileDump.txt");
-        
-        //Start test messages:
-//        Log.instance().logCall(new LogMessage(Severity.ERROR,SubSystem.DRIVETRAIN,"motionProfileTurn","Syntax Error in equation."));
-//        Log.instance().logCall(new LogMessage(Severity.INFORMATION,SubSystem.INTAKE,"IntakeLoader","Loaded Sucessfully."));
-//        Log.instance().logCall(new LogMessage(Severity.DEBUG,SubSystem.CLMBARM,"ArmExtend","Took longer to reach up than expected."));
-//        Log.instance().logCall(new LogMessage(Severity.WARNING,SubSystem.SHOOTER,"Shoot","Stuck in loop."));
-        //End test messages
-    }
-    
+		chooserERROR = new SendableChooser();
+		SmartDashboard.putData("ERROR", chooserERROR);
+
+		chooserWARNING = new SendableChooser();
+		SmartDashboard.putData("WARNING", chooserWARNING);
+
+		chooserDEBUG = new SendableChooser();
+		SmartDashboard.putData("DEBUG", chooserDEBUG);
+
+		chooserAUDIT = new SendableChooser();
+		SmartDashboard.putData("AUDIT", chooserAUDIT);
+
+	}
+
+	public void changeLogPassthrough() {
+		if (chooserAUDIT.equals(true)){
+			severityFilter.stopPassthrough(Severity.AUDIT);
+		}else{
+			severityFilter.Passthrough(Severity.AUDIT);
+		}
+		if (chooserDEBUG.equals(true)){
+			severityFilter.stopPassthrough(Severity.DEBUG);
+		}else{
+			severityFilter.Passthrough(Severity.DEBUG);
+		}
+		if (chooserWARNING.equals(true)){
+			severityFilter.stopPassthrough(Severity.WARNING);
+		}else{
+			severityFilter.Passthrough(Severity.WARNING);
+		}
+		if (chooserERROR.equals(true)){
+			severityFilter.stopPassthrough(Severity.ERROR);
+		}else{
+			severityFilter.Passthrough(Severity.ERROR);
+		}
+		if (chooserINFORMATION.equals(true)){
+			severityFilter.stopPassthrough(Severity.INFORMATION);
+		}else{
+			severityFilter.Passthrough(Severity.INFORMATION);
+		}
+	}
+
+	public void establishLogging() {
+		System.out.println("Creating filters");
+		
+		severityFilter = new SeverityFilter();
+
+		ThreadFilter threadFilter = new ThreadFilter();
+		SeverityFilter fileSeverityFilter = new SeverityFilter();
+		FileSink fileSink = new FileSink();
+		DashboardSink dashboardSink = new DashboardSink();
+
+		fileSeverityFilter.Passthrough(Severity.ERROR);
+		Log.instance().attach(threadFilter);
+		Log.instance().attach(severityFilter);
+		threadFilter.attach(fileSeverityFilter);
+		fileSeverityFilter.attach(fileSink);
+		severityFilter.attach(dashboardSink);
+		
+
+		// SET YOUR FILE HERE
+		// fileSink.setPath("/home/lvuser/FileDump.txt");
+		fileSink.setPath("FileDump.txt");
+
+		// Start test messages:
+		Log.instance().logCall(new LogMessage(Severity.ERROR, SubSystem.DRIVETRAIN, "motionProfileTurn",
+				"Syntax Error in equation.", 32));
+		Log.instance().logCall(
+				new LogMessage(Severity.INFORMATION, SubSystem.INTAKE, "IntakeLoader", "Loaded Sucessfully.", 89));
+		Log.instance().logCall(new LogMessage(Severity.DEBUG, SubSystem.CLMBARM, "ArmExtend",
+				"Took longer to reach up than expected.", 86));
+		Log.instance().logCall(new LogMessage(Severity.WARNING, SubSystem.SHOOTER, "Shoot", "Stuck in loop.", 99));
+		// End test messages
+	}
 	
 	/**
      * This function is called once each time the robot enters Disabled mode.

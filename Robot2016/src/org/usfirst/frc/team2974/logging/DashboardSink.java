@@ -10,8 +10,8 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 public class DashboardSink extends LogFilter {
 
 	@Override
-	public boolean LogCall(LogMessage message) {
-		DriverStation.reportError(message.getCommand() + " says: " + message.getMessage() + "\n",false);
+	public boolean logCall(LogMessage message) {
+		DriverStation.reportError("@" + message.getTime() + " seconds:" + message.getCommand() + ": " + message.getMessage() + "on line " + message.getLine() + "\n",false);
 		return true;
 	}
 

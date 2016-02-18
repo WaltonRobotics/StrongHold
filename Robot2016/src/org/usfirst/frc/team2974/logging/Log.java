@@ -18,7 +18,7 @@ public class Log {
 
 	public void logCall(LogMessage message) {
 		for(LogSink logSinkIterator : logSinks){
-			logSinkIterator.LogCall(message);
+			logSinkIterator.logCall(message);
 		}
 	}
 
