@@ -15,6 +15,7 @@ import org.usfirst.frc.team2974.logging.filters.SeverityFilter;
 import org.usfirst.frc.team2974.logging.filters.ThreadFilter;
 import org.usfirst.frc.team2974.logging.messages.LogMessage;
 import org.usfirst.frc.team2974.robot.commands.ShowInputs;
+import org.usfirst.frc.team2974.robot.commands.UpdateFiltration;
 import org.usfirst.frc.team2974.robot.subsystems.*;
 
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
@@ -30,7 +31,7 @@ public class Robot extends IterativeRobot {
 	public static Inputs inputs;
     Command autonomousCommand;
 	
-	SeverityFilter severityFilter;
+	static SeverityFilter severityFilter;
    // SendableChooser chooser;
 
     /**
@@ -67,7 +68,7 @@ public class Robot extends IterativeRobot {
 
 	}
 
-	public void changeLogPassthrough() {
+	public static void changeLogPassthrough() {
 		if (SmartDashboard.getString("Information") == "true"){
 			severityFilter.stopPassthrough(Severity.INFORMATION);
 		}else{
@@ -112,7 +113,6 @@ public class Robot extends IterativeRobot {
 		fileSeverityFilter.attach(fileSink);
 		severityFilter.attach(dashboardSink);
 		
-
 		// SET YOUR FILE HERE
 		// fileSink.setPath("/home/lvuser/FileDump.txt");
 		fileSink.setPath("FileDump.txt");
@@ -126,6 +126,7 @@ public class Robot extends IterativeRobot {
 				"Took longer to reach up than expected.", 86));
 		Log.instance().logCall(new LogMessage(Severity.WARNING, SubSystem.SHOOTER, "Shoot", "Stuck in loop.", 99));
 		// End test messages
+		SmartDashboard.putData("update", new UpdateFiltration());
 	}
 	
 	/**
