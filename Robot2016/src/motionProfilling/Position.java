@@ -8,11 +8,10 @@ public class Position {
 	public double deltaVelocityRight;
 	@Override
 	public String toString() {
-		return "Position [s=" + s + ", deltaLength=" + deltaLength + ", deltaTime=" + deltaTime + ", totalTime="
-				+ totalTime + ", velocity=" + velocity +  ", curvature=" + curvature
-				+ ", turningRight=" + turningRight + ", totalDistanceLeft=" + totalDistanceLeft
-				+ ", totalDistanceRight=" + totalDistanceRight + ", x=" + x + ", y=" + y + ", getDeltaLengthLeft()="
-				+ getDeltaLengthLeft() + ", getDeltaLengthRight()=" + getDeltaLengthRight() + "]";
+		return "Position [s=" + s + ", totalTime=" + totalTime + ", accelerationLeft=" + accelerationLeft
+				+ ", accelerationRight=" + accelerationRight + ", totalDistanceLeft=" + totalDistanceLeft
+				+ ", totalDistanceRight=" + totalDistanceRight + ", getVelocityRight()=" + getVelocityRight()
+				+ ", getVelocityLeft()=" + getVelocityLeft() + "]";
 	}
 
 	public double totalTime;//time until the start of this 
@@ -29,20 +28,20 @@ public class Position {
 	
 	
 	public double getDeltaLengthLeft() {
-		return (1 + MotionControl.Robot_Width / 2 * curvature) * deltaLength;
+		return (1 - MotionControl.Robot_Width / 2 * curvature) * deltaLength;
 		
 	}
 
 	public double getDeltaLengthRight() {
-		return (1 - MotionControl.Robot_Width / 2 * curvature) * deltaLength;
+		return (1 + MotionControl.Robot_Width / 2 * curvature) * deltaLength;
 	}
 
 	public double getVelocityRight() {
-		return (1 - MotionControl.Robot_Width / 2 * curvature) * velocity;
+		return (1 + MotionControl.Robot_Width / 2 * curvature) * velocity;
 	}
 
 	public double getVelocityLeft() {
-		return (1 + MotionControl.Robot_Width / 2 * curvature) * velocity;
+		return (1 - MotionControl.Robot_Width / 2 * curvature) * velocity;
 	}
 
 	
