@@ -36,6 +36,11 @@ public class Robot extends IterativeRobot {
 	public static OI oi;
 	
 	SendableChooser chooserAUDIT;
+	SendableChooser chooserDEBUG;
+	SendableChooser chooserWARNING;
+	SendableChooser chooserERROR;
+	SendableChooser chooserINFORMATION;
+	
 	SeverityFilter severityFilter;
 
 	Command autonomousCommand;
@@ -59,31 +64,50 @@ public class Robot extends IterativeRobot {
 	}
 
 	public void establishLoggingChooser() {
-		SendableChooser chooserINFORMATION = new SendableChooser();
+		chooserINFORMATION = new SendableChooser();
 		SmartDashboard.putData("INFORMATION", chooserINFORMATION);
 
-		SendableChooser chooserERROR = new SendableChooser();
+		chooserERROR = new SendableChooser();
 		SmartDashboard.putData("ERROR", chooserERROR);
 
-		SendableChooser chooserWARNING = new SendableChooser();
+		chooserWARNING = new SendableChooser();
 		SmartDashboard.putData("WARNING", chooserWARNING);
 
-		SendableChooser chooserDEBUG = new SendableChooser();
+		chooserDEBUG = new SendableChooser();
 		SmartDashboard.putData("DEBUG", chooserDEBUG);
 
 		chooserAUDIT = new SendableChooser();
 		SmartDashboard.putData("AUDIT", chooserAUDIT);
 
 	}
-
 	public void changeLogPassthrough() {
 		if (chooserAUDIT.equals(true)){
 			severityFilter.stopPassthrough(Severity.AUDIT);
 		}else{
 			severityFilter.Passthrough(Severity.AUDIT);
 		}
+		if (chooserDEBUG.equals(true)){
+			severityFilter.stopPassthrough(Severity.DEBUG);
+		}else{
+			severityFilter.Passthrough(Severity.DEBUG);
+		}
+		if (chooserWARNING.equals(true)){
+			severityFilter.stopPassthrough(Severity.WARNING);
+		}else{
+			severityFilter.Passthrough(Severity.WARNING);
+		}
+		if (chooserERROR.equals(true)){
+			severityFilter.stopPassthrough(Severity.ERROR);
+		}else{
+			severityFilter.Passthrough(Severity.ERROR);
+		}
+		if (chooserINFORMATION.equals(true)){
+			severityFilter.stopPassthrough(Severity.INFORMATION);
+		}else{
+			severityFilter.Passthrough(Severity.INFORMATION);
+		}
 	}
-
+  
 	public void establishLogging() {
 		System.out.println("Creating filters");
 		
