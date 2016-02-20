@@ -13,7 +13,6 @@ import org.usfirst.frc.team2974.robot.commands.*;
  * Shows Inputs
  */
 public class Inputs extends Subsystem {
-    
 	
 	DigitalInput digital0 = RobotMap.digital0;
     DigitalInput digital1 = RobotMap.digital1;
@@ -26,12 +25,10 @@ public class Inputs extends Subsystem {
     DigitalInput digital8 = RobotMap.digital8;
     DigitalInput digital9 = RobotMap.digital9;
     
-
     AnalogInput analog0 = RobotMap.analog0;
     AnalogInput analog1 = RobotMap.analog1;
     AnalogInput analog2 = RobotMap.analog2;
     AnalogInput analog3 = RobotMap.analog3;
-    
 
 	@Override
 	protected void initDefaultCommand() {
@@ -42,7 +39,6 @@ public class Inputs extends Subsystem {
 	
 	public void updateSmartDashboard()
 	{
-		//System.out.println("Im alive");
 		SmartDashboard.putData("Digital In 0", digital0);
 		SmartDashboard.putData("Digital In 1", digital1);
 		SmartDashboard.putData("Digital In 2", digital2);

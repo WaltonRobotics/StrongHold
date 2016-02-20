@@ -11,7 +11,6 @@ public class Camera extends Subsystem {
     double[] defaultValue;
 
     public void initDefaultCommand() {
-        // Set the default command for a subsystem here.
         //setDefaultCommand(new MySpecialCommand());
     }
     public Camera()

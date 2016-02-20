@@ -8,7 +8,6 @@ import edu.wpi.first.wpilibj.command.Command;
 
 public class ShowInputs extends Command {
     public ShowInputs() {
-        // Use requires() here to declare subsystem dependencies
         requires(Robot.inputs);
     }
     

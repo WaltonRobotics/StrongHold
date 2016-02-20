@@ -1,6 +1,6 @@
 package org.usfirst.frc.team2974.robot;
 
-import org.usfirst.frc.team2974.robot.commands.DriveSpline;
+import org.usfirst.frc.team2974.robot.autonomousCommands.DriveSpline;
 
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.Button;

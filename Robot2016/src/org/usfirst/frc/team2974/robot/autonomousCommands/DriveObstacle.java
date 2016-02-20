@@ -1,22 +1,19 @@
-package org.usfirst.frc.team2974.robot.commands;
-
-import org.usfirst.frc.team2974.robot.Robot;
+package org.usfirst.frc.team2974.robot.autonomousCommands;
 
 import edu.wpi.first.wpilibj.command.Command;
 
 /**
  *
  */
-public class UpdateFiltration extends Command {
+public class DriveObstacle extends Command {
 
-    public UpdateFiltration() {
+    public DriveObstacle() {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
     }
 
     // Called just before this Command runs the first time
     protected void initialize() {
-    	//Robot.changeLogPassthrough();
     }
 
     // Called repeatedly when this Command is scheduled to run
