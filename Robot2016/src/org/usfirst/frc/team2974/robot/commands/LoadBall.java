@@ -22,17 +22,11 @@ private double threshold = .05;
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
     	if(Robot.oi.intake.get())
-    	{
     		Robot.intake.input();
-    	}
     	else if(Robot.oi.outtake.get())
-    	{
     		Robot.intake.output();
-    	}
     	else if(Robot.oi.gamepad.getLeftTrigger()>threshold)
-    	{
     		Robot.intake.setMotor(Robot.oi.gamepad.getLeftTrigger());
-    	}
     	else
     		Robot.intake.setMotor(0);
     	
@@ -40,7 +34,6 @@ private double threshold = .05;
     		Robot.intake.setIntakeSolenoid(IntakeState.up);
     	else if(Robot.oi.ballRelease.get())
     		Robot.intake.setIntakeSolenoid(IntakeState.down);
-    		
     }
 
     // Make this return true when this Command no longer needs to run execute()

@@ -12,23 +12,21 @@ import edu.wpi.first.wpilibj.command.Command;
 public class Shoot extends Command {
 	private state currentState;
 	private Shooter shooter = Robot.shooter;
+	
     public Shoot() {
         // Use requires() here to declare subsystem dependencies
          requires(Robot.shooter);
     }
 
     // Called just before this Command runs the first time
-    protected void initialize() {
-    	while(shooter.getState() != TensionerState.tensioned){
-    		shooter.unload();
-    	}
-    	shooter.latch();
-    	currentState = state.latched;
+    protected void initialize() 
+    {
+    	currentState = state.returning;
     }
     	
     private enum state
     {
-    	latched, ready, shot, returning
+    	latched, ready, returning
     }
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
@@ -39,12 +37,20 @@ public class Shoot extends Command {
     			currentState = state.ready;
     		break;
     	case ready:
+    		shooter.atTensionLimit();
     		if(Robot.oi.shoot.get())
+    		{
     			shooter.unlatch();
-    		break;
-    	case shot:
+    			currentState = state.returning;
+    		}
     		break;
     	case returning:
+    		shooter.unload();
+    		if(shooter.getState() == TensionerState.untensioned)
+    		{
+    			shooter.latch();
+    			currentState = state.latched;
+    		}
     		break;
     	}
     }

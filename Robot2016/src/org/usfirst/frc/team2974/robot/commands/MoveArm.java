@@ -3,13 +3,14 @@ package org.usfirst.frc.team2974.robot.commands;
 import org.usfirst.frc.team2974.robot.Robot;
 import org.usfirst.frc.team2974.robot.RobotMap;
 
+import edu.wpi.first.wpilibj.CANTalon;
 import edu.wpi.first.wpilibj.command.Command;
 
 /**
  *
  */
 public class MoveArm extends Command {
-
+	CANTalon arm = RobotMap.arm;
     public MoveArm() {
         requires(Robot.arm);
     }
@@ -20,7 +21,7 @@ public class MoveArm extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	RobotMap.arm.set(Robot.oi.gamepad.getLeftY());
+    	arm.set(Robot.oi.gamepad.getLeftY());
     }
 
     // Make this return true when this Command no longer needs to run execute()
