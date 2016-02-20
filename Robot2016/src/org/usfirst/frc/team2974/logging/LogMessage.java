@@ -1,4 +1,4 @@
-package org.usfirst.frc.team2974.logging.messages;
+package org.usfirst.frc.team2974.logging;
 
 import org.usfirst.frc.team2974.logging.enumerations.Severity;
 import org.usfirst.frc.team2974.logging.enumerations.SubSystem;

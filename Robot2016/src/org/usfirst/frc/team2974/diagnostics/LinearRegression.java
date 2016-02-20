@@ -1,4 +1,4 @@
-package org.usfirst.frc.team2974.diagnostics.regressions;
+package org.usfirst.frc.team2974.diagnostics;
 
 import java.util.ArrayList;
 

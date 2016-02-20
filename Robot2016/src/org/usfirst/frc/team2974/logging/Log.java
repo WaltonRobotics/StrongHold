@@ -2,8 +2,6 @@ package org.usfirst.frc.team2974.logging;
 
 import java.util.ArrayList;
 
-import org.usfirst.frc.team2974.logging.messages.LogMessage;
-
 /**
  * 
  */

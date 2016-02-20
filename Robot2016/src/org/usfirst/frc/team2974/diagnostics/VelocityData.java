@@ -1,4 +1,4 @@
-package org.usfirst.frc.team2974.diagnostics.messageObjects;
+package org.usfirst.frc.team2974.diagnostics;
 
 public class VelocityData {
 	double predictedLeftVelocity;

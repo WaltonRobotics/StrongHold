@@ -783,7 +783,7 @@ public class BNO055 {
 		}
 		return null;
 	}
-
+	
 	/**
 	 * Writes to the sensor's offset registers from an offset object
 	 * 
