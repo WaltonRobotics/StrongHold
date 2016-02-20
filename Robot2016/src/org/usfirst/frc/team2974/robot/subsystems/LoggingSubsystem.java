@@ -12,7 +12,7 @@ import org.usfirst.frc.team2974.robot.commands.UpdateFiltration;
 
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-
+// imports
 
 public class LoggingSubsystem extends Subsystem {
 	
@@ -33,7 +33,7 @@ public class LoggingSubsystem extends Subsystem {
 		SmartDashboard.putString("Debug", "true");
 
 		SmartDashboard.putString("Audit", "true");
-
+// put strings on smart dashboard
 	}
 
 	public static void changeLogPassthrough() {
@@ -63,6 +63,9 @@ public class LoggingSubsystem extends Subsystem {
 			severityFilter.Passthrough(Severity.AUDIT);
 		}
 	}
+	/** booleans represented by strings
+	 * determine what gets writtn to file
+	 */
 
 	public void establishLogging() {
 		System.out.println("Creating filters");
@@ -80,6 +83,7 @@ public class LoggingSubsystem extends Subsystem {
 		threadFilter.attach(fileSeverityFilter);
 		fileSeverityFilter.attach(fileSink);
 		severityFilter.attach(dashboardSink);
+		// asssembles logging system
 		
 		// SET YOUR FILE HERE
 		// fileSink.setPath("/home/lvuser/FileDump.txt");
