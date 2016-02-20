@@ -28,10 +28,11 @@ public class Compass extends Subsystem {
 		}
     }
     /**
-     * 
+     * left increase
+     * right decrease
      * @return yaw (turn)
      */
-    public double getHeading1()
+    public double getYaw()
     {
     	try {
 			return compass.getQuaternion()[0];
@@ -42,10 +43,12 @@ public class Compass extends Subsystem {
     	return 0;
     }
     /**
-     * 
+     * p.s. i dont care
+     * down positive
+     * up negative
      * @return pitch
      */
-    public double getHeading2()
+    public double getPitch()
     {
     	try {
 			return compass.getQuaternion()[1];
@@ -56,10 +59,10 @@ public class Compass extends Subsystem {
     	return 0;
     }
     /**
-     * 
+     * i dont care
      * @return roll
      */
-    public double getHeading3()
+    public double getroll()
     {
     	try {
 			return compass.getQuaternion()[2];
