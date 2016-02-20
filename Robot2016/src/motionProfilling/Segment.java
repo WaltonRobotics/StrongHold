@@ -1,5 +1,7 @@
 package motionProfilling;
 
+// TFS: I don't see the point of this class... it just gets in the way!
+
 public class Segment {
 	private Trajectory trajectory;
 

@@ -15,6 +15,7 @@ import org.usfirst.frc.team2974.logging.filters.SeverityFilter;
 import org.usfirst.frc.team2974.logging.filters.ThreadFilter;
 import org.usfirst.frc.team2974.logging.messages.LogMessage;
 import org.usfirst.frc.team2974.robot.commands.ShowInputs;
+import org.usfirst.frc.team2974.robot.commands.UpdateFiltration;
 import org.usfirst.frc.team2974.robot.subsystems.*;
 
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
@@ -29,14 +30,8 @@ public class Robot extends IterativeRobot {
 	public static Arm arm;
 	public static Inputs inputs;
     Command autonomousCommand;
-    
-	SendableChooser chooserAUDIT;
-	SendableChooser chooserDEBUG;
-	SendableChooser chooserWARNING;
-	SendableChooser chooserERROR;
-	SendableChooser chooserINFORMATION;
 	
-	SeverityFilter severityFilter;
+	static SeverityFilter severityFilter;
    // SendableChooser chooser;
 
     /**
@@ -61,48 +56,43 @@ public class Robot extends IterativeRobot {
     }
     
 	public void establishLoggingChooser() {
-		chooserINFORMATION = new SendableChooser();
-		SmartDashboard.putData("INFORMATION", chooserINFORMATION);
+		SmartDashboard.putString("Information", "true");
 
-		chooserERROR = new SendableChooser();
-		SmartDashboard.putData("ERROR", chooserERROR);
+		SmartDashboard.putString("Error", "true");
+	
+		SmartDashboard.putString("Warning", "true");
 
-		chooserWARNING = new SendableChooser();
-		SmartDashboard.putData("WARNING", chooserWARNING);
+		SmartDashboard.putString("Debug", "true");
 
-		chooserDEBUG = new SendableChooser();
-		SmartDashboard.putData("DEBUG", chooserDEBUG);
-
-		chooserAUDIT = new SendableChooser();
-		SmartDashboard.putData("AUDIT", chooserAUDIT);
+		SmartDashboard.putString("Audit", "true");
 
 	}
 
-	public void changeLogPassthrough() {
-		if (chooserAUDIT.equals(true)){
-			severityFilter.stopPassthrough(Severity.AUDIT);
+	public static void changeLogPassthrough() {
+		if (SmartDashboard.getString("Information") == "true"){
+			severityFilter.stopPassthrough(Severity.INFORMATION);
 		}else{
-			severityFilter.Passthrough(Severity.AUDIT);
+			severityFilter.Passthrough(Severity.INFORMATION);
 		}
-		if (chooserDEBUG.equals(true)){
-			severityFilter.stopPassthrough(Severity.DEBUG);
-		}else{
-			severityFilter.Passthrough(Severity.DEBUG);
-		}
-		if (chooserWARNING.equals(true)){
-			severityFilter.stopPassthrough(Severity.WARNING);
-		}else{
-			severityFilter.Passthrough(Severity.WARNING);
-		}
-		if (chooserERROR.equals(true)){
+		if (SmartDashboard.getString("Error") == "true"){
 			severityFilter.stopPassthrough(Severity.ERROR);
 		}else{
 			severityFilter.Passthrough(Severity.ERROR);
 		}
-		if (chooserINFORMATION.equals(true)){
-			severityFilter.stopPassthrough(Severity.INFORMATION);
+		if (SmartDashboard.getString("Warning") == "true"){
+			severityFilter.stopPassthrough(Severity.WARNING);
 		}else{
-			severityFilter.Passthrough(Severity.INFORMATION);
+			severityFilter.Passthrough(Severity.WARNING);
+		}
+		if (SmartDashboard.getString("Debug") == "true"){
+			severityFilter.stopPassthrough(Severity.DEBUG);
+		}else{
+			severityFilter.Passthrough(Severity.DEBUG);
+		}
+		if (SmartDashboard.getString("Audit") == "true"){
+			severityFilter.stopPassthrough(Severity.AUDIT);
+		}else{
+			severityFilter.Passthrough(Severity.AUDIT);
 		}
 	}
 
@@ -123,7 +113,6 @@ public class Robot extends IterativeRobot {
 		fileSeverityFilter.attach(fileSink);
 		severityFilter.attach(dashboardSink);
 		
-
 		// SET YOUR FILE HERE
 		// fileSink.setPath("/home/lvuser/FileDump.txt");
 		fileSink.setPath("FileDump.txt");
@@ -137,6 +126,7 @@ public class Robot extends IterativeRobot {
 				"Took longer to reach up than expected.", 86));
 		Log.instance().logCall(new LogMessage(Severity.WARNING, SubSystem.SHOOTER, "Shoot", "Stuck in loop.", 99));
 		// End test messages
+		SmartDashboard.putData("update", new UpdateFiltration());
 	}
 	
 	/**
