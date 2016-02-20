@@ -6,13 +6,16 @@ public class LinearRegression {
 	double a;
 	double b;
 	double r;
+	double Qa;
+	double Qb;
+	double Qc;
 	
 	/**
 	 * The math didn't work, but here's a new formula that might:
 	 * m = r * standard deviation of y / standard deviation of x
 	 * where r is the correlation coeficcient
 	 * 
-	 * the intercapt (b)
+	 * the intercept (b)
 	 * b = avgY - m(avgX)
 	 * 
 	 * standard deviation = (sum(x-avgX)^2)/n
@@ -51,9 +54,13 @@ public class LinearRegression {
 		sy = Math.sqrt(sumErrorYY/ dataPoints.size());
 		a = r * sy / sx;
 		b = avgY - (a * avgX);
-		System.out.println("sumX = " + sumX + ", sumY = " + sumY+ ", avgX = " +avgX+ ", avgY = " +avgY+ ", sumErrorXY = " +sumErrorXY+ ", sumErrorXX = " +sumErrorXX+ ", sumErrorYY = " +sumErrorYY+ ", sx = " +sx+ ", sy =" +sy);
+//		Qa = a * a;
+//		Qb = 2 * a * b;
+//		Qc = b * b;
 		
-/**
+		//System.out.println("sumX = " + sumX + ", sumY = " + sumY+ ", avgX = " +avgX+ ", avgY = " +avgY+ ", sumErrorXY = " +sumErrorXY+ ", sumErrorXX = " +sumErrorXX+ ", sumErrorYY = " +sumErrorYY+ ", sx = " +sx+ ", sy =" +sy);
+		
+/*
  * 		double X = 0, XX = 0, Y = 0, XY = 0, avgX = 0, avgY = 0;
 		for (PointValue currentValue : dataPoints) {
 			X += currentValue.getX();

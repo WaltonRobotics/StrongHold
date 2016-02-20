@@ -2,27 +2,32 @@ package org.usfirst.frc.team2974.diagnostics.dataGatherers;
 
 import java.util.Stack;
 
+import org.usfirst.frc.team2974.diagnostics.DataGatherer;
 import org.usfirst.frc.team2974.diagnostics.DiagnosticDataTypeList;
 import org.usfirst.frc.team2974.diagnostics.messageObjects.VelocityData;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
-public class VelosityGatherer {
+public class VelosityGatherer extends DataGatherer{
+	double rightPercentDifference;
+	double leftPercentDifference;
 	Stack<VelocityData> velocityList = new Stack<VelocityData>();
-	public void processDataElement(DiagnosticDataTypeList type, VelocityData object) {
-		double leftPercentDifference = (object.getPredictedLeftVelocity() - object.getTrueLeftVelocity())/object.getPredictedLeftVelocity();
-		double rightPercentDifference = (object.getPredictedRightVelocity() - object.getTrueRightVelocity())/object.getPredictedRightVelocity();
+	public void processDataElement(DiagnosticDataTypeList type, Object object) {
+		leftPercentDifference = (((VelocityData) object).getPredictedLeftVelocity() - ((VelocityData) object).getTrueLeftVelocity())
+				/((VelocityData) object).getPredictedLeftVelocity();
+		rightPercentDifference = (((VelocityData) object).getPredictedRightVelocity() - ((VelocityData) object).getTrueRightVelocity())
+				/((VelocityData) object).getPredictedRightVelocity();
 		
 		
 		
-		velocityList.push(object);
-		updateDashboard(leftPercentDifference ,rightPercentDifference);
+		velocityList.push((VelocityData) object);
+		updateDashboard();
 	}
 
 			
-	public void updateDashboard(double leftPercentError, double rightPercentError) {
-		SmartDashboard.putNumber("leftPercentError", leftPercentError);
-		SmartDashboard.putNumber("rightPercentError", rightPercentError);
+	public void updateDashboard() {
+		SmartDashboard.putNumber("leftPercentError", leftPercentDifference);
+		SmartDashboard.putNumber("rightPercentError", rightPercentDifference);
 	}
 
 	public boolean IsDataElementHandle(DiagnosticDataTypeList type) {
