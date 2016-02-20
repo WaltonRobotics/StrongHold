@@ -48,6 +48,15 @@ public class State {
 	}
 
 	private double distanceRight;
+	
+	// TFS: I would remove the trajectory from the state and have the MotionController 
+	// handle it directly. You should be able to just store the current trajectory, and
+	// create them on demand. As you create them, they can be initialized with the final
+	// values from the previous one. You could make a method here that would replace the
+	// Segment class, creating and returning a trajectory based on the State definition.
+	// It would need either the last trajectory or the information from it definining the
+	// current time/distance left/distance right.
+	
 	//trajectory from this state to next one
 	private Trajectory trajectory;
 	/**
@@ -107,10 +116,17 @@ public class State {
 	 * @return direction, -1 if no direction has been specified 
 	 */
 	public double getDirection() {
+		// TFS: Can the be handled by the setter instead... that way
+		// you know theta is always valid according to the definition here! 
+		// (unless it's uninitialized at -1, which becomes a test you can
+		// rely on!)
 		while(theta>=360)
 			theta-=360;
 		while(theta<0)
 			theta+=360;
+		
+		// TFS: Is this here to get round issues with calculating tangents? 
+		// or is it test code? 
 		if(theta==90)
 			theta = 90.5;
 		if(theta == 270)

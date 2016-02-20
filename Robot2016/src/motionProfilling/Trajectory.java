@@ -26,6 +26,7 @@ public class Trajectory extends java.util.ArrayList<Position> {
 	}
 	private void generatePositions(TrajectorySpline tr) {
 		for (MathPosition mp: tr) {
+			// TFS: This would be better as a constructor on Position which takes an MathPosition as a parameter
 			Position p = new Position();
 			p.s = mp.s;
 			p.curvature = mp.curvature;
@@ -77,6 +78,7 @@ public class Trajectory extends java.util.ArrayList<Position> {
 	}
 	private void setTotalDistances()
 	{
+		// TFS: Could put into same loop?
 		double distanceLeft = start.getDistanceLeft();
 		for(int i=0; i<size();i++)
 		{
@@ -148,6 +150,10 @@ public class Trajectory extends java.util.ArrayList<Position> {
 		return Math.pow(a*a+b*b,.5);
 	}
 
+	// TFS: Why are these here? Does setTotals not calculate the same stuff? It would be more
+	// efficient to use cached values rather than recalculate each time
+	// these methods are called?
+	
 	/**
 	 * @return the total time this trajectory will take
 	 */

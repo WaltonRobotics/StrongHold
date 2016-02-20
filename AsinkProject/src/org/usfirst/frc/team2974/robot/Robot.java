@@ -34,6 +34,14 @@ public class Robot extends IterativeRobot {
 
 	public static final ExampleSubsystem exampleSubsystem = new ExampleSubsystem();
 	public static OI oi;
+	
+	SendableChooser chooserAUDIT;
+	SendableChooser chooserDEBUG;
+	SendableChooser chooserWARNING;
+	SendableChooser chooserERROR;
+	SendableChooser chooserINFORMATION;
+	
+	SeverityFilter severityFilter;
 
 	Command autonomousCommand;
 	SendableChooser chooser;
@@ -56,40 +64,67 @@ public class Robot extends IterativeRobot {
 	}
 
 	public void establishLoggingChooser() {
-		SendableChooser chooserInformation = new SendableChooser();
-		SmartDashboard.putData("Information", chooserInformation);
+		chooserINFORMATION = new SendableChooser();
+		SmartDashboard.putData("INFORMATION", chooserINFORMATION);
 
-		SendableChooser chooserERROR = new SendableChooser();
+		chooserERROR = new SendableChooser();
 		SmartDashboard.putData("ERROR", chooserERROR);
 
-		SendableChooser chooserWARNING = new SendableChooser();
+		chooserWARNING = new SendableChooser();
 		SmartDashboard.putData("WARNING", chooserWARNING);
 
-		SendableChooser chooserDEBUG = new SendableChooser();
+		chooserDEBUG = new SendableChooser();
 		SmartDashboard.putData("DEBUG", chooserDEBUG);
 
-		SendableChooser chooserAUDIT = new SendableChooser();
+		chooserAUDIT = new SendableChooser();
 		SmartDashboard.putData("AUDIT", chooserAUDIT);
 
 	}
-
 	public void changeLogPassthrough() {
-		//if (chooserWARNING.equals)
+		if (chooserAUDIT.equals(true)){
+			severityFilter.stopPassthrough(Severity.AUDIT);
+		}else{
+			severityFilter.Passthrough(Severity.AUDIT);
+		}
+		if (chooserDEBUG.equals(true)){
+			severityFilter.stopPassthrough(Severity.DEBUG);
+		}else{
+			severityFilter.Passthrough(Severity.DEBUG);
+		}
+		if (chooserWARNING.equals(true)){
+			severityFilter.stopPassthrough(Severity.WARNING);
+		}else{
+			severityFilter.Passthrough(Severity.WARNING);
+		}
+		if (chooserERROR.equals(true)){
+			severityFilter.stopPassthrough(Severity.ERROR);
+		}else{
+			severityFilter.Passthrough(Severity.ERROR);
+		}
+		if (chooserINFORMATION.equals(true)){
+			severityFilter.stopPassthrough(Severity.INFORMATION);
+		}else{
+			severityFilter.Passthrough(Severity.INFORMATION);
+		}
 	}
-
+  
 	public void establishLogging() {
 		System.out.println("Creating filters");
+		
+		severityFilter = new SeverityFilter();
 
 		ThreadFilter threadFilter = new ThreadFilter();
-		SeverityFilter severityFilter = new SeverityFilter();
+		SeverityFilter fileSeverityFilter = new SeverityFilter();
 		FileSink fileSink = new FileSink();
 		DashboardSink dashboardSink = new DashboardSink();
 
-		severityFilter.Passthrough(Severity.ERROR);
+		fileSeverityFilter.Passthrough(Severity.ERROR);
 		Log.instance().attach(threadFilter);
-		Log.instance().attach(dashboardSink);
-		threadFilter.attach(severityFilter);
-		severityFilter.attach(fileSink);
+		Log.instance().attach(severityFilter);
+		threadFilter.attach(fileSeverityFilter);
+		fileSeverityFilter.attach(fileSink);
+		severityFilter.attach(dashboardSink);
+		
 
 		// SET YOUR FILE HERE
 		// fileSink.setPath("/home/lvuser/FileDump.txt");

@@ -12,10 +12,10 @@ public void attach(LogSink logSink){//Push LogSink to the ArrayList of LogSinks
 public void detach(LogSink logSink){//Remove LongSink from the ArrayList of LogSinks
 	 logSinks.remove(logSink);
 }
-public void LogPostFilter(LogMessage message){
+public void logPostFilter(LogMessage message){
 	//Iterate over logSinks and call LogCall in each object
 	for(LogSink logSinkIterator : logSinks){
-		logSinkIterator.LogCall(message);
+		logSinkIterator.logCall(message);
 	}
 }
 }

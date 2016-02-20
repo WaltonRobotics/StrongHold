@@ -1,5 +1,10 @@
 package motionProfilling;
 
+// TFS: An accepted practice for writing  a data class like this is to make all the attributes
+// public final doubles and set the values in a constructor. (That's allowed!) 
+//
+// That way no-one can meddle with the values.
+
 /**
  * @author piyush
  * Mathematical position
