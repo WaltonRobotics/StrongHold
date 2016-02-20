@@ -15,7 +15,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 public class OI {
 	public Joystick left;
 	public Joystick right;
-	public Gamepad gamepad;
+	public Gamepad gamepad; // TFS: The Gamepad class is missing from github
 	public Button shiftUp;
 	public Button shiftDown;
 	public OI()

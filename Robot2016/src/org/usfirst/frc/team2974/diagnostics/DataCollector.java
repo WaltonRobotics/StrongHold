@@ -19,7 +19,7 @@ public class DataCollector{
 		}
 
 	}
-	public void ProcessDataElement(DiagnosticDataTypeList type, Object object){
+	public void ProcessDataElement(DiagnosticDataTypeList type, Object object){ // TFS: DiagnosticDataTypeList missing from github
 		for(DataGatherer iterator : dataList){
 			if(iterator.IsDataElementHandle(type)) {
 				iterator.processDataElement(type, object);
