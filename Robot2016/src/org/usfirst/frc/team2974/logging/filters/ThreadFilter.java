@@ -51,9 +51,4 @@ public class ThreadFilter extends LogFilter implements Runnable {
 //		return true;
 	}
 
-	/**
-	*
-	*
-	*
-	*/
 }

@@ -24,7 +24,6 @@ public class DataCollector{
 			if(iterator.IsDataElementHandle(type)) {
 				iterator.processDataElement(type, object);
 			}
-		
 		}
 	}
 }

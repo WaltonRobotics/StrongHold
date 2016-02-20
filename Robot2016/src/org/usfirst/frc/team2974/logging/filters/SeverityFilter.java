@@ -6,7 +6,7 @@ import org.usfirst.frc.team2974.logging.messages.LogMessage;
 
 public class SeverityFilter extends LogFilter {
 private ArrayList<Severity> severityList = new ArrayList<Severity>();
-	public void Passthrough (Severity pass){
+	public void Passthrough (Severity pass){//Two methods that choose what do and don't go through the filter
 		if (!severityList.contains(pass)){
 			severityList.add(pass);
 			}
@@ -18,7 +18,7 @@ private ArrayList<Severity> severityList = new ArrayList<Severity>();
 	}
 public boolean logCall(LogMessage message){
 		if (severityList.contains(message.getSeverity())) {
-			logPostFilter(message);
+			logPostFilter(message);//Call logPostFilter, which pushes the message down to the next level in the pipe
 			return true;
 		}
 		return false;
