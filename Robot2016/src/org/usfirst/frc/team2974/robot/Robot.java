@@ -14,7 +14,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 
 public class Robot extends IterativeRobot {
-
+	
 	public static OI oi;
 	public static DriveTrain driveTrain;
 	public static Arm arm;
@@ -25,7 +25,6 @@ public class Robot extends IterativeRobot {
 	public static Compass compass;
     Command autonomousCommand;
 
-	static SeverityFilter severityFilter;
    // SendableChooser chooser;
 
     /**
@@ -49,7 +48,7 @@ public class Robot extends IterativeRobot {
     	camera = new Camera();
     	compass = new Compass();
     }
-    
+
 	/**
      * This function is called once each time the robot enters Disabled mode.
      * You can use it to reset any subsystem information you want to clear when

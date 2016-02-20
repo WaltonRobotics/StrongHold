@@ -1,6 +1,7 @@
 package org.usfirst.frc.team2974.robot.commands;
 
 import org.usfirst.frc.team2974.robot.Robot;
+import org.usfirst.frc.team2974.robot.subsystems.LoggingSubsystem;
 
 import edu.wpi.first.wpilibj.command.Command;
 
@@ -16,7 +17,7 @@ public class UpdateFiltration extends Command {
 
     // Called just before this Command runs the first time
     protected void initialize() {
-    	//Robot.changeLogPassthrough();
+    	LoggingSubsystem.changeLogPassthrough();
     }
 
     // Called repeatedly when this Command is scheduled to run
