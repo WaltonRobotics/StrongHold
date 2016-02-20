@@ -8,11 +8,15 @@ public class TimeFilter extends LogFilter {
 private ArrayList<Severity> severityList;
 	public void Passthrough (Severity pass){
 		severityList.add(pass);
+		/* adds log filter to get time filter
+		 * adds severity list
+		 */
 	}
 public boolean logCall(LogMessage message){
 		if (severityList.contains(message.getTime())) {
 			logPostFilter(message);
 			return true;
+			// boolean returns message containing time 
 		}
 		return false;
 	}
