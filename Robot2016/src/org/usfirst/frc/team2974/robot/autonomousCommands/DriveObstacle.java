@@ -1,6 +1,10 @@
 package org.usfirst.frc.team2974.robot.autonomousCommands;
 
+import org.usfirst.frc.team2974.robot.Robot;
+
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  *
@@ -8,8 +12,8 @@ import edu.wpi.first.wpilibj.command.Command;
 public class DriveObstacle extends Command {
 
     public DriveObstacle() {
-        // Use requires() here to declare subsystem dependencies
-        // eg. requires(chassis);
+    	requires(Robot.driveTrain);
+    	requires(Robot.compass);
     }
 
     // Called just before this Command runs the first time
@@ -18,6 +22,12 @@ public class DriveObstacle extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
+    	SmartDashboard.putNumber("time", Timer.getFPGATimestamp());
+    	SmartDashboard.putNumber("heading1: " , Robot.compass.getHeading1());
+    	SmartDashboard.putNumber("heading2: " , Robot.compass.getHeading2());
+    	SmartDashboard.putNumber("heading3: " , Robot.compass.getHeading3());
+    	SmartDashboard.putNumber("heading4: " , Robot.compass.getHeading4());
+
     }
 
     // Make this return true when this Command no longer needs to run execute()

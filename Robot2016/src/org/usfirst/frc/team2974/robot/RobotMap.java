@@ -2,6 +2,8 @@ package org.usfirst.frc.team2974.robot;
 
 import edu.wpi.first.wpilibj.Encoder;
 
+import org.usfirst.frc.team2974.robot.sensors.BNO055;
+
 import edu.wpi.first.wpilibj.AnalogInput;
 import edu.wpi.first.wpilibj.CANTalon;
 import edu.wpi.first.wpilibj.DigitalInput;
@@ -55,6 +57,8 @@ public class RobotMap {
 	//arm
     public static CANTalon arm;
 	
+    //compass
+    public static BNO055 compass = new BNO055(BNO055.BNO055_ADDRESS_A);
     
     public static void init() {     
         //inputs
@@ -84,10 +88,10 @@ public class RobotMap {
         driveTrainBackLeft = new Talon(1);
         
         //arm
-        arm = new CANTalon(2);
+        arm = new CANTalon(0);
         
         //shifter
-        pnuematicsShifter = new Solenoid(0);
+        pnuematicsShifter = new Solenoid(4);
 
 
         //shooter
@@ -96,7 +100,7 @@ public class RobotMap {
         tensioner = new CANTalon(1);
         
         //intake
-        intakeMotor = new Talon(0);
+        intakeMotor = new Talon(4);
         intakeSolenoid = new Solenoid(3);
     }
 }
