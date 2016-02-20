@@ -1,9 +1,8 @@
 package org.usfirst.frc.team2974.logging.filters;
 
-//import java.util.Stack;
-//import java.util.concurrent.Semaphore;
-import org.usfirst.frc.team2974.logging.messages.LogMessage;
 import java.util.concurrent.ConcurrentLinkedQueue;
+
+import org.usfirst.frc.team2974.logging.LogMessage;
 
 public class ThreadFilter extends LogFilter implements Runnable {
 //	Stack<LogMessage> stackLogMessages = new Stack<LogMessage>();

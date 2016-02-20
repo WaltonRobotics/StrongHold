@@ -9,11 +9,11 @@ import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import org.usfirst.frc.team2974.logging.DashboardSink;
 import org.usfirst.frc.team2974.logging.FileSink;
 import org.usfirst.frc.team2974.logging.Log;
+import org.usfirst.frc.team2974.logging.LogMessage;
 import org.usfirst.frc.team2974.logging.enumerations.Severity;
 import org.usfirst.frc.team2974.logging.enumerations.SubSystem;
 import org.usfirst.frc.team2974.logging.filters.SeverityFilter;
 import org.usfirst.frc.team2974.logging.filters.ThreadFilter;
-import org.usfirst.frc.team2974.logging.messages.LogMessage;
 import org.usfirst.frc.team2974.robot.commands.ShowInputs;
 import org.usfirst.frc.team2974.robot.commands.UpdateFiltration;
 import org.usfirst.frc.team2974.robot.subsystems.*;
@@ -24,13 +24,14 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class Robot extends IterativeRobot {
 
-
 	public static OI oi;
 	public static DriveTrain driveTrain;
 	public static Arm arm;
 	public static Inputs inputs;
+	public static Shooter shooter;
+	public static Intake intake;
     Command autonomousCommand;
-	
+
 	static SeverityFilter severityFilter;
    // SendableChooser chooser;
 
@@ -49,6 +50,8 @@ public class Robot extends IterativeRobot {
     	driveTrain = new DriveTrain();
     	inputs = new Inputs();
     	arm = new Arm();
+    	shooter = new Shooter();
+    	intake = new Intake();
     	oi = new OI();
     	
     	establishLoggingChooser();
@@ -128,7 +131,6 @@ public class Robot extends IterativeRobot {
 		// End test messages
 		SmartDashboard.putData("update", new UpdateFiltration());
 	}
-	
 	/**
      * This function is called once each time the robot enters Disabled mode.
      * You can use it to reset any subsystem information you want to clear when

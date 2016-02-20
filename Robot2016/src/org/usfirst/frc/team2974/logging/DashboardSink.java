@@ -1,6 +1,5 @@
 package org.usfirst.frc.team2974.logging;
 import org.usfirst.frc.team2974.logging.filters.LogFilter;
-import org.usfirst.frc.team2974.logging.messages.LogMessage;
 import org.usfirst.frc.team2974.robot.Robot;
 
 import edu.wpi.first.wpilibj.DriverStation;

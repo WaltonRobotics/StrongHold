@@ -18,6 +18,11 @@ public class OI {
 	public Gamepad gamepad; // TFS: The Gamepad class is missing from github
 	public Button shiftUp;
 	public Button shiftDown;
+	public Button intake;
+	public Button outtake;
+	public Button shoot;
+	public Button ballMoveIn;
+	public Button ballRelease;
 	public OI()
 	{
 		SmartDashboard.putData(new DriveSpline());
@@ -27,7 +32,11 @@ public class OI {
 		
 		shiftUp = new JoystickButton (left,3);
 		shiftDown = new JoystickButton (left,2);
-		
+		intake = new JoystickButton(left, 4);
+		outtake = new JoystickButton(left,5);
+		shoot = new JoystickButton(left, 6);
+		ballMoveIn = new JoystickButton(left,1);
+		ballRelease = new JoystickButton(left, 7);
 	}
 
 }

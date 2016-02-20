@@ -1,8 +1,8 @@
 package org.usfirst.frc.team2974.logging.filters;
 import java.util.ArrayList;
 
+import org.usfirst.frc.team2974.logging.LogMessage;
 import org.usfirst.frc.team2974.logging.LogSink;
-import org.usfirst.frc.team2974.logging.messages.LogMessage;
 
 public abstract class LogFilter implements LogSink{
 	private ArrayList<LogSink> logSinks = new ArrayList<LogSink>();

@@ -6,7 +6,6 @@ import java.io.IOException;
 import java.time.LocalDateTime;
 
 import org.usfirst.frc.team2974.logging.filters.LogFilter;
-import org.usfirst.frc.team2974.logging.messages.LogMessage;
 
 public class FileSink extends LogFilter {
 	String path;

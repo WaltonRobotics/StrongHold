@@ -1,10 +1,6 @@
-package org.usfirst.frc.team2974.diagnostics.dataGatherers;
+package org.usfirst.frc.team2974.diagnostics;
 
 import java.util.Stack;
-
-import org.usfirst.frc.team2974.diagnostics.DataGatherer;
-import org.usfirst.frc.team2974.diagnostics.DiagnosticDataTypeList;
-import org.usfirst.frc.team2974.diagnostics.messageObjects.VelocityData;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
