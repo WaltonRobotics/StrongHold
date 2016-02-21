@@ -567,7 +567,7 @@ public class BNO055 {
 	 *            I2C address of chip
 	 */
 	public BNO055(I2C.Port port, int address) {
-		bno055 = new I2C(I2C.Port.kOnboard, address);
+		bno055 = new I2C(port, address);
 	}
 
 	/**

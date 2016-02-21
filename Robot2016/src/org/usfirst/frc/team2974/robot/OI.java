@@ -23,6 +23,7 @@ public class OI {
 	public Button shoot;
 	public Button ballMoveIn;
 	public Button ballRelease;
+	public Button aim;
 	public OI()
 	{
 		SmartDashboard.putData(new DriveSpline());
@@ -37,6 +38,7 @@ public class OI {
 		shoot = new JoystickButton(left, 6);
 		ballMoveIn = new JoystickButton(left,1);
 		ballRelease = new JoystickButton(left, 7);
+		aim = new JoystickButton(right, 0);
 	}
 
 }
