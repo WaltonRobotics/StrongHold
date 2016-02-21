@@ -26,7 +26,13 @@ public class Position {
 	public double x;
 	public double y;
 	
-	
+	public Position(MathPosition mp)
+	{
+		this.s = mp.s;
+		this.curvature = mp.curvature;
+		this.x = mp.x;
+		this.y = mp.y;
+	}
 	public double getDeltaLengthLeft() {
 		return (1 - MotionControl.Robot_Width / 2 * curvature) * deltaLength;
 		

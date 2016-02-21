@@ -173,7 +173,14 @@ public class MotionControl {
 			
 			// TFS: I'm not sure what you are doing here, but it's never a good
 			// idea to do == on a floating point number, as rounding errors make
-			// it unlikely the value will be exactly zero.
+			// it unlikely the value will be exactly zero. 
+			
+			//PGK: This is because 0 and 360 are the same direction
+			// I made it so that if the getDirection() is 360, it would return 0
+			//but if the other angle is on the farther side of the unit circle, the 360 is
+			//more useful for calculation purposes
+			//this value is usually set by user, so it has a high likelihood of being zero
+			
 			if (direction1 == 0 || direction2 == 0)
 				if (direction2 >= 180)
 					direction1 = 360;
@@ -192,14 +199,8 @@ public class MotionControl {
 		double x2 = state2.getX();
 		double y2 = state2.getY();
 		
-		//  TFS: If you want to calculate a arctangent from a dX and dY, use atan2... much easier and safer!
-		if (x2 >= x1 && y2 >= y1) {
-			return Math.atan((y2 - y1) / (x2 - x1));
-		}
-		if (x2 < x1 && y2 < y1) {
-			return Math.atan((y2 - y1) / (x2 - x1));
-		}
-		return Math.atan((x2 - x1) / (y2 - y1));
+		return Math.atan2((y2 - y1), (x2 - x1));
+		
 	}
 
 }

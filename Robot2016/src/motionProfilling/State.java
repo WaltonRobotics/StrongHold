@@ -116,17 +116,12 @@ public class State {
 	 * @return direction, -1 if no direction has been specified 
 	 */
 	public double getDirection() {
-		// TFS: Can the be handled by the setter instead... that way
-		// you know theta is always valid according to the definition here! 
-		// (unless it's uninitialized at -1, which becomes a test you can
-		// rely on!)
-		while(theta>=360)
-			theta-=360;
-		while(theta<0)
-			theta+=360;
-		
+
 		// TFS: Is this here to get round issues with calculating tangents? 
 		// or is it test code? 
+		//
+		//PGK To get around issues - I use the slope of lines and when the angle 
+		//is 90 or 270, the slope is infinity!
 		if(theta==90)
 			theta = 90.5;
 		if(theta == 270)
@@ -136,6 +131,11 @@ public class State {
 	
 	public void setDirection(double theta)
 	{
+		while(theta>=360)
+			theta-=360;
+		while(theta<0)
+			theta+=360;
+		
 		this.theta = theta;
 	}
 	

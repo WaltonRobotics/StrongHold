@@ -1,4 +1,4 @@
-package org.usfirst.frc.team2974.robot.autonomousCommands;
+package org.usfirst.frc.team2974.robot.commands;
 
 import org.usfirst.frc.team2974.robot.Robot;
 import org.usfirst.frc.team2974.robot.subsystems.DriveTrain;
@@ -8,12 +8,14 @@ import edu.wpi.first.wpilibj.command.Command;
 /**
  *
  */
-public class DriveObstacle extends Command {
-	DriveTrain drivetrain = Robot.driveTrain;
+public class Aim extends Command {
 	
-    public DriveObstacle() {
-    	requires(drivetrain);
-    	
+	DriveTrain drivetrain = Robot.driveTrain;
+    
+	public Aim() {
+        requires(drivetrain);
+        requires(Robot.camera);
+        requires(Robot.compass);
     }
 
     // Called just before this Command runs the first time

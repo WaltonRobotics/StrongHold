@@ -84,7 +84,7 @@ public class RobotMap {
         driveTrainBackLeft = new Talon(1);
         
         //arm
-        arm = new CANTalon(2);
+        arm = new CANTalon(3);
         
         //shifter
         pnuematicsShifter = new Solenoid(0);
@@ -96,7 +96,7 @@ public class RobotMap {
         tensioner = new CANTalon(1);
         
         //intake
-        intakeMotor = new Talon(0);
+        intakeMotor = new Talon(4);
         intakeSolenoid = new Solenoid(3);
     }
 }
