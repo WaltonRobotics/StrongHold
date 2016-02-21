@@ -12,7 +12,7 @@ import edu.wpi.first.wpilibj.command.Command;
 public class Aim extends Command {
 	private DriveTrain driveTrain = Robot.driveTrain;
 	private Camera camera = Robot.camera;
-	private final double threshold = 10; 
+	private final double threshold = 20; 
 	private double speed = .1;
 	private final double centerX = 200;
     public Aim() {

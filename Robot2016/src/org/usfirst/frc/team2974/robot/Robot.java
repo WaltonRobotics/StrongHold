@@ -55,10 +55,10 @@ public class Robot extends IterativeRobot {
 	 * the robot is disabled.
      */
     public void disabledInit(){
+    	Scheduler.getInstance().add(new ShowInputs());
     }
 	
 	public void disabledPeriodic() {
-		Scheduler.getInstance().add(new ShowInputs());
 		Scheduler.getInstance().run();
 	}
 
@@ -72,6 +72,7 @@ public class Robot extends IterativeRobot {
 	 * or additional comparisons to the switch structure below with additional strings & commands.
 	 */
     public void autonomousInit() {
+    	Scheduler.getInstance().add(new ShowInputs());
     }
 
     /**
@@ -90,7 +91,7 @@ public class Robot extends IterativeRobot {
      */
     public void teleopPeriodic() {
         Scheduler.getInstance().add(new ShowInputs());
-        Scheduler.getInstance().add(new DriveObstacle());
+        //Scheduler.getInstance().add(new DriveObstacle());
         Scheduler.getInstance().run();
     }
     
@@ -99,5 +100,6 @@ public class Robot extends IterativeRobot {
      */
     public void testPeriodic() {
         LiveWindow.run();
+        Scheduler.getInstance().add(new ShowInputs());
     }
 }
