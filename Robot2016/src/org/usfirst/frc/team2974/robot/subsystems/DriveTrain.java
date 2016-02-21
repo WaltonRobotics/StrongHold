@@ -27,12 +27,18 @@ public class DriveTrain extends Subsystem {
 	
 	Solenoid shifter = RobotMap.pnuematicsShifter;
 	
+	public PIDControllerAccel leftController;
+	public PIDControllerAccel rightController;
+	
 	public final double distancePerPulse  = .000515417;
+	
 	private class SharedDrive implements PIDOutput
 	{
 		SpeedController one;
 		SpeedController two;
+		
 		Boolean isLeft;
+		
 		public SharedDrive(SpeedController one, SpeedController two, boolean isLeft)
 		{
 			this.isLeft = isLeft;
@@ -42,15 +48,14 @@ public class DriveTrain extends Subsystem {
 		@Override
 		public void pidWrite(double out)
 		{
-			if(!isLeft)out*=-1;
-			System.out.println("pid write"+out);
+			if(!isLeft)
+				out*=-1;
+			
 			one.set(out);
 			two.set(out);
 		}
 	}
-	public PIDControllerAccel leftController = new PIDControllerAccel(1, 0, 0,1, RobotMap.encoderLeft,  new SharedDrive(backLeft, frontLeft,true),1,0);
-	public PIDControllerAccel rightController = new PIDControllerAccel(1, 0, 0,1, RobotMap.encoderRight,  new SharedDrive(backRight, frontRight,false),1,0);
-
+	
 	public DriveTrain()
 	{
 		//128 pluses per revolution
@@ -60,14 +65,15 @@ public class DriveTrain extends Subsystem {
 		//60 wheel
 		//.21*pi/(128*3*60/18) = distance per pulse
 		resetEncoders();
+		
 		encoderLeft.setDistancePerPulse(distancePerPulse);
 		encoderRight.setDistancePerPulse(distancePerPulse);
+		
 		encoderLeft.setPIDSourceType(PIDSourceType.kDisplacement);
 		encoderRight.setPIDSourceType(PIDSourceType.kDisplacement);
 		
-
-		
-
+		leftController = new PIDControllerAccel(1, 0, 0,1, RobotMap.encoderLeft,  new SharedDrive(backLeft, frontLeft,true),1,0);
+		rightController = new PIDControllerAccel(1, 0, 0,1, RobotMap.encoderRight,  new SharedDrive(backRight, frontRight,false),1,0);
 	}
     public void initDefaultCommand() {
         setDefaultCommand(new Drive());

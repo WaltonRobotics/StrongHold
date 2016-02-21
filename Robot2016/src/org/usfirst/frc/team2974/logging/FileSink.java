@@ -6,7 +6,6 @@ import java.io.IOException;
 import java.time.LocalDateTime;
 
 import org.usfirst.frc.team2974.logging.filters.LogFilter;
-import org.usfirst.frc.team2974.logging.messages.LogMessage;
 
 public class FileSink extends LogFilter {
 	String path;
@@ -40,11 +39,11 @@ public class FileSink extends LogFilter {
 
 	public void setPath(String path) {
 		if (new File("/media/sda1").exists()) {
-			this.path = "/media/sda1/" + LocalDateTime.now().getMonth() + "day" + LocalDateTime.now().getDayOfMonth() + 
-					"at" + LocalDateTime.now().getHour() + "minuete" + LocalDateTime.now().getMinute() + path;
+			this.path = "/media/sda1/" + LocalDateTime.now().getMonth() + "day" + LocalDateTime.now().getDayOfMonth()
+					+ "atHour" + LocalDateTime.now().getHour() + "minuete" + LocalDateTime.now().getMinute() + path;
 		} else if (new File("/media/sda2").exists()) {
-			this.path = "/media/sda2/" + LocalDateTime.now().getMonth() + "day" + LocalDateTime.now().getDayOfMonth() +
-					"at" + LocalDateTime.now().getHour() + "minuete" + LocalDateTime.now().getMinute() + path;
+			this.path = "/media/sda2/" + LocalDateTime.now().getMonth() + "day" + LocalDateTime.now().getDayOfMonth()
+					+ "atHour" + LocalDateTime.now().getHour() + "minuete" + LocalDateTime.now().getMinute() + path;
 		} else {
 			System.out.println("sda1 and sda2 don't exist, therefore, the logging system is broken.");
 		}

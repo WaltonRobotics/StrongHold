@@ -40,16 +40,8 @@ public class Spline {
 		double deltaS = 1.0/(MotionControl.numPoints-1);
 		for (int i=0; i<MotionControl.numPoints; i++) {
 			double s = deltaS*i;
-			MathPosition p = new MathPosition();
-			p.s = s;
-			p.curvature =getK(s);
-			p.dYds = getdYds(s);
-			p.dXds = getdXds(s);
-			p.d2Yds2 = getd2Yds(s);
-			p.d2Xds2 = getd2Xds(s) ;
-			p.x = getX(s);
-			p.y = getY(s);
-			trajectory.add(p);
+			MathPosition mp = new MathPosition(s, getK(s), getX(s), getY(s), getdXds(s), getdYds(s), getd2Xds2(s), getd2Yds2(s));
+			trajectory.add(mp);
 		}
 	}
 	public void dumpPositions()
@@ -175,7 +167,7 @@ public class Spline {
 	{
 		return 6 * s * x;
 	}
-	private double getd2Xds(double s) {
+	private double getd2Xds2(double s) {
 		double a = d2Ads2(s, start.getX());
 		double b = d2Bds2(s, point1.getX());
 		double c = d2Cds2(s, point2.getX());
@@ -183,7 +175,7 @@ public class Spline {
 		return a + b + c + d;
 	}
 
-	private double getd2Yds(double s) {
+	private double getd2Yds2(double s) {
 		double a = d2Ads2(s, start.getY());
 		double b = d2Bds2(s, point1.getY());
 		double c = d2Cds2(s, point2.getY());
@@ -192,7 +184,7 @@ public class Spline {
 	}
 
 	private double getK(double s) {
-		double numerator = getdXds(s) * getd2Yds(s) - getdYds(s) * getd2Xds(s);
+		double numerator = getdXds(s) * getd2Yds2(s) - getdYds(s) * getd2Xds2(s);
 		double denominator = getdXds(s) * getdXds(s) + getdYds(s) * getdYds(s);
 		return numerator / Math.pow(denominator, 1.5);
 	}

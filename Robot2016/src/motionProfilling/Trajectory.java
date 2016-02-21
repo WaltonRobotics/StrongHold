@@ -1,11 +1,11 @@
 package motionProfilling;
 
-import java.util.ArrayList;
-
-
 public class Trajectory extends java.util.ArrayList<Position> {
 	private State start;
 	private State end;
+	private double totalTime;
+	private double totalDistanceLeft;
+	private double totalDistanceRight;
 
 	/**
 	 * 
@@ -26,12 +26,7 @@ public class Trajectory extends java.util.ArrayList<Position> {
 	}
 	private void generatePositions(TrajectorySpline tr) {
 		for (MathPosition mp: tr) {
-			Position p = new Position();
-			p.s = mp.s;
-			p.curvature = mp.curvature;
-			p.x = mp.x;
-			p.y = mp.y;
-			add(p);
+			add(new Position(mp));
 		}
 		setDeltaDistances();
 		limitVelocity();
@@ -74,21 +69,22 @@ public class Trajectory extends java.util.ArrayList<Position> {
 			get(i).totalTime = time;
 			time += get(i).deltaTime;
 		}
+		totalTime = time;
 	}
 	private void setTotalDistances()
 	{
 		double distanceLeft = start.getDistanceLeft();
+		double distanceRight = start.getDistanceRight();
 		for(int i=0; i<size();i++)
 		{
 			get(i).totalDistanceLeft = distanceLeft;
 			distanceLeft += get(i).getDeltaLengthLeft();
-		}
-		double distanceRight = start.getDistanceRight();
-		for(int i=0; i<size();i++)
-		{
 			get(i).totalDistanceRight = distanceRight;
 			distanceRight += get(i).getDeltaLengthRight();
 		}
+		totalDistanceLeft = distanceLeft;
+		totalDistanceRight = distanceRight;
+
 	}
 	/**
 	 *  
@@ -147,14 +143,11 @@ public class Trajectory extends java.util.ArrayList<Position> {
 	{
 		return Math.pow(a*a+b*b,.5);
 	}
-
+	
 	/**
 	 * @return the total time this trajectory will take
 	 */
 	public double getTotalTime() {
-		double totalTime = 0;
-		for (int i = 0; i < size(); i++) 
-				totalTime += get(i).deltaTime;
 		return totalTime;
 	}
 
@@ -162,10 +155,6 @@ public class Trajectory extends java.util.ArrayList<Position> {
 	 * @return the total length the left side of the robot should travel during this tajectory
 	 */
 	public double getTotalDistanceLeft() {
-		double totalDistanceLeft =0;
-			for (int i = 0; i < size(); i++) 
-				totalDistanceLeft += get(i).getDeltaLengthLeft();
-
 		return totalDistanceLeft;
 	}
 
@@ -173,10 +162,6 @@ public class Trajectory extends java.util.ArrayList<Position> {
 	 * @return the total length the right side of the robot should travel during this trajectory
 	 */
 	public double getTotalDistanceRight() {
-		double totalDistanceRight = 0;
-			for (int i = 0; i < size(); i++) 
-				totalDistanceRight += get(i).getDeltaLengthRight();
-
 		return totalDistanceRight;
 	}
 
