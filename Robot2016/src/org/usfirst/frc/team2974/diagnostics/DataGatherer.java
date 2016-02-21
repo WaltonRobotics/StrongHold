@@ -1,6 +1,5 @@
 package org.usfirst.frc.team2974.diagnostics;
 
-import java.util.ArrayList;
 
 public abstract class DataGatherer {
 
