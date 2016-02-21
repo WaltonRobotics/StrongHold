@@ -7,7 +7,6 @@ import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 
 import org.usfirst.frc.team2974.robot.commands.Aim;
-import org.usfirst.frc.team2974.robot.autonomousCommands.DriveObstacle;
 import org.usfirst.frc.team2974.robot.commands.ShowInputs;
 import org.usfirst.frc.team2974.robot.subsystems.*;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -24,8 +23,6 @@ public class Robot extends IterativeRobot {
 	public static Camera camera;
 	public static Compass compass;
     Command autonomousCommand;
-
-   // SendableChooser chooser;
 
     /**
      * This function is run when the robot is first started up and should be
@@ -55,11 +52,12 @@ public class Robot extends IterativeRobot {
 	 * the robot is disabled.
      */
     public void disabledInit(){
-    	Scheduler.getInstance().add(new ShowInputs());
+    	
     }
 	
 	public void disabledPeriodic() {
 		Scheduler.getInstance().run();
+		Scheduler.getInstance().add(new ShowInputs());
 	}
 
 	/**
@@ -79,6 +77,7 @@ public class Robot extends IterativeRobot {
      * This function is called periodically during autonomous
      */
     public void autonomousPeriodic() {
+    	Scheduler.getInstance().run();
     }
 
     public void teleopInit() {
@@ -101,5 +100,6 @@ public class Robot extends IterativeRobot {
     public void testPeriodic() {
         LiveWindow.run();
         Scheduler.getInstance().add(new ShowInputs());
+        Scheduler.getInstance().run();
     }
 }

@@ -16,9 +16,12 @@ public class Shooter extends Subsystem {
 	Solenoid latch = RobotMap.latch;
 	CANTalon tensioner = RobotMap.tensioner;
 	Encoder encoder = RobotMap.encoderShooter;
+	
 	private final double maxTensionerPower = 0.25;
 	private final double holdTensionerPower = .125;
+	
 	private TensionerState state; 
+	
 	private final double ForwardThreshold = .1;
 	private final double ReverseThreshold = .1;
 	private final double ForwardLimit = 10;
@@ -46,15 +49,13 @@ public class Shooter extends Subsystem {
     public void unlatch(){
     	latch.set(false);
     }
-//    public void reset(double on){
-//    	reset.set(on);	
-//    }
+
     public void tension(){
     	tensioner.set(maxTensionerPower);
     	state = TensionerState.tensioning;
     }
     public void unload(){
-    	tensioner.set(- maxTensionerPower);
+    	tensioner.set( -maxTensionerPower);
     	state = TensionerState.untensioning;
     }
     public void setZero(){
@@ -71,7 +72,7 @@ public class Shooter extends Subsystem {
     	if(encoder.get() + ForwardThreshold > ForwardLimit){
     		state = TensionerState.tensioned;
     	}
-    	if(encoder.get() + ReverseThreshold > ReverseLimit){
+    	if(encoder.get() - ReverseThreshold < ReverseLimit){
     		state = TensionerState.untensioned;
     	}
     	return state;

@@ -35,10 +35,8 @@ public class RobotMap {
     public static AnalogInput analog3;
 
     //drive train
-	public static Talon driveTrainFrontRight;
-    public static Talon driveTrainBackRight;
-    public static Talon driveTrainFrontLeft;
-    public static Talon driveTrainBackLeft;
+	public static Talon driveTrainRight;
+    public static Talon driveTrainLeft;
     
     public static Encoder encoderLeft;
     public static Encoder encoderRight;
@@ -82,10 +80,8 @@ public class RobotMap {
         encoderRight = new Encoder(digital8,digital9);
         encoderLeft = new Encoder(digital7,digital6);
         
-    	driveTrainFrontRight = new Talon(2);
-        driveTrainBackRight = new Talon(3);
-        driveTrainFrontLeft = new Talon(0);
-        driveTrainBackLeft = new Talon(1);
+    	driveTrainRight = new Talon(1);
+        driveTrainLeft = new Talon(0);
         
         //arm
         arm = new CANTalon(3);

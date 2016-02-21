@@ -13,9 +13,10 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  * interface to the commands and command groups that allow control of the robot.
  */
 public class OI {
+	
 	public Joystick left;
 	public Joystick right;
-	public Gamepad gamepad; // TFS: The Gamepad class is missing from github
+	public Gamepad gamepad; 
 	public Button shiftUp;
 	public Button shiftDown;
 	public Button intake;
@@ -24,6 +25,7 @@ public class OI {
 	public Button ballMoveIn;
 	public Button ballRelease;
 	public Button aim;
+	
 	public OI()
 	{
 		SmartDashboard.putData(new DriveSpline());

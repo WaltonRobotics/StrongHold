@@ -17,10 +17,8 @@ import motionProfilling.MotionControl;
  */
 public class DriveTrain extends Subsystem {
     
-	private Talon frontRight = RobotMap.driveTrainFrontRight;
-	private Talon backRight = RobotMap.driveTrainBackRight;
-	private Talon frontLeft = RobotMap.driveTrainFrontLeft;
-	private Talon backLeft = RobotMap.driveTrainBackLeft;
+	private Talon right = RobotMap.driveTrainRight;
+	private Talon left = RobotMap.driveTrainLeft;
 	
 	private Encoder encoderLeft = RobotMap.encoderLeft;
 	private Encoder encoderRight = RobotMap.encoderRight;
@@ -35,15 +33,13 @@ public class DriveTrain extends Subsystem {
 	private class SharedDrive implements PIDOutput
 	{
 		SpeedController one;
-		SpeedController two;
 		
 		Boolean isLeft;
 		
-		public SharedDrive(SpeedController one, SpeedController two, boolean isLeft)
+		public SharedDrive(SpeedController one, boolean isLeft)
 		{
 			this.isLeft = isLeft;
 			this.one = one;
-			this.two = two;
 		}
 		@Override
 		public void pidWrite(double out)
@@ -52,7 +48,6 @@ public class DriveTrain extends Subsystem {
 				out*=-1;
 			
 			one.set(out);
-			two.set(out);
 		}
 	}
 	
@@ -72,18 +67,16 @@ public class DriveTrain extends Subsystem {
 		encoderLeft.setPIDSourceType(PIDSourceType.kDisplacement);
 		encoderRight.setPIDSourceType(PIDSourceType.kDisplacement);
 		
-		leftController = new PIDControllerAccel(1, 0, 0,1, RobotMap.encoderLeft,  new SharedDrive(backLeft, frontLeft,true),1,0);
-		rightController = new PIDControllerAccel(1, 0, 0,1, RobotMap.encoderRight,  new SharedDrive(backRight, frontRight,false),1,0);
+		leftController = new PIDControllerAccel(1, 0, 0,1, RobotMap.encoderLeft,  new SharedDrive(left,true),1,0);
+		rightController = new PIDControllerAccel(1, 0, 0,1, RobotMap.encoderRight,  new SharedDrive( right,false),1,0);
 	}
     public void initDefaultCommand() {
         setDefaultCommand(new Drive());
     }
     public void setSpeeds(double left, double right)
     {
-    	backRight.set(right);
-    	backLeft.set(-left);
-    	frontRight.set(right);
-    	frontLeft.set(-left);
+    	this.right.set(right);
+    	this.left.set(-left);
     }
     public void resetEncoders()
     {

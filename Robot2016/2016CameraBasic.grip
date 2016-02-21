@@ -105,8 +105,8 @@
     </grip:Connection>
   </connections>
   <settings>
-    <teamNumber>0</teamNumber>
-    <publishAddress></publishAddress>
-    <deployAddress></deployAddress>
+    <teamNumber>2974</teamNumber>
+    <publishAddress>roborio-2974-frc.local</publishAddress>
+    <deployAddress>roborio-2974-frc.local</deployAddress>
   </settings>
 </grip:Pipeline>
