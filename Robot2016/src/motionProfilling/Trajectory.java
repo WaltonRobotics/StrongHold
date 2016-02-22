@@ -12,11 +12,12 @@ public class Trajectory extends java.util.ArrayList<Position> {
 	 */
 	private static final long serialVersionUID = 1L;
 
-	public Trajectory(TrajectorySpline tr, State start, State end)
+	public Trajectory( TrajectorySpline ts, State start, State end)
 	{
 		this.start = start;
 		this.end = end;
-		generatePositions(tr);
+		
+		generatePositions(ts);
 		
 	}
 	public void dumpValues()
