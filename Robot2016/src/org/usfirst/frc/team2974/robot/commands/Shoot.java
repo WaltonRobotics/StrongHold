@@ -31,6 +31,7 @@ public class Shoot extends Command {
     }
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
+    	//if(Robot.oi.gamepad.getRightY()>.1)shooter.tension();
     	switch(currentState){
     	case latched: 
     		shooter.tension();

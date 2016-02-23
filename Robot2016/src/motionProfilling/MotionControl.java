@@ -2,9 +2,9 @@ package motionProfilling;
 
 import java.util.ArrayList;
 
-//todo fix end condition
 public class MotionControl {
 	private ArrayList<State> states = new ArrayList<State>();
+
 	public static final double Robot_Width = .63;
 	public static final double Robot_Max_Speed = 1.5;
 	public static final double Robot_Max_Acceleration = .5;
@@ -44,10 +44,11 @@ public class MotionControl {
 		// set the starting condition at the start
 		stateIndex = 0;
 		trajIndex = 0;
-		// createGraphs();
-
 	}
 
+	/**
+	 * @return the maximum amount of time(in seconds)
+	 */
 	public double getMaxTime() {
 		Trajectory traj = states.get(states.size() - 2).getTrajectory();
 		return traj.get(traj.size() - 1).totalTime;
@@ -77,7 +78,6 @@ public class MotionControl {
 		for (int i = 1; i < states.size(); i++) {
 			time += states.get(i - 1).getTrajectory().getTotalTime();
 			states.get(i).setTime(time);
-
 		}
 	}
 
@@ -119,6 +119,14 @@ public class MotionControl {
 		return distanceRight;
 	}
 
+	/**
+	 * 
+	 * @param time
+	 *            current time time must be less than getMaxTime();
+	 * @return the velocity (m/s) the left side of the robot should be traveling
+	 *         at for the given time
+	 * 
+	 */
 	public double velocityLeft(double time) {
 		Position p = getPosition(time);
 		double vl = time - p.totalTime;
@@ -128,6 +136,14 @@ public class MotionControl {
 		return vl;
 	}
 
+	/**
+	 * 
+	 * @param time
+	 *            current time time must be less than getMaxTime();
+	 * @return the velocity (m/s) the right side of the robot should be
+	 *         traveling at for the given time
+	 * 
+	 */
 	public double velocityRight(double time) {
 		Position p = getPosition(time);
 		double vr = time - p.totalTime;
@@ -163,7 +179,6 @@ public class MotionControl {
 			double computedDirection = (direction1 - direction2) / 2;
 			states.get(i).setDirection(computedDirection + direction2);
 		}
-
 	}
 
 	private double calculateTheta(State state1, State state2) {
@@ -173,7 +188,6 @@ public class MotionControl {
 		double y2 = state2.getY();
 
 		return Math.atan2((y2 - y1), (x2 - x1));
-
 	}
 
 }

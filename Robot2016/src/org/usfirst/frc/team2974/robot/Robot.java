@@ -7,6 +7,7 @@ import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 
 import org.usfirst.frc.team2974.robot.commands.Aim;
+import org.usfirst.frc.team2974.robot.commands.Drive;
 import org.usfirst.frc.team2974.robot.commands.ShowInputs;
 import org.usfirst.frc.team2974.robot.subsystems.*;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -90,6 +91,7 @@ public class Robot extends IterativeRobot {
      */
     public void teleopPeriodic() {
         Scheduler.getInstance().add(new ShowInputs());
+        Scheduler.getInstance().add(new Drive());
         //Scheduler.getInstance().add(new DriveObstacle());
         Scheduler.getInstance().run();
     }

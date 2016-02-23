@@ -10,6 +10,7 @@ import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.SpeedController;
 import edu.wpi.first.wpilibj.Talon;
 import edu.wpi.first.wpilibj.command.Subsystem;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import motionProfilling.MotionControl;
 
 /**
@@ -77,6 +78,8 @@ public class DriveTrain extends Subsystem {
     {
     	this.right.set(right);
     	this.left.set(-left);
+    	SmartDashboard.putNumber("left", -left);
+    	SmartDashboard.putNumber("right", right);
     }
     public void resetEncoders()
     {
@@ -90,14 +93,14 @@ public class DriveTrain extends Subsystem {
     	rightController.setSetpoint(mc.distanceRight(time),mc.velocityRight(time),0);
     }
     
-    public void shiftDown()
+    public void shiftUp()
     {
     	if(shifter.get())
     	{
     		shifter.set(false);
     	}
     }
-    public void shiftUp()
+    public void shiftDown()
     {
     	if(!shifter.get())
     	{

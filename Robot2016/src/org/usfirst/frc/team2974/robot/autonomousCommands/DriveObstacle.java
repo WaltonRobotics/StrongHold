@@ -48,7 +48,7 @@ public class DriveObstacle extends Command {
     		speedLeft -= (yaw - compass.getYaw())* multiplierConstatnt;
     		speedRight += (yaw - compass.getYaw())* multiplierConstatnt;
     	}
-    	driveTrain.setSpeeds(speedLeft, speedRight);    	
+    	//driveTrain.setSpeeds(speedLeft, speedRight);    	
 
     }
 

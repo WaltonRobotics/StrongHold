@@ -22,9 +22,14 @@ public class OI {
 	public Button intake;
 	public Button outtake;
 	public Button shoot;
-	public Button ballMoveIn;
-	public Button ballRelease;
+	public Button flapperUp;
+	public Button flapperDown;
 	public Button aim;
+	public Button latchButton1;
+	public Button latchButton2;
+	public Button position1;
+	public Button position2;
+	public Button position3;
 	
 	public OI()
 	{
@@ -38,9 +43,15 @@ public class OI {
 		intake = new JoystickButton(left, 4);
 		outtake = new JoystickButton(left,5);
 		shoot = new JoystickButton(left, 6);
-		ballMoveIn = new JoystickButton(left,1);
-		ballRelease = new JoystickButton(left, 7);
+		flapperUp = new JoystickButton(right,3);
+		flapperDown = new JoystickButton(right, 2);
 		aim = new JoystickButton(right, 0);
+		latchButton1 = new JoystickButton(right, 4);
+		latchButton2 = new JoystickButton(right, 5);
+		position1 = new JoystickButton(right, 6);
+		position2 = new JoystickButton(right, 7);
+		position3 = new JoystickButton(right, 8);
+		
 	}
 
 }

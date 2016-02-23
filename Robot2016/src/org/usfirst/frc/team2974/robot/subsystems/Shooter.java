@@ -4,7 +4,10 @@ import org.usfirst.frc.team2974.robot.RobotMap;
 import org.usfirst.frc.team2974.robot.commands.Shoot;
 import org.usfirst.frc.team2974.robot.commands.Shoot.ShooterState;
 
+import com.ni.vision.NIVision.CalibrationThumbnailType;
+
 import edu.wpi.first.wpilibj.CANTalon;
+import edu.wpi.first.wpilibj.CANTalon.TalonControlMode;
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.command.Subsystem;
@@ -15,7 +18,6 @@ import edu.wpi.first.wpilibj.command.Subsystem;
 public class Shooter extends Subsystem {
 	Solenoid latch = RobotMap.latch;
 	CANTalon tensioner = RobotMap.tensioner;
-	Encoder encoder = RobotMap.encoderShooter;
 	
 	private final double maxTensionerPower = 0.25;
 	private final double holdTensionerPower = .125;
@@ -30,7 +32,9 @@ public class Shooter extends Subsystem {
 	public Shooter()
 	{
 		state = TensionerState.untensioned;
-		encoder.reset();
+		tensioner.reset();
+		tensioner.setFeedbackDevice(CANTalon.FeedbackDevice.AnalogEncoder);
+		tensioner.changeControlMode(CANTalon.TalonControlMode.PercentVbus);
 	}
 	public enum TensionerState{
 		tensioned, untensioned, tensioning, untensioning
@@ -69,10 +73,10 @@ public class Shooter extends Subsystem {
     	setZero();
     }
     public TensionerState getState(){
-    	if(encoder.get() + ForwardThreshold > ForwardLimit){
+    	if(tensioner.getAnalogInPosition() + ForwardThreshold > ForwardLimit){
     		state = TensionerState.tensioned;
     	}
-    	if(encoder.get() - ReverseThreshold < ReverseLimit){
+    	if(tensioner.getAnalogInPosition() - ReverseThreshold < ReverseLimit){
     		state = TensionerState.untensioned;
     	}
     	return state;

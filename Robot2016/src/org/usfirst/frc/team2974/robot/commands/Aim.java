@@ -17,7 +17,7 @@ public class Aim extends Command {
 	private final double centerX = 200;
     public Aim() {
         // Use requires() here to declare subsystem dependencies
-        requires(driveTrain);
+        //requires(driveTrain);
         requires(camera);
     }
 

@@ -30,9 +30,9 @@ private double threshold = .05;
     	else
     		Robot.intake.setMotor(0);
     	
-    	if(Robot.oi.ballMoveIn.get())
+    	if(Robot.oi.flapperUp.get())
     		Robot.intake.setIntakeSolenoid(IntakeState.up);
-    	else if(Robot.oi.ballRelease.get())
+    	else if(Robot.oi.flapperDown.get())
     		Robot.intake.setIntakeSolenoid(IntakeState.down);
     }
 
