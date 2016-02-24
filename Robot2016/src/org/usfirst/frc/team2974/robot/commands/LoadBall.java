@@ -10,6 +10,7 @@ import edu.wpi.first.wpilibj.command.Command;
  */
 public class LoadBall extends Command {
 private double threshold = .05;
+private IntakeRollerState currentState;
     public LoadBall() {
         // Use requires() here to declare subsystem dependencies
         requires(Robot.intake);
@@ -17,22 +18,45 @@ private double threshold = .05;
 
     // Called just before this Command runs the first time
     protected void initialize() {
+    	currentState = IntakeRollerState.stop;
     }
-
+    public enum IntakeRollerState{
+    	in, out, stop
+    }
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	if(Robot.oi.intake.get())
+    	if(Robot.oi.outtake.get()){
+			currentState = IntakeRollerState.out;
+		}
+		else if(Robot.oi.stoptake.get()){
+			currentState = IntakeRollerState.stop;
+		}
+		else if(Robot.oi.intake.get()){
+			currentState = IntakeRollerState.in;
+		}
+    	switch(currentState){
+    	
+    	case in:
     		Robot.intake.input();
-    	else if(Robot.oi.outtake.get())
+    		break;
+    	case out:
     		Robot.intake.output();
-    	else if(Robot.oi.gamepad.getLeftTrigger()>threshold)
-    		Robot.intake.setMotor(Robot.oi.gamepad.getLeftTrigger());
-    	else
-    		Robot.intake.setMotor(0);
+    		break;
+    	case stop:
+    		break;
+    	}
+//    	if(Robot.oi.intake.get())
+//    		Robot.intake.input();
+//    	else if(Robot.oi.outtake.get())
+//    		Robot.intake.output();
+//    	else if(Robot.oi.gamepad.getLeftTrigger()>threshold)
+//    		Robot.intake.setMotor(Robot.oi.gamepad.getLeftTrigger());
+//    	else
+//    		Robot.intake.setMotor(0);
     	
     	if(Robot.oi.flapperUp.get())
     		Robot.intake.setIntakeSolenoid(IntakeState.up);
-    	else if(Robot.oi.flapperDown.get())
+    	else if(Robot.oi.gamepad.getLeftTrigger() > .1)
     		Robot.intake.setIntakeSolenoid(IntakeState.down);
     }
 

@@ -1,5 +1,6 @@
 package org.usfirst.frc.team2974.robot.commands;
 
+import org.usfirst.frc.team2974.robot.Gamepad;
 import org.usfirst.frc.team2974.robot.Robot;
 import org.usfirst.frc.team2974.robot.RobotMap;
 
@@ -25,7 +26,7 @@ public class MoveArm extends Command {
     protected void execute() {
     	SmartDashboard.putNumber("armvalue", Robot.arm.getPotValue());
     	arm.set(Robot.oi.gamepad.getLeftY());
-    	if(Robot.oi.position1.get()){
+    	if(Robot.oi.gamepad.getPOVButton(Gamepad.POV.W)){
     		if(Math.abs(Robot.arm.getPotValue()) - 0 < threshold){
     			Robot.arm.moveArm(0);
     		}
@@ -35,7 +36,7 @@ public class MoveArm extends Command {
     		else
     			Robot.arm.moveArm(.5);
     	}
-    	if(Robot.oi.position2.get()){
+    	if(Robot.oi.gamepad.getPOVButton(Gamepad.POV.N)){
     		if(Math.abs(Robot.arm.getPotValue()) - 125 < threshold){
     			Robot.arm.moveArm(0);
     		}
@@ -45,7 +46,7 @@ public class MoveArm extends Command {
     		else
     			Robot.arm.moveArm(.5);
     	}
-    	if(Robot.oi.position3.get()){
+    	if(Robot.oi.gamepad.getPOVButton(Gamepad.POV.E)){
     		if(Math.abs(Robot.arm.getPotValue()) - 250 < threshold){
     			Robot.arm.moveArm(0);
     		}

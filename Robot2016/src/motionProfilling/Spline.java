@@ -58,32 +58,47 @@ public class Spline {
 	public void choosePoints(State start, State end) {
 		Line line1 = new Line(start);
 		Line line2 = new Line(end);
-		Coordinate intersection = getIntersection(line1, line2);
+		if(line1.getM() == line2.getM())
+		{
+			if(line1.equals(line2))
+			{
+				//todo do this
+			}
+			else
+			{
+				//die
+			}
+				
+		}
+		else
+		{
+			Coordinate intersection = getIntersection(line1, line2);
 
-		double x1 = (intersection.getX() - start.getX()) * 2.0 / 3 + start.getX();// x
-																					// point
-																					// 2/3
-																					// of
-																					// way
-																					// from
-																					// start
-																					// to
-																					// intersection
-		point1 = new Coordinate(x1, line1.getY(x1));
-
-		double x2 = (end.getX() - intersection.getX()) * 2.0 / 3 + intersection.getX();// x
+			double x1 = (intersection.getX() - start.getX()) * 2.0 / 3 + start.getX();// x
 																						// point
 																						// 2/3
 																						// of
 																						// way
 																						// from
-																						// intersection
+																						// start
 																						// to
-																						// end
-		point2 = new Coordinate(x2, line2.getY(x2));
+																						// intersection
+			point1 = new Coordinate(x1, line1.getY(x1));
+
+			double x2 = (end.getX() - intersection.getX()) * 2.0 / 3 + intersection.getX();// x
+																							// point
+																							// 2/3
+																							// of
+																							// way
+																							// from
+																							// intersection
+																							// to
+																							// end
+			point2 = new Coordinate(x2, line2.getY(x2));
+		}
+
 
 	}
-
 	private Coordinate getIntersection(Line line1, Line line2) {
 		double x = (line2.getB() - line1.getB()) / (line1.getM() - line2.getM());
 		double y = line1.getM() * x + line1.getB();
@@ -191,7 +206,7 @@ public class Spline {
 
 }
 
-class Line {
+class Line{
 	/*
 	 * An equation of a line is like:
 	 * 
@@ -219,6 +234,11 @@ class Line {
 
 	public double getY(double x) {
 		return m * x + b;
+	}
+	
+	public boolean equals(Line other)
+	{
+		return this.m == other.m && this.b == other.b;
 	}
 
 	@Override
