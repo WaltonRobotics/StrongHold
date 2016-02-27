@@ -1,11 +1,9 @@
 package org.usfirst.frc.team2974.robot.commands;
 
 import org.usfirst.frc.team2974.robot.Robot;
-import org.usfirst.frc.team2974.robot.RobotMap;
 import org.usfirst.frc.team2974.robot.subsystems.Shooter;
-import org.usfirst.frc.team2974.robot.subsystems.Shooter.TensionerState;
 
-import edu.wpi.first.wpilibj.DigitalInput;
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Command;
 
 /**
@@ -13,83 +11,84 @@ import edu.wpi.first.wpilibj.command.Command;
  */
 public class Shoot extends Command {
 	
-	//boolean canGoDown = true;
-	//boolean canGoUp = true;
-	
-	private ShooterState currentState;
+	private State currentState;
 	private Shooter shooter = Robot.shooter;
-	
-	private DigitalInput forwardLimit = RobotMap.forwardLimit;
-	private DigitalInput backwardLimit = RobotMap.backwardLimit;
-	
-    public Shoot(ShooterState state) {
-        // Use requires() here to declare subsystem dependencies
+		
+    public Shoot() {
          requires(Robot.shooter);
-         currentState = state;
     }
 
     // Called just before this Command runs the first time
     protected void initialize() 
     {
-    	
-    }	
-    public enum ShooterState
-    {
-    	latched, readyToAim, returning, readyToShoot
+    	currentState = new Latched();
     }
-//    abstract class State{
-//    	abstract void init();
-//    	abstract void execute();
-//    	abstract void end();
-//    	abstract boolean isFinished();
-//    }
-//    class Latched extends State{
-//    	void init(){
-//    		
-//    	}
-//    }
+    abstract class State{
+    	boolean init = false;
+    	abstract void init();
+    	abstract void execute();
+    	abstract void end();
+    	abstract boolean isFinished();
+    }
+    class Latched extends State{
+    	void init(){}
+		void execute() {
+			shooter.tension();
+		}
+		void end() {
+			currentState = new Ready();
+		}
+		boolean isFinished() {
+			return shooter.getState() == Shooter.TensionerState.tensioned;
+		}
+    }
+    class Returning extends State{
+    	void init(){}
+		void execute() {
+			shooter.unTension();
+		}
+		void end() {
+			currentState = new Latched();
+		}
+		boolean isFinished() {
+			return shooter.isShooterDown();	
+		}
+    }
+    class Ready extends State{
+    	void init(){}
+		void execute() {
+			shooter.atTensionLimit();
+		}
+		void end() {
+			currentState = new Shooting();
+		}
+		boolean isFinished() {
+			return Robot.oi.shoot.get();
+		}
+    }
+    class Shooting extends State{
+    	double initTime;
+    	void init(){
+			shooter.unlatch();
+    		initTime = Timer.getFPGATimestamp();
+    	}
+		void execute(){}
+		void end() {
+			currentState = new Returning();
+		}
+		boolean isFinished() {
+			return !Robot.oi.shoot.get() && Timer.getFPGATimestamp() - initTime> 1;
+		}
+    }
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	//if(Robot.oi.gamepad.getRightY()>.1)shooter.tension();
-    	switch(currentState){
-    	case latched:
-    		if (!forwardLimit.get()){
-    		shooter.tension();
-    		}
-    		if(shooter.getState() == TensionerState.tensioned){
-    			currentState = ShooterState.readyToAim;
-    		}
-    		break;
-    	case readyToAim:
-    		if (!forwardLimit.get()){
-    			shooter.atTensionLimit();
-    		}
-    		if(Robot.oi.aim.get())
-    		{
-    			new Aim();
-    		}
-    		break;
-    	case readyToShoot:
-    		if (!forwardLimit.get()){
-    			shooter.atTensionLimit();
-    		}
-    		if(Robot.oi.shoot.get())
-    		{
-    			shooter.unlatch();
-    			currentState = ShooterState.returning;
-    		}
-    		break;
-    	case returning:
-    		if (!backwardLimit.get()){
-    			shooter.unload();	
-    		}
-    		if(shooter.getState() == TensionerState.untensioned)
-    		{
-    			shooter.latch();
-    			currentState = ShooterState.latched;
-    		}
-    		break;
-    	}
+    	if(!currentState.init)
+    	{
+    		currentState.init();
+    		currentState.init = true;
+    	}else if(currentState.isFinished())
+        		currentState.end();
+    	else currentState.execute();
     }
 
     // Make this return true when this Command no longer needs to run execute()

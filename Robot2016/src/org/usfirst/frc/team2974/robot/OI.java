@@ -3,7 +3,6 @@ package org.usfirst.frc.team2974.robot;
 import org.usfirst.frc.team2974.robot.autonomousCommands.DriveSpline;
 
 import edu.wpi.first.wpilibj.Joystick;
-import edu.wpi.first.wpilibj.Joystick.AxisType;
 import edu.wpi.first.wpilibj.buttons.Button;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
