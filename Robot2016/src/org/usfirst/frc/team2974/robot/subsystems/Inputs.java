@@ -18,8 +18,8 @@ public class Inputs extends Subsystem {
     DigitalInput digital1 = RobotMap.digital1;
     DigitalInput digital2 = RobotMap.digital2;
     DigitalInput digital3 = RobotMap.digital3;
-    DigitalInput digital4 = RobotMap.digital4;
-    DigitalInput digital5 = RobotMap.digital5;
+   // DigitalInput digital4 = RobotMap.digital4;
+   // DigitalInput digital5 = RobotMap.digital5;
     DigitalInput digital6 = RobotMap.digital6;
     DigitalInput digital7 = RobotMap.digital7;
     DigitalInput digital8 = RobotMap.digital8;
@@ -41,8 +41,8 @@ public class Inputs extends Subsystem {
 		SmartDashboard.putData("Digital In 1", digital1);
 		SmartDashboard.putData("Digital In 2", digital2);
 		SmartDashboard.putData("Digital In 3", digital3);
-		SmartDashboard.putData("Digital In 4", digital4);
-		SmartDashboard.putData("Digital In 5", digital5);
+	//	SmartDashboard.putData("Digital In 4", digital4);
+	//	SmartDashboard.putData("Digital In 5", digital5);
 		SmartDashboard.putData("Digital In 6", digital6);
 		SmartDashboard.putData("Digital In 7", digital7);
 		SmartDashboard.putData("Digital In 8", digital8);
