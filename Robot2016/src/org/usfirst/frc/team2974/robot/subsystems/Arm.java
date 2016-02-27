@@ -18,17 +18,36 @@ public class Arm extends Subsystem {
     {
 //    	arm.setFeedbackDevice(CANTalon.FeedbackDevice.AnalogPot);
 //    	arm.changeControlMode(CANTalon.TalonControlMode.Position);
-    	
     }
 
     public void initDefaultCommand() {
         setDefaultCommand(new MoveArm());
     }
-    
+//    public void execute(){
+//    	if (armPot.get() >= max){
+//    		arm.set(armPot.get() * conversionRate - ((max - armPot.get()) * conversionRate));
+//    	}
+//    	if (armPot.get() <= min){
+//    		arm.set(armPot.get() * conversionRate + ((min - armPot.get()) * conversionRate));
+//    	}
+//    }
+//    
     public void moveArm(double x)
     {
     	arm.set(x);
-    }
+    }    
+//    public void moveArmMax()
+//    {
+//    	arm.set(max*conversionRate);
+//    }    
+//    public void moveArmMin()
+//    {
+//    	arm.set(min*conversionRate);
+//    }
+//    public void moveArmMid()
+//    {
+//    	arm.set((max+min)/2*conversionRate);
+//    }    
     public double getPotValue()
     {
     	return armPot.get();

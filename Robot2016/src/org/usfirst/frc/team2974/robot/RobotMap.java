@@ -23,8 +23,7 @@ public class RobotMap {
     public static DigitalInput digital1;
     public static DigitalInput digital2;
     public static DigitalInput digital3;
-    public static DigitalInput digital4;
-    public static DigitalInput digital5;
+    
     public static DigitalInput digital6;
     public static DigitalInput digital7;
     public static DigitalInput digital8;
@@ -60,14 +59,16 @@ public class RobotMap {
     //compass
     public static BNO055 compass = new BNO055(BNO055.BNO055_ADDRESS_A);
     
+    public static DigitalInput forwardLimit;
+    public static DigitalInput backwardLimit;
+    
+    
     public static void init() {     
         //inputs
         digital0 = new DigitalInput(0);
         digital1 = new DigitalInput(1);
         digital2 = new DigitalInput(2);
         digital3 = new DigitalInput(3);
-        digital4 = new DigitalInput(4);
-        digital5 = new DigitalInput(5);
         digital6 = new DigitalInput(6);
         digital7 = new DigitalInput(7);
         digital8 = new DigitalInput(8);
@@ -77,6 +78,9 @@ public class RobotMap {
         analog1 = new AnalogInput(1);
         analog2 = new AnalogInput(2);
         analog3 = new AnalogInput(3);
+        
+        forwardLimit = new DigitalInput(4);
+        backwardLimit = new DigitalInput(5);
         
     	//drive train
         encoderRight = new Encoder(digital2,digital3);

@@ -59,7 +59,7 @@ public class Shooter extends Subsystem {
     	state = TensionerState.tensioning;
     }
     public void unload(){
-    	tensioner.set( -maxTensionerPower);
+    	tensioner.set(0);
     	state = TensionerState.untensioning;
     }
     public void setZero(){
