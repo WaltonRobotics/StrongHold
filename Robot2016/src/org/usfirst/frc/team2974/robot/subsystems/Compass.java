@@ -5,6 +5,7 @@ import org.usfirst.frc.team2974.robot.sensors.BNO055;
 import org.usfirst.frc.team2974.robot.sensors.BNO055.BNO055Exception;
 
 import edu.wpi.first.wpilibj.command.Subsystem;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  *
@@ -62,7 +63,7 @@ public class Compass extends Subsystem {
      * i dont care
      * @return roll
      */
-    public double getroll()
+    public double getRoll()
     {
     	try {
 			return compass.getQuaternion()[2];
@@ -86,6 +87,11 @@ public class Compass extends Subsystem {
 		}
     	return 0;
     }
-    
+    public void dumpSmartDashboardValues(){
+    	SmartDashboard.putNumber("Yaw", getYaw());
+    	SmartDashboard.putNumber("Pitch", getPitch());
+    	SmartDashboard.putNumber("Roll", getRoll());
+    	SmartDashboard.putNumber("heading4 unknown", getHeading4());
+    }
 }
 

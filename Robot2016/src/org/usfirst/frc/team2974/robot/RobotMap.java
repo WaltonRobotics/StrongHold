@@ -9,6 +9,7 @@ import edu.wpi.first.wpilibj.CANTalon;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.Talon;
+import edu.wpi.first.wpilibj.AnalogPotentiometer;
 
 /**
  * The RobotMap is a mapping from the ports sensors and actuators are wired into
@@ -35,10 +36,8 @@ public class RobotMap {
     public static AnalogInput analog3;
 
     //drive train
-	public static Talon driveTrainFrontRight;
-    public static Talon driveTrainBackRight;
-    public static Talon driveTrainFrontLeft;
-    public static Talon driveTrainBackLeft;
+	public static Talon driveTrainRight;
+    public static Talon driveTrainLeft;
     
     public static Encoder encoderLeft;
     public static Encoder encoderRight;
@@ -56,6 +55,7 @@ public class RobotMap {
 	
 	//arm
     public static CANTalon arm;
+    public static AnalogPotentiometer armPot;
 	
     //compass
     public static BNO055 compass = new BNO055(BNO055.BNO055_ADDRESS_A);
@@ -79,28 +79,29 @@ public class RobotMap {
         analog3 = new AnalogInput(3);
         
     	//drive train
-        encoderRight = new Encoder(digital8,digital9);
-        encoderLeft = new Encoder(digital7,digital6);
+        encoderRight = new Encoder(digital2,digital3);
+        encoderLeft = new Encoder(digital0,digital1);
         
-    	driveTrainFrontRight = new Talon(2);
-        driveTrainBackRight = new Talon(3);
-        driveTrainFrontLeft = new Talon(0);
-        driveTrainBackLeft = new Talon(1);
+    	driveTrainRight = new Talon(1);
+        driveTrainLeft = new Talon(0);
+        //pcm = 1
         
         //arm
-        arm = new CANTalon(0);
+        arm = new CANTalon(2);
+        armPot = new AnalogPotentiometer(analog0,1000,-130);
         
         //shifter
-        pnuematicsShifter = new Solenoid(4);
+        pnuematicsShifter = new Solenoid(0);
 
 
         //shooter
-        encoderShooter = new Encoder(digital0,digital1);
+        encoderShooter = new Encoder(digital7,digital8);
         latch = new Solenoid(2);
         tensioner = new CANTalon(1);
         
         //intake
-        intakeMotor = new Talon(4);
-        intakeSolenoid = new Solenoid(3);
+        intakeMotor = new Talon(2);
+        intakeSolenoid = new Solenoid(1);
+        
     }
 }

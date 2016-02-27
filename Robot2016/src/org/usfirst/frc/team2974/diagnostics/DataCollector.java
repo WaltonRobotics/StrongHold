@@ -2,8 +2,6 @@ package org.usfirst.frc.team2974.diagnostics;
 
 import java.util.ArrayList;
 
-import org.usfirst.frc.team2974.logging.LogSink;
-
 public class DataCollector{
 	ArrayList<DataGatherer> dataList;
 

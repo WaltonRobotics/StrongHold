@@ -2,9 +2,9 @@ package motionProfilling;
 
 import java.util.ArrayList;
 
-//todo fix end condition
 public class MotionControl {
 	private ArrayList<State> states = new ArrayList<State>();
+
 	public static final double Robot_Width = .63;
 	public static final double Robot_Max_Speed = 1.5;
 	public static final double Robot_Max_Acceleration = .5;
@@ -25,64 +25,34 @@ public class MotionControl {
 
 		// create a segment for each state
 		for (int i = 0; i < states.size() - 1; i++) {
-			states.get(i).setTrajectory(new Segment(states.get(i), states.get(i + 1)).getTrajectory());
-
+			Spline spline = new Spline(states.get(i), states.get(i + 1));
+			TrajectorySpline ts = spline.getTrajectory();
+			states.get(i).setTrajectory(new Trajectory(ts, states.get(i), states.get(i + 1)));
 		}
 
-	// calculate total distances and times for each state
-	calculateTotalTimesForStates();
-	calculateDistanceLeft();
-	calculateDistanceRight();
+		// calculate total distances and times for each state
+		calculateTotalTimesForStates();
+		calculateDistanceLeft();
+		calculateDistanceRight();
 
-	// set total distances for each position
-	for (int i = 0; i < states.size() - 1; i++) {
-		states.get(i).getTrajectory().setTotals();
-		states.get(i).getTrajectory().dumpValues();
+		// set total distances for each position
+		for (int i = 0; i < states.size() - 1; i++) {
+			states.get(i).getTrajectory().setTotals();
+			states.get(i).getTrajectory().dumpValues();
+		}
+
+		// set the starting condition at the start
+		stateIndex = 0;
+		trajIndex = 0;
 	}
 
-	// set the starting condition at the start
-	stateIndex = 0;
-	trajIndex = 0;
-	//createGraphs();
-
+	/**
+	 * @return the maximum amount of time(in seconds)
+	 */
+	public double getMaxTime() {
+		Trajectory traj = states.get(states.size() - 2).getTrajectory();
+		return traj.get(traj.size() - 1).totalTime;
 	}
-	
-	public double getMaxTime()
-	{
-		Trajectory traj = states.get(states.size()-2).getTrajectory();
-		return traj.get(traj.size()-1).totalTime;
-	}
-//		public MotionControl(String s, double startVelocity, double endVelocity, Coordinate point1,Coordinate point2 ) {
-//			states = InputText.parseInput(s);// parse input
-//
-//			// set initial and end conditions
-//			states.get(0).setVelocity(startVelocity);
-//			states.get(states.size() - 1).setVelocity(endVelocity);
-//
-//			// calculate directions of each intermediate point
-//			calculateDirections();
-//
-//			// create a segment for each state
-//			for (int i = 0; i < states.size() - 1; i++) {
-//				states.get(i).setTrajectory(new Segment(states.get(i), states.get(i + 1),point1, point2).getTrajectory());
-//			}
-//
-//		// calculate total distances and times for each state
-//		calculateTotalTimesForStates();
-//		calculateDistanceLeft();
-//		calculateDistanceRight();
-//
-//		// set total distances for each position
-//		for (int i = 0; i < states.size() - 1; i++) {
-//			states.get(i).getTrajectory().setTotals();
-//			states.get(i).getTrajectory().dumpValues();
-//		}
-//
-//		// set the starting condition at the start
-//		stateIndex = 0;
-//		trajIndex = 0;
-//
-//	}
 
 	private void calculateDistanceLeft() {
 		double dl = 0;
@@ -108,24 +78,23 @@ public class MotionControl {
 		for (int i = 1; i < states.size(); i++) {
 			time += states.get(i - 1).getTrajectory().getTotalTime();
 			states.get(i).setTime(time);
-
 		}
 	}
 
 	public Position getPosition(double time) {
-		if (stateIndex > states.size()-2) {
+		if (stateIndex > states.size() - 2) {
 			return null;
 		}
 		Trajectory traj = states.get(stateIndex).getTrajectory();
 
-		while (traj.get(trajIndex).totalTime +traj.get(trajIndex).deltaTime< time ) {
+		while (traj.get(trajIndex).totalTime + traj.get(trajIndex).deltaTime < time) {
 			trajIndex++;
 			if (trajIndex > traj.size() - 1) {
 				stateIndex++;
 				traj = states.get(stateIndex).getTrajectory();
 				trajIndex = 0;
 			}
-			if (stateIndex > states.size()-2) {
+			if (stateIndex > states.size() - 2) {
 				return null;
 			}
 		}
@@ -149,6 +118,15 @@ public class MotionControl {
 		distanceRight += p.totalDistanceRight;
 		return distanceRight;
 	}
+
+	/**
+	 * 
+	 * @param time
+	 *            current time time must be less than getMaxTime();
+	 * @return the velocity (m/s) the left side of the robot should be traveling
+	 *         at for the given time
+	 * 
+	 */
 	public double velocityLeft(double time) {
 		Position p = getPosition(time);
 		double vl = time - p.totalTime;
@@ -157,6 +135,15 @@ public class MotionControl {
 		vl += p.getVelocityLeft();
 		return vl;
 	}
+
+	/**
+	 * 
+	 * @param time
+	 *            current time time must be less than getMaxTime();
+	 * @return the velocity (m/s) the right side of the robot should be
+	 *         traveling at for the given time
+	 * 
+	 */
 	public double velocityRight(double time) {
 		Position p = getPosition(time);
 		double vr = time - p.totalTime;
@@ -165,15 +152,24 @@ public class MotionControl {
 		vr += p.getVelocityRight();
 		return vr;
 	}
-	
+
 	private void calculateDirections() {
 		for (int i = 1; i < states.size() - 1; i++) {
 			double direction1 = states.get(i - 1).getDirection();
 			double direction2 = Math.toDegrees(calculateTheta(states.get(i), states.get(i + 1)));
-			
+
 			// TFS: I'm not sure what you are doing here, but it's never a good
 			// idea to do == on a floating point number, as rounding errors make
 			// it unlikely the value will be exactly zero.
+
+			// PGK: This is because 0 and 360 are the same direction
+			// I made it so that if the getDirection() is 360, it would return 0
+			// but if the other angle is on the farther side of the unit circle,
+			// the 360 is
+			// more useful for calculation purposes
+			// this value is usually set by user, so it has a high likelihood of
+			// being zero
+
 			if (direction1 == 0 || direction2 == 0)
 				if (direction2 >= 180)
 					direction1 = 360;
@@ -183,7 +179,6 @@ public class MotionControl {
 			double computedDirection = (direction1 - direction2) / 2;
 			states.get(i).setDirection(computedDirection + direction2);
 		}
-
 	}
 
 	private double calculateTheta(State state1, State state2) {
@@ -191,15 +186,8 @@ public class MotionControl {
 		double y1 = state1.getY();
 		double x2 = state2.getX();
 		double y2 = state2.getY();
-		
-		//  TFS: If you want to calculate a arctangent from a dX and dY, use atan2... much easier and safer!
-		if (x2 >= x1 && y2 >= y1) {
-			return Math.atan((y2 - y1) / (x2 - x1));
-		}
-		if (x2 < x1 && y2 < y1) {
-			return Math.atan((y2 - y1) / (x2 - x1));
-		}
-		return Math.atan((x2 - x1) / (y2 - y1));
+
+		return Math.atan2((y2 - y1), (x2 - x1));
 	}
 
 }

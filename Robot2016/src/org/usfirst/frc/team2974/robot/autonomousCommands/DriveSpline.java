@@ -44,7 +44,7 @@ public class DriveSpline extends Command {
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
     	dumpSmartDashBoardValuse();
-    	Robot.driveTrain.setSetPoint(mc,Math.min(Timer.getFPGATimestamp()-offsetTime, mc.getMaxTime()) );
+    	//Robot.driveTrain.setSetPoint(mc,Math.min(Timer.getFPGATimestamp()-offsetTime, mc.getMaxTime()) );
     	
     	
     }

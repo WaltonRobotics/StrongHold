@@ -40,16 +40,8 @@ public class Spline {
 		double deltaS = 1.0/(MotionControl.numPoints-1);
 		for (int i=0; i<MotionControl.numPoints; i++) {
 			double s = deltaS*i;
-			MathPosition p = new MathPosition();
-			p.s = s;
-			p.curvature =getK(s);
-			p.dYds = getdYds(s);
-			p.dXds = getdXds(s);
-			p.d2Yds2 = getd2Yds(s);
-			p.d2Xds2 = getd2Xds(s) ;
-			p.x = getX(s);
-			p.y = getY(s);
-			trajectory.add(p);
+			MathPosition mp = new MathPosition(s, getK(s), getX(s), getY(s), getdXds(s), getdYds(s), getd2Xds2(s), getd2Yds2(s));
+			trajectory.add(mp);
 		}
 	}
 	public void dumpPositions()
@@ -66,32 +58,47 @@ public class Spline {
 	public void choosePoints(State start, State end) {
 		Line line1 = new Line(start);
 		Line line2 = new Line(end);
-		Coordinate intersection = getIntersection(line1, line2);
+		if(line1.getM() == line2.getM())
+		{
+			if(line1.equals(line2))
+			{
+				//todo do this
+			}
+			else
+			{
+				//die
+			}
+				
+		}
+		else
+		{
+			Coordinate intersection = getIntersection(line1, line2);
 
-		double x1 = (intersection.getX() - start.getX()) * 2.0 / 3 + start.getX();// x
-																					// point
-																					// 2/3
-																					// of
-																					// way
-																					// from
-																					// start
-																					// to
-																					// intersection
-		point1 = new Coordinate(x1, line1.getY(x1));
-
-		double x2 = (end.getX() - intersection.getX()) * 2.0 / 3 + intersection.getX();// x
+			double x1 = (intersection.getX() - start.getX()) * 2.0 / 3 + start.getX();// x
 																						// point
 																						// 2/3
 																						// of
 																						// way
 																						// from
-																						// intersection
+																						// start
 																						// to
-																						// end
-		point2 = new Coordinate(x2, line2.getY(x2));
+																						// intersection
+			point1 = new Coordinate(x1, line1.getY(x1));
+
+			double x2 = (end.getX() - intersection.getX()) * 2.0 / 3 + intersection.getX();// x
+																							// point
+																							// 2/3
+																							// of
+																							// way
+																							// from
+																							// intersection
+																							// to
+																							// end
+			point2 = new Coordinate(x2, line2.getY(x2));
+		}
+
 
 	}
-
 	private Coordinate getIntersection(Line line1, Line line2) {
 		double x = (line2.getB() - line1.getB()) / (line1.getM() - line2.getM());
 		double y = line1.getM() * x + line1.getB();
@@ -175,7 +182,7 @@ public class Spline {
 	{
 		return 6 * s * x;
 	}
-	private double getd2Xds(double s) {
+	private double getd2Xds2(double s) {
 		double a = d2Ads2(s, start.getX());
 		double b = d2Bds2(s, point1.getX());
 		double c = d2Cds2(s, point2.getX());
@@ -183,7 +190,7 @@ public class Spline {
 		return a + b + c + d;
 	}
 
-	private double getd2Yds(double s) {
+	private double getd2Yds2(double s) {
 		double a = d2Ads2(s, start.getY());
 		double b = d2Bds2(s, point1.getY());
 		double c = d2Cds2(s, point2.getY());
@@ -192,14 +199,14 @@ public class Spline {
 	}
 
 	private double getK(double s) {
-		double numerator = getdXds(s) * getd2Yds(s) - getdYds(s) * getd2Xds(s);
+		double numerator = getdXds(s) * getd2Yds2(s) - getdYds(s) * getd2Xds2(s);
 		double denominator = getdXds(s) * getdXds(s) + getdYds(s) * getdYds(s);
 		return numerator / Math.pow(denominator, 1.5);
 	}
 
 }
 
-class Line {
+class Line{
 	/*
 	 * An equation of a line is like:
 	 * 
@@ -227,6 +234,11 @@ class Line {
 
 	public double getY(double x) {
 		return m * x + b;
+	}
+	
+	public boolean equals(Line other)
+	{
+		return this.m == other.m && this.b == other.b;
 	}
 
 	@Override

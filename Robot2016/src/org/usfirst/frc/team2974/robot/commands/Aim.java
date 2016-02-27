@@ -1,8 +1,8 @@
 package org.usfirst.frc.team2974.robot.commands;
 
-import org.usfirst.frc.team2974.robot.Robot;
 import org.usfirst.frc.team2974.robot.subsystems.Camera;
 import org.usfirst.frc.team2974.robot.subsystems.DriveTrain;
+import org.usfirst.frc.team2974.robot.Robot;
 import org.usfirst.frc.team2974.robot.commands.Shoot.ShooterState;
 import edu.wpi.first.wpilibj.command.Command;
 
@@ -12,12 +12,12 @@ import edu.wpi.first.wpilibj.command.Command;
 public class Aim extends Command {
 	private DriveTrain driveTrain = Robot.driveTrain;
 	private Camera camera = Robot.camera;
-	private final double threshold = 10; 
+	private final double threshold = 20; 
 	private double speed = .1;
 	private final double centerX = 200;
     public Aim() {
         // Use requires() here to declare subsystem dependencies
-        requires(driveTrain);
+        //requires(driveTrain);
         requires(camera);
     }
 

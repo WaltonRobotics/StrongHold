@@ -6,11 +6,10 @@ import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 
-import org.usfirst.frc.team2974.logging.filters.SeverityFilter;
-import org.usfirst.frc.team2974.robot.autonomousCommands.DriveObstacle;
+import org.usfirst.frc.team2974.robot.commands.Aim;
+import org.usfirst.frc.team2974.robot.commands.Drive;
 import org.usfirst.frc.team2974.robot.commands.ShowInputs;
 import org.usfirst.frc.team2974.robot.subsystems.*;
-
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 
@@ -25,8 +24,6 @@ public class Robot extends IterativeRobot {
 	public static Camera camera;
 	public static Compass compass;
     Command autonomousCommand;
-
-   // SendableChooser chooser;
 
     /**
      * This function is run when the robot is first started up and should be
@@ -56,11 +53,12 @@ public class Robot extends IterativeRobot {
 	 * the robot is disabled.
      */
     public void disabledInit(){
+    	
     }
 	
 	public void disabledPeriodic() {
-		Scheduler.getInstance().add(new ShowInputs());
 		Scheduler.getInstance().run();
+		Scheduler.getInstance().add(new ShowInputs());
 	}
 
 	/**
@@ -73,16 +71,19 @@ public class Robot extends IterativeRobot {
 	 * or additional comparisons to the switch structure below with additional strings & commands.
 	 */
     public void autonomousInit() {
+    	Scheduler.getInstance().add(new ShowInputs());
     }
 
     /**
      * This function is called periodically during autonomous
      */
     public void autonomousPeriodic() {
+    	Scheduler.getInstance().run();
     }
 
     public void teleopInit() {
         if (autonomousCommand != null) autonomousCommand.cancel();
+        Scheduler.getInstance().add(new Aim());
     }
 
     /**
@@ -90,7 +91,8 @@ public class Robot extends IterativeRobot {
      */
     public void teleopPeriodic() {
         Scheduler.getInstance().add(new ShowInputs());
-        Scheduler.getInstance().add(new DriveObstacle());
+        Scheduler.getInstance().add(new Drive());
+        //Scheduler.getInstance().add(new DriveObstacle());
         Scheduler.getInstance().run();
     }
     
@@ -99,5 +101,7 @@ public class Robot extends IterativeRobot {
      */
     public void testPeriodic() {
         LiveWindow.run();
+        Scheduler.getInstance().add(new ShowInputs());
+        Scheduler.getInstance().run();
     }
 }
