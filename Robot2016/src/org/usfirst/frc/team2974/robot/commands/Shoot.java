@@ -1,10 +1,12 @@
 package org.usfirst.frc.team2974.robot.commands;
 
 import org.usfirst.frc.team2974.robot.Robot;
+import org.usfirst.frc.team2974.robot.RobotMap;
 import org.usfirst.frc.team2974.robot.subsystems.Shooter;
 
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  *
@@ -89,6 +91,8 @@ public class Shoot extends Command {
     	}else if(currentState.isFinished())
         		currentState.end();
     	else currentState.execute();
+    	
+    	SmartDashboard.putNumber("tensioner", RobotMap.tensioner.getAnalogInPosition());
     }
 
     // Make this return true when this Command no longer needs to run execute()

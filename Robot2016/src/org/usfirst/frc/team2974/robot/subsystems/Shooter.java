@@ -2,6 +2,7 @@ package org.usfirst.frc.team2974.robot.subsystems;
 
 import org.usfirst.frc.team2974.robot.RobotMap;
 import org.usfirst.frc.team2974.robot.commands.Shoot;
+import org.usfirst.frc.team2974.robot.commands.ShootTemp;
 
 import edu.wpi.first.wpilibj.CANTalon;
 import edu.wpi.first.wpilibj.DigitalInput;
@@ -41,7 +42,7 @@ public class Shooter extends Subsystem {
 	}
 
 	public void initDefaultCommand() {
-		setDefaultCommand(new Shoot());
+		setDefaultCommand(new ShootTemp());
 	}
 
 	public void latch() {
