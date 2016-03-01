@@ -1,5 +1,9 @@
 package org.usfirst.frc.team2974.robot.commands;
 
+import org.usfirst.frc.team2974.logging.Log;
+import org.usfirst.frc.team2974.logging.LogMessage;
+import org.usfirst.frc.team2974.logging.enumerations.Severity;
+import org.usfirst.frc.team2974.logging.enumerations.SubSystem;
 import org.usfirst.frc.team2974.robot.Robot;
 import org.usfirst.frc.team2974.robot.RobotMap;
 import org.usfirst.frc.team2974.robot.subsystems.Shooter;
@@ -55,6 +59,9 @@ public class Shoot extends Command {
     	case latched:
     		if (!forwardLimit.get()){
     		shooter.tension();
+    		}else{
+    			Log.instance().logCall(new LogMessage(Severity.DEBUG, SubSystem.SHOOTER, "Shoot.execute",
+    					"Catapult hit forwardLimit before reaching desired tension in case latched", 63));
     		}
     		if(shooter.getState() == TensionerState.tensioned){
     			currentState = ShooterState.readyToAim;
@@ -63,6 +70,9 @@ public class Shoot extends Command {
     	case readyToAim:
     		if (!forwardLimit.get()){
     			shooter.atTensionLimit();
+    		}else{
+    			Log.instance().logCall(new LogMessage(Severity.DEBUG, SubSystem.SHOOTER, "Shoot.execute",
+    					"Catapult hit forwardLimit before reaching desired tension in case readyToAim", 74));
     		}
     		if(Robot.oi.aim.get())
     		{
@@ -72,6 +82,9 @@ public class Shoot extends Command {
     	case readyToShoot:
     		if (!forwardLimit.get()){
     			shooter.atTensionLimit();
+    		}else{
+    			Log.instance().logCall(new LogMessage(Severity.DEBUG, SubSystem.SHOOTER, "Shoot.execute",
+    					"Catapult hit forwardLimit before reaching desired tension in case readyToShoot", 87));
     		}
     		if(Robot.oi.shoot.get())
     		{
@@ -82,6 +95,9 @@ public class Shoot extends Command {
     	case returning:
     		if (!backwardLimit.get()){
     			shooter.unload();	
+    		}else{
+    			Log.instance().logCall(new LogMessage(Severity.DEBUG, SubSystem.SHOOTER, "Shoot.execute",
+    					"Catapult hit backwardLimit before reaching minimum tension in case returning", 99));
     		}
     		if(shooter.getState() == TensionerState.untensioned)
     		{

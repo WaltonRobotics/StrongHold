@@ -1,8 +1,13 @@
 package org.usfirst.frc.team2974.robot.commands;
 
+import org.usfirst.frc.team2974.logging.Log;
+import org.usfirst.frc.team2974.logging.LogMessage;
+import org.usfirst.frc.team2974.logging.enumerations.Severity;
+import org.usfirst.frc.team2974.logging.enumerations.SubSystem;
 import org.usfirst.frc.team2974.robot.Gamepad;
 import org.usfirst.frc.team2974.robot.Robot;
 import org.usfirst.frc.team2974.robot.RobotMap;
+import org.usfirst.frc.team2974.robot.subsystems.Arm;
 
 import edu.wpi.first.wpilibj.CANTalon;
 import edu.wpi.first.wpilibj.command.Command;
@@ -24,6 +29,8 @@ public class MoveArm extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
+		Log.instance().logCall(new LogMessage(Severity.INFORMATION, SubSystem.CLMBARM, "MoveArm.execute",
+				"Position:" + Robot.arm.getPotValue(), 32));
     	SmartDashboard.putNumber("armvalue", Robot.arm.getPotValue());
     	arm.set(Robot.oi.gamepad.getLeftY());
     	if(Robot.oi.gamepad.getPOVButton(Gamepad.POV.W)){
