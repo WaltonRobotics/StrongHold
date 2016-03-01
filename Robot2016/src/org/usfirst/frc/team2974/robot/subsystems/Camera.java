@@ -11,12 +11,9 @@ public class Camera extends Subsystem {
 	NetworkTable table;
 	double[] defaultValue;
 
-	public void initDefaultCommand() {
-		// setDefaultCommand(new MySpecialCommand());
-	}
+	public void initDefaultCommand() {}
 
 	public Camera() {
-		
 		defaultValue = new double[]{-1,-1};
 	}
 

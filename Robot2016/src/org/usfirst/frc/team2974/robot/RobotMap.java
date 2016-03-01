@@ -83,9 +83,9 @@ public class RobotMap {
         analog2 = new AnalogInput(2);
         analog3 = new AnalogInput(3);
         
-        forwardLimit = digital4;
-        backwardLimit = digital5;
-        shooterLimit = digital6;
+        forwardLimit = digital2;//forward is tensioned
+        backwardLimit = digital1;
+        shooterLimit = digital0;
         
     	//drive train
         encoderRight = new Encoder(digital2,digital3);

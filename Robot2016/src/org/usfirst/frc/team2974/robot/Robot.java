@@ -4,17 +4,17 @@ package org.usfirst.frc.team2974.robot;
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
-import edu.wpi.first.wpilibj.livewindow.LiveWindow;
+import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 
-import org.usfirst.frc.team2974.robot.commands.Aim;
-import org.usfirst.frc.team2974.robot.commands.Drive;
 import org.usfirst.frc.team2974.robot.commands.ShowInputs;
 import org.usfirst.frc.team2974.robot.subsystems.*;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 
+//grab ball at the end of auto
 public class Robot extends IterativeRobot {
 	
+	private SendableChooser autoChooser;
+	 
 	public static OI oi;
 	public static DriveTrain driveTrain;
 	public static Arm arm;
@@ -23,7 +23,8 @@ public class Robot extends IterativeRobot {
 	public static Intake intake;
 	public static Camera camera;
 	public static Compass compass;
-    Command autonomousCommand;
+    
+	public Command autonomousCommand;
 
     /**
      * This function is run when the robot is first started up and should be
@@ -31,20 +32,29 @@ public class Robot extends IterativeRobot {
      */
     public void robotInit() {
     	RobotMap.init();
-    	SmartDashboard.putNumber("kV", 1.0/1.5);
-    	SmartDashboard.putNumber("kA", 0);
-    	SmartDashboard.putNumber("P", 0);
-    	SmartDashboard.putNumber("I", 0);
-    	SmartDashboard.putNumber("D", 0);
     	
     	driveTrain = new DriveTrain();
     	inputs = new Inputs();
     	arm = new Arm();
     	shooter = new Shooter();
     	intake = new Intake();
-    	oi = new OI();
     	camera = new Camera();
     	compass = new Compass();
+    	oi = new OI();
+    	createAutonomousChooser();
+    }
+    private void createAutonomousChooser()
+    {//Chival de frise, a "moat", ramparts, a drawbridge, a Sally port, a portcullis, a rock wall, and "rough terrain".
+//    	autoChooser = new SendableChooser();
+//    	autoChooser.addDefault("Do Nothing",new DoNothing());
+//    	autoChooser.addObject("low bar",new OneTote_NoStep());
+//    	autoChooser.addObject("rock wall",new OneTote_Step());
+//    	autoChooser.addObject("spy bot", new Forward_NoStep());
+//    	autoChooser.addObject("moat", new Forward_Step());
+//    	autoChooser.addObject("ramparts", new OneTote_Dynamic());
+//    	autoChooser.addObject("rough terrain", new Forward_Dynamic());
+//    	autoChooser.addObject("porticullus", object);
+//    	SmartDashboard.putData("PICK AN AUTONOMOUS",autoChooser);
     }
 
 	/**
@@ -53,12 +63,11 @@ public class Robot extends IterativeRobot {
 	 * the robot is disabled.
      */
     public void disabledInit(){
-    	
+    	Scheduler.getInstance().add(new ShowInputs());
     }
 	
 	public void disabledPeriodic() {
 		Scheduler.getInstance().run();
-		Scheduler.getInstance().add(new ShowInputs());
 	}
 
 	/**
@@ -83,25 +92,12 @@ public class Robot extends IterativeRobot {
 
     public void teleopInit() {
         if (autonomousCommand != null) autonomousCommand.cancel();
-        Scheduler.getInstance().add(new Aim());
     }
 
     /**
      * This function is called periodically during operator control
      */
     public void teleopPeriodic() {
-        Scheduler.getInstance().add(new ShowInputs());
-        Scheduler.getInstance().add(new Drive());
-        //Scheduler.getInstance().add(new DriveObstacle());
-        Scheduler.getInstance().run();
-    }
-    
-    /**
-     * This function is called periodically during test mode
-     */
-    public void testPeriodic() {
-        LiveWindow.run();
-        Scheduler.getInstance().add(new ShowInputs());
         Scheduler.getInstance().run();
     }
 }

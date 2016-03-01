@@ -11,7 +11,6 @@ import edu.wpi.first.wpilibj.command.Command;
 public class Drive extends Command {
 	private final double deadband = .05;
     public Drive() {
-        // Use requires() here to declare subsystem dependencies
         requires(Robot.driveTrain);
     }
 
@@ -34,11 +33,6 @@ public class Drive extends Command {
     		Robot.driveTrain.shiftDown();
     	if(Robot.oi.shiftUp.get())
     		Robot.driveTrain.shiftUp();
-    	//get rid of following code
-    	if(Robot.oi.latchButton1.get())
-    		Robot.shooter.latch();
-    	if(Robot.oi.latchButton2.get())
-    		Robot.shooter.unlatch();
 
     }
 

@@ -14,61 +14,54 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 public class MoveArm extends Command {
 	CANTalon arm = RobotMap.arm;
 	private final double threshold = 10;
-    public MoveArm() {
-        requires(Robot.arm);
-    }
+	private final double power = .5;
+	private final double positionLow = 0;
+	private final double positionMiddle = 125;
+	private final double positionUp = 250;
 
-    // Called just before this Command runs the first time
-    protected void initialize() {
-    }
+	public MoveArm() {
+		requires(Robot.arm);
+	}
 
-    // Called repeatedly when this Command is scheduled to run
-    protected void execute() {
-    	SmartDashboard.putNumber("armvalue", Robot.arm.getPotValue());
-    	arm.set(Robot.oi.gamepad.getLeftY());
-    	if(Robot.oi.gamepad.getPOVButton(Gamepad.POV.W)){
-    		if(Math.abs(Robot.arm.getPotValue()) - 0 < threshold){
-    			Robot.arm.moveArm(0);
-    		}
-    		else if(Robot.arm.getPotValue() > 0){
-    			Robot.arm.moveArm(-.5);
-    		}
-    		else
-    			Robot.arm.moveArm(.5);
-    	}
-    	if(Robot.oi.gamepad.getPOVButton(Gamepad.POV.N)){
-    		if(Math.abs(Robot.arm.getPotValue()) - 125 < threshold){
-    			Robot.arm.moveArm(0);
-    		}
-    		if(Robot.arm.getPotValue() > 125){
-    			Robot.arm.moveArm(-.5);
-    		}
-    		else
-    			Robot.arm.moveArm(.5);
-    	}
-    	if(Robot.oi.gamepad.getPOVButton(Gamepad.POV.E)){
-    		if(Math.abs(Robot.arm.getPotValue()) - 250 < threshold){
-    			Robot.arm.moveArm(0);
-    		}
-    		if(Robot.arm.getPotValue() > 250){
-    			Robot.arm.moveArm(-.5);
-    		}
-    		else
-    			Robot.arm.moveArm(.5);
-    	}
-    }
+	// Called just before this Command runs the first time
+	protected void initialize() {
+	}
 
-    // Make this return true when this Command no longer needs to run execute()
-    protected boolean isFinished() {
-        return false;
-    }
+	// Called repeatedly when this Command is scheduled to run
+	protected void execute() {
+		SmartDashboard.putNumber("armvalue", Robot.arm.getPotValue());
 
-    // Called once after isFinished returns true
-    protected void end() {
-    }
+		arm.set(Robot.oi.gamepad.getLeftY());
+		double targetPosition =-500;
+		if (Robot.oi.gamepad.getPOVButton(Gamepad.POV.W))
+			targetPosition = positionLow;
+		else if (Robot.oi.gamepad.getPOVButton(Gamepad.POV.N))
+			targetPosition = positionMiddle;
+		else if (Robot.oi.gamepad.getPOVButton(Gamepad.POV.E))
+			targetPosition = positionUp;
 
-    // Called when another command which requires one or more of the same
-    // subsystems is scheduled to run
-    protected void interrupted() {
-    }
+		if (targetPosition != -500) {
+			if (Math.abs(Robot.arm.getPotValue()) - targetPosition < threshold) {
+				Robot.arm.moveArm(0);
+			}
+			if (Robot.arm.getPotValue() > targetPosition) {
+				Robot.arm.moveArm(-power);
+			} else
+				Robot.arm.moveArm(power);
+		}
+	}
+
+	// Make this return true when this Command no longer needs to run execute()
+	protected boolean isFinished() {
+		return false;
+	}
+
+	// Called once after isFinished returns true
+	protected void end() {
+	}
+
+	// Called when another command which requires one or more of the same
+	// subsystems is scheduled to run
+	protected void interrupted() {
+	}
 }

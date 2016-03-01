@@ -107,6 +107,23 @@ public class DriveTrain extends Subsystem {
     		shifter.set(true);
     	}
     }
-    
+    public void dumpSmartdashboardValues()
+    {
+    	SmartDashboard.putNumber("EncoderLeft", encoderLeft.getDistance());
+		SmartDashboard.putNumber("EncoderRight", encoderRight.getDistance());
+		
+		SmartDashboard.putNumber("Velocity Left", encoderLeft.getRate());
+		SmartDashboard.putNumber("Velocity Right", encoderRight.getRate());
+    }
+    public void initSmartdashBoardValues()
+    {
+        SmartDashboard.putNumber("kV", 1.0/1.5);
+    	SmartDashboard.putNumber("kA", 0);
+    	SmartDashboard.putNumber("P", 0);
+    	SmartDashboard.putNumber("I", 0);
+    	SmartDashboard.putNumber("D", 0);
+    }
+
+	
 }
 

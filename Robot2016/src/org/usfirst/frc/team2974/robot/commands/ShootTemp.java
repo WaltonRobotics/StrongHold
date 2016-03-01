@@ -1,10 +1,8 @@
 package org.usfirst.frc.team2974.robot.commands;
 
 import org.usfirst.frc.team2974.robot.Robot;
-import org.usfirst.frc.team2974.robot.RobotMap;
 
 import edu.wpi.first.wpilibj.command.Command;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  *
@@ -21,8 +19,19 @@ public class ShootTemp extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	RobotMap.tensioner.set(Robot.oi.gamepad.getRightY());
-    	SmartDashboard.putNumber("tensioner", RobotMap.tensioner.getAnalogInPosition());
+    	//get rid of following code
+    	if(Robot.oi.right.getRawButton(4))
+    		Robot.shooter.tension();
+    	else if(Robot.oi.right.getRawButton(5))
+    		Robot.shooter.unTension();
+    	else
+    		Robot.shooter.setZero();
+    	
+    	//get rid of following code
+    	if(Robot.oi.latchButton1.get())
+    		Robot.shooter.latch();
+    	if(Robot.oi.latchButton2.get())
+    		Robot.shooter.unlatch();
         
     }
 

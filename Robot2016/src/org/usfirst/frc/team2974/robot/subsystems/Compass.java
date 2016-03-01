@@ -12,19 +12,14 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  */
 public class Compass extends Subsystem {
     BNO055 compass = RobotMap.compass;
-    // Put methods for controlling this subsystem
-    // here. Call these from Commands.
 
-    public void initDefaultCommand() {
-        // Set the default command for a subsystem here.
-        //setDefaultCommand(new MySpecialCommand());
-    }
+    public void initDefaultCommand() {}
+    
     public Compass()
     {
     	try {
 			compass.initialize();
 		} catch (BNO055Exception e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
     }
@@ -87,6 +82,7 @@ public class Compass extends Subsystem {
 		}
     	return 0;
     }
+    
     public void dumpSmartDashboardValues(){
     	SmartDashboard.putNumber("Yaw", getYaw());
     	SmartDashboard.putNumber("Pitch", getPitch());

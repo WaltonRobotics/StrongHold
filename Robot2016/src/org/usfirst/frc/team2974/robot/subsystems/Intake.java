@@ -37,10 +37,10 @@ public class Intake extends Subsystem {
 	    	switch(state)
 	    	{
 	    	case up:
-	    		intakeSolenoid.set(true);
+	    		intakeSolenoid.set(false);
 	    		break;
 	    	case down:
-	    		intakeSolenoid.set(false);
+	    		intakeSolenoid.set(true);
 	    	}
 	    }
 	    

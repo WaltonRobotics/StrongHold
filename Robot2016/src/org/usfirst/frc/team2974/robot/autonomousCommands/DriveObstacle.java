@@ -14,14 +14,16 @@ public class DriveObstacle extends Command {
 	private double yaw;
 	private double speed  =.8;
 	private final double multiplierConstatnt = 1.5;
+	
 	Compass compass = Robot.compass;
 	DriveTrain driveTrain = Robot.driveTrain;
+	
 	private double time;
 	private double startTime;
+	
     public DriveObstacle(double time) {
     	requires(driveTrain);
     	requires(compass);
-    	this.time = time;
     }
 
     // Called just before this Command runs the first time
@@ -48,7 +50,7 @@ public class DriveObstacle extends Command {
     		speedLeft -= (yaw - compass.getYaw())* multiplierConstatnt;
     		speedRight += (yaw - compass.getYaw())* multiplierConstatnt;
     	}
-    	//driveTrain.setSpeeds(speedLeft, speedRight);    	
+    	driveTrain.setSpeeds(speedLeft, speedRight);    	
 
     }
 

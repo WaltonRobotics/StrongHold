@@ -6,6 +6,7 @@ import org.usfirst.frc.team2974.robot.commands.MoveArm;
 import edu.wpi.first.wpilibj.AnalogPotentiometer;
 import edu.wpi.first.wpilibj.CANTalon;
 import edu.wpi.first.wpilibj.command.Subsystem;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  *
@@ -22,38 +23,19 @@ public class Arm extends Subsystem {
     public void initDefaultCommand() {
         setDefaultCommand(new MoveArm());
     }
-//    public void execute(){
-//    	if (armPot.get() >= max){
-//    		arm.set(armPot.get() * conversionRate - ((max - armPot.get()) * conversionRate));
-//    	}
-//    	if (armPot.get() <= min){
-//    		arm.set(armPot.get() * conversionRate + ((min - armPot.get()) * conversionRate));
-//    	}
-//    }
-//    
+
     public void moveArm(double x)
     {
     	arm.set(x);
     }    
-//    public void moveArmMax()
-//    {
-//    	arm.set(max*conversionRate);
-//    }    
-//    public void moveArmMin()
-//    {
-//    	arm.set(min*conversionRate);
-//    }
-//    public void moveArmMid()
-//    {
-//    	arm.set((max+min)/2*conversionRate);
-//    }    
+
     public double getPotValue()
     {
     	return armPot.get();
     }
-//    public void set(double potValue)
-//    {
-//    	
-//    }
+    public void dumpSmartDashboardValues()
+    {
+    	SmartDashboard.putNumber("Arm Potentiometer", armPot.get());
+    }
 }
 

@@ -1,12 +1,14 @@
 package org.usfirst.frc.team2974.robot.subsystems;
 
 
-
 import org.usfirst.frc.team2974.robot.RobotMap;
 
 import edu.wpi.first.wpilibj.AnalogInput;
+import edu.wpi.first.wpilibj.CANTalon;
 import edu.wpi.first.wpilibj.DigitalInput;
+import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.command.Subsystem;
+import edu.wpi.first.wpilibj.interfaces.Potentiometer;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import org.usfirst.frc.team2974.robot.commands.*;
 /**
@@ -29,7 +31,13 @@ public class Inputs extends Subsystem {
     AnalogInput analog1 = RobotMap.analog1;
     AnalogInput analog2 = RobotMap.analog2;
     AnalogInput analog3 = RobotMap.analog3;
-
+    
+    Potentiometer armPot = RobotMap.armPot;
+    CANTalon tensioner = RobotMap.tensioner;
+    
+    Encoder encoderLeft = RobotMap.encoderLeft;
+    Encoder encoderRight = RobotMap.encoderRight;
+    
 	@Override
 	protected void initDefaultCommand() {
 		setDefaultCommand(new ShowInputs());		
@@ -53,14 +61,7 @@ public class Inputs extends Subsystem {
 		SmartDashboard.putData("Analog In 2", analog2);
 		SmartDashboard.putData("Analog In 3", analog3);
 		
-		SmartDashboard.putNumber("EncoderLeft", RobotMap.encoderLeft.getDistance());
-		SmartDashboard.putNumber("EncoderRight", RobotMap.encoderRight.getDistance());
-		
-		SmartDashboard.putNumber("Velocity Left", RobotMap.encoderLeft.getRate());
-		SmartDashboard.putNumber("Velocity Right", RobotMap.encoderRight.getRate());
 	}
-	
-
-    
+	    
 }
 

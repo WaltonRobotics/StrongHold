@@ -9,44 +9,47 @@ import edu.wpi.first.wpilibj.command.Command;
  *
  */
 public class Aim extends Command {
+	
 	private DriveTrain driveTrain = Robot.driveTrain;
 	private Camera camera = Robot.camera;
-	private final double threshold = 20; 
+	
+	private final double threshold = 20;
+	
 	private double speed = .1;
 	private final double centerX = 200;
-    public Aim() {
-        // Use requires() here to declare subsystem dependencies
-        //requires(driveTrain);
-        requires(camera);
-    }
 
-    // Called just before this Command runs the first time
-    protected void initialize() {
-    }
+	public Aim() {
+		requires(driveTrain);
+		requires(camera);
+	}
 
-    // Called repeatedly when this Command is scheduled to run
-    protected void execute() {
-    	if(Math.abs(camera.getX() -centerX) > threshold){
-    		if(camera.getX() > centerX){
-    			driveTrain.setSpeeds(-speed, speed);
-    		}
-    		else 
-    			driveTrain.setSpeeds(speed, -speed);
-    	}
-    }
+	// Called just before this Command runs the first time
+	protected void initialize() {
+	}
 
-    // Make this return true when this Command no longer needs to run execute()
-    protected boolean isFinished() {
-    	
-        return Math.abs(camera.getX() -centerX) <= threshold;
-    }
+	// Called repeatedly when this Command is scheduled to run
+	protected void execute() {
+		if (Math.abs(camera.getX() - centerX) > threshold) {
+			if (camera.getX() > centerX) {
+				driveTrain.setSpeeds(-speed, speed);
+			} else
+				driveTrain.setSpeeds(speed, -speed);
+		}
+	}
 
-    // Called once after isFinished returns true
-    protected void end() {
-    }
+	// Make this return true when this Command no longer needs to run execute()
+	protected boolean isFinished() {
 
-    // Called when another command which requires one or more of the same
-    // subsystems is scheduled to run
-    protected void interrupted() {
-    }
+		return Math.abs(camera.getX() - centerX) <= threshold;
+	}
+
+	// Called once after isFinished returns true
+	protected void end() {
+		driveTrain.setSpeeds(0, 0);
+	}
+
+	// Called when another command which requires one or more of the same
+	// subsystems is scheduled to run
+	protected void interrupted() {
+	}
 }

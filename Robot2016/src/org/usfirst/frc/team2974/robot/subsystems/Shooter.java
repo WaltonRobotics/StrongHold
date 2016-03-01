@@ -1,13 +1,14 @@
 package org.usfirst.frc.team2974.robot.subsystems;
 
+import org.usfirst.frc.team2974.robot.Robot;
 import org.usfirst.frc.team2974.robot.RobotMap;
-import org.usfirst.frc.team2974.robot.commands.Shoot;
 import org.usfirst.frc.team2974.robot.commands.ShootTemp;
 
 import edu.wpi.first.wpilibj.CANTalon;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.command.Subsystem;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  *
@@ -32,9 +33,9 @@ public class Shooter extends Subsystem {
 
 	public Shooter() {
 		state = TensionerState.untensioned;
-		tensioner.reset();
 		tensioner.setFeedbackDevice(CANTalon.FeedbackDevice.AnalogEncoder);
 		tensioner.changeControlMode(CANTalon.TalonControlMode.PercentVbus);
+		tensioner.enable();
 	}
 
 	public enum TensionerState {
@@ -46,57 +47,68 @@ public class Shooter extends Subsystem {
 	}
 
 	public void latch() {
-		latch.set(true);
-	}
-
-	public void unlatch() {
 		latch.set(false);
 	}
 
+	public void unlatch() {
+		latch.set(true);
+	}
+
 	public void tension() {
-		if (!isForwardLimit())
-			tensioner.set(maxTensionerPower);
-		else
-			tensioner.set(0);
+		setTensionerPower(maxTensionerPower);
 		state = TensionerState.tensioning;
 	}
 
 	public void unTension() {
-		if (!isReverseLimit())
-			tensioner.set(-maxTensionerPower);
-		else
-			tensioner.set(0);
+		setTensionerPower(-maxTensionerPower);
 		state = TensionerState.untensioning;
 	}
 
-	public void atTensionLimit() {
-		tensioner.set(holdTensionerPower);
+	public void holdTension() {
+		setTensionerPower(holdTensionerPower);
 	}
 
 	public TensionerState getState() {
-		if (tensioner.getAnalogInPosition() + ForwardThreshold > ForwardLimit) {
+		if (getTensionerValue() > ForwardLimit - ForwardThreshold )
 			state = TensionerState.tensioned;
-		}
-		if (tensioner.getAnalogInPosition() - ReverseThreshold < ReverseLimit) {
+		else if (getTensionerValue() < ReverseLimit + ReverseThreshold) 
 			state = TensionerState.untensioned;
-		}
 		return state;
 	}
 
-	private boolean isForwardLimit() {
+	public boolean isForwardLimit() {
 		return forwardLimitSwitch.get();
 	}
 
-	private boolean isReverseLimit() {
+	public boolean isReverseLimit() {
 		return reverseLimitSwitch.get();
 	}
 
+	public void setZero() {
+		tensioner.set(0);
+	}
+
 	public boolean isShooterDown() {
-		return shooterLimitSwitch.get();
+		return !shooterLimitSwitch.get();
+	}
+
+	private void setTensionerPower(double power) {
+		if (power < 0 && isReverseLimit())
+			setZero();
+		else if (power > 0 && isForwardLimit())
+			setZero();
+		else
+			tensioner.set(power);
 	}
 
 	public double getTensionerValue() {
 		return tensioner.getAnalogInPosition();
+	}
+	
+	public void dumpSmartDashboardValues()
+	{
+		SmartDashboard.putNumber("Tensioner Encoder", Robot.shooter.getTensionerValue());
+		SmartDashboard.putNumber("Raw tensioner encoder value", tensioner.getAnalogInPosition());
 	}
 
 }

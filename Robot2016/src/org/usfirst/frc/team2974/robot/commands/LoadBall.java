@@ -41,12 +41,13 @@ private IntakeRollerState currentState;
     		Robot.intake.output();
     		break;
     	case stop:
+    		Robot.intake.stop();
     		break;
     	}
     	
     	if(Robot.oi.flapperUp.get())
     		Robot.intake.setIntakeSolenoid(IntakeState.up);
-    	else if(Robot.oi.gamepad.getLeftTrigger() > .1)
+    	else if(Robot.oi.flapperDown.get())
     		Robot.intake.setIntakeSolenoid(IntakeState.down);
     }
 
