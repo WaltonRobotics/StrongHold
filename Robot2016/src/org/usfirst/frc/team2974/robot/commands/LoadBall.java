@@ -13,7 +13,6 @@ import edu.wpi.first.wpilibj.command.Command;
  *
  */
 public class LoadBall extends Command {
-private double threshold = .05;
 private IntakeRollerState currentState;
     public LoadBall() {
         // Use requires() here to declare subsystem dependencies
@@ -45,7 +44,6 @@ private IntakeRollerState currentState;
         		"intake button pressed", 44));
 		}
     	switch(currentState){
-    	
     	case in:
     		Robot.intake.input();
     		break;
@@ -55,14 +53,6 @@ private IntakeRollerState currentState;
     	case stop:
     		break;
     	}
-//    	if(Robot.oi.intake.get())
-//    		Robot.intake.input();
-//    	else if(Robot.oi.outtake.get())
-//    		Robot.intake.output();
-//    	else if(Robot.oi.gamepad.getLeftTrigger()>threshold)
-//    		Robot.intake.setMotor(Robot.oi.gamepad.getLeftTrigger());
-//    	else
-//    		Robot.intake.setMotor(0);
     	
     	if(Robot.oi.flapperUp.get()){
     		Robot.intake.setIntakeSolenoid(IntakeState.up);

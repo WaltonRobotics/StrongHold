@@ -3,7 +3,6 @@ package org.usfirst.frc.team2974.robot.commands;
 import org.usfirst.frc.team2974.robot.subsystems.Camera;
 import org.usfirst.frc.team2974.robot.subsystems.DriveTrain;
 import org.usfirst.frc.team2974.robot.Robot;
-import org.usfirst.frc.team2974.robot.commands.Shoot.ShooterState;
 import edu.wpi.first.wpilibj.command.Command;
 
 /**
@@ -44,7 +43,6 @@ public class Aim extends Command {
 
     // Called once after isFinished returns true
     protected void end() {
-    	new Shoot(ShooterState.readyToShoot);
     }
 
     // Called when another command which requires one or more of the same
