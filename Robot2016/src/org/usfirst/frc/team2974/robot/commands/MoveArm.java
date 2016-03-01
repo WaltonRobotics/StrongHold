@@ -1,8 +1,13 @@
 package org.usfirst.frc.team2974.robot.commands;
 
+import org.usfirst.frc.team2974.logging.Log;
+import org.usfirst.frc.team2974.logging.LogMessage;
+import org.usfirst.frc.team2974.logging.enumerations.Severity;
+import org.usfirst.frc.team2974.logging.enumerations.SubSystem;
 import org.usfirst.frc.team2974.robot.Gamepad;
 import org.usfirst.frc.team2974.robot.Robot;
 import org.usfirst.frc.team2974.robot.RobotMap;
+import org.usfirst.frc.team2974.robot.subsystems.Arm;
 
 import edu.wpi.first.wpilibj.CANTalon;
 import edu.wpi.first.wpilibj.command.Command;
@@ -21,10 +26,6 @@ public class MoveArm extends Command {
 
 	public MoveArm() {
 		requires(Robot.arm);
-	}
-
-	// Called just before this Command runs the first time
-	protected void initialize() {
 	}
 
 	// Called repeatedly when this Command is scheduled to run
@@ -63,5 +64,11 @@ public class MoveArm extends Command {
 	// Called when another command which requires one or more of the same
 	// subsystems is scheduled to run
 	protected void interrupted() {
+	}
+
+	@Override
+	protected void initialize() {
+		// TODO Auto-generated method stub
+		
 	}
 }

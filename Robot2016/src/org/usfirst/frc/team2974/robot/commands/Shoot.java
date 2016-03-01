@@ -1,5 +1,9 @@
 package org.usfirst.frc.team2974.robot.commands;
 
+import org.usfirst.frc.team2974.logging.Log;
+import org.usfirst.frc.team2974.logging.LogMessage;
+import org.usfirst.frc.team2974.logging.enumerations.Severity;
+import org.usfirst.frc.team2974.logging.enumerations.SubSystem;
 import org.usfirst.frc.team2974.robot.Robot;
 import org.usfirst.frc.team2974.robot.subsystems.Shooter;
 
@@ -101,7 +105,7 @@ public class Shoot extends Command {
 		boolean isFinished() {
 			return !Robot.oi.shoot.get() && Timer.getFPGATimestamp() - initTime > 1;
 		}
-	}
+    }
 
 	// Called repeatedly when this Command is scheduled to run
 	protected void execute() {

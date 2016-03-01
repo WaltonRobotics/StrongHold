@@ -1,5 +1,9 @@
 package org.usfirst.frc.team2974.robot.commands;
 
+import org.usfirst.frc.team2974.logging.Log;
+import org.usfirst.frc.team2974.logging.LogMessage;
+import org.usfirst.frc.team2974.logging.enumerations.Severity;
+import org.usfirst.frc.team2974.logging.enumerations.SubSystem;
 import org.usfirst.frc.team2974.robot.Robot;
 import org.usfirst.frc.team2974.robot.subsystems.Intake.IntakeState;
 
@@ -26,12 +30,18 @@ private IntakeRollerState currentState;
     protected void execute() {
     	if(Robot.oi.outtake.get()){
 			currentState = IntakeRollerState.out;
+    		Log.instance().logCall(new LogMessage(Severity.INFORMATION, SubSystem.SHOOTER, "LoadBall.execute",
+    			"outtake button pressed", 34));
 		}
 		else if(Robot.oi.stoptake.get()){
 			currentState = IntakeRollerState.stop;
+    		Log.instance().logCall(new LogMessage(Severity.INFORMATION, SubSystem.SHOOTER, "LoadBall.execute",
+        		"stoptake button pressed", 39));
 		}
 		else if(Robot.oi.intake.get()){
 			currentState = IntakeRollerState.in;
+    		Log.instance().logCall(new LogMessage(Severity.INFORMATION, SubSystem.SHOOTER, "LoadBall.execute",
+        		"intake button pressed", 44));
 		}
     	switch(currentState){
     	case in:
@@ -64,4 +74,4 @@ private IntakeRollerState currentState;
     // subsystems is scheduled to run
     protected void interrupted() {
     }
-}
+    }
