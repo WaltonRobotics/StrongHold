@@ -88,60 +88,58 @@ public class Shoot extends Command {
     }
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-<<<<<<< HEAD
     	//if(Robot.oi.gamepad.getRightY()>.1)shooter.tension();
-    	switch(currentState){
-    	case latched:
-    		if (!forwardLimit.get()){
-    		shooter.tension();
-    		}else{
-    			Log.instance().logCall(new LogMessage(Severity.DEBUG, SubSystem.SHOOTER, "Shoot.execute",
-    					"Catapult hit forwardLimit before reaching desired tension in case latched", 63));
-    		}
-    		if(shooter.getState() == TensionerState.tensioned){
-    			currentState = ShooterState.readyToAim;
-    		}
-    		break;
-    	case readyToAim:
-    		if (!forwardLimit.get()){
-    			shooter.atTensionLimit();
-    		}else{
-    			Log.instance().logCall(new LogMessage(Severity.DEBUG, SubSystem.SHOOTER, "Shoot.execute",
-    					"Catapult hit forwardLimit before reaching desired tension in case readyToAim", 74));
-    		}
-    		if(Robot.oi.aim.get())
-    		{
-    			new Aim();
-    		}
-    		break;
-    	case readyToShoot:
-    		if (!forwardLimit.get()){
-    			shooter.atTensionLimit();
-    		}else{
-    			Log.instance().logCall(new LogMessage(Severity.DEBUG, SubSystem.SHOOTER, "Shoot.execute",
-    					"Catapult hit forwardLimit before reaching desired tension in case readyToShoot", 87));
-    		}
-    		if(Robot.oi.shoot.get())
-    		{
-    			shooter.unlatch();
-    			currentState = ShooterState.returning;
-    		}
-    		break;
-    	case returning:
-    		if (!backwardLimit.get()){
-    			shooter.unload();	
-    		}else{
-    			Log.instance().logCall(new LogMessage(Severity.DEBUG, SubSystem.SHOOTER, "Shoot.execute",
-    					"Catapult hit backwardLimit before reaching minimum tension in case returning", 99));
-    		}
-    		if(shooter.getState() == TensionerState.untensioned)
-    		{
-    			shooter.latch();
-    			currentState = ShooterState.latched;
-    		}
-    		break;
-    	}
-=======
+//    	switch(currentState){
+//    	case latched:
+//    		if (!forwardLimit.get()){
+//    		shooter.tension();
+//    		}else{
+//    			Log.instance().logCall(new LogMessage(Severity.DEBUG, SubSystem.SHOOTER, "Shoot.execute",
+//    					"Catapult hit forwardLimit before reaching desired tension in case latched", 63));
+//    		}
+//    		if(shooter.getState() == TensionerState.tensioned){
+//    			currentState = ShooterState.readyToAim;
+//    		}
+//    		break;
+//    	case readyToAim:
+//    		if (!forwardLimit.get()){
+//    			shooter.atTensionLimit();
+//    		}else{
+//    			Log.instance().logCall(new LogMessage(Severity.DEBUG, SubSystem.SHOOTER, "Shoot.execute",
+//    					"Catapult hit forwardLimit before reaching desired tension in case readyToAim", 74));
+//    		}
+//    		if(Robot.oi.aim.get())
+//    		{
+//    			new Aim();
+//    		}
+//    		break;
+//    	case readyToShoot:
+//    		if (!forwardLimit.get()){
+//    			shooter.atTensionLimit();
+//    		}else{
+//    			Log.instance().logCall(new LogMessage(Severity.DEBUG, SubSystem.SHOOTER, "Shoot.execute",
+//    					"Catapult hit forwardLimit before reaching desired tension in case readyToShoot", 87));
+//    		}
+//    		if(Robot.oi.shoot.get())
+//    		{
+//    			shooter.unlatch();
+//    			currentState = ShooterState.returning;
+//    		}
+//    		break;
+//    	case returning:
+//    		if (!backwardLimit.get()){
+//    			shooter.unload();	
+//    		}else{
+//    			Log.instance().logCall(new LogMessage(Severity.DEBUG, SubSystem.SHOOTER, "Shoot.execute",
+//    					"Catapult hit backwardLimit before reaching minimum tension in case returning", 99));
+//    		}
+//    		if(shooter.getState() == TensionerState.untensioned)
+//    		{
+//    			shooter.latch();
+//    			currentState = ShooterState.latched;
+//    		}
+//    		break;
+//    	}
     	if(!currentState.init)
     	{
     		currentState.init();
@@ -151,7 +149,6 @@ public class Shoot extends Command {
     	else currentState.execute();
     	
     	SmartDashboard.putNumber("tensioner", RobotMap.tensioner.getAnalogInPosition());
->>>>>>> 2af98a6cd242862a4d9186181b6de217f21c8f53
     }
 
     // Make this return true when this Command no longer needs to run execute()
