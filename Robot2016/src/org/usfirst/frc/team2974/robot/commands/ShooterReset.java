@@ -1,47 +1,32 @@
-
 package org.usfirst.frc.team2974.robot.commands;
 
 import org.usfirst.frc.team2974.robot.Robot;
+import org.usfirst.frc.team2974.robot.subsystems.Shooter;
 
 import edu.wpi.first.wpilibj.command.Command;
 
 /**
  *
  */
-public class Drive extends Command {
-	private final double deadband = .05;
-    public Drive() {
-        requires(Robot.driveTrain);
+public class ShooterReset extends Command {
+
+	Shooter shooter = Robot.shooter;
+    public ShooterReset() {
+        requires(shooter);
     }
 
     // Called just before this Command runs the first time
     protected void initialize() {
+    	shooter.unlatch();
     }
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	double left = Robot.oi.left.getY();
-    	double right = Robot.oi.right.getY();
-    	
-    	if(Math.abs(left)<deadband)
-    		left = 0;
-    	if(Math.abs(right)<deadband)
-    		right = 0;
-    	Robot.driveTrain.setSpeeds(left,right);
-    	
-    	if(Robot.oi.shiftDown.get())
-    		Robot.driveTrain.shiftDown();
-    	if(Robot.oi.shiftUp.get())
-    		Robot.driveTrain.shiftUp();
-    	
-    	if(Robot.oi.aimButton2.get())
-    		Robot.camera.dumpSmartDshboardValues();
-
     }
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-        return false;
+        return true;
     }
 
     // Called once after isFinished returns true

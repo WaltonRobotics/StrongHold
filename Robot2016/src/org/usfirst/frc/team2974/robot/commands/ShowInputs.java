@@ -20,6 +20,7 @@ public class ShowInputs extends Command {
 	protected void execute() {
 		Robot.inputs.updateSmartDashboard();
 		Robot.compass.dumpSmartDashboardValues();
+		Robot.camera.setNetTable();
 		Robot.camera.dumpSmartDshboardValues();
 		Robot.arm.dumpSmartDashboardValues();
 		Robot.shooter.dumpSmartDashboardValues();

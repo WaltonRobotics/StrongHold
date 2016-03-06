@@ -5,6 +5,8 @@ import org.usfirst.frc.team2974.logging.LogMessage;
 import org.usfirst.frc.team2974.logging.enumerations.Severity;
 import org.usfirst.frc.team2974.logging.enumerations.SubSystem;
 import org.usfirst.frc.team2974.robot.Robot;
+import org.usfirst.frc.team2974.robot.subsystems.Intake;
+import org.usfirst.frc.team2974.robot.subsystems.Intake.IntakeState;
 import org.usfirst.frc.team2974.robot.subsystems.Shooter;
 
 import edu.wpi.first.wpilibj.Timer;
@@ -18,14 +20,18 @@ public class Shoot extends Command {
 
 	private State currentState;
 	private Shooter shooter = Robot.shooter;
+	private Intake intake = Robot.intake;
 
 	public Shoot() {
-		requires(Robot.shooter);
+		requires(shooter);
 	}
 
 	// Called just before this Command runs the first time
 	protected void initialize() {
+		if(shooter.isShooterDown())
 		currentState = new Latched();
+		else 
+			currentState = new Returning();
 	}
 
 	abstract class State {
@@ -37,8 +43,34 @@ public class Shoot extends Command {
 		abstract boolean isFinished();
 	}
 
+
+	class Returning extends State {
+		double readyTime = -1;
+		void init() {
+		}
+
+		void execute() {
+			shooter.unTension();
+			if(shooter.isShooterDown() && readyTime ==-1)
+				readyTime = Timer.getFPGATimestamp();
+			SmartDashboard.putNumber("ready time", readyTime);
+			
+		}
+
+		void end() {
+			shooter.latch();
+			currentState = new Latched();
+			
+		}
+
+		boolean isFinished() {
+			return readyTime != -1 && ((Timer.getFPGATimestamp() - readyTime) > 1);
+		}
+	}
 	class Latched extends State {
-		void init() {}
+		void init() {
+			intake.setFlapper(IntakeState.up);
+		}
 
 		void execute() {
 			shooter.tension();
@@ -53,22 +85,6 @@ public class Shoot extends Command {
 		}
 	}
 
-	class Returning extends State {
-		void init() {}
-
-		void execute() {
-			shooter.unTension();
-		}
-
-		void end() {
-			currentState = new Latched();
-		}
-
-		boolean isFinished() {
-			return shooter.isShooterDown();
-		}
-	}
-
 	class Ready extends State {
 		void init() {
 		}
@@ -78,12 +94,38 @@ public class Shoot extends Command {
 		}
 
 		void end() {
-			currentState = new Shooting();
+			currentState = new MovingFlapper();
 		}
 
 		boolean isFinished() {
 			return Robot.oi.shoot.get();
 		}
+	}
+	class MovingFlapper extends State
+	{
+		double initTime;
+		
+		void init() {
+			initTime = Timer.getFPGATimestamp();
+		}
+
+
+		@Override
+		void execute() {
+			intake.setFlapper(IntakeState.down);
+		}
+
+		@Override
+		void end() {
+			currentState = new Shooting();
+			
+		}
+
+		@Override
+		boolean isFinished() {
+			return Timer.getFPGATimestamp()-initTime > .3;
+		}
+		
 	}
 
 	class Shooting extends State {
@@ -117,6 +159,7 @@ public class Shoot extends Command {
 		else
 			currentState.execute();
 
+		//Log.instance().logCall(new LogMessage(Severity.INFORMATION, SubSystem.SHOOTER, "Shooter", "Shooter State" + currentState.getClass()+"", 120));
 		SmartDashboard.putString("Shooter State", currentState.getClass()+"");
 		SmartDashboard.putString("Tensioner State", shooter.getState()+"");
 	}

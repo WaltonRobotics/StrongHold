@@ -29,7 +29,7 @@ public class OI {
 	public Button latchButton1;
 	public Button latchButton2;
 	public Button shoot;
-	
+	public Button aimButton2;
 	public OI()
 	{
 		SmartDashboard.putData(new DriveSpline());
@@ -52,6 +52,7 @@ public class OI {
 		//get rid l8er
 		latchButton1 = new JoystickButton(right, 4);
 		latchButton2 = new JoystickButton(right, 5);
+		aimButton2 = new JoystickButton(left, 10);
 
 		aim.whenPressed(new Aim());
 	}

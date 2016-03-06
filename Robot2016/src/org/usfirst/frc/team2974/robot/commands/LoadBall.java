@@ -56,9 +56,9 @@ private IntakeRollerState currentState;
     	}
     	
     	if(Robot.oi.flapperUp.get())
-    		Robot.intake.setIntakeSolenoid(IntakeState.up);
+    		Robot.intake.setFlapper(IntakeState.up);
     	else if(Robot.oi.flapperDown.get())
-    		Robot.intake.setIntakeSolenoid(IntakeState.down);
+    		Robot.intake.setFlapper(IntakeState.down);
     }
 
     // Make this return true when this Command no longer needs to run execute()

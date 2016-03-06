@@ -6,7 +6,10 @@ import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 
+import org.usfirst.frc.team2974.robot.commands.Shoot;
+import org.usfirst.frc.team2974.robot.commands.ShootTemp;
 import org.usfirst.frc.team2974.robot.commands.ShowInputs;
+import org.usfirst.frc.team2974.robot.commands.UpdateFiltration;
 import org.usfirst.frc.team2974.robot.subsystems.*;
 
 
@@ -92,6 +95,8 @@ public class Robot extends IterativeRobot {
 
     public void teleopInit() {
         if (autonomousCommand != null) autonomousCommand.cancel();
+        Scheduler.getInstance().add(new Shoot());
+       // Scheduler.getInstance().add(new UpdateFiltration());
     }
 
     /**

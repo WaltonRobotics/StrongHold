@@ -32,7 +32,7 @@ public class Intake extends Subsystem {
 	    	up, down
 	    }
 	    
-	    public void setIntakeSolenoid(IntakeState state)
+	    public void setFlapper(IntakeState state)
 	    {
 	    	switch(state)
 	    	{

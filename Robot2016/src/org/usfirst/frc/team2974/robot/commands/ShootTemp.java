@@ -1,8 +1,13 @@
 package org.usfirst.frc.team2974.robot.commands;
 
+import org.usfirst.frc.team2974.logging.Log;
+import org.usfirst.frc.team2974.logging.LogMessage;
+import org.usfirst.frc.team2974.logging.enumerations.Severity;
+import org.usfirst.frc.team2974.logging.enumerations.SubSystem;
 import org.usfirst.frc.team2974.robot.Robot;
 
 import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  *
@@ -28,11 +33,13 @@ public class ShootTemp extends Command {
     		Robot.shooter.setZero();
     	
     	//get rid of following code
-    	if(Robot.oi.latchButton1.get())
-    		Robot.shooter.latch();
-    	if(Robot.oi.latchButton2.get())
-    		Robot.shooter.unlatch();
-        
+//    	if(Robot.oi.latchButton1.get())
+//    		Robot.shooter.latch();
+//    	if(Robot.oi.latchButton2.get())
+//    		Robot.shooter.unlatch();
+		Log.instance().logCall(new LogMessage(Severity.INFORMATION, SubSystem.SHOOTER, "Shooter", "Shooter State" + Robot.shooter.getState(), 120));
+		//SmartDashboard.putString("Shooter State", currentState.getClass()+"");
+		SmartDashboard.putString("Tensioner State", Robot.shooter.getState()+"");
     }
 
     // Make this return true when this Command no longer needs to run execute()

@@ -13,10 +13,10 @@ public class Aim extends Command {
 	private DriveTrain driveTrain = Robot.driveTrain;
 	private Camera camera = Robot.camera;
 	
-	private final double threshold = 20;
+	private final double threshold = 7;
 	
-	private double speed = .1;
-	private final double centerX = 200;
+	private double speed = .3;
+	private final double centerX = 250;
 
 	public Aim() {
 		requires(driveTrain);
@@ -25,22 +25,32 @@ public class Aim extends Command {
 
 	// Called just before this Command runs the first time
 	protected void initialize() {
+		Robot.driveTrain.shiftDown();
 	}
 
 	// Called repeatedly when this Command is scheduled to run
 	protected void execute() {
-		if (Math.abs(camera.getX() - centerX) > threshold) {
-			if (camera.getX() > centerX) {
-				driveTrain.setSpeeds(-speed, speed);
-			} else
-				driveTrain.setSpeeds(speed, -speed);
+		if(camera.getX()!=-1)
+		{
+			//double speed = Math.abs(camera.getX() - centerX)*this.speed;
+			if(speed<.2)
+				speed = .4;
+			if (Math.abs(camera.getX() - centerX) > threshold) {
+				if (camera.getX() > centerX) {
+					driveTrain.setSpeeds(-speed, speed);
+				} else
+					driveTrain.setSpeeds(speed, -speed);
+			}
 		}
+		else
+			driveTrain.setSpeeds(0, 0);
+
 	}
 
 	// Make this return true when this Command no longer needs to run execute()
 	protected boolean isFinished() {
 
-		return Math.abs(camera.getX() - centerX) <= threshold;
+		return !Robot.oi.aim.get() || Math.abs(camera.getX() - centerX) <= threshold;
 	}
 
 	// Called once after isFinished returns true

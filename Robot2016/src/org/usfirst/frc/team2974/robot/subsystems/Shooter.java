@@ -2,6 +2,7 @@ package org.usfirst.frc.team2974.robot.subsystems;
 
 import org.usfirst.frc.team2974.robot.Robot;
 import org.usfirst.frc.team2974.robot.RobotMap;
+import org.usfirst.frc.team2974.robot.commands.Shoot;
 import org.usfirst.frc.team2974.robot.commands.ShootTemp;
 
 import edu.wpi.first.wpilibj.CANTalon;
@@ -17,15 +18,17 @@ public class Shooter extends Subsystem {
 	Solenoid latch = RobotMap.latch;
 	CANTalon tensioner = RobotMap.tensioner;
 
-	private final double maxTensionerPower = 0.25;
-	private final double holdTensionerPower = .125;
+	boolean isInit = false;
+	
+	private final double maxTensionerPower = 0.40;
+	private final double holdTensionerPower = .000;
 
 	private TensionerState state;
 
-	private final double ForwardThreshold = .1;
-	private final double ReverseThreshold = .1;
-	private final double ForwardLimit = 10;
-	private final double ReverseLimit = 30;
+	private final double ForwardThreshold = 1000;
+	private final double ReverseThreshold = 300;
+	private final double ForwardLimit = 110000;
+	private final double ReverseLimit = 500;
 
 	private DigitalInput forwardLimitSwitch = RobotMap.forwardLimit;
 	private DigitalInput reverseLimitSwitch = RobotMap.backwardLimit;
@@ -33,8 +36,10 @@ public class Shooter extends Subsystem {
 
 	public Shooter() {
 		state = TensionerState.untensioned;
-		tensioner.setFeedbackDevice(CANTalon.FeedbackDevice.AnalogEncoder);
+		tensioner.setFeedbackDevice(CANTalon.FeedbackDevice.QuadEncoder);
 		tensioner.changeControlMode(CANTalon.TalonControlMode.PercentVbus);
+		
+		tensioner.reset();
 		tensioner.enable();
 	}
 
@@ -43,7 +48,7 @@ public class Shooter extends Subsystem {
 	}
 
 	public void initDefaultCommand() {
-		setDefaultCommand(new ShootTemp());
+		setDefaultCommand(new Shoot());
 	}
 
 	public void latch() {
@@ -94,7 +99,15 @@ public class Shooter extends Subsystem {
 
 	private void setTensionerPower(double power) {
 		if (power < 0 && isReverseLimit())
+		{
 			setZero();
+			if(!isInit)
+			{
+				tensioner.setEncPosition(1000);
+				isInit = true;
+			}
+			
+		}
 		else if (power > 0 && isForwardLimit())
 			setZero();
 		else
@@ -102,7 +115,8 @@ public class Shooter extends Subsystem {
 	}
 
 	public double getTensionerValue() {
-		return tensioner.getAnalogInPosition();
+		return tensioner.getEncPosition();
+		
 	}
 	
 	public void dumpSmartDashboardValues()

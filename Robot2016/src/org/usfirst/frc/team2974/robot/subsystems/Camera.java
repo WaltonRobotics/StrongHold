@@ -8,34 +8,73 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  *
  */
 public class Camera extends Subsystem {
-	NetworkTable table;
-	double[] defaultValue;
 
-	public void initDefaultCommand() {}
+	double[] defaultValue;
+	NetworkTable table;
+
+	// final int Max_Area = 2700;
+	public void initDefaultCommand() {
+	}
 
 	public Camera() {
-		defaultValue = new double[]{-1,-1};
+		defaultValue = new double[] { -1 };
+		setNetTable();
+	}
+
+	private int getIndexofMaxAreaContour() {
+		NetworkTable table = getNetTable();
+		int maxIndex = -1;
+		if (table != null) {
+			double[] area = table.getNumberArray("area", defaultValue);
+			try {
+				double maxArea = 0;
+				for (int i = 0; i < area.length; i++) {
+					if (area[i] > maxArea) {
+						maxArea = area[i];
+						maxIndex = i;
+					}
+				}
+			} catch (Exception e) {
+			}
+		}
+
+		return maxIndex;
+	}
+
+	private NetworkTable getNetTable() {
+
+		return table;
+
+	}
+
+	public void setNetTable() {
+		try {
+			table = NetworkTable.getTable("GRIP/report");
+		} catch (Exception e) {
+			table = null;
+		}
 	}
 
 	public double getX() {
-		try {
-			table = NetworkTable.getTable("GRIP/report");
-			double[] centerX = table.getNumberArray("centerX", defaultValue);
-			return centerX[0];
-		} catch (Exception e) {
+		int index = getIndexofMaxAreaContour();
+		if (index != -1) {
+			double[] centerX = getNetTable().getNumberArray("centerX", defaultValue);
+			return centerX[index];
 		}
-		return -1;
 
+		return index;
 	}
 
 	public double getY() {
-		try {
-			table = NetworkTable.getTable("GRIP/report");
-			double[] centerY = table.getNumberArray("centerY", defaultValue);
-			return centerY[0];
-		} catch (Exception e) {
+		int index = getIndexofMaxAreaContour();
+		if (index != -1) {
+			double[] centerY = getNetTable().getNumberArray("centerY", defaultValue);
+			if(index>centerY.length)
+				index = 0;
+			return centerY[index];
 		}
-		return -1;
+
+		return index;
 	}
 
 	public void dumpSmartDshboardValues() {
