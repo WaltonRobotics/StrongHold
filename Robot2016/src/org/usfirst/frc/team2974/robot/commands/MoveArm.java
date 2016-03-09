@@ -1,15 +1,9 @@
 package org.usfirst.frc.team2974.robot.commands;
 
-import org.usfirst.frc.team2974.logging.Log;
-import org.usfirst.frc.team2974.logging.LogMessage;
-import org.usfirst.frc.team2974.logging.enumerations.Severity;
-import org.usfirst.frc.team2974.logging.enumerations.SubSystem;
 import org.usfirst.frc.team2974.robot.Gamepad;
 import org.usfirst.frc.team2974.robot.Robot;
-import org.usfirst.frc.team2974.robot.RobotMap;
 import org.usfirst.frc.team2974.robot.subsystems.Arm;
 
-import edu.wpi.first.wpilibj.CANTalon;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
@@ -17,39 +11,29 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  *
  */
 public class MoveArm extends Command {
-	CANTalon arm = RobotMap.arm;
-	private final double threshold = 10;
-	private final double power = .5;
+	Arm arm = Robot.arm;
 	private final double positionLow = 0;
 	private final double positionMiddle = 125;
 	private final double positionUp = 250;
 
 	public MoveArm() {
-		requires(Robot.arm);
+		requires(arm);
 	}
 
 	// Called repeatedly when this Command is scheduled to run
 	protected void execute() {
 		SmartDashboard.putNumber("armvalue", Robot.arm.getPotValue());
-
-		arm.set(Robot.oi.gamepad.getLeftY());
-		double targetPosition =-500;
+		
 		if (Robot.oi.gamepad.getPOVButton(Gamepad.POV.W))
-			targetPosition = positionLow;
+			arm.moveArmPosition(positionLow);
 		else if (Robot.oi.gamepad.getPOVButton(Gamepad.POV.N))
-			targetPosition = positionMiddle;
+			arm.moveArmPosition(positionMiddle);
 		else if (Robot.oi.gamepad.getPOVButton(Gamepad.POV.E))
-			targetPosition = positionUp;
-
-		if (targetPosition != -500) {
-			if (Math.abs(Robot.arm.getPotValue()) - targetPosition < threshold) {
-				Robot.arm.moveArm(0);
-			}
-			if (Robot.arm.getPotValue() > targetPosition) {
-				Robot.arm.moveArm(-power);
-			} else
-				Robot.arm.moveArm(power);
-		}
+			arm.moveArmPosition(positionUp);
+		else
+			arm.moveArmPower(Robot.oi.gamepad.getLeftY());
+		
+		
 	}
 
 	// Make this return true when this Command no longer needs to run execute()

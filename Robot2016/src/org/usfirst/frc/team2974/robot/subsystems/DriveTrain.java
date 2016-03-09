@@ -18,8 +18,10 @@ import motionProfilling.MotionControl;
  */
 public class DriveTrain extends Subsystem {
     
-	private Talon right = RobotMap.driveTrainRight;
-	private Talon left = RobotMap.driveTrainLeft;
+	private Talon right1 = RobotMap.driveTrainRight1;
+	private Talon left1 = RobotMap.driveTrainLeft1;
+	private Talon right2 = RobotMap.driveTrainRight2;
+	private Talon left2 = RobotMap.driveTrainLeft2;
 	
 	private Encoder encoderLeft = RobotMap.encoderLeft;
 	private Encoder encoderRight = RobotMap.encoderRight;
@@ -34,13 +36,15 @@ public class DriveTrain extends Subsystem {
 	private class SharedDrive implements PIDOutput
 	{
 		SpeedController one;
+		SpeedController two;
 		
 		Boolean isLeft;
 		
-		public SharedDrive(SpeedController one, boolean isLeft)
+		public SharedDrive(SpeedController one,SpeedController two, boolean isLeft)
 		{
 			this.isLeft = isLeft;
 			this.one = one;
+			this.two = two;
 		}
 		@Override
 		public void pidWrite(double out)
@@ -68,16 +72,19 @@ public class DriveTrain extends Subsystem {
 		encoderLeft.setPIDSourceType(PIDSourceType.kDisplacement);
 		encoderRight.setPIDSourceType(PIDSourceType.kDisplacement);
 		
-		leftController = new PIDControllerAccel(1, 0, 0,1, RobotMap.encoderLeft,  new SharedDrive(left,true),1,0);
-		rightController = new PIDControllerAccel(1, 0, 0,1, RobotMap.encoderRight,  new SharedDrive( right,false),1,0);
+		leftController = new PIDControllerAccel(1, 0, 0,1, RobotMap.encoderLeft,  new SharedDrive(left1,left2,true),1,0);
+		rightController = new PIDControllerAccel(1, 0, 0,1, RobotMap.encoderRight,  new SharedDrive( right1, right2,false),1,0);
+		
 	}
     public void initDefaultCommand() {
         setDefaultCommand(new Drive());
     }
     public void setSpeeds(double left, double right)
     {
-    	this.right.set(right);
-    	this.left.set(-left);
+    	this.right1.set(right);
+    	this.right1.set(right);
+    	this.left1.set(-left);
+    	this.left2.set(-left);
     	SmartDashboard.putNumber("left", -left);
     	SmartDashboard.putNumber("right", right);
     }

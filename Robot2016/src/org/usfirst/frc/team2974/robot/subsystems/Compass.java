@@ -3,6 +3,7 @@ package org.usfirst.frc.team2974.robot.subsystems;
 import org.usfirst.frc.team2974.robot.RobotMap;
 import org.usfirst.frc.team2974.robot.sensors.BNO055;
 import org.usfirst.frc.team2974.robot.sensors.BNO055.BNO055Exception;
+import org.usfirst.frc.team2974.robot.sensors.BNO055.OperationMode;
 
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -19,9 +20,11 @@ public class Compass extends Subsystem {
     {
     	try {
 			compass.initialize();
+			compass.setMode(OperationMode.OPERATION_MODE_IMUPLUS);
 		} catch (BNO055Exception e) {
 			e.printStackTrace();
 		}
+
     }
     /**
      * left increase
@@ -31,7 +34,7 @@ public class Compass extends Subsystem {
     public double getYaw()
     {
     	try {
-			return compass.getQuaternion()[0];
+			return compass.getVector(BNO055.VectorType.VECTOR_EULER)[0];
 		} catch (BNO055Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -46,13 +49,13 @@ public class Compass extends Subsystem {
      */
     public double getPitch()
     {
-    	try {
-			return compass.getQuaternion()[1];
-		} catch (BNO055Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-    	return 0;
+       	try {
+    			return compass.getVector(BNO055.VectorType.VECTOR_EULER)[1];
+    		} catch (BNO055Exception e) {
+    			// TODO Auto-generated catch block
+    			e.printStackTrace();
+    		}
+        	return 0;
     }
     /**
      * i dont care
@@ -60,34 +63,21 @@ public class Compass extends Subsystem {
      */
     public double getRoll()
     {
-    	try {
-			return compass.getQuaternion()[2];
-		} catch (BNO055Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-    	return 0;
+       	try {
+    			return compass.getVector(BNO055.VectorType.VECTOR_EULER)[2];
+    		} catch (BNO055Exception e) {
+    			// TODO Auto-generated catch block
+    			e.printStackTrace();
+    		}
+        	return 0;
     }
-    /**
-     * 
-     * @return idek
-     */
-    public double getHeading4()
-    {
-    	try {
-			return compass.getQuaternion()[3];
-		} catch (BNO055Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-    	return 0;
-    }
+
     
     public void dumpSmartDashboardValues(){
     	SmartDashboard.putNumber("Yaw", getYaw());
     	SmartDashboard.putNumber("Pitch", getPitch());
     	SmartDashboard.putNumber("Roll", getRoll());
-    	SmartDashboard.putNumber("heading4 unknown", getHeading4());
+    	
     }
 }
 

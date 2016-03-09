@@ -36,8 +36,10 @@ public class RobotMap {
     public static AnalogInput analog3;
 
     //drive train
-	public static Talon driveTrainRight;
-    public static Talon driveTrainLeft;
+	public static Talon driveTrainRight1;
+	public static Talon driveTrainRight2;
+    public static Talon driveTrainLeft1;
+    public static Talon driveTrainLeft2;
     
     public static Encoder encoderLeft;
     public static Encoder encoderRight;
@@ -46,7 +48,7 @@ public class RobotMap {
     
     //intake
     public static Talon intakeMotor;
-	public static Solenoid intakeSolenoid;
+	public static Solenoid flapper;
 	
 	//shooter
     public static Encoder encoderShooter;
@@ -88,16 +90,19 @@ public class RobotMap {
         shooterLimit = digital0;
         
     	//drive train
-        encoderRight = new Encoder(digital2,digital3);
-        encoderLeft = new Encoder(digital0,digital1);
+        encoderRight = new Encoder(digital6,digital7);
+        encoderLeft = new Encoder(digital9,digital8);
         
-    	driveTrainRight = new Talon(1);
-        driveTrainLeft = new Talon(0);
+    	driveTrainRight1 = new Talon(2);
+    	driveTrainRight2 = new Talon(3);
+    	
+    	driveTrainLeft1 = new Talon(0);
+        driveTrainLeft2 = new Talon(1);
         //pcm = 1
         
         //arm
         arm = new CANTalon(2);
-        armPot = new AnalogPotentiometer(analog0,1000,-130);
+        armPot = new AnalogPotentiometer(analog0,1000,-520);
         
         //shifter
         pnuematicsShifter = new Solenoid(0);
@@ -109,8 +114,8 @@ public class RobotMap {
         tensioner = new CANTalon(1);
         
         //intake
-        intakeMotor = new Talon(2);
-        intakeSolenoid = new Solenoid(1);
+        intakeMotor = new Talon(4);
+        flapper = new Solenoid(1);
         
     }
 }

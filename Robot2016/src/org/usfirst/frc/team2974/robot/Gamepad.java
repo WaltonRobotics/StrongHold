@@ -27,7 +27,7 @@ public class Gamepad extends Joystick
 	 */
 	public double getLeftY( )
 	{
-
+		
 		return getRawAxis(1);
 	}
 

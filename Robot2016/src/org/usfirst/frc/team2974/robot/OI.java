@@ -2,6 +2,8 @@ package org.usfirst.frc.team2974.robot;
 
 import org.usfirst.frc.team2974.robot.autonomousCommands.DriveSpline;
 import org.usfirst.frc.team2974.robot.commands.Aim;
+import org.usfirst.frc.team2974.robot.commands.ShooterReset;
+import org.usfirst.frc.team2974.robot.commands.UnTension;
 
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.Button;
@@ -29,10 +31,13 @@ public class OI {
 	public Button latchButton1;
 	public Button latchButton2;
 	public Button shoot;
-	public Button aimButton2;
+	public Button resetShooter;
+	public Button startUntentioning;
+	public Button stopUntensioning;
+	
 	public OI()
 	{
-		SmartDashboard.putData(new DriveSpline());
+		//SmartDashboard.putData(new DriveSpline());
 		
 		left = new Joystick(0);
 		right = new Joystick(1);
@@ -43,17 +48,16 @@ public class OI {
 		intake = new JoystickButton(gamepad, 1);
 		outtake = new JoystickButton(gamepad, 3);
 		stoptake = new JoystickButton(gamepad, 2);
-		shoot = new JoystickButton(right, 3);
+		shoot = new JoystickButton(right, 1);
 		flapperUp = new JoystickButton(gamepad,6);
 		flapperDown = new JoystickButton(gamepad, 8);
 		aim = new JoystickButton(right, 2);
-		
-		
-		//get rid l8er
-		latchButton1 = new JoystickButton(right, 4);
-		latchButton2 = new JoystickButton(right, 5);
-		aimButton2 = new JoystickButton(left, 10);
+		startUntentioning = new JoystickButton(left, 8);
+		stopUntensioning = new JoystickButton(left, 9);
+		resetShooter = new JoystickButton(left, 10);
 
+		startUntentioning.whenPressed(new UnTension());
+		resetShooter.whenPressed(new ShooterReset());
 		aim.whenPressed(new Aim());
 	}
 

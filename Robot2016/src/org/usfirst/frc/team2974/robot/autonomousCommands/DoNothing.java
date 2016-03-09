@@ -1,18 +1,15 @@
-
-package org.usfirst.frc.team2974.robot.commands;
+package org.usfirst.frc.team2974.robot.autonomousCommands;
 
 import edu.wpi.first.wpilibj.command.Command;
-
-import org.usfirst.frc.team2974.robot.Robot;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  *
  */
-public class ExampleCommand extends Command {
+public class DoNothing extends Command {
 
-    public ExampleCommand() {
-        // Use requires() here to declare subsystem dependencies
-        requires(Robot.exampleSubsystem);
+    public DoNothing() {
+        
     }
 
     // Called just before this Command runs the first time
@@ -21,6 +18,7 @@ public class ExampleCommand extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
+    	SmartDashboard.putString("Autonomous stuff", "I'm doing nothing");
     }
 
     // Make this return true when this Command no longer needs to run execute()

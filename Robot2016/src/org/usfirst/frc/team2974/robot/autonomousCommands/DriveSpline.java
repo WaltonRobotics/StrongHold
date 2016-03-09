@@ -17,11 +17,10 @@ public class DriveSpline extends Command {
 	private double offsetTime;
 	private DriveTrain drive; 
 	
-    public DriveSpline() {
+    public DriveSpline(double time ) {
        	drive = Robot.driveTrain;
     	requires(drive);
     }
-
     // Called just before this Command runs the first time
     protected void initialize() {
     	mc = new MotionControl(SmartDashboard.getString("Spline","0,0,0:1,1,90" ),0,0);

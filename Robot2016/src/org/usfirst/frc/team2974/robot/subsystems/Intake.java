@@ -12,7 +12,7 @@ import edu.wpi.first.wpilibj.command.Subsystem;
  */
 public class Intake extends Subsystem {
 	   Talon intakeMotor = RobotMap.intakeMotor;
-	   Solenoid intakeSolenoid = RobotMap.intakeSolenoid;
+	   Solenoid intakeSolenoid = RobotMap.flapper;
 
 	    public void initDefaultCommand() {
 	    	setDefaultCommand(new LoadBall());

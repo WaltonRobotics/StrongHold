@@ -33,9 +33,9 @@ public class Drive extends Command {
     		Robot.driveTrain.shiftDown();
     	if(Robot.oi.shiftUp.get())
     		Robot.driveTrain.shiftUp();
-    	
-    	if(Robot.oi.aimButton2.get())
-    		Robot.camera.dumpSmartDshboardValues();
+//    	
+//    	if(Robot.oi.aimButton2.get())
+//    		Robot.camera.dumpSmartDshboardValues();
 
     }
 

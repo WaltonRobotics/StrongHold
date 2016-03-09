@@ -5,7 +5,11 @@ import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
+import java.io.IOException;
+
+import org.usfirst.frc.team2974.robot.autonomousCommands.DoNothing;
 import org.usfirst.frc.team2974.robot.commands.Shoot;
 import org.usfirst.frc.team2974.robot.commands.ShootTemp;
 import org.usfirst.frc.team2974.robot.commands.ShowInputs;
@@ -34,6 +38,14 @@ public class Robot extends IterativeRobot {
      * used for any initialization code.
      */
     public void robotInit() {
+//    	try{
+//    		new ProcessBuilder("/home/lvuser/grip").inheritIO().start();
+//    	}
+//    	catch(IOException e)
+//    	{
+//    		SmartDashboard.putString("Camera Error", "Camera not initialized, do not use aim");
+//    		e.printStackTrace();
+//    	}
     	RobotMap.init();
     	
     	driveTrain = new DriveTrain();
@@ -47,17 +59,18 @@ public class Robot extends IterativeRobot {
     	createAutonomousChooser();
     }
     private void createAutonomousChooser()
-    {//Chival de frise, a "moat", ramparts, a drawbridge, a Sally port, a portcullis, a rock wall, and "rough terrain".
-//    	autoChooser = new SendableChooser();
-//    	autoChooser.addDefault("Do Nothing",new DoNothing());
-//    	autoChooser.addObject("low bar",new OneTote_NoStep());
-//    	autoChooser.addObject("rock wall",new OneTote_Step());
-//    	autoChooser.addObject("spy bot", new Forward_NoStep());
-//    	autoChooser.addObject("moat", new Forward_Step());
-//    	autoChooser.addObject("ramparts", new OneTote_Dynamic());
-//    	autoChooser.addObject("rough terrain", new Forward_Dynamic());
-//    	autoChooser.addObject("porticullus", object);
-//    	SmartDashboard.putData("PICK AN AUTONOMOUS",autoChooser);
+    {
+    	//Chival de frise, a "moat", ramparts, a drawbridge, a Sally port, a portcullis, a rock wall, and "rough terrain".
+    	autoChooser = new SendableChooser();
+    	autoChooser.addDefault("Do Nothing",new DoNothing());
+    	autoChooser.addObject("low bar",new DoNothing());
+    	autoChooser.addObject("rock wall",new DoNothing());
+    	autoChooser.addObject("spy bot", new DoNothing());
+    	autoChooser.addObject("moat", new DoNothing());
+    	autoChooser.addObject("ramparts", new DoNothing());
+    	autoChooser.addObject("rough terrain", new DoNothing());
+    	autoChooser.addObject("porticullus", new DoNothing());
+    	SmartDashboard.putData("PICK AN AUTONOMOUS NOW!",autoChooser);
     }
 
 	/**
@@ -95,7 +108,7 @@ public class Robot extends IterativeRobot {
 
     public void teleopInit() {
         if (autonomousCommand != null) autonomousCommand.cancel();
-        Scheduler.getInstance().add(new Shoot());
+        //Scheduler.getInstance().add(new ShootTemp());
        // Scheduler.getInstance().add(new UpdateFiltration());
     }
 

@@ -31,6 +31,11 @@ public class ShootTemp extends Command {
     		Robot.shooter.unTension();
     	else
     		Robot.shooter.setZero();
+    	if(Robot.oi.right.getRawButton(10))
+    		Robot.shooter.latch();
+    	else
+    		if(Robot.oi.right.getRawButton(11))
+    			Robot.shooter.unlatch();
     	
     	//get rid of following code
 //    	if(Robot.oi.latchButton1.get())

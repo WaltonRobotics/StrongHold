@@ -11,8 +11,10 @@ public class Camera extends Subsystem {
 
 	double[] defaultValue;
 	NetworkTable table;
+	double centerX;
+	double centerY;
 
-	// final int Max_Area = 2700;
+
 	public void initDefaultCommand() {
 	}
 
@@ -21,7 +23,7 @@ public class Camera extends Subsystem {
 		setNetTable();
 	}
 
-	private int getIndexofMaxAreaContour() {
+	private int setMaximums() {
 		NetworkTable table = getNetTable();
 		int maxIndex = -1;
 		if (table != null) {
@@ -33,8 +35,23 @@ public class Camera extends Subsystem {
 						maxArea = area[i];
 						maxIndex = i;
 					}
+					if(maxIndex!=-1)
+					{
+						double[] X = getNetTable().getNumberArray("centerX", defaultValue);
+						centerX =X[maxIndex];
+						double[] Y = getNetTable().getNumberArray("centerY",defaultValue);
+						centerY = Y[maxIndex];
+					}
+					else
+					{
+						centerX = -1;
+						centerY = -1;
+					}
+					
 				}
 			} catch (Exception e) {
+				centerX = -1;
+				centerY = -1;
 			}
 		}
 
@@ -56,25 +73,13 @@ public class Camera extends Subsystem {
 	}
 
 	public double getX() {
-		int index = getIndexofMaxAreaContour();
-		if (index != -1) {
-			double[] centerX = getNetTable().getNumberArray("centerX", defaultValue);
-			return centerX[index];
-		}
-
-		return index;
+		setMaximums();//TODO make this better
+		return centerX;
 	}
 
 	public double getY() {
-		int index = getIndexofMaxAreaContour();
-		if (index != -1) {
-			double[] centerY = getNetTable().getNumberArray("centerY", defaultValue);
-			if(index>centerY.length)
-				index = 0;
-			return centerY[index];
-		}
-
-		return index;
+		setMaximums();
+		return centerY;
 	}
 
 	public void dumpSmartDshboardValues() {

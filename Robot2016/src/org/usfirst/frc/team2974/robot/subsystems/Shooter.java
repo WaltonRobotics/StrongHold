@@ -19,7 +19,7 @@ public class Shooter extends Subsystem {
 	CANTalon tensioner = RobotMap.tensioner;
 
 	boolean isInit = false;
-	
+
 	private final double maxTensionerPower = 0.40;
 	private final double holdTensionerPower = .000;
 
@@ -28,7 +28,7 @@ public class Shooter extends Subsystem {
 	private final double ForwardThreshold = 1000;
 	private final double ReverseThreshold = 300;
 	private final double ForwardLimit = 110000;
-	private final double ReverseLimit = 500;
+	private final double ReverseLimit = 1300;
 
 	private DigitalInput forwardLimitSwitch = RobotMap.forwardLimit;
 	private DigitalInput reverseLimitSwitch = RobotMap.backwardLimit;
@@ -38,7 +38,7 @@ public class Shooter extends Subsystem {
 		state = TensionerState.untensioned;
 		tensioner.setFeedbackDevice(CANTalon.FeedbackDevice.QuadEncoder);
 		tensioner.changeControlMode(CANTalon.TalonControlMode.PercentVbus);
-		
+
 		tensioner.reset();
 		tensioner.enable();
 	}
@@ -74,9 +74,9 @@ public class Shooter extends Subsystem {
 	}
 
 	public TensionerState getState() {
-		if (getTensionerValue() > ForwardLimit - ForwardThreshold )
+		if (getTensionerValue() > ForwardLimit - ForwardThreshold || isForwardLimit())
 			state = TensionerState.tensioned;
-		else if (getTensionerValue() < ReverseLimit + ReverseThreshold) 
+		else if (getTensionerValue() < ReverseLimit + ReverseThreshold || isReverseLimit())
 			state = TensionerState.untensioned;
 		return state;
 	}
@@ -98,17 +98,11 @@ public class Shooter extends Subsystem {
 	}
 
 	private void setTensionerPower(double power) {
-		if (power < 0 && isReverseLimit())
-		{
+		if (power < 0 && isReverseLimit()) {
 			setZero();
-			if(!isInit)
-			{
-				tensioner.setEncPosition(1000);
-				isInit = true;
-			}
-			
-		}
-		else if (power > 0 && isForwardLimit())
+			tensioner.setEncPosition(1000);
+			isInit = true;
+		} else if (power > 0 && isForwardLimit())
 			setZero();
 		else
 			tensioner.set(power);
@@ -116,11 +110,10 @@ public class Shooter extends Subsystem {
 
 	public double getTensionerValue() {
 		return tensioner.getEncPosition();
-		
+
 	}
-	
-	public void dumpSmartDashboardValues()
-	{
+
+	public void dumpSmartDashboardValues() {
 		SmartDashboard.putNumber("Tensioner Encoder", Robot.shooter.getTensionerValue());
 		SmartDashboard.putNumber("Raw tensioner encoder value", tensioner.getAnalogInPosition());
 	}
