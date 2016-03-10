@@ -64,12 +64,12 @@ public class Robot extends IterativeRobot {
     	autoChooser = new SendableChooser();
     	autoChooser.addDefault("Do Nothing",new DoNothing());
     	autoChooser.addObject("low bar",new DoNothing());
-    	autoChooser.addObject("rock wall",new DoNothing());
-    	autoChooser.addObject("spy bot", new DoNothing());
-    	autoChooser.addObject("moat", new DoNothing());
-    	autoChooser.addObject("ramparts", new DoNothing());
-    	autoChooser.addObject("rough terrain", new DoNothing());
-    	autoChooser.addObject("porticullus", new DoNothing());
+//    	autoChooser.addObject("rock wall",new DoNothing());
+//    	autoChooser.addObject("spy bot", new DoNothing());
+//    	autoChooser.addObject("moat", new DoNothing());
+//    	autoChooser.addObject("ramparts", new DoNothing());
+//    	autoChooser.addObject("rough terrain", new DoNothing());
+//    	autoChooser.addObject("porticullus", new DoNothing());
     	SmartDashboard.putData("PICK AN AUTONOMOUS NOW!",autoChooser);
     }
 
@@ -96,7 +96,10 @@ public class Robot extends IterativeRobot {
 	 * or additional comparisons to the switch structure below with additional strings & commands.
 	 */
     public void autonomousInit() {
+    	autonomousCommand= (Command)autoChooser.getSelected();
+    	autonomousCommand.start();
     	Scheduler.getInstance().add(new ShowInputs());
+
     }
 
     /**
@@ -108,8 +111,8 @@ public class Robot extends IterativeRobot {
 
     public void teleopInit() {
         if (autonomousCommand != null) autonomousCommand.cancel();
-        //Scheduler.getInstance().add(new ShootTemp());
-       // Scheduler.getInstance().add(new UpdateFiltration());
+        Scheduler.getInstance().add(new ShowInputs());
+       
     }
 
     /**
