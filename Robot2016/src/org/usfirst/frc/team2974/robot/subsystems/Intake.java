@@ -1,7 +1,7 @@
 package org.usfirst.frc.team2974.robot.subsystems;
 
 import org.usfirst.frc.team2974.robot.RobotMap;
-import org.usfirst.frc.team2974.robot.commands.LoadBall;
+import org.usfirst.frc.team2974.robot.commands.IntakeBall;
 
 import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.Talon;
@@ -15,7 +15,7 @@ public class Intake extends Subsystem {
 	   Solenoid intakeSolenoid = RobotMap.flapper;
 
 	    public void initDefaultCommand() {
-	    	setDefaultCommand(new LoadBall());
+	    	setDefaultCommand(new IntakeBall());
 	    }
 	    public void input(){
 	    	intakeMotor.set(1);

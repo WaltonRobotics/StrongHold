@@ -9,36 +9,35 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 /**
  *
  */
-public class DriveStraight extends Command {
-	double time;
-	double speed;
-	double startTime;
-    public DriveStraight() {
+public class TurnRight extends Command {
+double time;
+double startTime;
+double speed;
+    public TurnRight() {
         requires(Robot.driveTrain);
-    	SmartDashboard.putNumber("DriveStraightTime", 4);
-    	SmartDashboard.putNumber("DriveStraightSpeed", .4);
+        SmartDashboard.putNumber("TurnTime", 1);
+        SmartDashboard.putNumber("TurnSpeed", .3);
     }
-    
+
     // Called just before this Command runs the first time
     protected void initialize() {
-    	time = (double) SmartDashboard.getNumber("DriveStraightTime",4 );
-    	speed = (double) SmartDashboard.getNumber("DriveStraightSpeed", .4);
     	startTime = Timer.getFPGATimestamp();
+    	time = (double)SmartDashboard.getNumber("TurnTime",1);
+    	speed = (double)SmartDashboard.getNumber("TurnSpeed",.3);
     }
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	Robot.driveTrain.setSpeeds(speed, speed);
+    	Robot.driveTrain.setSpeeds(speed, 0);
     }
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-        return Timer.getFPGATimestamp()-startTime > time;
+        return Robot.camera.getX()!=-1 || Timer.getFPGATimestamp()-startTime>time;
     }
 
     // Called once after isFinished returns true
     protected void end() {
-    	SmartDashboard.putString("Autonomous stuff", "There ya go, you crossed the low bar");
     }
 
     // Called when another command which requires one or more of the same

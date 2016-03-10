@@ -12,9 +12,9 @@ import edu.wpi.first.wpilibj.command.Command;
 /**
  *
  */
-public class LoadBall extends Command {
+public class IntakeBall extends Command {
 private IntakeRollerState currentState;
-    public LoadBall() {
+    public IntakeBall() {
         // Use requires() here to declare subsystem dependencies
         requires(Robot.intake);
     }
