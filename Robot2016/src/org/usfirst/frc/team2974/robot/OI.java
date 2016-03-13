@@ -43,13 +43,13 @@ public class OI {
 		right = new Joystick(1);
 		gamepad = new Gamepad(2);
 			
-		shiftUp = new JoystickButton (left,3);
-		shiftDown = new JoystickButton (left,2);
+		shiftUp = new JoystickButton (left,2);
+		shiftDown = new JoystickButton (left,3);
 		intake = new JoystickButton(gamepad, 1);
 		outtake = new JoystickButton(gamepad, 3);
 		stoptake = new JoystickButton(gamepad, 2);
 		shoot = new JoystickButton(right, 1);
-		flapperUp = new JoystickButton(gamepad,6);
+		flapperUp = new JoystickButton(gamepad,7);
 		flapperDown = new JoystickButton(gamepad, 8);
 		aim = new JoystickButton(right, 2);
 		startUntentioning = new JoystickButton(left, 8);

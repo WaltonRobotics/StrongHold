@@ -17,7 +17,7 @@ public class Arm extends Subsystem {
     private AnalogPotentiometer armPot = RobotMap.armPot;
     private final double zeroPosition = 0;
     private PIDController pid = new PIDController(1, 0, 0, armPot, arm);
-    private double absoluteTolerance = 5;
+    private double absoluteTolerance = 10;
     public Arm()
     {
     	pid.enable();

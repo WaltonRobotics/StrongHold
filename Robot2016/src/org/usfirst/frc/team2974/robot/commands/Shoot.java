@@ -123,7 +123,7 @@ public class Shoot extends Command {
 
 		@Override
 		boolean isFinished() {
-			return Timer.getFPGATimestamp()-initTime > .3;
+			return Timer.getFPGATimestamp()-initTime > .1;
 		}
 		
 	}

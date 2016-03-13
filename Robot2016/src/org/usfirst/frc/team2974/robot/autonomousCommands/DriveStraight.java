@@ -1,6 +1,7 @@
 package org.usfirst.frc.team2974.robot.autonomousCommands;
 
 import org.usfirst.frc.team2974.robot.Robot;
+import org.usfirst.frc.team2974.robot.RobotMap;
 
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Command;
@@ -13,22 +14,38 @@ public class DriveStraight extends Command {
 	double time;
 	double speed;
 	double startTime;
+	double multiplierConstatnt = .01;
+	double threshold = 10;
     public DriveStraight() {
         requires(Robot.driveTrain);
-    	SmartDashboard.putNumber("DriveStraightTime", 4);
-    	SmartDashboard.putNumber("DriveStraightSpeed", .4);
+    	//SmartDashboard.putNumber("DriveStraightTime", 4.5);
+    	//SmartDashboard.putNumber("DriveStraightSpeed", .5);
     }
     
     // Called just before this Command runs the first time
     protected void initialize() {
-    	time = (double) SmartDashboard.getNumber("DriveStraightTime",4 );
-    	speed = (double) SmartDashboard.getNumber("DriveStraightSpeed", .4);
+    	time = 4.5;
+    	speed = .5;//(double) SmartDashboard.getNumber("DriveStraightSpeed", .5);
     	startTime = Timer.getFPGATimestamp();
     }
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	Robot.driveTrain.setSpeeds(speed, speed);
+    	double speedLeft = speed;
+    	double speedRight = speed;
+//    	if(Math.abs(RobotMap.encoderLeft.getzDistance()-RobotMap.encoderRight.getDistance())>threshold)
+//    	{
+//    		if(RobotMap.encoderLeft.getDistance()>RobotMap.encoderRight.getDistance())
+//        		speedRight+= (RobotMap.encoderLeft.getDistance()-RobotMap.encoderRight.getDistance())*multiplierConstatnt;
+//        	else 
+//        		speedLeft+=(RobotMap.encoderRight.getDistance()-RobotMap.encoderLeft.getDistance())*multiplierConstatnt;
+//    	}
+    	
+    	Robot.driveTrain.setSpeeds(speedLeft, speedRight);
+    	if(Timer.getFPGATimestamp()-startTime>.3&& Timer.getFPGATimestamp()-startTime<.7)
+    		Robot.arm.moveArmPower(-1);
+    	else
+    		Robot.arm.moveArmPower(0);
     }
 
     // Make this return true when this Command no longer needs to run execute()

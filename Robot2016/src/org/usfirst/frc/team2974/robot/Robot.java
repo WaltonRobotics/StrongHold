@@ -9,7 +9,10 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 import java.io.IOException;
 
+import org.usfirst.frc.team2974.robot.autonomousCommandGroups.LowBar;
 import org.usfirst.frc.team2974.robot.autonomousCommands.DoNothing;
+import org.usfirst.frc.team2974.robot.autonomousCommands.DriveStraight;
+import org.usfirst.frc.team2974.robot.autonomousCommands.DriveStraightMoat;
 import org.usfirst.frc.team2974.robot.commands.Shoot;
 import org.usfirst.frc.team2974.robot.commands.ShootTemp;
 import org.usfirst.frc.team2974.robot.commands.ShowInputs;
@@ -63,14 +66,14 @@ public class Robot extends IterativeRobot {
     	//Chival de frise, a "moat", ramparts, a drawbridge, a Sally port, a portcullis, a rock wall, and "rough terrain".
     	autoChooser = new SendableChooser();
     	autoChooser.addDefault("Do Nothing",new DoNothing());
-    	autoChooser.addObject("low bar",new DoNothing());
-//    	autoChooser.addObject("rock wall",new DoNothing());
+    	autoChooser.addObject("move forward",new DriveStraight());
+    	autoChooser.addObject("move Forward faster",new DriveStraightMoat());
 //    	autoChooser.addObject("spy bot", new DoNothing());
 //    	autoChooser.addObject("moat", new DoNothing());
 //    	autoChooser.addObject("ramparts", new DoNothing());
 //    	autoChooser.addObject("rough terrain", new DoNothing());
 //    	autoChooser.addObject("porticullus", new DoNothing());
-    	SmartDashboard.putData("PICK AN AUTONOMOUS NOW!",autoChooser);
+    	SmartDashboard.putData("PICK AN AUTONOMOUS NOW, OR SUFFER THE CONSEQUENCES!",autoChooser);
     }
 
 	/**

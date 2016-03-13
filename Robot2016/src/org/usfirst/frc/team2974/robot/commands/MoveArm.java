@@ -13,8 +13,8 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 public class MoveArm extends Command {
 	Arm arm = Robot.arm;
 	private final double positionLow = 0;
-	private final double positionMiddle = 125;
-	private final double positionUp = 250;
+	private final double positionMiddle = -125;
+	private final double positionUp = -250;
 
 	public MoveArm() {
 		requires(arm);
@@ -31,7 +31,8 @@ public class MoveArm extends Command {
 		else if (Robot.oi.gamepad.getPOVButton(Gamepad.POV.E))
 			arm.moveArmPosition(positionUp);
 		else
-			arm.moveArmPower(Robot.oi.gamepad.getLeftY());
+			arm.moveArmPower(-1*Robot.oi.gamepad.getLeftY());
+		
 		
 		
 	}

@@ -82,7 +82,7 @@ public class DriveTrain extends Subsystem {
     public void setSpeeds(double left, double right)
     {
     	this.right1.set(right);
-    	this.right1.set(right);
+    	this.right2.set(right);
     	this.left1.set(-left);
     	this.left2.set(-left);
     	SmartDashboard.putNumber("left", -left);

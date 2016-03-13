@@ -27,7 +27,7 @@ public class Shooter extends Subsystem {
 
 	private final double ForwardThreshold = 1000;
 	private final double ReverseThreshold = 300;
-	private final double ForwardLimit = 110000;
+	private final double ForwardLimit = 135000;
 	private final double ReverseLimit = 1300;
 
 	private DigitalInput forwardLimitSwitch = RobotMap.forwardLimit;
