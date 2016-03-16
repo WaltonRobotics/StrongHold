@@ -13,6 +13,11 @@ public class ShowInputs extends Command {
 	// Called just before this Command runs the first time
 	protected void initialize() {
 		Robot.inputs.updateSmartDashboard();
+		Robot.compass.dumpSmartDashboardValues();
+		Robot.camera.setNetTable();
+		Robot.camera.dumpSmartDshboardValues();
+		Robot.arm.dumpSmartDashboardValues();
+		Robot.shooter.dumpSmartDashboardValues();
 		Robot.driveTrain.initSmartdashBoardValues();
 	}
 

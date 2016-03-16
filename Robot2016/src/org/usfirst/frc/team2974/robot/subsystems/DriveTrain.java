@@ -53,6 +53,7 @@ public class DriveTrain extends Subsystem {
 				out*=-1;
 			
 			one.set(out);
+			two.set(out);
 		}
 	}
 	
@@ -81,12 +82,12 @@ public class DriveTrain extends Subsystem {
     }
     public void setSpeeds(double left, double right)
     {
-    	this.right1.set(right);
-    	this.right2.set(right);
-    	this.left1.set(-left);
-    	this.left2.set(-left);
-    	SmartDashboard.putNumber("left", -left);
-    	SmartDashboard.putNumber("right", right);
+    	this.right1.set(-right);
+    	this.right2.set(-right);
+    	this.left1.set(left);
+    	this.left2.set(left);
+    	SmartDashboard.putNumber("left", left);
+    	SmartDashboard.putNumber("right", -right);
     }
     public void resetEncoders()
     {

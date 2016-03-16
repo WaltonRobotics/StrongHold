@@ -18,7 +18,7 @@ public class Aim extends Command {
 
 	private final double threshold = 2;
 	private AimState currentState;
-	private double speed = .4;
+	private double speed = .6;
 	private double brakingSpeed = .05;
 	private final double centerX = 85;
 	private double gain = .0087;
@@ -30,12 +30,13 @@ public class Aim extends Command {
 	public Aim() {
 		requires(driveTrain);
 		requires(camera);
+		SmartDashboard.putNumber("gain", gain);
 	}
 
 	// Called just before this Command runs the first time
 	protected void initialize() {
-		Robot.driveTrain.shiftDown();
-		SmartDashboard.putNumber("gain", gain);
+		//Robot.driveTrain.shiftUp();//shift dwn not up
+		gain = SmartDashboard.getNumber("gain");
 		currentState = AimState.inReset;
 	}
 
@@ -49,72 +50,38 @@ public class Aim extends Command {
 		if (camera.getX() != -1) {
 			switch (currentState) {
 			case inCycle:
-				double speed = this.speed;
 				if (cycleDifference > 0)
 					driveTrain.setSpeeds(-speed, brakingSpeed);
 				else
 					driveTrain.setSpeeds(speed, -brakingSpeed);
 				if (Timer.getFPGATimestamp() - cycleInitTime > gain * Math.abs(cycleDifference)) {
+					SmartDashboard.putNumber("gain*cycleiff", gain*cycleDifference);
 					currentState = AimState.inWait;
 					waitTimeInit = Timer.getFPGATimestamp();
 				}
+				break;
 			case inWait:
 				driveTrain.setSpeeds(0, 0);
 				if (Timer.getFPGATimestamp() - waitTimeInit > .1) {
 					currentState = AimState.inReset;
 				}
+				break;
 			case inReset:
 				cycleDifference = camera.getX() - centerX;
 				cycleInitTime = Timer.getFPGATimestamp();
 				if (Math.abs(cycleDifference) > threshold) {
 					currentState = AimState.inCycle;
+				SmartDashboard.putNumber("gain*cycleiff", gain*cycleDifference);
 				}
+				break;
+				
 			}
 		} else {
 			driveTrain.setSpeeds(0, 0);
 			currentState = AimState.inReset;
-			gain = SmartDashboard.getNumber("gain");
+			
 		}
-
-		// if (inCycle) {
-		//
-		// //double speed = Math.abs(camera.getX() - centerX) * this.speed;
-		// double speed = this.speed;
-		// if (cycleDifference > 0)
-		// driveTrain.setSpeeds(-speed, brakingSpeed);
-		// else
-		// driveTrain.setSpeeds(speed, -brakingSpeed);
-		// if(Timer.getFPGATimestamp()-cycleInitTime >
-		// gain*Math.abs(cycleDifference))
-		// {
-		// inCycle = false;
-		// waitTimeInit = Timer.getFPGATimestamp();
-		// inWait = true;
-		// }
-		//
-		// } else if(inWait)
-		// {
-		// driveTrain.setSpeeds(0, 0);
-		// if(Timer.getFPGATimestamp()-waitTimeInit>.1)
-		// {
-		// inWait = false;
-		// inReset = true;
-		// }
-		//
-		//
-		// }else{
-		//
-		//
-		// cycleDifference = camera.getX() - centerX;
-		// cycleInitTime = Timer.getFPGATimestamp();
-		// if (Math.abs(cycleDifference) > threshold)
-		// {
-		// inCycle = true;
-		// inReset = false;
-		// }
-		//
-		// }
-
+		SmartDashboard.putString("aim state", currentState.toString());
 	}
 
 	// Make this return true when this Command no longer needs to run execute()

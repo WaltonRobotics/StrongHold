@@ -14,7 +14,6 @@ public class Camera extends Subsystem {
 	double centerX;
 	double centerY;
 
-
 	public void initDefaultCommand() {
 	}
 
@@ -35,19 +34,16 @@ public class Camera extends Subsystem {
 						maxArea = area[i];
 						maxIndex = i;
 					}
-					if(maxIndex!=-1)
-					{
+					if (maxIndex != -1) {
 						double[] X = getNetTable().getNumberArray("centerX", defaultValue);
-						centerX =X[maxIndex];
-						double[] Y = getNetTable().getNumberArray("centerY",defaultValue);
+						centerX = X[maxIndex];
+						double[] Y = getNetTable().getNumberArray("centerY", defaultValue);
 						centerY = Y[maxIndex];
-					}
-					else
-					{
+					} else {
 						centerX = -1;
 						centerY = -1;
 					}
-					
+
 				}
 			} catch (Exception e) {
 				centerX = -1;
@@ -73,7 +69,7 @@ public class Camera extends Subsystem {
 	}
 
 	public double getX() {
-		setMaximums();//TODO make this better
+		setMaximums();// TODO make this better
 		return centerX;
 	}
 

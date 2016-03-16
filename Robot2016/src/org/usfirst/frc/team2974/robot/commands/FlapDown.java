@@ -1,54 +1,32 @@
 package org.usfirst.frc.team2974.robot.commands;
 
 import org.usfirst.frc.team2974.robot.Robot;
+import org.usfirst.frc.team2974.robot.subsystems.Flapper;
 
 import edu.wpi.first.wpilibj.command.Command;
 
 /**
  *
  */
-public class IntakeBall extends Command {
-private IntakeRollerState currentState;
-    public IntakeBall() {
-        requires(Robot.intake);
+public class FlapDown extends Command {
+
+    public FlapDown() {
+        requires(Robot.flapper);
     }
 
     // Called just before this Command runs the first time
     protected void initialize() {
-    	currentState = IntakeRollerState.stop;
+    	Robot.flapper.setFlapper(Flapper.FlapperState.down);
     }
-    public enum IntakeRollerState{
-    	in, out, stop
-    }
+
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	if(Robot.oi.outtake.get()){
-			currentState = IntakeRollerState.out;
-		}
-		else if(Robot.oi.stoptake.get()){
-			currentState = IntakeRollerState.stop;
-		}
-		else if(Robot.oi.intake.get()){
-			currentState = IntakeRollerState.in;
-		}
-    	
-    	switch(currentState){
-    	case in:
-    		Robot.intake.input();
-    		break;
-    	case out:
-    		Robot.intake.output();
-    		break;
-    	case stop:
-    		Robot.intake.stop();
-    		break;
-    	}
-
+    	Robot.flapper.setFlapper(Flapper.FlapperState.down);
     }
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-        return false;
+        return Robot.shooter.isShooterDown();
     }
 
     // Called once after isFinished returns true
@@ -59,4 +37,4 @@ private IntakeRollerState currentState;
     // subsystems is scheduled to run
     protected void interrupted() {
     }
-    }
+}

@@ -1,12 +1,6 @@
 package org.usfirst.frc.team2974.robot.commands;
 
-import org.usfirst.frc.team2974.logging.Log;
-import org.usfirst.frc.team2974.logging.LogMessage;
-import org.usfirst.frc.team2974.logging.enumerations.Severity;
-import org.usfirst.frc.team2974.logging.enumerations.SubSystem;
 import org.usfirst.frc.team2974.robot.Robot;
-import org.usfirst.frc.team2974.robot.subsystems.Intake;
-import org.usfirst.frc.team2974.robot.subsystems.Intake.IntakeState;
 import org.usfirst.frc.team2974.robot.subsystems.Shooter;
 
 import edu.wpi.first.wpilibj.Timer;
@@ -20,7 +14,6 @@ public class Shoot extends Command {
 
 	private State currentState;
 	private Shooter shooter = Robot.shooter;
-	private Intake intake = Robot.intake;
 
 	public Shoot() {
 		requires(shooter);
@@ -53,8 +46,6 @@ public class Shoot extends Command {
 			shooter.unTension();
 			if(shooter.isShooterDown() && readyTime ==-1)
 				readyTime = Timer.getFPGATimestamp();
-			SmartDashboard.putNumber("ready time", readyTime);
-			
 		}
 
 		void end() {
@@ -69,7 +60,7 @@ public class Shoot extends Command {
 	}
 	class Latched extends State {
 		void init() {
-			intake.setFlapper(IntakeState.up);
+			
 		}
 
 		void execute() {
@@ -95,10 +86,12 @@ public class Shoot extends Command {
 
 		void end() {
 			currentState = new MovingFlapper();
+			Robot.oi.autoShoot = false;
 		}
 
 		boolean isFinished() {
-			return Robot.oi.shoot.get();
+			
+			return Robot.oi.shoot.get()||Robot.oi.autoShoot;
 		}
 	}
 	class MovingFlapper extends State
@@ -107,12 +100,12 @@ public class Shoot extends Command {
 		
 		void init() {
 			initTime = Timer.getFPGATimestamp();
+			new FlapDown();
 		}
 
 
 		@Override
 		void execute() {
-			intake.setFlapper(IntakeState.down);
 		}
 
 		@Override
@@ -162,6 +155,8 @@ public class Shoot extends Command {
 		//Log.instance().logCall(new LogMessage(Severity.INFORMATION, SubSystem.SHOOTER, "Shooter", "Shooter State" + currentState.getClass()+"", 120));
 		SmartDashboard.putString("Shooter State", currentState.getClass()+"");
 		SmartDashboard.putString("Tensioner State", shooter.getState()+"");
+
+			
 	}
 
 	// Make this return true when this Command no longer needs to run execute()

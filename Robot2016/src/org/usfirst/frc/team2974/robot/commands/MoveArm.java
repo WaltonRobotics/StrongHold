@@ -31,9 +31,7 @@ public class MoveArm extends Command {
 		else if (Robot.oi.gamepad.getPOVButton(Gamepad.POV.E))
 			arm.moveArmPosition(positionUp);
 		else
-			arm.moveArmPower(-1*Robot.oi.gamepad.getLeftY());
-		
-		
+			arm.moveArmPower(-1*Robot.oi.gamepad.getLeftY());		
 		
 	}
 

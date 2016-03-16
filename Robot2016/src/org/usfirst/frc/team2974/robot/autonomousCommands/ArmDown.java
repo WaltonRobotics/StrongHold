@@ -9,35 +9,37 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 /**
  *
  */
-public class Shoot extends Command {
-	double startTime;
-	double time = .5;
+public class ArmDown extends Command {
 
-	public Shoot() {
-		
+	double startTime;
+	double totalTime = .7;
+	double armPower = 1; // change to -1 TODO
+
+	public ArmDown() {
+		requires(Robot.arm);
 	}
 
 	// Called just before this Command runs the first time
 	protected void initialize() {
-		
 		startTime = Timer.getFPGATimestamp();
-		Robot.oi.autoShoot = true;
 	}
 
 	// Called repeatedly when this Command is scheduled to run
 	protected void execute() {
-		
+		if (Timer.getFPGATimestamp() - startTime > .3 && Timer.getFPGATimestamp() - startTime < totalTime)
+			Robot.arm.moveArmPower(armPower);
+		else
+			Robot.arm.moveArmPower(0);
 	}
 
 	// Make this return true when this Command no longer needs to run execute()
 	protected boolean isFinished() {
-		return Timer.getFPGATimestamp() - startTime > time;
+		return Timer.getFPGATimestamp() - startTime > totalTime;
 	}
 
 	// Called once after isFinished returns true
 	protected void end() {
-		Robot.oi.autoShoot = false;
-		SmartDashboard.putString("Autonomous stuff", "There ya go, ball in goal");
+		SmartDashboard.putString("Autonomous stuff", "There ya go, arm is down");
 	}
 
 	// Called when another command which requires one or more of the same

@@ -1,7 +1,6 @@
 package org.usfirst.frc.team2974.robot.commands;
 
 import org.usfirst.frc.team2974.robot.Robot;
-import org.usfirst.frc.team2974.robot.subsystems.Intake.IntakeState;
 import org.usfirst.frc.team2974.robot.subsystems.Shooter;
 
 import edu.wpi.first.wpilibj.Timer;
@@ -20,7 +19,7 @@ public class ShooterReset extends Command {
     // Called just before this Command runs the first time
     protected void initialize() {
     	initTime = Timer.getFPGATimestamp();
-    	Robot.intake.setFlapper(IntakeState.down);
+    	new MoveFlapper();
     }
 
     // Called repeatedly when this Command is scheduled to run

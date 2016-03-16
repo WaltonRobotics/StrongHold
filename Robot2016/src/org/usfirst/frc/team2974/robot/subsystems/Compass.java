@@ -18,13 +18,17 @@ public class Compass extends Subsystem {
     
     public Compass()
     {
+    	initializeCompass();
+
+    }
+    public void initializeCompass()
+    {
     	try {
-			compass.initialize();
-			compass.setMode(OperationMode.OPERATION_MODE_IMUPLUS);
+			compass.initialize(OperationMode.OPERATION_MODE_IMUPLUS);
+			//compass.setMode(OperationMode.OPERATION_MODE_IMUPLUS);
 		} catch (BNO055Exception e) {
 			e.printStackTrace();
 		}
-
     }
     /**
      * left increase

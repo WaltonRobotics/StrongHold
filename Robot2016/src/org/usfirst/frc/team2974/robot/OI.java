@@ -1,6 +1,5 @@
 package org.usfirst.frc.team2974.robot;
 
-import org.usfirst.frc.team2974.robot.autonomousCommands.DriveSpline;
 import org.usfirst.frc.team2974.robot.commands.Aim;
 import org.usfirst.frc.team2974.robot.commands.ShooterReset;
 import org.usfirst.frc.team2974.robot.commands.UnTension;
@@ -8,7 +7,6 @@ import org.usfirst.frc.team2974.robot.commands.UnTension;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.Button;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 
 /**
@@ -34,6 +32,7 @@ public class OI {
 	public Button resetShooter;
 	public Button startUntentioning;
 	public Button stopUntensioning;
+	public boolean autoShoot;
 	
 	public OI()
 	{
@@ -59,6 +58,7 @@ public class OI {
 		startUntentioning.whenPressed(new UnTension());
 		resetShooter.whenPressed(new ShooterReset());
 		aim.whenPressed(new Aim());
+		autoShoot = false;
 	}
 
 }

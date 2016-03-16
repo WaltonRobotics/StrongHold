@@ -8,10 +8,11 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
 /**
  *
  */
-public class LowBar extends CommandGroup {
+public class RoughTerrain extends CommandGroup {
     
-    public  LowBar() {
-       addParallel(new ArmDown());
-       addSequential(new DriveStraight(3, -.5));
+    public  RoughTerrain() {
+		addParallel(new ArmDown());
+		addSequential(new DriveStraight(3, -.5));
+
     }
 }

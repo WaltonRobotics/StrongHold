@@ -7,16 +7,15 @@ import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
-import java.io.IOException;
 
 import org.usfirst.frc.team2974.robot.autonomousCommandGroups.LowBar;
+import org.usfirst.frc.team2974.robot.autonomousCommandGroups.LowBarShoot;
+import org.usfirst.frc.team2974.robot.autonomousCommandGroups.RockWall;
+import org.usfirst.frc.team2974.robot.autonomousCommandGroups.RockWallShoot;
+import org.usfirst.frc.team2974.robot.autonomousCommandGroups.RoughTerrain;
+import org.usfirst.frc.team2974.robot.autonomousCommandGroups.RoughTerrainShoot;
 import org.usfirst.frc.team2974.robot.autonomousCommands.DoNothing;
-import org.usfirst.frc.team2974.robot.autonomousCommands.DriveStraight;
-import org.usfirst.frc.team2974.robot.autonomousCommands.DriveStraightMoat;
-import org.usfirst.frc.team2974.robot.commands.Shoot;
-import org.usfirst.frc.team2974.robot.commands.ShootTemp;
 import org.usfirst.frc.team2974.robot.commands.ShowInputs;
-import org.usfirst.frc.team2974.robot.commands.UpdateFiltration;
 import org.usfirst.frc.team2974.robot.subsystems.*;
 
 
@@ -33,6 +32,7 @@ public class Robot extends IterativeRobot {
 	public static Intake intake;
 	public static Camera camera;
 	public static Compass compass;
+	public static Flapper flapper;
     
 	public Command autonomousCommand;
 
@@ -58,6 +58,7 @@ public class Robot extends IterativeRobot {
     	intake = new Intake();
     	camera = new Camera();
     	compass = new Compass();
+    	flapper = new Flapper();
     	oi = new OI();
     	createAutonomousChooser();
     }
@@ -66,13 +67,12 @@ public class Robot extends IterativeRobot {
     	//Chival de frise, a "moat", ramparts, a drawbridge, a Sally port, a portcullis, a rock wall, and "rough terrain".
     	autoChooser = new SendableChooser();
     	autoChooser.addDefault("Do Nothing",new DoNothing());
-    	autoChooser.addObject("move forward",new DriveStraight());
-    	autoChooser.addObject("move Forward faster",new DriveStraightMoat());
-//    	autoChooser.addObject("spy bot", new DoNothing());
-//    	autoChooser.addObject("moat", new DoNothing());
-//    	autoChooser.addObject("ramparts", new DoNothing());
-//    	autoChooser.addObject("rough terrain", new DoNothing());
-//    	autoChooser.addObject("porticullus", new DoNothing());
+    	autoChooser.addObject("Lowbar", new LowBar());
+    	autoChooser.addObject("Lowbar + shoot",new LowBarShoot());
+    	autoChooser.addObject("Rough Terrain", new RoughTerrain());
+    	autoChooser.addObject("Rough terrain shoot", new RoughTerrainShoot());
+    	autoChooser.addObject("Rock wall",new RockWall());
+    	autoChooser.addObject("Rock wall shoot", new RockWallShoot());
     	SmartDashboard.putData("PICK AN AUTONOMOUS NOW, OR SUFFER THE CONSEQUENCES!",autoChooser);
     }
 
@@ -86,7 +86,14 @@ public class Robot extends IterativeRobot {
     }
 	
 	public void disabledPeriodic() {
-		Scheduler.getInstance().run();
+		Robot.inputs.updateSmartDashboard();
+		Robot.compass.dumpSmartDashboardValues();
+		Robot.camera.setNetTable();
+		Robot.camera.dumpSmartDshboardValues();
+		Robot.arm.dumpSmartDashboardValues();
+		Robot.shooter.dumpSmartDashboardValues();
+		Robot.driveTrain.initSmartdashBoardValues();
+		//Scheduler.getInstance().run();
 	}
 
 	/**
@@ -99,6 +106,7 @@ public class Robot extends IterativeRobot {
 	 * or additional comparisons to the switch structure below with additional strings & commands.
 	 */
     public void autonomousInit() {
+    	compass.initializeCompass();
     	autonomousCommand= (Command)autoChooser.getSelected();
     	autonomousCommand.start();
     	Scheduler.getInstance().add(new ShowInputs());
@@ -113,6 +121,7 @@ public class Robot extends IterativeRobot {
     }
 
     public void teleopInit() {
+    	compass.initializeCompass();
         if (autonomousCommand != null) autonomousCommand.cancel();
         Scheduler.getInstance().add(new ShowInputs());
        
