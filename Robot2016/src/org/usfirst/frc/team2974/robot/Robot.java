@@ -82,7 +82,6 @@ public class Robot extends IterativeRobot {
 	 * the robot is disabled.
      */
     public void disabledInit(){
-    	Scheduler.getInstance().add(new ShowInputs());
     }
 	
 	public void disabledPeriodic() {
@@ -93,7 +92,7 @@ public class Robot extends IterativeRobot {
 		Robot.arm.dumpSmartDashboardValues();
 		Robot.shooter.dumpSmartDashboardValues();
 		Robot.driveTrain.initSmartdashBoardValues();
-		//Scheduler.getInstance().run();
+		
 	}
 
 	/**

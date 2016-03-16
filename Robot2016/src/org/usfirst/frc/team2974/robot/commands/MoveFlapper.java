@@ -20,10 +20,10 @@ public class MoveFlapper extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	if(Robot.oi.flapperUp.get())
-    		Robot.flapper.setFlapper(Flapper.FlapperState.up);
-    	else 
+    	if(Robot.oi.flapperDown.get())
     		Robot.flapper.setFlapper(Flapper.FlapperState.down);
+    	else 
+    		Robot.flapper.setFlapper(Flapper.FlapperState.up);
     }
 
     // Make this return true when this Command no longer needs to run execute()

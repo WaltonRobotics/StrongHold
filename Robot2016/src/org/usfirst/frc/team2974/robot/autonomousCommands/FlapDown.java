@@ -1,4 +1,4 @@
-package org.usfirst.frc.team2974.robot.commands;
+package org.usfirst.frc.team2974.robot.autonomousCommands;
 
 import org.usfirst.frc.team2974.robot.Robot;
 import org.usfirst.frc.team2974.robot.subsystems.Flapper;

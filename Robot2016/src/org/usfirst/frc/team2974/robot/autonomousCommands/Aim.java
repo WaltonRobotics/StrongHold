@@ -21,7 +21,7 @@ public class Aim extends Command {
 	private double speed = .6; 
 	private double brakingSpeed = .05; 
 	private final double centerX = 85;
-	private double gain = .0087;
+	private double gain = .0095;
 	private double cycleDifference;
 
     public Aim() {
@@ -66,6 +66,7 @@ public class Aim extends Command {
     class Wait extends State
     {
     	double startTime;
+    	double waitTime = .1;
     	void init()
     	{
     		startTime = Timer.getFPGATimestamp();
@@ -76,7 +77,7 @@ public class Aim extends Command {
     	}
     	boolean isFinished()
     	{
-    		return Timer.getFPGATimestamp() - startTime > .1;
+    		return Timer.getFPGATimestamp() - startTime > waitTime;
     	}
     	void end()
     	{

@@ -1,10 +1,12 @@
 package org.usfirst.frc.team2974.robot.commands;
 
 import org.usfirst.frc.team2974.robot.Robot;
+import org.usfirst.frc.team2974.robot.autonomousCommands.FlapDown;
 import org.usfirst.frc.team2974.robot.subsystems.Shooter;
 
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
@@ -100,7 +102,7 @@ public class Shoot extends Command {
 		
 		void init() {
 			initTime = Timer.getFPGATimestamp();
-			new FlapDown();
+			Scheduler.getInstance().add(new FlapDown());
 		}
 
 
