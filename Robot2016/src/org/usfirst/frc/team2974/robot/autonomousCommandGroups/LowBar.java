@@ -12,6 +12,6 @@ public class LowBar extends CommandGroup {
     
     public  LowBar() {
        addParallel(new ArmDown());
-       addSequential(new DriveStraight(4, .5));
+       addSequential(new DriveStraight(4, -.5));
     }
 }

@@ -51,7 +51,6 @@ public class RobotMap {
 	public static Solenoid flapper;
 	
 	//shooter
-    //public static Encoder encoderShooter;
 	public static Solenoid latch;
 	public static CANTalon tensioner;
 	
@@ -109,7 +108,6 @@ public class RobotMap {
 
 
         //shooter
-        //encoderShooter = new Encoder(digital7,digital8);
         latch = new Solenoid(2);
         tensioner = new CANTalon(1);
         

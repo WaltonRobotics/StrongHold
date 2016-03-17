@@ -4,6 +4,7 @@ import org.usfirst.frc.team2974.robot.Robot;
 
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  *
@@ -15,17 +16,20 @@ public class TurnLeft extends Command {
 
 	public TurnLeft() {
 		requires(Robot.driveTrain);
-
+		SmartDashboard.putNumber("timeTurn", time);
+		SmartDashboard.putNumber("speedTurn", speed);
 	}
 
 	// Called just before this Command runs the first time
 	protected void initialize() {
 		startTime = Timer.getFPGATimestamp();
+		time = SmartDashboard.getNumber("timeTurn");
+		speed = SmartDashboard.getNumber("speedTurn");
 	}
 
 	// Called repeatedly when this Command is scheduled to run
 	protected void execute() {
-		Robot.driveTrain.setSpeeds(0, speed);
+		Robot.driveTrain.setSpeeds(-1*speed, speed);
 	}
 
 	// Make this return true when this Command no longer needs to run execute()

@@ -12,11 +12,11 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 public class ArmDown extends Command {
 
 	double startTime;
-	double totalTime = .6;
-	double armPower = -1; // change to -1 TODO
+	double totalTime = .7;
+	double armPower = -1; 
 	//practice bot = 1
 	//comp bot = -1
-
+	//TODO
 	public ArmDown() {
 		requires(Robot.arm);
 	}

@@ -1,43 +1,30 @@
-
 package org.usfirst.frc.team2974.robot.commands;
 
 import org.usfirst.frc.team2974.robot.Robot;
 
 import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj.command.Scheduler;
+import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 
 /**
  *
  */
-public class Drive extends Command {
-	private final double deadband = .05;
-    public Drive() {
-    	
-        requires(Robot.driveTrain);
+public class TestAuton extends Command {
+
+    public TestAuton() {
+        
     }
 
     // Called just before this Command runs the first time
     protected void initialize() {
-    	
+		SendableChooser autoChooser = Robot.autoChooser;
+    	Command autonomousCommand = (Command) autoChooser.getSelected();
+		autonomousCommand.start();
+		Scheduler.getInstance().add(new ShowInputs());
     }
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	
-    	double left = Robot.oi.left.getY();
-    	double right = Robot.oi.right.getY();
-    	
-    	if(Math.abs(left)<deadband)
-    		left = 0;
-    	if(Math.abs(right)<deadband)
-    		right = 0;
-    	Robot.driveTrain.setSpeeds(-1*left,-1*right);
-    	
-    	if(Robot.oi.shiftDown.get())
-    		Robot.driveTrain.shiftDown();
-    	if(Robot.oi.shiftUp.get())
-    		Robot.driveTrain.shiftUp();
-
-
     }
 
     // Make this return true when this Command no longer needs to run execute()
