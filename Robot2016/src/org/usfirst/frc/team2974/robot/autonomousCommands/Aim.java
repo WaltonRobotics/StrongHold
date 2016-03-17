@@ -105,7 +105,7 @@ public class Aim extends Command {
     }
     // Called just before this Command runs the first time
     protected void initialize() {
-    	Robot.driveTrain.shiftUp();//change to down TODO
+    	Robot.driveTrain.shiftDown();//change to down TODO
     	gain = SmartDashboard.getNumber("gain");
 		currentState = new Reset();
     }

@@ -9,10 +9,13 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 
 import org.usfirst.frc.team2974.robot.autonomousCommandGroups.LowBar;
+import org.usfirst.frc.team2974.robot.autonomousCommandGroups.LowBarReturn;
 import org.usfirst.frc.team2974.robot.autonomousCommandGroups.LowBarShoot;
 import org.usfirst.frc.team2974.robot.autonomousCommandGroups.RockWall;
+import org.usfirst.frc.team2974.robot.autonomousCommandGroups.RockWallReturn;
 import org.usfirst.frc.team2974.robot.autonomousCommandGroups.RockWallShoot;
 import org.usfirst.frc.team2974.robot.autonomousCommandGroups.RoughTerrain;
+import org.usfirst.frc.team2974.robot.autonomousCommandGroups.RoughTerrainReturn;
 import org.usfirst.frc.team2974.robot.autonomousCommandGroups.RoughTerrainShoot;
 import org.usfirst.frc.team2974.robot.autonomousCommands.DoNothing;
 import org.usfirst.frc.team2974.robot.commands.ShowInputs;
@@ -60,20 +63,28 @@ public class Robot extends IterativeRobot {
     	compass = new Compass();
     	flapper = new Flapper();
     	oi = new OI();
+    	
     	createAutonomousChooser();
+    	SmartDashboard.putString("lol", "dun");
     }
     private void createAutonomousChooser()
     {
+    	
     	//Chival de frise, a "moat", ramparts, a drawbridge, a Sally port, a portcullis, a rock wall, and "rough terrain".
     	autoChooser = new SendableChooser();
     	autoChooser.addDefault("Do Nothing",new DoNothing());
     	autoChooser.addObject("Lowbar", new LowBar());
     	autoChooser.addObject("Lowbar + shoot",new LowBarShoot());
+    	autoChooser.addObject("LowBar return", new LowBarReturn());
     	autoChooser.addObject("Rough Terrain", new RoughTerrain());
     	autoChooser.addObject("Rough terrain shoot", new RoughTerrainShoot());
+    	autoChooser.addObject("Rough Terrain Return", new RoughTerrainReturn());
     	autoChooser.addObject("Rock wall",new RockWall());
     	autoChooser.addObject("Rock wall shoot", new RockWallShoot());
-    	SmartDashboard.putData("PICK AN AUTONOMOUS NOW, OR SUFFER THE CONSEQUENCES!",autoChooser);
+    	autoChooser.addObject("Rock Wall Return", new RockWallReturn());
+    	SmartDashboard.putData("PICK AN AUTONOMOUS",autoChooser);
+    	SmartDashboard.putString("auton3", "made auton");
+    	
     }
 
 	/**
@@ -91,8 +102,7 @@ public class Robot extends IterativeRobot {
 		Robot.camera.dumpSmartDshboardValues();
 		Robot.arm.dumpSmartDashboardValues();
 		Robot.shooter.dumpSmartDashboardValues();
-		Robot.driveTrain.initSmartdashBoardValues();
-		
+			
 	}
 
 	/**
@@ -105,7 +115,7 @@ public class Robot extends IterativeRobot {
 	 * or additional comparisons to the switch structure below with additional strings & commands.
 	 */
     public void autonomousInit() {
-    	compass.initializeCompass();
+    	//compass.initializeCompass();
     	autonomousCommand= (Command)autoChooser.getSelected();
     	autonomousCommand.start();
     	Scheduler.getInstance().add(new ShowInputs());

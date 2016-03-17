@@ -18,7 +18,7 @@ public class DoNothing extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	SmartDashboard.putString("Autonomous stuff", "I'm doing nothing");
+    	SmartDashboard.putString("Autonomous stuff2", "I'm doing nothing");
     }
 
     // Make this return true when this Command no longer needs to run execute()
