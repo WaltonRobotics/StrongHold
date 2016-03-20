@@ -11,22 +11,22 @@ import edu.wpi.first.wpilibj.command.Command;
 public class FlapDown extends Command {
 
     public FlapDown() {
-        requires(Robot.flapper);
+        //requires(Robot.flapper);
     }
 
     // Called just before this Command runs the first time
     protected void initialize() {
-    	Robot.flapper.setFlapper(Flapper.FlapperState.down);
+    	//Robot.flapper.setFlapper(Flapper.FlapperState.down);
     }
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	Robot.flapper.setFlapper(Flapper.FlapperState.down);
+    	//Robot.flapper.setFlapper(Flapper.FlapperState.down);
     }
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-        return Robot.shooter.isShooterDown();
+        return true;
     }
 
     // Called once after isFinished returns true

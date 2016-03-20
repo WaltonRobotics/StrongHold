@@ -11,6 +11,7 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
 public class LowBar extends CommandGroup {
     
     public  LowBar() {
+    	
        addParallel(new ArmDown());
        addSequential(new DriveStraight(4, -.5));
     }

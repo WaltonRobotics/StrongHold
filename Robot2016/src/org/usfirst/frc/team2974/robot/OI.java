@@ -74,7 +74,7 @@ public class OI {
 		autoShoot = false;
 		
 		testAuton = new JoystickButton(gamepad, 6);//remove l8er TODO
-		testAuton.whenPressed(new TestAuton());
+		//testAuton.whenPressed(new TestAuton());
 	}
 
 }

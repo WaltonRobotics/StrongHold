@@ -1,12 +1,12 @@
 package org.usfirst.frc.team2974.robot.commands;
 
 import org.usfirst.frc.team2974.robot.Robot;
-import org.usfirst.frc.team2974.robot.autonomousCommands.FlapDown;
+//import org.usfirst.frc.team2974.robot.autonomousCommands.FlapDown;
 import org.usfirst.frc.team2974.robot.subsystems.Shooter;
 
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Command;
-import edu.wpi.first.wpilibj.command.Scheduler;
+//import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
@@ -87,7 +87,7 @@ public class Shoot extends Command {
 		}
 
 		void end() {
-			currentState = new MovingFlapper();
+			currentState = new Shooting();
 			Robot.oi.autoShoot = false;
 		}
 
@@ -96,32 +96,32 @@ public class Shoot extends Command {
 			return Robot.oi.shoot.get()||Robot.oi.autoShoot;
 		}
 	}
-	class MovingFlapper extends State
-	{
-		double initTime;
-		
-		void init() {
-			initTime = Timer.getFPGATimestamp();
-			Scheduler.getInstance().add(new FlapDown());
-		}
-
-
-		@Override
-		void execute() {
-		}
-
-		@Override
-		void end() {
-			currentState = new Shooting();
-			
-		}
-
-		@Override
-		boolean isFinished() {
-			return Timer.getFPGATimestamp()-initTime > .1;
-		}
-		
-	}
+//	class MovingFlapper extends State
+//	{
+//		double initTime;
+//		
+//		void init() {
+//			initTime = Timer.getFPGATimestamp();
+//			Scheduler.getInstance().add(new FlapDown());
+//		}
+//
+//
+//		@Override
+//		void execute() {
+//		}
+//
+//		@Override
+//		void end() {
+//			currentState = new Shooting();
+//			
+//		}
+//
+//		@Override
+//		boolean isFinished() {
+//			return Timer.getFPGATimestamp()-initTime > .1;
+//		}
+//		
+//	}
 
 	class Shooting extends State {
 		double initTime;

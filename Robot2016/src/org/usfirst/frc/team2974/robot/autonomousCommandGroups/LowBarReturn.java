@@ -15,6 +15,6 @@ public class LowBarReturn extends CommandGroup {
         addParallel(new ArmDown());
         addSequential(new DriveStraight(4, -.5));
         addSequential(new Wait(2));
-        addSequential(new DriveStraight(3, .5));
+        addSequential(new DriveStraight(2.5, .5));
     }
 }

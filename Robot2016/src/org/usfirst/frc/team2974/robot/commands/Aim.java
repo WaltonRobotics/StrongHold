@@ -16,12 +16,12 @@ public class Aim extends Command {
 	private DriveTrain driveTrain = Robot.driveTrain;
 	private Camera camera = Robot.camera;
 
-	private final double threshold = 2;
+	private final double threshold = 3;
 	private AimState currentState;
 	private double speed = .6;
 	private double brakingSpeed = .05;
-	private final double centerX = 85;
-	private double gain = .0087;
+	private final double centerX = 155;
+	private double gain = .0015;
 	private double cycleInitTime;
 	private double cycleDifference;
 	private double waitTimeInit;
@@ -51,9 +51,9 @@ public class Aim extends Command {
 			switch (currentState) {
 			case inCycle:
 				if (cycleDifference > 0)
-					driveTrain.setSpeeds(-speed, brakingSpeed);
-				else
 					driveTrain.setSpeeds(speed, -brakingSpeed);
+				else
+					driveTrain.setSpeeds(-speed, brakingSpeed);
 				if (Timer.getFPGATimestamp() - cycleInitTime > gain * Math.abs(cycleDifference)) {
 					SmartDashboard.putNumber("gain*cycleiff", gain*cycleDifference);
 					currentState = AimState.inWait;

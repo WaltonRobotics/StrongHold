@@ -17,10 +17,11 @@ public class TestAuton extends Command {
 
     // Called just before this Command runs the first time
     protected void initialize() {
-		SendableChooser autoChooser = Robot.autoChooser;
-    	Command autonomousCommand = (Command) autoChooser.getSelected();
-		autonomousCommand.start();
-		Scheduler.getInstance().add(new ShowInputs());
+		//Robot.autonomousCommand.cancel();
+//    	SendableChooser autoChooser = Robot.autoChooser;
+//    	Command autonomousCommand = (Command) autoChooser.getSelected();
+//		autonomousCommand.start();
+		
     }
 
     // Called repeatedly when this Command is scheduled to run
@@ -29,7 +30,7 @@ public class TestAuton extends Command {
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-        return false;
+        return true;//change this fool
     }
 
     // Called once after isFinished returns true

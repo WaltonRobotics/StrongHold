@@ -16,6 +16,7 @@ import org.usfirst.frc.team2974.robot.autonomousCommandGroups.RockWallShoot;
 import org.usfirst.frc.team2974.robot.autonomousCommandGroups.RoughTerrain;
 import org.usfirst.frc.team2974.robot.autonomousCommandGroups.RoughTerrainReturn;
 import org.usfirst.frc.team2974.robot.autonomousCommandGroups.RoughTerrainShoot;
+import org.usfirst.frc.team2974.robot.autonomousCommandGroups.ShootSequence;
 import org.usfirst.frc.team2974.robot.autonomousCommands.DoNothing;
 import org.usfirst.frc.team2974.robot.commands.ShowInputs;
 import org.usfirst.frc.team2974.robot.subsystems.*;
@@ -35,7 +36,7 @@ public class Robot extends IterativeRobot {
 	public static Compass compass;
 	public static Flapper flapper;
 
-	public Command autonomousCommand;
+	public static Command autonomousCommand;
 
 	/**
 	 * This function is run when the robot is first started up and should be
@@ -61,9 +62,9 @@ public class Robot extends IterativeRobot {
 		camera = new Camera();
 		compass = new Compass();
 		flapper = new Flapper();
-		oi = new OI();
-
+	
 		createAutonomousChooser();
+		oi = new OI();
 	}
 
 	private void createAutonomousChooser() {
@@ -81,6 +82,7 @@ public class Robot extends IterativeRobot {
 		autoChooser.addObject("Rock wall", new RockWall());
 		autoChooser.addObject("Rock wall shoot", new RockWallShoot());
 		autoChooser.addObject("Rock Wall Return", new RockWallReturn());
+		autoChooser.addObject("Shoot Sequence (Do not use in real match)", new ShootSequence());
 		SmartDashboard.putData("PICK AN AUTONOMOUS", autoChooser);
 
 	}

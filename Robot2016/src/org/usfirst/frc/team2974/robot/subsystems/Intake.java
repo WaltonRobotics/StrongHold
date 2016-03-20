@@ -13,7 +13,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 public class Intake extends Subsystem {
 	   Talon intakeMotor = RobotMap.intakeMotor;
 	   
-	   double power = 1;
+	   double power = .5;
 
 	    public void initDefaultCommand() {
 	    	setDefaultCommand(new IntakeBall());

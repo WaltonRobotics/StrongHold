@@ -3,6 +3,7 @@ package org.usfirst.frc.team2974.robot.commands;
 import org.usfirst.frc.team2974.robot.Robot;
 
 import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj.command.Scheduler;
 
 public class ShowInputs extends Command {
 	
@@ -29,6 +30,8 @@ public class ShowInputs extends Command {
 		Robot.camera.dumpSmartDshboardValues();
 		Robot.arm.dumpSmartDashboardValues();
 		Robot.shooter.dumpSmartDashboardValues();
+//		if(Robot.oi.testAuton.get())
+	//		Scheduler.getInstance().add(new TestAuton());
 	}
 
 	// Make this return true when this Command no longer needs to run execute()

@@ -16,12 +16,12 @@ public class Aim extends Command {
 	private DriveTrain driveTrain = Robot.driveTrain;
 	private Camera camera = Robot.camera;
 
-	private final double threshold = 2;
+	private final double threshold = 7;
 	private State currentState;
 	private double speed = .6; 
 	private double brakingSpeed = .05; 
-	private final double centerX = 85;
-	private double gain = .0095;
+	private final double centerX = 160;
+	private double gain = .008;
 	private double cycleDifference;
 
     public Aim() {
@@ -48,9 +48,9 @@ public class Aim extends Command {
     	void execute()
     	{
     		if (cycleDifference > 0)//im to the right
-				driveTrain.setSpeeds(-speed, brakingSpeed);//turn left
+				driveTrain.setSpeeds(speed, -brakingSpeed);//turn left
 			else
-				driveTrain.setSpeeds(speed, -brakingSpeed);//turn right
+				driveTrain.setSpeeds(-speed, brakingSpeed);//turn right
 			
     	}
     	boolean isFinished()
