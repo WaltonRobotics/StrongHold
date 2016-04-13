@@ -2,6 +2,7 @@ package org.usfirst.frc.team2974.robot;
 
 import org.usfirst.frc.team2974.robot.commands.Aim;
 import org.usfirst.frc.team2974.robot.commands.ShooterReset;
+import org.usfirst.frc.team2974.robot.commands.Tension;
 import org.usfirst.frc.team2974.robot.commands.TestAuton;
 import org.usfirst.frc.team2974.robot.commands.UnTension;
 
@@ -23,18 +24,21 @@ public class OI {
 	public Button shiftUp;
 	public Button shiftDown;
 	
-	public Button intake;
-	public Button outtake;
-	public Button stoptake;
+//	public Button intake;
+//	public Button outtake;
+//	public Button stoptake;
 	public Button flapperDown;
 	
 	public Button aim;
+	public Button aimLeft;
+	public Button aimRight;
 	
 	public Button shoot;
 	
 	public Button resetShooter;
-	public Button startUntentioning;
-	public Button stopUntensioning;
+	public Button startUntensioning;
+	public Button startTensioning;
+	public Button normalTensioning;
 	
 	public boolean autoShoot;
 	
@@ -51,25 +55,31 @@ public class OI {
 		shiftUp = new JoystickButton (left,2);
 		shiftDown = new JoystickButton (left,3);
 		
-		intake = new JoystickButton(gamepad, 1);
-		outtake = new JoystickButton(gamepad, 3);
-		stoptake = new JoystickButton(gamepad, 2);
+//		intake = new JoystickButton(gamepad, 1);
+//		outtake = new JoystickButton(gamepad, 3);
+//		stoptake = new JoystickButton(gamepad, 2);
 		
 		flapperDown = new JoystickButton(gamepad,8);
 		
 		shoot = new JoystickButton(right, 1);
 		
 		aim = new JoystickButton(right, 2);
+		aimLeft = new JoystickButton(right,4);
+		aimRight = new JoystickButton(right,5);
 		
-		startUntentioning = new JoystickButton(left, 8);
-		stopUntensioning = new JoystickButton(left, 9);
+		startUntensioning = new JoystickButton(left, 8);
+		startTensioning = new JoystickButton(left, 11);
+		normalTensioning = new JoystickButton(left, 9);
 		resetShooter = new JoystickButton(left, 10);
 
-		startUntentioning.whenPressed(new UnTension());
+		startUntensioning.whenPressed(new UnTension());
+		startTensioning.whenPressed(new Tension());
 		
 		resetShooter.whenPressed(new ShooterReset());
 		
-		aim.whenPressed(new Aim());
+		aim.whenPressed(new Aim(1));
+		aimLeft.whenPressed(new Aim(0));
+		aimRight.whenPressed(new Aim(2));
 		
 		autoShoot = false;
 		

@@ -1,5 +1,7 @@
 package org.usfirst.frc.team2974.robot.subsystems;
 
+import java.util.Arrays;
+
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.networktables.NetworkTable;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -72,6 +74,44 @@ public class Camera extends Subsystem {
 		setMaximums();// TODO make this better
 		return centerX;
 	}
+	
+	public double getXLeft()
+	{
+		double left = -1;
+		try
+		{
+			double[] X = getNetTable().getNumberArray("centerX", defaultValue);
+			Arrays.sort(X);
+			left = X[0];
+		}
+		catch(Exception e)
+		{
+			
+		}
+		return left;
+		
+	}
+	public double getXRight()
+	{
+		double right = -1;
+		try
+		{
+			double[] X = getNetTable().getNumberArray("centerX", defaultValue);
+			if(X.length>1)
+			{
+				Arrays.sort(X);
+				right = X[1];
+				
+			}
+			else
+				right = X[0];
+		}
+		catch(Exception e)
+		{
+			
+		}
+		return right;
+	}
 
 	public double getY() {
 		setMaximums();
@@ -79,7 +119,8 @@ public class Camera extends Subsystem {
 	}
 
 	public void dumpSmartDshboardValues() {
-		SmartDashboard.putNumber("CenterX", getX());
+		SmartDashboard.putNumber("CenterXLeft", getXLeft());
+		SmartDashboard.putNumber("CenterXRight", getXRight());
 		SmartDashboard.putNumber("CenterY", getY());
 	}
 }

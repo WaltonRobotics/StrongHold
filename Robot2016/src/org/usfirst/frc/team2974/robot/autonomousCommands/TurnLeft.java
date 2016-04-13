@@ -10,14 +10,20 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  *
  */
 public class TurnLeft extends Command {
-	double time = 3;
+	double time ;
 	double startTime;
-	double speed = .3;
+	double speed;
 
 	public TurnLeft() {
+		this(2,.5);
+	}
+	public TurnLeft(double time, double speed)
+	{
 		requires(Robot.driveTrain);
 		SmartDashboard.putNumber("timeTurn", time);
 		SmartDashboard.putNumber("speedTurn", speed);
+		this.time = time;
+		this.speed = speed;
 	}
 
 	// Called just before this Command runs the first time
@@ -29,16 +35,17 @@ public class TurnLeft extends Command {
 
 	// Called repeatedly when this Command is scheduled to run
 	protected void execute() {
-		Robot.driveTrain.setSpeeds(-1*speed, speed);
+		Robot.driveTrain.setSpeeds(-speed, speed);
 	}
 
 	// Make this return true when this Command no longer needs to run execute()
 	protected boolean isFinished() {
-		return Robot.camera.getX() != -1 || Timer.getFPGATimestamp() - startTime > time;
+		return ( Timer.getFPGATimestamp() - startTime > time);
 	}
 
 	// Called once after isFinished returns true
 	protected void end() {
+		Robot.driveTrain.setSpeeds(0, 0);
 	}
 
 	// Called when another command which requires one or more of the same

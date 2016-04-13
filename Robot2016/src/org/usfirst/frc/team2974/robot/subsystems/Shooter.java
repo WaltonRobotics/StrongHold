@@ -3,6 +3,8 @@ package org.usfirst.frc.team2974.robot.subsystems;
 import org.usfirst.frc.team2974.robot.Robot;
 import org.usfirst.frc.team2974.robot.RobotMap;
 import org.usfirst.frc.team2974.robot.commands.Shoot;
+import org.usfirst.frc.team2974.robot.commands.ShootTemp;
+import org.usfirst.frc.team2974.robot.commands.shootTemp2;
 
 import edu.wpi.first.wpilibj.CANTalon;
 import edu.wpi.first.wpilibj.DigitalInput;
@@ -19,7 +21,7 @@ public class Shooter extends Subsystem {
 
 	boolean isInit = false;
 
-	private final double maxTensionerPower = 0.40;
+	private final double maxTensionerPower = 0.450;
 	private final double holdTensionerPower = .000;
 
 	private TensionerState state;

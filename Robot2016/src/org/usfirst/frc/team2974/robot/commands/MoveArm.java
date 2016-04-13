@@ -24,13 +24,13 @@ public class MoveArm extends Command {
 	protected void execute() {
 		SmartDashboard.putNumber("armvalue", Robot.arm.getPotValue());
 		
-		if (Robot.oi.gamepad.getPOVButton(Gamepad.POV.W))
-			arm.moveArmPosition(positionLow);
-		else if (Robot.oi.gamepad.getPOVButton(Gamepad.POV.N))
-			arm.moveArmPosition(positionMiddle);
-		else if (Robot.oi.gamepad.getPOVButton(Gamepad.POV.E))
-			arm.moveArmPosition(positionUp);
-		else
+//		if (Robot.oi.gamepad.getPOVButton(Gamepad.POV.W))
+//			arm.moveArmPosition(positionLow);
+//		else if (Robot.oi.gamepad.getPOVButton(Gamepad.POV.N))
+//			arm.moveArmPosition(positionMiddle);
+//		else if (Robot.oi.gamepad.getPOVButton(Gamepad.POV.E))
+//			arm.moveArmPosition(positionUp);
+//		else
 			arm.moveArmPower(-1*Robot.oi.gamepad.getLeftY());		
 		
 	}

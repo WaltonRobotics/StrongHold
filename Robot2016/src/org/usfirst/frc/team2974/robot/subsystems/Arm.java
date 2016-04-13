@@ -15,13 +15,14 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 public class Arm extends Subsystem {
     private CANTalon arm = RobotMap.arm;
     private AnalogPotentiometer armPot = RobotMap.armPot;
-    private final double zeroPosition = 0;
-    private PIDController pid = new PIDController(1, 0, 0, armPot, arm);
-    private double absoluteTolerance = 10;
+    //private final double zeroPosition = 0;
+    //private PIDController pid = new PIDController(1, 0, 0, armPot, arm);
+    //private double absoluteTolerance = 10;
     public Arm()
     {
-    	pid.enable();
-    	pid.setAbsoluteTolerance(absoluteTolerance);
+    	//pid.enable();
+    	//pid.setAbsoluteTolerance(absoluteTolerance);
+    	arm.enable();
     }
 
     public void initDefaultCommand() {
@@ -30,27 +31,27 @@ public class Arm extends Subsystem {
 
     public void moveArmPower(double power)
     {
-    	if(pid.isEnabled())
-    		pid.disable();
+    	//if(pid.isEnabled())
+    		//pid.disable();
     	arm.set(power);
     }    
         
     public void disablePID()
     {
-    	pid.disable();
+    	//pid.disable();
     }
     
     public void enablePID()
     {
-    	pid.enable();
+    	//pid.enable();
     }
     
     public void moveArmPosition(double position)
     {
-    	if(!pid.isEnabled())
-    		pid.enable();
-    	position -=zeroPosition;
-    	pid.setSetpoint(position);
+    	//if(!pid.isEnabled())
+    		//pid.enable();
+    	//position -=zeroPosition;
+    	//pid.setSetpoint(position);
     }
 
     public double getPotValue()

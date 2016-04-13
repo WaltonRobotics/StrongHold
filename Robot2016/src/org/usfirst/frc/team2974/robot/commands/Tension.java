@@ -7,20 +7,21 @@ import edu.wpi.first.wpilibj.command.Command;
 /**
  *
  */
-public class UnTension extends Command {
+public class Tension extends Command {
 
-    public UnTension() {
-        requires(Robot.shooter);
+    public Tension() {
+        // Use requires() here to declare subsystem dependencies
+    	requires(Robot.shooter);
     }
 
     // Called just before this Command runs the first time
     protected void initialize() {
-    	Robot.shooter.unTension();
+    	Robot.shooter.tension();
     }
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	Robot.shooter.unTension();
+    	Robot.shooter.tension();
     }
 
     // Make this return true when this Command no longer needs to run execute()

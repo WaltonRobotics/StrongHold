@@ -1,6 +1,7 @@
 
 package org.usfirst.frc.team2974.robot;
 
+import edu.wpi.first.wpilibj.CameraServer;
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
@@ -31,7 +32,7 @@ public class Robot extends IterativeRobot {
 	public static Arm arm;
 	public static Inputs inputs;
 	public static Shooter shooter;
-	public static Intake intake;
+	//public static Intake intake;
 	public static Camera camera;
 	public static Compass compass;
 	public static Flapper flapper;
@@ -58,13 +59,16 @@ public class Robot extends IterativeRobot {
 		inputs = new Inputs();
 		arm = new Arm();
 		shooter = new Shooter();
-		intake = new Intake();
+		//intake = new Intake();
 		camera = new Camera();
 		compass = new Compass();
 		flapper = new Flapper();
 	
 		createAutonomousChooser();
 		oi = new OI();
+		CameraServer server = CameraServer.getInstance();
+		server.setQuality(1);
+		server.startAutomaticCapture("cam1");
 	}
 
 	private void createAutonomousChooser() {
