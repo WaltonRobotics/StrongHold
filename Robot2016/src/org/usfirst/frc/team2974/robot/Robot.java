@@ -8,16 +8,7 @@ import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
-import org.usfirst.frc.team2974.robot.autonomousCommandGroups.LowBar;
-import org.usfirst.frc.team2974.robot.autonomousCommandGroups.LowBarReturn;
-import org.usfirst.frc.team2974.robot.autonomousCommandGroups.LowBarShoot;
-import org.usfirst.frc.team2974.robot.autonomousCommandGroups.RockWall;
-import org.usfirst.frc.team2974.robot.autonomousCommandGroups.RockWallReturn;
-import org.usfirst.frc.team2974.robot.autonomousCommandGroups.RockWallShoot;
-import org.usfirst.frc.team2974.robot.autonomousCommandGroups.RoughTerrain;
-import org.usfirst.frc.team2974.robot.autonomousCommandGroups.RoughTerrainReturn;
-import org.usfirst.frc.team2974.robot.autonomousCommandGroups.RoughTerrainShoot;
-import org.usfirst.frc.team2974.robot.autonomousCommandGroups.ShootSequence;
+import org.usfirst.frc.team2974.robot.autonomousCommandGroups.*;
 import org.usfirst.frc.team2974.robot.autonomousCommands.DoNothing;
 import org.usfirst.frc.team2974.robot.commands.ShowInputs;
 import org.usfirst.frc.team2974.robot.subsystems.*;
@@ -73,20 +64,17 @@ public class Robot extends IterativeRobot {
 
 	private void createAutonomousChooser() {
 
-		// Chival de frise, a "moat", ramparts, a drawbridge, a Sally port, a
-		// portcullis, a rock wall, and "rough terrain".
 		autoChooser = new SendableChooser();
 		autoChooser.addDefault("Do Nothing", new DoNothing());
-		autoChooser.addObject("Lowbar", new LowBar());
-		autoChooser.addObject("Lowbar + shoot", new LowBarShoot());
-		autoChooser.addObject("LowBar return", new LowBarReturn());
+		//autoChooser.addObject("Lowbar", new LowBar());
+		//autoChooser.addObject("Lowbar + shoot", new LowBarShoot());
+		//autoChooser.addObject("LowBar return", new LowBarReturn());
 		autoChooser.addObject("Rough Terrain", new RoughTerrain());
 		autoChooser.addObject("Rough terrain shoot", new RoughTerrainShoot());
 		autoChooser.addObject("Rough Terrain Return", new RoughTerrainReturn());
 		autoChooser.addObject("Rock wall", new RockWall());
 		autoChooser.addObject("Rock wall shoot", new RockWallShoot());
 		autoChooser.addObject("Rock Wall Return", new RockWallReturn());
-		autoChooser.addObject("Shoot Sequence (Do not use in real match)", new ShootSequence());
 		SmartDashboard.putData("PICK AN AUTONOMOUS", autoChooser);
 
 	}

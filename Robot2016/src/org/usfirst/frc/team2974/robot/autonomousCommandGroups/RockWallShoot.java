@@ -3,7 +3,7 @@ package org.usfirst.frc.team2974.robot.autonomousCommandGroups;
 import org.usfirst.frc.team2974.robot.autonomousCommands.Aim;
 import org.usfirst.frc.team2974.robot.autonomousCommands.ArmDown;
 import org.usfirst.frc.team2974.robot.autonomousCommands.DriveStraight;
-import org.usfirst.frc.team2974.robot.autonomousCommands.FlapDown;
+import org.usfirst.frc.team2974.robot.autonomousCommands.FlapDownTime;
 import org.usfirst.frc.team2974.robot.autonomousCommands.ShiftDown;
 import org.usfirst.frc.team2974.robot.autonomousCommands.Shoot;
 import org.usfirst.frc.team2974.robot.autonomousCommands.TurnLeft;
@@ -25,7 +25,7 @@ public class RockWallShoot extends CommandGroup {
     	addSequential(new Wait(.3));
     	addSequential(new TurnLeft());
 		
-    	addParallel(new FlapDown(true));
+    	addParallel(new FlapDownTime(1));
     	
     	addSequential(new Aim(1,3));
     	addSequential(new Aim(0,3));

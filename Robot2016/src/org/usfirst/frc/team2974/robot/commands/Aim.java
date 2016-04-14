@@ -116,8 +116,6 @@ public class Aim extends Command {
 				cycleDifference = camera.getXLeft() - centerX;
 			else if (side == 2)
 				cycleDifference = camera.getXRight() - centerX;
-		//if(Math.abs(cycleDifference) < 8)
-			//cycleDifference = 8* Math.signum(cycleDifference);
 		}
 		
 		void execute() {
@@ -135,7 +133,7 @@ public class Aim extends Command {
 
 	// Called just before this Command runs the first time
 	protected void initialize() {
-		Robot.driveTrain.shiftUp();// change to down TODO
+		Robot.driveTrain.shiftDown();
 		gain = SmartDashboard.getNumber("gain");
 		currentState = new Reset();
 	}

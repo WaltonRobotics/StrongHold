@@ -103,16 +103,16 @@ public class DriveTrain extends Subsystem {
     
     public void shiftUp()
     {
-    	if(shifter.get())
+    	if(!shifter.get())
     	{
-    		shifter.set(false);
+    		shifter.set(true);
     	}
     }
     public void shiftDown()
     {
-    	if(!shifter.get())
+    	if(shifter.get())
     	{
-    		shifter.set(true);
+    		shifter.set(false);
     	}
     }
     public void dumpSmartdashboardValues()

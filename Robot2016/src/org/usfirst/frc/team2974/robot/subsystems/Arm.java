@@ -5,7 +5,6 @@ import org.usfirst.frc.team2974.robot.commands.MoveArm;
 
 import edu.wpi.first.wpilibj.AnalogPotentiometer;
 import edu.wpi.first.wpilibj.CANTalon;
-import edu.wpi.first.wpilibj.PIDController;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
@@ -36,23 +35,23 @@ public class Arm extends Subsystem {
     	arm.set(power);
     }    
         
-    public void disablePID()
-    {
-    	//pid.disable();
-    }
-    
-    public void enablePID()
-    {
-    	//pid.enable();
-    }
-    
-    public void moveArmPosition(double position)
-    {
-    	//if(!pid.isEnabled())
-    		//pid.enable();
-    	//position -=zeroPosition;
-    	//pid.setSetpoint(position);
-    }
+//    public void disablePID()
+//    {
+//    	//pid.disable();
+//    }
+//    
+//    public void enablePID()
+//    {
+//    	//pid.enable();
+//    }
+//    
+//    public void moveArmPosition(double position)
+//    {
+//    	//if(!pid.isEnabled())
+//    		//pid.enable();
+//    	//position -=zeroPosition;
+//    	//pid.setSetpoint(position);
+//    }
 
     public double getPotValue()
     {

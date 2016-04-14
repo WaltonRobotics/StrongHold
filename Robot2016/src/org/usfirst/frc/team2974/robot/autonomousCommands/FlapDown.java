@@ -2,29 +2,22 @@ package org.usfirst.frc.team2974.robot.autonomousCommands;
 
 import org.usfirst.frc.team2974.robot.Robot;
 import org.usfirst.frc.team2974.robot.subsystems.Flapper;
+import org.usfirst.frc.team2974.robot.subsystems.Flapper.FlapperState;
 
-import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Command;
 
 /**
  *
  */
 public class FlapDown extends Command {
-double startTime;
-boolean reset;
-    public FlapDown() {     
-        this(false);
-    }
-    public FlapDown(boolean reset)
-    {
-    	this.reset = reset;
+
+	public FlapDown() {     
     	requires(Robot.flapper);
     }
 
     // Called just before this Command runs the first time
     protected void initialize() {
-    	Robot.flapper.setFlapper(Flapper.FlapperState.down);
-    	startTime = Timer.getFPGATimestamp();
+    	Robot.flapper.setFlapper(FlapperState.down);
     }
 
     // Called repeatedly when this Command is scheduled to run
@@ -34,11 +27,7 @@ boolean reset;
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-       if(!reset)
-    	return Robot.shooter.isShooterDown();
-       else
-    	   return Timer.getFPGATimestamp()-startTime>.3;
-        
+    	return Robot.shooter.isShooterDown();        
     }
 
     // Called once after isFinished returns true

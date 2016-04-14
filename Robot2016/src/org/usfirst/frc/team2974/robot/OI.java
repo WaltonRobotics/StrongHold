@@ -3,7 +3,6 @@ package org.usfirst.frc.team2974.robot;
 import org.usfirst.frc.team2974.robot.commands.Aim;
 import org.usfirst.frc.team2974.robot.commands.ShooterReset;
 import org.usfirst.frc.team2974.robot.commands.Tension;
-import org.usfirst.frc.team2974.robot.commands.TestAuton;
 import org.usfirst.frc.team2974.robot.commands.UnTension;
 
 import edu.wpi.first.wpilibj.Joystick;
@@ -52,8 +51,8 @@ public class OI {
 		right = new Joystick(1);
 		gamepad = new Gamepad(2);
 			
-		shiftUp = new JoystickButton (left,2);
-		shiftDown = new JoystickButton (left,3);
+		shiftUp = new JoystickButton (left,3);
+		shiftDown = new JoystickButton (left,2);
 		
 //		intake = new JoystickButton(gamepad, 1);
 //		outtake = new JoystickButton(gamepad, 3);

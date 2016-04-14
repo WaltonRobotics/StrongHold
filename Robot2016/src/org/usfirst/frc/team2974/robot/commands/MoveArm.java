@@ -1,6 +1,5 @@
 package org.usfirst.frc.team2974.robot.commands;
 
-import org.usfirst.frc.team2974.robot.Gamepad;
 import org.usfirst.frc.team2974.robot.Robot;
 import org.usfirst.frc.team2974.robot.subsystems.Arm;
 
@@ -12,9 +11,6 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  */
 public class MoveArm extends Command {
 	Arm arm = Robot.arm;
-	private final double positionLow = 0;
-	private final double positionMiddle = -125;
-	private final double positionUp = -250;
 
 	public MoveArm() {
 		requires(arm);

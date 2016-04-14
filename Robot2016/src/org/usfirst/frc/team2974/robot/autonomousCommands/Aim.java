@@ -1,17 +1,12 @@
 package org.usfirst.frc.team2974.robot.autonomousCommands;
 
 import org.usfirst.frc.team2974.robot.Robot;
-import org.usfirst.frc.team2974.robot.commands.Aim.Cycle;
-import org.usfirst.frc.team2974.robot.commands.Aim.Reset;
-import org.usfirst.frc.team2974.robot.commands.Aim.State;
-import org.usfirst.frc.team2974.robot.commands.Aim.Wait;
 import org.usfirst.frc.team2974.robot.subsystems.Camera;
 import org.usfirst.frc.team2974.robot.subsystems.DriveTrain;
 
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-//import org.usfirst.frc.team2974.robot.commands.Aim.*;
 
 /**
  *
@@ -25,8 +20,8 @@ public class Aim extends Command {
 	private State currentState;
 	private double speed = .6;
 	private double brakingSpeed = .05;
-	private final double centerX = 82;//comp bot 155
-	private double gain = .003;
+	private final double centerX = 82;
+	private double gain = .002;
 	private double cycleDifference;
 	private double startTime;
 	private double time;
@@ -150,7 +145,7 @@ public class Aim extends Command {
 
 	// Called just before this Command runs the first time
 	protected void initialize() {
-		Robot.driveTrain.shiftUp();// change to down TODO
+		Robot.driveTrain.shiftDown();
 		gain = SmartDashboard.getNumber("gain");
 		currentState = new Reset();
 		startTime = Timer.getFPGATimestamp();
