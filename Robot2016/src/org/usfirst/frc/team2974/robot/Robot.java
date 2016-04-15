@@ -14,7 +14,6 @@ import org.usfirst.frc.team2974.robot.commands.Aim;
 import org.usfirst.frc.team2974.robot.commands.ShowInputs;
 import org.usfirst.frc.team2974.robot.subsystems.*;
 
-//grab ball at the end of auto
 public class Robot extends IterativeRobot {
 
 	public static SendableChooser autoChooser;
@@ -24,7 +23,6 @@ public class Robot extends IterativeRobot {
 	public static Arm arm;
 	public static Inputs inputs;
 	public static Shooter shooter;
-	//public static Intake intake;
 	public static Camera camera;
 	public static Compass compass;
 	public static Flapper flapper;
@@ -51,7 +49,6 @@ public class Robot extends IterativeRobot {
 		inputs = new Inputs();
 		arm = new Arm();
 		shooter = new Shooter();
-		//intake = new Intake();
 		camera = new Camera();
 		compass = new Compass();
 		flapper = new Flapper();
@@ -90,12 +87,14 @@ public class Robot extends IterativeRobot {
 	}
 
 	public void disabledPeriodic() {
+		
 		Robot.inputs.updateSmartDashboard();
 		Robot.compass.dumpSmartDashboardValues();
 		Robot.camera.setNetTable();
 		Robot.camera.dumpSmartDshboardValues();
 		Robot.arm.dumpSmartDashboardValues();
 		Robot.shooter.dumpSmartDashboardValues();
+		
 		SmartDashboard.putBoolean("aimed", Math.abs(Robot.camera.getXRight()-Aim.centerX)<Aim.threshold);
 		SmartDashboard.putBoolean("left", Robot.camera.getXRight()-Aim.centerX > 0);
 		SmartDashboard.putBoolean("right", Robot.camera.getXRight()-Aim.centerX < 0);

@@ -8,9 +8,9 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 /**
  *
  */
-public class shootTemp2 extends Command {
+public class ShootTempNoShoot extends Command {
 
-    public shootTemp2() {
+    public ShootTempNoShoot() {
         // Use requires() here to declare subsystem dependencies
         requires(Robot.shooter);
     }
