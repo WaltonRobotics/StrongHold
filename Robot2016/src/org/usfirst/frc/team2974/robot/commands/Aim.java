@@ -16,13 +16,13 @@ public class Aim extends Command {
 	private Camera camera = Robot.camera;
 
 	public static final double threshold = 3;
-	private State currentState;
 	private double speed = .35;
-	private double brakingSpeed = 0;
+	private double brakingSpeed = 0.05;
 	public static final double centerX = 95;
 	private double gain = .0035;
-	public static double cycleDifference;
 
+	private State currentState;
+	public static double cycleDifference;
 	private double side;// 0 is left, 1 is center, 2 is right
 
 	public Aim(int side) {
@@ -30,8 +30,8 @@ public class Aim extends Command {
 		requires(Robot.driveTrain);
 		this.side = side;
 	}
-	public Aim()
-	{
+
+	public Aim() {
 		this(1);
 	}
 
@@ -60,16 +60,12 @@ public class Aim extends Command {
 					driveTrain.setSpeeds(speed, -brakingSpeed);// turn left
 				else
 					driveTrain.setSpeeds(-speed, brakingSpeed);// turn right
-			}
-			else if(side == 1)
-			{
+			} else if (side == 1) {
 				if (cycleDifference > 0)// im to the right
 					driveTrain.setSpeeds(speed, -speed);// turn left
 				else
 					driveTrain.setSpeeds(-speed, speed);// turn right
-			}
-			else if(side ==2)
-			{
+			} else if (side == 2) {
 				if (cycleDifference > 0)// im to the right
 					driveTrain.setSpeeds(brakingSpeed, -speed);// turn left
 				else
@@ -117,7 +113,7 @@ public class Aim extends Command {
 			else if (side == 2)
 				cycleDifference = camera.getXRight() - centerX;
 		}
-		
+
 		void execute() {
 			if (side == 1)
 				cycleDifference = camera.getX() - centerX;
@@ -125,7 +121,7 @@ public class Aim extends Command {
 				cycleDifference = camera.getXLeft() - centerX;
 			else if (side == 2)
 				cycleDifference = camera.getXRight() - centerX;
-		
+
 		}
 
 		boolean isFinished() {
@@ -165,9 +161,9 @@ public class Aim extends Command {
 
 	// Make this return true when this Command no longer needs to run execute()
 	protected boolean isFinished() {
-		if(side == 1)
-		return !Robot.oi.aim.get();
-		if(side==0)
+		if (side == 1)
+			return !Robot.oi.aim.get();
+		if (side == 0)
 			return !Robot.oi.aimLeft.get();
 		return !Robot.oi.aimRight.get();
 	}

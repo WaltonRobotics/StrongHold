@@ -15,30 +15,30 @@ public class Aim extends Command {
 	private DriveTrain driveTrain = Robot.driveTrain;
 	private Camera camera = Robot.camera;
 
-
 	private final double threshold = 3;
-	private State currentState;
-	private double speed = .6;
+	private double speed = .35;
 	private double brakingSpeed = .05;
 	private final double centerX = 95;
-	private double gain = .0025;
+	private double gain = .0035;
+	
+	private State currentState;
 	private double cycleDifference;
 	private double startTime;
-	private double time;
+	private double totalTime;
 	private boolean shoot;
 
 	private double side;// 0 is left, 1 is center, 2 is right
 
-	public Aim(int side,double time,boolean shoot) {
+	public Aim(int side,double totalTime,boolean shoot) {
 		SmartDashboard.putNumber("gain", gain);
 		requires(Robot.driveTrain);
 		this.side = side;
 		this.shoot = shoot;
-		this.time = time;
+		this.totalTime = totalTime;
 	}
-	public Aim(int side, double time)
+	public Aim(int side, double totalTime)
 	{
-		this(side,time,false);
+		this(side,totalTime,false);
 	}
 	public Aim()
 	{
@@ -126,8 +126,6 @@ public class Aim extends Command {
 				cycleDifference = camera.getXLeft() - centerX;
 			else if (side == 2)
 				cycleDifference = camera.getXRight() - centerX;
-		//if(Math.abs(cycleDifference) < 5)
-			//cycleDifference = 5* Math.signum(cycleDifference);
 		}
 		
 		void execute() {
@@ -179,9 +177,9 @@ public class Aim extends Command {
 	// Make this return true when this Command no longer needs to run execute()
 	protected boolean isFinished() {
 		if(!shoot)
-		return Math.abs(cycleDifference) < threshold && Timer.getFPGATimestamp()-startTime > time;
+		return Math.abs(cycleDifference) < threshold && Timer.getFPGATimestamp()-startTime > totalTime;
 		else
-			return Math.abs(cycleDifference)<5 ;
+			return Math.abs(cycleDifference)<threshold ;
 	}
 
 	// Called once after isFinished returns true

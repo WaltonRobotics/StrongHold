@@ -20,7 +20,7 @@ public class RockWallShoot extends CommandGroup {
     	addSequential(new ShiftDown());
     	
     	addParallel(new ArmDown());
-    	addSequential(new DriveStraight(4.2, -.7));
+    	addSequential(new DriveStraight(4.7, -.7));
     	
     	addSequential(new Wait(.3));
     	addSequential(new TurnLeft());

@@ -1,16 +1,16 @@
 package org.usfirst.frc.team2974.robot.commands;
 
 import org.usfirst.frc.team2974.robot.Robot;
-import org.usfirst.frc.team2974.robot.subsystems.Flapper;
+import org.usfirst.frc.team2974.robot.subsystems.Flipper;
 
 import edu.wpi.first.wpilibj.command.Command;
 
 /**
  *
  */
-public class MoveFlapper extends Command {
+public class MoveFlipper extends Command {
 
-    public MoveFlapper() {
+    public MoveFlipper() {
         requires(Robot.flapper);
     }
 
@@ -21,9 +21,9 @@ public class MoveFlapper extends Command {
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
     	if(Robot.oi.flapperDown.get())
-    		Robot.flapper.setFlapper(Flapper.FlapperState.down);
+    		Robot.flapper.setFlapper(Flipper.FlipperState.down);
     	else 
-    		Robot.flapper.setFlapper(Flapper.FlapperState.up);
+    		Robot.flapper.setFlapper(Flipper.FlipperState.up);
     }
 
     // Make this return true when this Command no longer needs to run execute()

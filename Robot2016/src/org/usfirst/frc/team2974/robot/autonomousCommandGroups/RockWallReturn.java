@@ -13,7 +13,7 @@ public class RockWallReturn extends CommandGroup {
     
     public  RockWallReturn() {
     	addParallel(new ArmDown());
-    	addSequential(new DriveStraight(4.2, -.7));
+    	addSequential(new DriveStraight(4.7, -.7));
     	addSequential(new Wait(2));
     	addSequential(new DriveStraight(3,.7));
     }
