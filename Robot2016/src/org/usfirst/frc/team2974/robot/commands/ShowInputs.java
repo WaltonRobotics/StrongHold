@@ -39,7 +39,8 @@ public class ShowInputs extends Command {
 		SmartDashboard.putNumber("x", accel.getX());
 		SmartDashboard.putNumber("y", accel.getY());
 		SmartDashboard.putNumber("z", accel.getZ());
-//		if(Robot.oi.testAuton.get())
+		
+		//		if(Robot.oi.testAuton.get())
 	//		Scheduler.getInstance().add(new TestAuton());
 	}
 

@@ -20,8 +20,8 @@ public class Aim extends Command {
 	private State currentState;
 	private double speed = .6;
 	private double brakingSpeed = .05;
-	private final double centerX = 82;
-	private double gain = .002;
+	private final double centerX = 95;
+	private double gain = .0025;
 	private double cycleDifference;
 	private double startTime;
 	private double time;
@@ -131,7 +131,12 @@ public class Aim extends Command {
 		}
 		
 		void execute() {
-
+			if (side == 1)
+				cycleDifference = camera.getX() - centerX;
+			else if (side == 0)
+				cycleDifference = camera.getXLeft() - centerX;
+			else if (side == 2)
+				cycleDifference = camera.getXRight() - centerX;
 		}
 
 		boolean isFinished() {
@@ -174,9 +179,9 @@ public class Aim extends Command {
 	// Make this return true when this Command no longer needs to run execute()
 	protected boolean isFinished() {
 		if(!shoot)
-		return Math.abs(cycleDifference) < threshold || Timer.getFPGATimestamp()-startTime > time;
+		return Math.abs(cycleDifference) < threshold && Timer.getFPGATimestamp()-startTime > time;
 		else
-			return Math.abs(cycleDifference)<threshold*3 ;
+			return Math.abs(cycleDifference)<5 ;
 	}
 
 	// Called once after isFinished returns true

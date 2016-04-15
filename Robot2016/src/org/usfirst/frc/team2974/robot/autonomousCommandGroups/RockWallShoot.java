@@ -27,9 +27,9 @@ public class RockWallShoot extends CommandGroup {
 		
     	addParallel(new FlapDownTime(1));
     	
-    	addSequential(new Aim(1,3));
-    	addSequential(new Aim(0,3));
-		addSequential(new Aim(0,1,true));
+		addSequential(new Aim(2,3));
+		addSequential(new Aim(2,3));
+		addSequential(new Aim(2,.5,true));
 		
 		addSequential(new Shoot());
     }

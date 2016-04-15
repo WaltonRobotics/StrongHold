@@ -10,6 +10,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 import org.usfirst.frc.team2974.robot.autonomousCommandGroups.*;
 import org.usfirst.frc.team2974.robot.autonomousCommands.DoNothing;
+import org.usfirst.frc.team2974.robot.commands.Aim;
 import org.usfirst.frc.team2974.robot.commands.ShowInputs;
 import org.usfirst.frc.team2974.robot.subsystems.*;
 
@@ -57,8 +58,9 @@ public class Robot extends IterativeRobot {
 	
 		createAutonomousChooser();
 		oi = new OI();
+		
 		CameraServer server = CameraServer.getInstance();
-		server.setQuality(1);
+		server.setQuality(0);
 		server.startAutomaticCapture("cam1");
 	}
 
@@ -94,7 +96,9 @@ public class Robot extends IterativeRobot {
 		Robot.camera.dumpSmartDshboardValues();
 		Robot.arm.dumpSmartDashboardValues();
 		Robot.shooter.dumpSmartDashboardValues();
-
+		SmartDashboard.putBoolean("aimed", Math.abs(Robot.camera.getXRight()-Aim.centerX)<Aim.threshold);
+		SmartDashboard.putBoolean("left", Robot.camera.getXRight()-Aim.centerX > 0);
+		SmartDashboard.putBoolean("right", Robot.camera.getXRight()-Aim.centerX < 0);
 	}
 
 	/**
@@ -113,7 +117,6 @@ public class Robot extends IterativeRobot {
 		autonomousCommand = (Command) autoChooser.getSelected();
 		autonomousCommand.start();
 		Scheduler.getInstance().add(new ShowInputs());
-
 	}
 
 	/**
@@ -128,7 +131,10 @@ public class Robot extends IterativeRobot {
 		if (autonomousCommand != null)
 			autonomousCommand.cancel();
 		Scheduler.getInstance().add(new ShowInputs());
-
+		
+		SmartDashboard.putBoolean("aimed", Math.abs(Robot.camera.getXRight()-Aim.centerX)<Aim.threshold);
+		SmartDashboard.putBoolean("left", Robot.camera.getXRight()-Aim.centerX > 0);
+		SmartDashboard.putBoolean("right", Robot.camera.getXRight()-Aim.centerX < 0);
 	}
 
 	/**
@@ -136,5 +142,9 @@ public class Robot extends IterativeRobot {
 	 */
 	public void teleopPeriodic() {
 		Scheduler.getInstance().run();
+		
+		SmartDashboard.putBoolean("aimed", Math.abs(Robot.camera.getXRight()-Aim.centerX)<Aim.threshold);
+		SmartDashboard.putBoolean("left", Robot.camera.getXRight()-Aim.centerX > 0);
+		SmartDashboard.putBoolean("right", Robot.camera.getXRight()-Aim.centerX < 0);
 	}
 }

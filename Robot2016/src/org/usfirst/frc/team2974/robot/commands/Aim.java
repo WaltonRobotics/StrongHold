@@ -15,13 +15,13 @@ public class Aim extends Command {
 	private DriveTrain driveTrain = Robot.driveTrain;
 	private Camera camera = Robot.camera;
 
-	private final double threshold = 3;
+	public static final double threshold = 3;
 	private State currentState;
-	private double speed = .6;
-	private double brakingSpeed = .05;
-	private final double centerX = 80;
-	private double gain = .0012;
-	private double cycleDifference;
+	private double speed = .35;
+	private double brakingSpeed = 0;
+	public static final double centerX = 95;
+	private double gain = .0035;
+	public static double cycleDifference;
 
 	private double side;// 0 is left, 1 is center, 2 is right
 
@@ -119,7 +119,13 @@ public class Aim extends Command {
 		}
 		
 		void execute() {
-
+			if (side == 1)
+				cycleDifference = camera.getX() - centerX;
+			else if (side == 0)
+				cycleDifference = camera.getXLeft() - centerX;
+			else if (side == 2)
+				cycleDifference = camera.getXRight() - centerX;
+		
 		}
 
 		boolean isFinished() {

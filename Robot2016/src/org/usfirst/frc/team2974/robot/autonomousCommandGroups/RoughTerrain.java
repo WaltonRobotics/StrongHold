@@ -12,7 +12,7 @@ public class RoughTerrain extends CommandGroup {
     
     public  RoughTerrain() {
 		addParallel(new ArmDown());
-		addSequential(new DriveStraight(4.5, -.5));
+		addSequential(new DriveStraight(4.2, -.7));
 
     }
 }

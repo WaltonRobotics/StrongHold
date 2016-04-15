@@ -1,9 +1,4 @@
 package org.usfirst.frc.team2974.robot.subsystems;
-
-
-/**
- *
- */
 //public class Intake extends Subsystem {
 //	   Talon intakeMotor = RobotMap.intakeMotor;
 //	   

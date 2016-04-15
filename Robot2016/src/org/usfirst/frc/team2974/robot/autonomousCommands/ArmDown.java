@@ -12,7 +12,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 public class ArmDown extends Command {
 
 	double startTime;
-	double totalTime = .7;
+	double totalTime = .3;
 	double armPower = -1; 
 	//practice bot = 1
 	//comp bot = -1
@@ -28,11 +28,8 @@ public class ArmDown extends Command {
 
 	// Called repeatedly when this Command is scheduled to run
 	protected void execute() {
-		if (Timer.getFPGATimestamp() - startTime > .3 && Timer.getFPGATimestamp() - startTime < totalTime)
-			Robot.arm.moveArmPower(armPower);
-		else
-			Robot.arm.moveArmPower(0);
-	}
+		Robot.arm.moveArmPower(armPower);
+		}
 
 	// Make this return true when this Command no longer needs to run execute()
 	protected boolean isFinished() {
@@ -41,6 +38,7 @@ public class ArmDown extends Command {
 
 	// Called once after isFinished returns true
 	protected void end() {
+		Robot.arm.moveArmPower(0);
 		SmartDashboard.putString("Autonomous stuff", "There ya go, arm is down");
 	}
 

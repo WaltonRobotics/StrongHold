@@ -15,7 +15,7 @@ public class TurnLeft extends Command {
 	double speed;
 
 	public TurnLeft() {
-		this(2,.5);
+		this(1.4,.5);
 	}
 	public TurnLeft(double time, double speed)
 	{
