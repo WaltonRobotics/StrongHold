@@ -13,10 +13,8 @@ public class ArmDown extends Command {
 
 	double startTime;
 	double totalTime = .3;
-	double armPower = -1; 
-	//practice bot = 1
-	//comp bot = -1
-	//TODO
+	double armPower = -1;
+
 	public ArmDown() {
 		requires(Robot.arm);
 	}
@@ -29,7 +27,7 @@ public class ArmDown extends Command {
 	// Called repeatedly when this Command is scheduled to run
 	protected void execute() {
 		Robot.arm.moveArmPower(armPower);
-		}
+	}
 
 	// Make this return true when this Command no longer needs to run execute()
 	protected boolean isFinished() {
