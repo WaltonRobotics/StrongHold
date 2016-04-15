@@ -1,8 +1,8 @@
 package org.usfirst.frc.team2974.robot.autonomousCommands;
 
 import org.usfirst.frc.team2974.robot.Robot;
-import org.usfirst.frc.team2974.robot.subsystems.Flapper;
-import org.usfirst.frc.team2974.robot.subsystems.Flapper.FlapperState;
+import org.usfirst.frc.team2974.robot.subsystems.Flipper;
+import org.usfirst.frc.team2974.robot.subsystems.Flipper.FlipperState;
 
 import edu.wpi.first.wpilibj.command.Command;
 
@@ -12,17 +12,17 @@ import edu.wpi.first.wpilibj.command.Command;
 public class FlapDown extends Command {
 
 	public FlapDown() {     
-    	requires(Robot.flapper);
+    	requires(Robot.flipper);
     }
 
     // Called just before this Command runs the first time
     protected void initialize() {
-    	Robot.flapper.setFlapper(FlapperState.down);
+    	Robot.flipper.setFlapper(FlipperState.down);
     }
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	Robot.flapper.setFlapper(Flapper.FlapperState.down);
+    	Robot.flipper.setFlapper(Flipper.FlipperState.down);
     }
 
     // Make this return true when this Command no longer needs to run execute()

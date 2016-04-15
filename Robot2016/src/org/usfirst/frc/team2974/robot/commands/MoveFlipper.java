@@ -11,7 +11,7 @@ import edu.wpi.first.wpilibj.command.Command;
 public class MoveFlipper extends Command {
 
     public MoveFlipper() {
-        requires(Robot.flapper);
+        requires(Robot.flipper);
     }
 
     // Called just before this Command runs the first time
@@ -21,9 +21,9 @@ public class MoveFlipper extends Command {
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
     	if(Robot.oi.flapperDown.get())
-    		Robot.flapper.setFlapper(Flipper.FlipperState.down);
+    		Robot.flipper.setFlapper(Flipper.FlipperState.down);
     	else 
-    		Robot.flapper.setFlapper(Flipper.FlipperState.up);
+    		Robot.flipper.setFlapper(Flipper.FlipperState.up);
     }
 
     // Make this return true when this Command no longer needs to run execute()
