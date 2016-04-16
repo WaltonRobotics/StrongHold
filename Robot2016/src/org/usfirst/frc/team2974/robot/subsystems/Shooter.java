@@ -20,14 +20,14 @@ public class Shooter extends Subsystem {
 	boolean isInit = false;
 
 	private final double maxTensionerPower = 0.450;
-	private final double holdTensionerPower = .050;
+	private final double holdTensionerPower = .030;
 
 	private TensionerState state;
 
-//	private final double ForwardThreshold = 1000;
-//	private final double ReverseThreshold = 300;
-//	private final double ForwardLimit = 135000;
-//	private final double ReverseLimit = 1300;
+	// private final double ForwardThreshold = 1000;
+	// private final double ReverseThreshold = 300;
+	// private final double ForwardLimit = 135000;
+	// private final double ReverseLimit = 1300;
 
 	private DigitalInput forwardLimitSwitch = RobotMap.forwardLimit;
 	private DigitalInput reverseLimitSwitch = RobotMap.backwardLimit;
@@ -73,13 +73,15 @@ public class Shooter extends Subsystem {
 	}
 
 	public TensionerState getState() {
-//		if (getTensionerValue() > ForwardLimit - ForwardThreshold || isForwardLimit())
-//			state = TensionerState.tensioned;
-//		else if (getTensionerValue() < ReverseLimit + ReverseThreshold || isReverseLimit())
-//			state = TensionerState.untensioned;
-		if(isForwardLimit())
+		// if (getTensionerValue() > ForwardLimit - ForwardThreshold ||
+		// isForwardLimit())
+		// state = TensionerState.tensioned;
+		// else if (getTensionerValue() < ReverseLimit + ReverseThreshold ||
+		// isReverseLimit())
+		// state = TensionerState.untensioned;
+		if (isForwardLimit())
 			state = TensionerState.tensioned;
-		else if(isReverseLimit())
+		else if (isReverseLimit())
 			state = TensionerState.untensioned;
 		return state;
 	}
@@ -103,26 +105,21 @@ public class Shooter extends Subsystem {
 	private void setTensionerPower(double power) {
 		if (power < 0 && isReverseLimit()) {
 			setZero();
-			//tensioner.setEncPosition(1000);
+			// tensioner.setEncPosition(1000);
 			isInit = true;
-		} else if (power > 0 && isForwardLimit())
-		{
+		} else if (power > 0 && isForwardLimit()) {
 			setZero();
-			
-		}
-		else
-		{
+
+		} else {
 			tensioner.set(power);
-			SmartDashboard.putString("im going to power",""+power);
+			SmartDashboard.putString("im going to power", "" + power);
 		}
-		
-		
-//		if(isForwardLimit())
-//			tensioner.setEncPosition(130000);
-//		else if(isReverseLimit())
-//			tensioner.setEncPosition(1000);
-			
-		
+
+		// if(isForwardLimit())
+		// tensioner.setEncPosition(130000);
+		// else if(isReverseLimit())
+		// tensioner.setEncPosition(1000);
+
 	}
 
 	public double getTensionerValue() {
