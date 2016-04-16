@@ -177,7 +177,7 @@ public class Aim extends Command {
 	// Make this return true when this Command no longer needs to run execute()
 	protected boolean isFinished() {
 		if(!shoot)
-		return Math.abs(cycleDifference) < threshold || Timer.getFPGATimestamp()-startTime > totalTime;
+		return Math.abs(cycleDifference) < threshold || Timer.getFPGATimestamp() - startTime > totalTime;
 		else
 			return Math.abs(cycleDifference)<threshold ;
 	}
