@@ -15,17 +15,19 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
 /**
  *
  */
-public class LowBar extends CommandGroup {
+public class RockWallShootLeft extends CommandGroup {
     
-    public  LowBar() {
+    public  RockWallShootLeft() {
     	
 //    	addSequential(new ShiftDown());
-    	
-    	//1.6 = 180
-    	//1.95 more than 180
-    	//1.25 less than 180
-//    	addSequential(new TurnLeft(1.95,.5));
-//    	addSequential(new TurnRightUntilFind(4, .1));
+//    	
+//    	addParallel(new ArmDown());
+//    	addSequential(new DriveStraight(4.77, -.7));
+//    	
+//		addSequential(new Wait(.15));
+//		//addSequential(new DriveStraight(.3, .5));
+//		//addSequential(new Wait(.15));
+//		addSequential(new TurnLeft());
 //		
 //		addParallel(new FlapDownTime(.3));
 //		
@@ -33,6 +35,23 @@ public class LowBar extends CommandGroup {
 //		addSequential(new Aim(0,.5,true));
 //		
 //		addSequential(new Shoot());
-
+		
+    	addSequential(new ShiftDown());
+    	
+    	addParallel(new ArmDown());
+    	addSequential(new DriveStraight(4.77, -.7));
+    	
+		addSequential(new Wait(.1));
+    	addSequential(new TurnLeft(1.95,.5));
+    	
+    	addSequential(new Wait(.1));
+    	addSequential(new TurnRightUntilFind(2, .2));
+		
+		addParallel(new FlapDownTime(.3));
+		
+		addSequential(new Aim(0,4));
+		addSequential(new Aim(0,.5,true));
+		
+		addSequential(new Shoot());
     }
 }

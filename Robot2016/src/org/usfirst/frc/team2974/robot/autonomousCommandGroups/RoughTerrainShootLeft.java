@@ -13,26 +13,32 @@ import org.usfirst.frc.team2974.robot.autonomousCommands.Wait;
 import edu.wpi.first.wpilibj.command.CommandGroup;
 
 /**
- *
+ * dont run until uncomment line 23 !!!!!!!!!!!!!!!!!!!
  */
-public class LowBar extends CommandGroup {
+public class RoughTerrainShootLeft extends CommandGroup {
     
-    public  LowBar() {
+    public  RoughTerrainShootLeft() {
+    	addSequential(new ShiftDown());
     	
-//    	addSequential(new ShiftDown());
-    	
-    	//1.6 = 180
-    	//1.95 more than 180
-    	//1.25 less than 180
-//    	addSequential(new TurnLeft(1.95,.5));
-//    	addSequential(new TurnRightUntilFind(4, .1));
-//		
-//		addParallel(new FlapDownTime(.3));
-//		
-//		addSequential(new Aim(0,6));
-//		addSequential(new Aim(0,.5,true));
-//		
-//		addSequential(new Shoot());
+    	addParallel(new ArmDown());
+		addSequential(new DriveStraight(4,-.7));
+		
+//		addSequential(new Wait(.15));
+//		addSequential(new TurnLeft(1.6,.5));
 
+//		addSequential(new TurnLeft());
+		
+		addSequential(new Wait(.1));
+    	addSequential(new TurnLeft(1.95,.5));
+    	
+    	addSequential(new Wait(.1));
+    	addSequential(new TurnRightUntilFind(2, .2));
+		
+		addParallel(new FlapDownTime(.3));
+		
+		addSequential(new Aim(0,4));
+		addSequential(new Aim(0,.5,true));
+		
+		addSequential(new Shoot());
     }
 }

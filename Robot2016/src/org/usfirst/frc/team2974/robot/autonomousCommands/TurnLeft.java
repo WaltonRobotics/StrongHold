@@ -15,13 +15,13 @@ public class TurnLeft extends Command {
 	double speed;
 
 	public TurnLeft() {
-		this(1.4,.5);
+		this(1.25,.5);
 	}
 	public TurnLeft(double time, double speed)
 	{
 		requires(Robot.driveTrain);
-		SmartDashboard.putNumber("timeTurn", time);
-		SmartDashboard.putNumber("speedTurn", speed);
+		//SmartDashboard.putNumber("timeTurn", time);
+		//SmartDashboard.putNumber("speedTurn", speed);
 		this.time = time;
 		this.speed = speed;
 	}
@@ -29,8 +29,8 @@ public class TurnLeft extends Command {
 	// Called just before this Command runs the first time
 	protected void initialize() {
 		startTime = Timer.getFPGATimestamp();
-		time = SmartDashboard.getNumber("timeTurn");
-		speed = SmartDashboard.getNumber("speedTurn");
+		//time = SmartDashboard.getNumber("timeTurn");
+		//speed = SmartDashboard.getNumber("speedTurn");
 	}
 
 	// Called repeatedly when this Command is scheduled to run

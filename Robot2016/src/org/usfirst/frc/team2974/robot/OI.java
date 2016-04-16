@@ -69,7 +69,7 @@ public class OI {
 		
 		resetShooter.whenPressed(new ShooterReset());
 		
-		aim.whenPressed(new Aim(1));
+//		aim.whenPressed(new Aim(1));
 		aimLeft.whenPressed(new Aim(0));
 		aimRight.whenPressed(new Aim(2));
 		

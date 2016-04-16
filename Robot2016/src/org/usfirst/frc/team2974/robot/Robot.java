@@ -65,16 +65,18 @@ public class Robot extends IterativeRobot {
 
 		autoChooser = new SendableChooser();
 		autoChooser.addDefault("Do Nothing", new DoNothing());
-		//autoChooser.addObject("Lowbar", new LowBar());
+		autoChooser.addObject("Lowbar", new LowBar());
 		//autoChooser.addObject("Lowbar + shoot", new LowBarShoot());
 		//autoChooser.addObject("LowBar return", new LowBarReturn());
 		autoChooser.addObject("Rough Terrain", new RoughTerrain());
-		autoChooser.addObject("Rough terrain shoot", new RoughTerrainShoot());
+		autoChooser.addObject("Rough terrain shoot left", new RoughTerrainShootLeft());
+		autoChooser.addObject("Rough terrain shoot right", new RoughTerrainShootRight());
 		autoChooser.addObject("Rough Terrain Return", new RoughTerrainReturn());
 		autoChooser.addObject("Rock wall", new RockWall());
-		autoChooser.addObject("Rock wall shoot", new RockWallShoot());
+		autoChooser.addObject("Rock wall shoot right", new RockWallShootRight());
+		autoChooser.addObject("Rock wall shoot left", new RockWallShootLeft());
 		autoChooser.addObject("Rock Wall Return", new RockWallReturn());
-		SmartDashboard.putData("PICK AN AUTONOMOUS", autoChooser);
+		SmartDashboard.putData("PICK AN AUTO", autoChooser);
 
 	}
 
@@ -116,6 +118,8 @@ public class Robot extends IterativeRobot {
 		autonomousCommand = (Command) autoChooser.getSelected();
 		autonomousCommand.start();
 		Scheduler.getInstance().add(new ShowInputs());
+		SmartDashboard.putBoolean("aimed", Math.abs(Robot.camera.getXRight()-Aim.centerX)<Aim.threshold);
+
 	}
 
 	/**
@@ -123,6 +127,8 @@ public class Robot extends IterativeRobot {
 	 */
 	public void autonomousPeriodic() {
 		Scheduler.getInstance().run();
+		SmartDashboard.putBoolean("aimed", Math.abs(Robot.camera.getXRight()-Aim.centerX)<Aim.threshold);
+
 	}
 
 	public void teleopInit() {

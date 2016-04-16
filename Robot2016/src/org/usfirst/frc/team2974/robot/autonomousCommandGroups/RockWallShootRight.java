@@ -7,28 +7,31 @@ import org.usfirst.frc.team2974.robot.autonomousCommands.FlapDownTime;
 import org.usfirst.frc.team2974.robot.autonomousCommands.ShiftDown;
 import org.usfirst.frc.team2974.robot.autonomousCommands.Shoot;
 import org.usfirst.frc.team2974.robot.autonomousCommands.TurnLeft;
+import org.usfirst.frc.team2974.robot.autonomousCommands.TurnRightUntilFind;
 import org.usfirst.frc.team2974.robot.autonomousCommands.Wait;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
 
 /**
- * dont run until uncomment line 23 !!!!!!!!!!!!!!!!!!!
+ *
  */
-public class RoughTerrainShoot extends CommandGroup {
+public class RockWallShootRight extends CommandGroup {
     
-    public  RoughTerrainShoot() {
+    public  RockWallShootRight() {
     	addSequential(new ShiftDown());
     	
     	addParallel(new ArmDown());
-//		addSequential(new DriveStraight(4.2,-.7));
+    	addSequential(new DriveStraight(4.77, -.7));
+    	
+		addSequential(new Wait(.1));
+    	addSequential(new TurnLeft(1.95,.5));
+    	
+    	addSequential(new Wait(.1));
+    	addSequential(new TurnRightUntilFind(2, .2));
 		
-		addSequential(new Wait(.3));
-		addSequential(new TurnLeft());
+		addParallel(new FlapDownTime(.3));
 		
-		addParallel(new FlapDownTime(1));
-		
-		addSequential(new Aim(2,3));
-		addSequential(new Aim(2,3));
+		addSequential(new Aim(2,4));
 		addSequential(new Aim(2,.5,true));
 		
 		addSequential(new Shoot());

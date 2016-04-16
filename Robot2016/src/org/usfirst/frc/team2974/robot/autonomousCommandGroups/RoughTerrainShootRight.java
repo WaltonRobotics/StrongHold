@@ -14,21 +14,22 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
 /**
  *
  */
-public class RockWallShoot extends CommandGroup {
+public class RoughTerrainShootRight extends CommandGroup {
     
-    public  RockWallShoot() {
-    	addSequential(new ShiftDown());
+    public  RoughTerrainShootRight() {
+addSequential(new ShiftDown());
     	
     	addParallel(new ArmDown());
-    	addSequential(new DriveStraight(4.7, -.7));
-    	
-    	addSequential(new Wait(.3));
-    	addSequential(new TurnLeft());
+		addSequential(new DriveStraight(4,-.7));
 		
-    	addParallel(new FlapDownTime(1));
-    	
-		addSequential(new Aim(2,3));
-		addSequential(new Aim(2,3));
+		//addSequential(new Wait(.15));
+		//addSequential(new DriveStraight(.4, .5));
+		addSequential(new Wait(.15));
+		addSequential(new TurnLeft());
+		
+		addParallel(new FlapDownTime(.3));
+		
+		addSequential(new Aim(2,6));
 		addSequential(new Aim(2,.5,true));
 		
 		addSequential(new Shoot());
