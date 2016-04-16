@@ -13,7 +13,7 @@ import org.usfirst.frc.team2974.robot.autonomousCommands.Wait;
 import edu.wpi.first.wpilibj.command.CommandGroup;
 
 /**
- * dont run until uncomment line 23 !!!!!!!!!!!!!!!!!!!
+ * 
  */
 public class RoughTerrainShootLeft extends CommandGroup {
     
@@ -22,11 +22,6 @@ public class RoughTerrainShootLeft extends CommandGroup {
     	
     	addParallel(new ArmDown());
 		addSequential(new DriveStraight(4,-.7));
-		
-//		addSequential(new Wait(.15));
-//		addSequential(new TurnLeft(1.6,.5));
-
-//		addSequential(new TurnLeft());
 		
 		addSequential(new Wait(.1));
     	addSequential(new TurnLeft(1.95,.5));
