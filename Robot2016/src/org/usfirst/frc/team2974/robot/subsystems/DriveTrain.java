@@ -11,7 +11,7 @@ import edu.wpi.first.wpilibj.SpeedController;
 import edu.wpi.first.wpilibj.Talon;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import motionProfilling.MotionControl;
+//import motionProfilling.MotionControl;
 
 /**
  *
@@ -94,12 +94,12 @@ public class DriveTrain extends Subsystem {
     	encoderLeft.reset();
     	encoderRight.reset();
     }
-    public void setSetPoint(MotionControl mc, double time)
-    {
+//    public void setSetPoint(MotionControl mc, double time)
+//    {
     	//fix acceleration
-    	leftController.setSetpoint(mc.distanceleft(time),mc.velocityLeft(time),0);
-    	rightController.setSetpoint(mc.distanceRight(time),mc.velocityRight(time),0);
-    }
+//    	leftController.setSetpoint(mc.distanceleft(time),mc.velocityLeft(time),0);
+//    	rightController.setSetpoint(mc.distanceRight(time),mc.velocityRight(time),0);
+//    }
     
     public void shiftUp()
     {
