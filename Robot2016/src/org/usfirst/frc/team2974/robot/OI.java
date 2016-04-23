@@ -24,6 +24,9 @@ public class OI {
 	public Button shiftDown;
 	
 	public Button flapperDown;
+	public Button intake;
+	public Button outtake;
+	public Button stoptake;
 	
 	public Button aim;
 	public Button aimLeft;
@@ -53,6 +56,10 @@ public class OI {
 		
 		flapperDown = new JoystickButton(gamepad,8);
 		
+		intake = new JoystickButton(gamepad, 1);
+		outtake = new JoystickButton(gamepad, 3);
+		stoptake = new JoystickButton(gamepad, 2);
+		
 		shoot = new JoystickButton(right, 1);
 		
 		aim = new JoystickButton(right, 2);
@@ -69,7 +76,6 @@ public class OI {
 		
 		resetShooter.whenPressed(new ShooterReset());
 		
-//		aim.whenPressed(new Aim(1));
 		aimLeft.whenPressed(new Aim(0));
 		aimRight.whenPressed(new Aim(2));
 		
