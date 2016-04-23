@@ -2,9 +2,12 @@ package org.usfirst.frc.team2974.robot.autonomousCommands;
 
 import org.usfirst.frc.team2974.robot.Robot;
 import org.usfirst.frc.team2974.robot.subsystems.Flipper;
+import org.usfirst.frc.team2974.robot.subsystems.Intake;
 import org.usfirst.frc.team2974.robot.subsystems.Flipper.FlipperState;
 
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj.command.Scheduler;
 
 /**
  *
@@ -13,15 +16,19 @@ public class FlapDown extends Command {
 
 	public FlapDown() {     
     	requires(Robot.flipper);
+    	requires(Robot.intake);
     }
 
     // Called just before this Command runs the first time
     protected void initialize() {
-    	Robot.flipper.setFlapper(FlipperState.down);
+
+    	Scheduler.getInstance().add(new IntakeOut());
+    	Robot.intake.extend();
     }
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
+    	if(Robot.intake.getState() == Intake.IntakeExtenderState.out)
     	Robot.flipper.setFlapper(Flipper.FlipperState.down);
     }
 

@@ -27,6 +27,7 @@ public class Robot extends IterativeRobot {
 	public static Compass compass;
 	public static Flipper flipper;
 	public static Intake intake;
+	public static IntakeWheels intakeWheels;
 
 	public static Command autonomousCommand;
 
@@ -55,6 +56,7 @@ public class Robot extends IterativeRobot {
 		compass = new Compass();
 		flipper = new Flipper();
 		intake = new Intake();
+		intakeWheels = new IntakeWheels();
 	
 		createAutonomousChooser();
 		oi = new OI();

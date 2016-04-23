@@ -1,10 +1,12 @@
 package org.usfirst.frc.team2974.robot.autonomousCommands;
 
 import org.usfirst.frc.team2974.robot.Robot;
+import org.usfirst.frc.team2974.robot.subsystems.Intake;
 import org.usfirst.frc.team2974.robot.subsystems.Flipper.FlipperState;
 
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj.command.Scheduler;
 
 /**
  *
@@ -20,11 +22,13 @@ double startTime;
     // Called just before this Command runs the first time
     protected void initialize() {
     	startTime = Timer.getFPGATimestamp();
-    	Robot.flipper.setFlapper(FlipperState.down);
+    	Robot.intake.extend();
+    	
     }
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
+    	if(Robot.intake.getState() == Intake.IntakeExtenderState.out)
     	Robot.flipper.setFlapper(FlipperState.down);
     }
 

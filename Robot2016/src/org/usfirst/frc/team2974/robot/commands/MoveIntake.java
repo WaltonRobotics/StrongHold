@@ -1,18 +1,16 @@
 package org.usfirst.frc.team2974.robot.commands;
 
 import org.usfirst.frc.team2974.robot.Robot;
-import org.usfirst.frc.team2974.robot.subsystems.Flipper;
-import org.usfirst.frc.team2974.robot.subsystems.Intake;
 
 import edu.wpi.first.wpilibj.command.Command;
 
 /**
  *
  */
-public class MoveFlipper extends Command {
+public class MoveIntake extends Command {
 
-    public MoveFlipper() {
-        requires(Robot.flipper);
+    public MoveIntake() {
+        requires(Robot.intake);
     }
 
     // Called just before this Command runs the first time
@@ -21,15 +19,10 @@ public class MoveFlipper extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	if(Robot.oi.flapperDown.get())
-    	{
-    		if(Robot.intake.getState() == Intake.IntakeExtenderState.out)
-    		Robot.flipper.setFlapper(Flipper.FlipperState.down);
-    		else
-    			Robot.intake.extend();
-    	}	
-    	else 
-    		Robot.flipper.setFlapper(Flipper.FlipperState.up);
+    	if(Robot.oi.retractIntake.get())
+    		Robot.intake.retract();
+    	else if(Robot.oi.extendIntake.get())
+    		Robot.intake.extend();
     }
 
     // Make this return true when this Command no longer needs to run execute()
