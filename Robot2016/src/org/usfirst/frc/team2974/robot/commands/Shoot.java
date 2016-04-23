@@ -2,6 +2,7 @@ package org.usfirst.frc.team2974.robot.commands;
 
 import org.usfirst.frc.team2974.robot.Robot;
 import org.usfirst.frc.team2974.robot.autonomousCommands.FlapDown;
+import org.usfirst.frc.team2974.robot.autonomousCommands.IntakeOut;
 //import org.usfirst.frc.team2974.robot.autonomousCommands.FlapDown;
 import org.usfirst.frc.team2974.robot.subsystems.Shooter;
 
@@ -89,7 +90,7 @@ public class Shoot extends Command {
 		}
 
 		void end() {
-			currentState = new MovingFlapper();
+			currentState = new MovingIntake();
 			Robot.oi.autoShoot = false;
 		}
 
@@ -105,6 +106,7 @@ public class Shoot extends Command {
 		void init() {
 			initTime = Timer.getFPGATimestamp();
 			Scheduler.getInstance().add(new FlapDown());
+			
 		}
 
 
@@ -124,7 +126,34 @@ public class Shoot extends Command {
 		}
 		
 	}
+	class MovingIntake extends State
+	{
+		double startTime;
+		@Override
+		void init() {
+			startTime = Timer.getFPGATimestamp();
+			Scheduler.getInstance().add(new IntakeOut());
+		}
 
+		@Override
+		void execute() {
+			// TODO Auto-generated method stub
+			
+		}
+
+		@Override
+		void end() {
+		currentState = new MovingFlapper();
+			
+		}
+
+		@Override
+		boolean isFinished() {
+			// TODO Auto-generated method stub
+			return Timer.getFPGATimestamp()-startTime > .1;
+		}
+		
+	}
 	class Shooting extends State {
 		double initTime;
 
