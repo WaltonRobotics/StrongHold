@@ -12,36 +12,51 @@ import edu.wpi.first.wpilibj.command.Subsystem;
  */
 public class Intake extends Subsystem {
 	   Talon intakeMotor = RobotMap.intakeMotor;
-	   Solenoid intakeSolenoid = RobotMap.flapper;
-
+	   Solenoid intakeExtender = RobotMap.intakeExtender;
+	   
+	   IntakeExtenderState state;
+	   
+	   private double speed = .5;
+	   
 	    public void initDefaultCommand() {
 	    	setDefaultCommand(new LoadBall());
 	    }
+	    
+	    public Intake()
+	    {
+	    	state = IntakeExtenderState.in;
+	    }
+	    
 	    public void input(){
-	    	intakeMotor.set(1);
+	    	intakeMotor.set(speed);
 	    }
 	    public void output(){
-	    	intakeMotor.set(-1);
+	    	intakeMotor.set(-1 * speed);
 	    }
 	    public void stop(){
 	    	intakeMotor.set(0);
 	    }
 	    
-	    public enum IntakeState
+	    public enum IntakeExtenderState
 	    {
-	    	up, down
+	    	in, out
 	    }
 	    
-	    public void setFlapper(IntakeState state)
+	    public void extend()
 	    {
-	    	switch(state)
-	    	{
-	    	case up:
-	    		intakeSolenoid.set(false);
-	    		break;
-	    	case down:
-	    		intakeSolenoid.set(true);
-	    	}
+	    	intakeExtender.set(true);
+	    	state = IntakeExtenderState.out;
+	    }
+	    
+	    public void retract()
+	    {
+	    	intakeExtender.set(false);
+	    	state = IntakeExtenderState.in;
+	    }
+	    
+	    public IntakeExtenderState getState()
+	    {
+	    	return state;
 	    }
 	    
 	    public void setMotor(double value)

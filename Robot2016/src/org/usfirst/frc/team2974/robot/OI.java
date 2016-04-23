@@ -27,6 +27,8 @@ public class OI {
 	public Button intake;
 	public Button outtake;
 	public Button stoptake;
+	public Button retractIntake;
+	public Button extendIntake;
 	
 	public Button aim;
 	public Button aimLeft;
@@ -59,6 +61,9 @@ public class OI {
 		intake = new JoystickButton(gamepad, 1);
 		outtake = new JoystickButton(gamepad, 3);
 		stoptake = new JoystickButton(gamepad, 2);
+		
+		extendIntake = new JoystickButton(gamepad, 5);
+		retractIntake = new JoystickButton(gamepad, 6);
 		
 		shoot = new JoystickButton(right, 1);
 		

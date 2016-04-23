@@ -49,6 +49,7 @@ public class RobotMap {
     //intake
 	public static Solenoid flapper;
 	public static Talon intakeMotor;
+	public static Solenoid intakeExtender;
 	
 	//shooter
 	public static Solenoid latch;
@@ -112,6 +113,7 @@ public class RobotMap {
         //intake
         flapper = new Solenoid(1);
         intakeMotor = new Talon(4);
+        intakeExtender = new Solenoid(3);
         
     }
 }
