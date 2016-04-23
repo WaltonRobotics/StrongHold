@@ -13,7 +13,7 @@ public class RoughTerrainReturn extends CommandGroup {
     
     public  RoughTerrainReturn() {
 		addParallel(new ArmDown());
-		addSequential(new DriveStraight(4.2, -.7));
+		addSequential(new DriveStraight(4, -.7));
 		addSequential(new Wait(2));
 		addSequential(new DriveStraight(2.5, .7));
     }

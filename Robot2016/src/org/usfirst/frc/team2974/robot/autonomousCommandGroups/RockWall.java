@@ -12,6 +12,6 @@ public class RockWall extends CommandGroup {
     
     public  RockWall() {
     	addParallel(new ArmDown());
-    	addSequential(new DriveStraight(4.7, -.7));
+    	addSequential(new DriveStraight(4.77, -.7));
     }
 }
