@@ -26,7 +26,7 @@ public class IntakeOut extends Command {
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-        return Timer.getFPGATimestamp()-startTime>.1;
+        return true;
     }
 
     // Called once after isFinished returns true

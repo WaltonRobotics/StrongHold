@@ -25,17 +25,17 @@ public class MoveFlipper extends Command {
     protected void execute() {
     	if(Robot.oi.flapperDown.get())
     	{
-    		//if(Robot.intake.getState() == Intake.IntakeExtenderState.out)
-    		Robot.flipper.setFlapper(Flipper.FlipperState.down);
-    		//else
-    			//Scheduler.getInstance().add(new IntakeOut());;
+    		if(Robot.intake.getState() == Intake.IntakeExtenderState.out)
+    			Robot.flipper.setFlapper(Flipper.FlipperState.down);
+    		else
+    			Scheduler.getInstance().add(new IntakeOut());
     	}	
     	else 
     	{
-    		//if(Robot.intake.getState() == Intake.IntakeExtenderState.out)
-    		Robot.flipper.setFlapper(Flipper.FlipperState.up);
-    		//else
-    			//Scheduler.getInstance().add(new IntakeOut());;
+    		if(Robot.intake.getState() == Intake.IntakeExtenderState.out)
+    			Robot.flipper.setFlapper(Flipper.FlipperState.up);
+    		else
+    			Scheduler.getInstance().add(new IntakeOut());
     	}
     		
     }

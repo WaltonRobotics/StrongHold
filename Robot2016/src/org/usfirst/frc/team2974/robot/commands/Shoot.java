@@ -106,7 +106,6 @@ public class Shoot extends Command {
 		void init() {
 			initTime = Timer.getFPGATimestamp();
 			Scheduler.getInstance().add(new FlapDown());
-			
 		}
 
 

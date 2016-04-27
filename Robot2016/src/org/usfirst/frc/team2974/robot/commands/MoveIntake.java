@@ -2,6 +2,7 @@ package org.usfirst.frc.team2974.robot.commands;
 
 import org.usfirst.frc.team2974.robot.Robot;
 
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Command;
 
 /**
@@ -15,14 +16,21 @@ public class MoveIntake extends Command {
 
     // Called just before this Command runs the first time
     protected void initialize() {
+    	
     }
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
     	if(Robot.oi.retractIntake.get())
+    	{
     		Robot.intake.retract();
+    	}
+    		
     	else if(Robot.oi.extendIntake.get())
+    	{
     		Robot.intake.extend();
+    	}
+    		
     }
 
     // Make this return true when this Command no longer needs to run execute()

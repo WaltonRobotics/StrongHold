@@ -30,21 +30,29 @@ public class Intake extends Subsystem {
 	    
 	    public enum IntakeExtenderState
 	    {
-	    	in, out
+	    	in, out, middle
 	    }
 	    
 	    public void extend()
 	    {
-	    	intakeExtender.set(true);
-	    	state = IntakeExtenderState.out;
-	    	time = Timer.getFPGATimestamp();
+	    	if(getState() == IntakeExtenderState.in)
+	    	{
+	    		intakeExtender.set(true);
+		    	state = IntakeExtenderState.out;
+		    	time = Timer.getFPGATimestamp();
+	    	}
+	    	
 	    }
 	    
 	    public void retract()
 	    {
-	    	intakeExtender.set(false);
-	    	state = IntakeExtenderState.in;
-	    	time = Timer.getFPGATimestamp();
+	    	if(getState() == IntakeExtenderState.out)
+	    	{
+		    	intakeExtender.set(false);
+		    	state = IntakeExtenderState.in;
+		    	time = Timer.getFPGATimestamp();
+	    	}
+
 	    }
 	    
 	    public IntakeExtenderState getState()
@@ -52,10 +60,7 @@ public class Intake extends Subsystem {
 	    	if(Timer.getFPGATimestamp()-time>.1)
 	    		return state;
 	    	else
-	    		if(state == IntakeExtenderState.in)
-	    			return IntakeExtenderState.out;
-	    		else
-	    			return IntakeExtenderState.in;
+	    		return IntakeExtenderState.middle;
 	    }	
 	    
 }
