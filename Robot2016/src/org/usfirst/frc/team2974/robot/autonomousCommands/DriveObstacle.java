@@ -13,19 +13,20 @@ import edu.wpi.first.wpilibj.command.Command;
  *
  */
 public class DriveObstacle extends Command {
-	private double yaw;
-	private double speed  =.8;
+	private double startYaw;
+	private double pitch;
+	private double speed  =-.8;
 	private final double multiplierConstatnt = 1.5;
 	private driveState state;
-	private double upYaw =20;
-	private double downYaw = -20;
-	private double crossYaw;
-	private double normalYaw;
+	private double upPitch =15;
+	private double downPitch = -15;
+	private double crossPitch = 0;
+	private double normalPitch = 0;
 	private double threshold  = 5;
 	
-	private double timeUp;
-	private double timeCross;
-	private double timeDown;
+	private double timeUp =1;
+	private double timeCross = 1;
+	private double timeDown = 1;
 	
 	Compass compass = Robot.compass;
 	DriveTrain driveTrain = Robot.driveTrain;
@@ -33,7 +34,7 @@ public class DriveObstacle extends Command {
 	private double time;
 	private double startTime;
 	
-    public DriveObstacle(double time) {
+    public DriveObstacle() {
     	requires(driveTrain);
     	requires(compass);
     }
@@ -43,19 +44,19 @@ public class DriveObstacle extends Command {
     }
     // Called just before this Command runs the first time
     protected void initialize() {
-    	yaw = compass.getYaw();
+    	startYaw = compass.getYaw();
     	startTime = Timer.getFPGATimestamp();
     	state = driveState.drive;
     }
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	yaw = compass.getYaw();
+    	pitch = compass.getPitch();
     	switch(state)
     	{
     	case drive:
     		straight();
-    		if(yaw>upYaw)
+    		if(pitch>upPitch)
     		{
     			state = driveState.crossing;
     			startTime = Timer.getFPGATimestamp();
@@ -63,7 +64,7 @@ public class DriveObstacle extends Command {
     		break;
     	case up:
     		straight();
-    		if(Timer.getFPGATimestamp()-startTime>timeUp && yaw<crossYaw)
+    		if(Timer.getFPGATimestamp()-startTime>timeUp && pitch<crossPitch)
     		{
     			state = driveState.crossing;
     			startTime = Timer.getFPGATimestamp();
@@ -71,7 +72,7 @@ public class DriveObstacle extends Command {
     		break;
     	case crossing:
     		straight();
-    		if(Timer.getFPGATimestamp()-startTime>timeCross&& yaw < downYaw)
+    		if(Timer.getFPGATimestamp()-startTime>timeCross&& pitch < downPitch)
     		{
     			state = driveState.down;
     			startTime = Timer.getFPGATimestamp();
@@ -79,7 +80,7 @@ public class DriveObstacle extends Command {
     		break;
     	case down:
     		straight();
-    		if(Math.abs(normalYaw - yaw)< threshold && Timer.getFPGATimestamp()-time> timeDown )
+    		if(Math.abs(normalPitch - pitch)< threshold && Timer.getFPGATimestamp()-time> timeDown )
     		{
     			state = driveState.done;
     		}
@@ -97,17 +98,17 @@ public class DriveObstacle extends Command {
     	double speedLeft = speed;
     	double speedRight = speed;
     	
-    	if(compass.getYaw()>yaw)
+    	if(compass.getYaw()>startYaw)
     	{
-    		//veering left
-    		speedLeft +=(compass.getYaw()-yaw)* multiplierConstatnt;
-    		speedRight -= (compass.getYaw()-yaw)* multiplierConstatnt;
+    		//veering right
+    		speedLeft -=Math.abs(compass.getYaw()-startYaw)* multiplierConstatnt;
+    		speedRight += Math.abs(compass.getYaw()-startYaw)* multiplierConstatnt;
     	}
     	else
     	{
-    		//veering right
-    		speedLeft -= (yaw - compass.getYaw())* multiplierConstatnt;
-    		speedRight += (yaw - compass.getYaw())* multiplierConstatnt;
+    		//veering left
+    		speedLeft +=Math.abs(compass.getYaw()-startYaw)* multiplierConstatnt;
+    		speedRight -= Math.abs(compass.getYaw()-startYaw)* multiplierConstatnt;
     	}
     	driveTrain.setSpeeds(speedLeft, speedRight);   
     }

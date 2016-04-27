@@ -28,6 +28,7 @@ public class Aim extends Command {
 	public Aim(int side) {
 		SmartDashboard.putNumber("gain", gain);
 		requires(Robot.driveTrain);
+		requires(Robot.camera);
 		this.side = side;
 	}
 
@@ -106,18 +107,14 @@ public class Aim extends Command {
 
 	public class Reset extends State {
 		void init() {
-			if (side == 1)
-				cycleDifference = camera.getX() - centerX;
-			else if (side == 0)
+			if (side == 0)
 				cycleDifference = camera.getXLeft() - centerX;
 			else if (side == 2)
 				cycleDifference = camera.getXRight() - centerX;
 		}
 
 		void execute() {
-			if (side == 1)
-				cycleDifference = camera.getX() - centerX;
-			else if (side == 0)
+			 if (side == 0)
 				cycleDifference = camera.getXLeft() - centerX;
 			else if (side == 2)
 				cycleDifference = camera.getXRight() - centerX;
@@ -142,7 +139,7 @@ public class Aim extends Command {
 
 	// Called repeatedly when this Command is scheduled to run
 	protected void execute() {
-		if (camera.getX() != -1) {
+		if (camera.getXLeft() != -1) {
 			if (!currentState.init) {
 				currentState.init();
 				currentState.init = true;
@@ -154,6 +151,7 @@ public class Aim extends Command {
 		} else {
 			driveTrain.setSpeeds(0, 0);
 			currentState = new Reset();
+			Robot.camera.setNetTable();
 
 		}
 		SmartDashboard.putString("aim state", currentState.toString());
@@ -161,8 +159,8 @@ public class Aim extends Command {
 
 	// Make this return true when this Command no longer needs to run execute()
 	protected boolean isFinished() {
-		if (side == 1)
-			return !Robot.oi.aim.get();
+		//if (side == 1)
+			//return !Robot.oi.aim.get();
 		if (side == 0)
 			return !Robot.oi.aimLeft.get();
 		return !Robot.oi.aimRight.get();

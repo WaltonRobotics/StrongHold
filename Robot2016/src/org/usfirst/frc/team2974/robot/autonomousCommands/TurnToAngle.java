@@ -19,28 +19,32 @@ public class TurnToAngle extends Command {
         	speedRight = 0;
     }
     double speed = .5;
-    double speedLeft;
-    double speedRight;
+    double speedLeft = .5;
+    double speedRight = 0;
     boolean left;
     double angle;
     double tolerance = 20;
+    double startYaw;
 
     // Called just before this Command runs the first time
     protected void initialize() {
-    	
+    	startYaw = Robot.compass.getYaw();
     }
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	if(Robot.compass.getPitch()>Robot.startAngle + angle)
-    		Robot.driveTrain.setSpeeds(speedLeft, speedRight);
+    	double deltaYaw = Robot.compass.getYaw()-startYaw;
+    	if(deltaYaw<0)
+    		deltaYaw+=360;
+    	if(deltaYaw > angle)
+    		Robot.driveTrain.setSpeeds(-1*speedLeft, speedRight);
     	else
-    		Robot.driveTrain.setSpeeds(-1 * speedLeft, speedRight);
+    		Robot.driveTrain.setSpeeds(speedLeft, speedRight);
     }
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-        return Math.abs(Robot.compass.getPitch()-(Robot.startAngle+ angle))<tolerance;
+        return Math.abs(Robot.compass.getYaw()-startYaw- angle)<tolerance;
     }
 
     // Called once after isFinished returns true

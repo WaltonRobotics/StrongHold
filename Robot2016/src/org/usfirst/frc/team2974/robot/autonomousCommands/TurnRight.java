@@ -33,7 +33,7 @@ double speed;
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-        return Robot.camera.getX()!=-1 || Timer.getFPGATimestamp()-startTime>time;
+        return Robot.camera.getXLeft()!=-1 || Timer.getFPGATimestamp()-startTime>time;
     }
 
     // Called once after isFinished returns true

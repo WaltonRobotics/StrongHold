@@ -1,10 +1,12 @@
 package org.usfirst.frc.team2974.robot.commands;
 
 import org.usfirst.frc.team2974.robot.Robot;
+import org.usfirst.frc.team2974.robot.autonomousCommands.IntakeOut;
 import org.usfirst.frc.team2974.robot.subsystems.Flipper;
 import org.usfirst.frc.team2974.robot.subsystems.Intake;
 
 import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj.command.Scheduler;
 
 /**
  *
@@ -23,13 +25,19 @@ public class MoveFlipper extends Command {
     protected void execute() {
     	if(Robot.oi.flapperDown.get())
     	{
-    		if(Robot.intake.getState() == Intake.IntakeExtenderState.out)
+    		//if(Robot.intake.getState() == Intake.IntakeExtenderState.out)
     		Robot.flipper.setFlapper(Flipper.FlipperState.down);
-    		else
-    			Robot.intake.extend();
+    		//else
+    			//Scheduler.getInstance().add(new IntakeOut());;
     	}	
     	else 
+    	{
+    		//if(Robot.intake.getState() == Intake.IntakeExtenderState.out)
     		Robot.flipper.setFlapper(Flipper.FlipperState.up);
+    		//else
+    			//Scheduler.getInstance().add(new IntakeOut());;
+    	}
+    		
     }
 
     // Make this return true when this Command no longer needs to run execute()

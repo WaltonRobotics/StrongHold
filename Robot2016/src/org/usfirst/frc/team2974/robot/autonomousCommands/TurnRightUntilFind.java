@@ -35,7 +35,7 @@ public class TurnRightUntilFind extends Command {
 
 	// Make this return true when this Command no longer needs to run execute()
 	protected boolean isFinished() {
-		return Robot.camera.getX() != -1 && Timer.getFPGATimestamp()-startTime < 4;
+		return Robot.camera.getXLeft() != -1 && Timer.getFPGATimestamp()-startTime < 4;
 	}
 
 	// Called once after isFinished returns true

@@ -21,7 +21,7 @@ public class Flipper extends Subsystem {
     {
     	up, down
     }
-    
+//    
     public void setFlapper(FlipperState state)
     {
     	switch(state)

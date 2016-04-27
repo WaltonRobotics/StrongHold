@@ -46,7 +46,6 @@ public class Compass extends Subsystem {
     	return 0;
     }
     /**
-     * p.s. i dont care
      * down positive
      * up negative
      * @return pitch

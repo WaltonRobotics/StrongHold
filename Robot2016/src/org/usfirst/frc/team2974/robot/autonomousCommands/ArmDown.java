@@ -12,7 +12,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 public class ArmDown extends Command {
 
 	double startTime;
-	double totalTime = .3;
+	double totalTime = .2;
 	double armPower = -1;
 
 	public ArmDown() {
@@ -43,5 +43,6 @@ public class ArmDown extends Command {
 	// Called when another command which requires one or more of the same
 	// subsystems is scheduled to run
 	protected void interrupted() {
+		Robot.arm.moveArmPower(0);
 	}
 }

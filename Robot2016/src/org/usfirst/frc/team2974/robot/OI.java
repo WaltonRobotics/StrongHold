@@ -30,7 +30,8 @@ public class OI {
 	public Button retractIntake;
 	public Button extendIntake;
 	
-	public Button aim;
+	public Button changeAim1;
+	public Button changeAim2;
 	public Button aimLeft;
 	public Button aimRight;
 	
@@ -67,7 +68,9 @@ public class OI {
 		
 		shoot = new JoystickButton(right, 1);
 		
-		aim = new JoystickButton(right, 2);
+		changeAim1 = new JoystickButton(left, 6);
+		changeAim2 = new JoystickButton(right, 6);
+				
 		aimLeft = new JoystickButton(right,4);
 		aimRight = new JoystickButton(right,5);
 		
@@ -81,12 +84,13 @@ public class OI {
 		
 		resetShooter.whenPressed(new ShooterReset());
 		
-		aimLeft.whenPressed(new Aim(0));
-		aimRight.whenPressed(new Aim(2));
+		//aimLeft.whenPressed(new Aim(0));
+		//aimRight.whenPressed(new Aim(2));
+		
 		
 		autoShoot = false;
 		
-		testAuton = new JoystickButton(gamepad, 6);//remove l8er TODO
+		//testAuton = new JoystickButton(gamepad, 6);//remove l8er TODO
 		//testAuton.whenPressed(new TestAuton());
 	}
 
