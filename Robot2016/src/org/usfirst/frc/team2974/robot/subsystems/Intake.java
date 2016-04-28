@@ -35,23 +35,25 @@ public class Intake extends Subsystem {
 	    
 	    public void extend()
 	    {
-	    	if(getState() == IntakeExtenderState.in)
-	    	{
-	    		intakeExtender.set(true);
-		    	state = IntakeExtenderState.out;
-		    	time = Timer.getFPGATimestamp();
-	    	}
+	    	intakeExtender.set(true);
+//	    	if(getState() == IntakeExtenderState.in)
+//	    	{
+//	    		intakeExtender.set(true);
+//		    	state = IntakeExtenderState.out;
+//		    	time = Timer.getFPGATimestamp();
+//	    	}
 	    	
 	    }
 	    
 	    public void retract()
 	    {
-	    	if(getState() == IntakeExtenderState.out)
-	    	{
-		    	intakeExtender.set(false);
-		    	state = IntakeExtenderState.in;
-		    	time = Timer.getFPGATimestamp();
-	    	}
+	    	intakeExtender.set(false);
+//	    	if(getState() == IntakeExtenderState.out)
+//	    	{
+//		    	intakeExtender.set(false);
+//		    	state = IntakeExtenderState.in;
+//		    	time = Timer.getFPGATimestamp();
+//	    	}
 
 	    }
 	    

@@ -16,7 +16,7 @@ public class FlapDown extends Command {
 
 	public FlapDown() {     
     	requires(Robot.flipper);
-    	requires(Robot.intake);
+    	//requires(Robot.intake);
     }
 
     // Called just before this Command runs the first time

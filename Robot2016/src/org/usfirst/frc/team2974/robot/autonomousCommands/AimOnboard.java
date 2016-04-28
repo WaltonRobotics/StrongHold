@@ -42,17 +42,17 @@ public class AimOnboard extends Command {
 		{
 			if (side == 0) {
 				if (cycleDifference > 0)// im to the right
-					driveTrain.setSpeeds(speed, -brakingSpeed);// turn left
+					driveTrain.setSpeeds(-speed, brakingSpeed);// turn left
 				else
-					driveTrain.setSpeeds(-speed, brakingSpeed);// turn right
+					driveTrain.setSpeeds(speed, -brakingSpeed);// turn right
 			} else if (side == 1) {
 					//y u do this to meeeeeeeee
 					//imma do nothing
 			} else if (side == 2) {
 				if (cycleDifference > 0)// im to the right
-					driveTrain.setSpeeds(brakingSpeed, -speed);// turn left
+					driveTrain.setSpeeds(-brakingSpeed, speed);// turn left
 				else
-					driveTrain.setSpeeds(-brakingSpeed, speed);// turn right
+					driveTrain.setSpeeds(brakingSpeed, -speed);// turn right
 			}
 		}
 

@@ -1,5 +1,13 @@
 package org.usfirst.frc.team2974.robot.autonomousCommandGroups;
 
+import org.usfirst.frc.team2974.robot.autonomousCommands.ArmDown;
+import org.usfirst.frc.team2974.robot.autonomousCommands.DriveStraight;
+import org.usfirst.frc.team2974.robot.autonomousCommands.IntakeOut;
+import org.usfirst.frc.team2974.robot.autonomousCommands.ShiftDown;
+import org.usfirst.frc.team2974.robot.autonomousCommands.TurnLeft;
+import org.usfirst.frc.team2974.robot.autonomousCommands.TurnToAngle;
+import org.usfirst.frc.team2974.robot.autonomousCommands.Wait;
+
 import edu.wpi.first.wpilibj.command.CommandGroup;
 
 /**
@@ -8,21 +16,16 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
 public class RockWall2 extends CommandGroup {
     
     public  RockWall2() {
-        // Add Commands here:
-        // e.g. addSequential(new Command1());
-        //      addSequential(new Command2());
-        // these will run in order.
-
-        // To run multiple commands at the same time,
-        // use addParallel()
-        // e.g. addParallel(new Command1());
-        //      addSequential(new Command2());
-        // Command1 and Command2 will run in parallel.
-
-        // A command group will require all of the subsystems that each member
-        // would require.
-        // e.g. if Command1 requires chassis, and Command2 requires arm,
-        // a CommandGroup containing them would require both the chassis and the
-        // arm.
+addSequential(new ShiftDown());
+    	
+    	addParallel(new ArmDown());
+    	addParallel(new IntakeOut());
+    	addSequential(new DriveStraight(4.77, -.7));
+    	
+		addSequential(new Wait(.1));
+		addSequential(new TurnLeft(1.6,.5));
+    	
+    	addSequential(new Wait(.1));
+    	//addSequential(new TurnToAngle(5, true));
     }
 }

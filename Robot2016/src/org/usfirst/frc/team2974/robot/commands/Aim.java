@@ -28,7 +28,6 @@ public class Aim extends Command {
 	public Aim(int side) {
 		SmartDashboard.putNumber("gain", gain);
 		requires(Robot.driveTrain);
-		requires(Robot.camera);
 		this.side = side;
 	}
 
@@ -62,9 +61,9 @@ public class Aim extends Command {
 				else
 					driveTrain.setSpeeds(-speed, brakingSpeed);// turn right
 			} else if (side == 1) {
-				if (cycleDifference > 0)// im to the right
-					driveTrain.setSpeeds(speed, -speed);// turn left
-				else
+//				if (cycleDifference > 0)// im to the right
+//					driveTrain.setSpeeds(speed, -speed);// turn left
+//				else
 					driveTrain.setSpeeds(-speed, speed);// turn right
 			} else if (side == 2) {
 				if (cycleDifference > 0)// im to the right
@@ -107,13 +106,17 @@ public class Aim extends Command {
 
 	public class Reset extends State {
 		void init() {
-			if (side == 0)
+			//if (side == 1)
+			//	cycleDifference = camera.getX() - centerX;
+			 if (side == 0)
 				cycleDifference = camera.getXLeft() - centerX;
 			else if (side == 2)
 				cycleDifference = camera.getXRight() - centerX;
 		}
 
 		void execute() {
+			//if (side == 1)
+			//	cycleDifference = camera.getX() - centerX;
 			 if (side == 0)
 				cycleDifference = camera.getXLeft() - centerX;
 			else if (side == 2)
@@ -151,7 +154,6 @@ public class Aim extends Command {
 		} else {
 			driveTrain.setSpeeds(0, 0);
 			currentState = new Reset();
-			Robot.camera.setNetTable();
 
 		}
 		SmartDashboard.putString("aim state", currentState.toString());
@@ -159,8 +161,8 @@ public class Aim extends Command {
 
 	// Make this return true when this Command no longer needs to run execute()
 	protected boolean isFinished() {
-		//if (side == 1)
-			//return !Robot.oi.aim.get();
+//		if (side == 1)
+//			return !Robot.oi.aim.get();
 		if (side == 0)
 			return !Robot.oi.aimLeft.get();
 		return !Robot.oi.aimRight.get();

@@ -90,7 +90,7 @@ public class Shoot extends Command {
 		}
 
 		void end() {
-			currentState = new MovingIntake();
+			currentState = new MovingFlapper();
 			Robot.oi.autoShoot = false;
 		}
 
@@ -121,7 +121,7 @@ public class Shoot extends Command {
 
 		@Override
 		boolean isFinished() {
-			return Timer.getFPGATimestamp()-initTime > .1;
+			return Timer.getFPGATimestamp()-initTime > .5;
 		}
 		
 	}

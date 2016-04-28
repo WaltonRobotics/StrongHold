@@ -5,9 +5,9 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
 /**
  *
  */
-public class RoughTerrain1 extends CommandGroup {
+public class RoughTerrain5 extends CommandGroup {
     
-    public  RoughTerrain1() {
+    public  RoughTerrain5() {
         // Add Commands here:
         // e.g. addSequential(new Command1());
         //      addSequential(new Command2());

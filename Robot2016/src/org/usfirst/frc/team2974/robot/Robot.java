@@ -11,7 +11,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import org.usfirst.frc.team2974.robot.autonomousCommandGroups.*;
 import org.usfirst.frc.team2974.robot.autonomousCommands.DoNothing;
 import org.usfirst.frc.team2974.robot.commands.Aim;
-import org.usfirst.frc.team2974.robot.commands.ControlAim.aimState;
+//import org.usfirst.frc.team2974.robot.commands.ControlAim.aimState;
 import org.usfirst.frc.team2974.robot.commands.ShowInputs;
 import org.usfirst.frc.team2974.robot.subsystems.*;
 
@@ -33,7 +33,7 @@ public class Robot extends IterativeRobot {
 	public static Command autonomousCommand;
 
 	public static double startAngle;
-	public static aimState aimingState = aimState.onbaord;
+	//public static aimState aimingState = aimState.cpu;
 	/**
 	 * This function is run when the robot is first started up and should be
 	 * used for any initialization code.
@@ -78,16 +78,18 @@ public class Robot extends IterativeRobot {
 		//autoChooser.addObject("Lowbar + shoot", new LowBarShoot());
 		//autoChooser.addObject("LowBar return", new LowBarReturn());
 //		autoChooser.addObject("Rough Terrain", new RoughTerrain());
-		autoChooser.addObject("rock wall 1", new RockWall1());
-		autoChooser.addObject("Rough terrain shoot right", new RoughTerrainShootRight());
+		//autoChooser.addObject("rock wall 1", new RockWall1());
+//		autoChooser.addObject("Rough terrain shoot right", new RoughTerrainShootRight());
 //		autoChooser.addObject("Rough terrain shoot center", new RoughTerrainShootStraight());
 //		autoChooser.addObject("Rough Terrain Return", new RoughTerrainReturn());
 //		autoChooser.addObject("Rock wall", new RockWall());
-		autoChooser.addObject("Rock wall shoot right", new RockWallShootRight());
-		autoChooser.addObject("Rock wall shoot left", new RockWallShootLeft());
+//		autoChooser.addObject("Rock wall shoot right", new RockWallShootRight());
+//		autoChooser.addObject("Rock wall shoot left", new RockWallShootLeft());
 //		autoChooser.addObject("Rock wall shoot center", new RockwallShootStraight());
 //		autoChooser.addObject("Rock Wall Return", new RockWallReturn());
-		SmartDashboard.putData("PICK AN A", autoChooser);
+		autoChooser.addObject("Rock wall",new RockWall());
+		autoChooser.addObject("Rough Terain", new RoughTerrain());
+		SmartDashboard.putData("PICK AN ", autoChooser);
 
 	}
 

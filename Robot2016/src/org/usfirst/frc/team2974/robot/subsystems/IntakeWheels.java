@@ -13,7 +13,7 @@ public class IntakeWheels extends Subsystem {
 	   Talon intakeMotor = RobotMap.intakeMotor;
 	   static WheelState state;
 	   
-	   private double speed = .35;
+	   private double speed = .39;
 	   
 	    public void initDefaultCommand() {
 	    	setDefaultCommand(new LoadBall());

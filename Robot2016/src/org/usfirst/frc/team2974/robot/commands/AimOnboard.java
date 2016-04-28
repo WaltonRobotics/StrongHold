@@ -21,7 +21,7 @@ public class AimOnboard extends Command {
 	
 	public AimOnboard(double side) {
 		requires(Robot.driveTrain);
-		requires(Robot.camera);
+		//requires(Robot.camera);
 		this.side = side;
 	}
 
