@@ -23,7 +23,7 @@ public class Aim extends Command {
 
 	private State currentState;
 	public static double cycleDifference;
-	private double side;// 0 is left, 1 is center, 2 is right
+	private double side;// 0 is left, 2 is right
 
 	public Aim(int side) {
 		SmartDashboard.putNumber("gain", gain);
@@ -55,21 +55,16 @@ public class Aim extends Command {
 		}
 
 		void execute() {
-			if (side == 0) {
+			if (side == 0) {//aim to the left goal
 				if (cycleDifference > 0)// im to the right
-					driveTrain.setSpeeds(speed, -brakingSpeed);// turn left
+					driveTrain.setSpeeds(-speed, brakingSpeed);// turn left
 				else
-					driveTrain.setSpeeds(-speed, brakingSpeed);// turn right
-			} else if (side == 1) {
-//				if (cycleDifference > 0)// im to the right
-//					driveTrain.setSpeeds(speed, -speed);// turn left
-//				else
-					driveTrain.setSpeeds(-speed, speed);// turn right
-			} else if (side == 2) {
+					driveTrain.setSpeeds(speed, -brakingSpeed);// turn right
+			}else if (side == 2) {//aim to the right goal
 				if (cycleDifference > 0)// im to the right
-					driveTrain.setSpeeds(brakingSpeed, -speed);// turn left
+					driveTrain.setSpeeds(-brakingSpeed, speed);// turn left
 				else
-					driveTrain.setSpeeds(-brakingSpeed, speed);// turn right
+					driveTrain.setSpeeds(brakingSpeed, -speed);// turn right
 			}
 		}
 
@@ -106,8 +101,7 @@ public class Aim extends Command {
 
 	public class Reset extends State {
 		void init() {
-			//if (side == 1)
-			//	cycleDifference = camera.getX() - centerX;
+
 			 if (side == 0)
 				cycleDifference = camera.getXLeft() - centerX;
 			else if (side == 2)
@@ -115,8 +109,7 @@ public class Aim extends Command {
 		}
 
 		void execute() {
-			//if (side == 1)
-			//	cycleDifference = camera.getX() - centerX;
+
 			 if (side == 0)
 				cycleDifference = camera.getXLeft() - centerX;
 			else if (side == 2)
@@ -161,8 +154,6 @@ public class Aim extends Command {
 
 	// Make this return true when this Command no longer needs to run execute()
 	protected boolean isFinished() {
-//		if (side == 1)
-//			return !Robot.oi.aim.get();
 		if (side == 0)
 			return !Robot.oi.aimLeft.get();
 		return !Robot.oi.aimRight.get();

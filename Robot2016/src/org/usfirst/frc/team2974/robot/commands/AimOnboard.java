@@ -31,26 +31,22 @@ public class AimOnboard extends Command {
 
 	// Called repeatedly when this Command is scheduled to run
 	protected void execute() {
-		//PIDController controller = new PIDController(1, .5, 0, source, output)
-		//if (side == 1)
-			//cycleDifference = camera.getX() - centerX;
+
 		 if (side == 0)
 			cycleDifference = camera.getXLeft() - centerX;
 		else if (side == 2)
 			cycleDifference = camera.getXRight() - centerX;
-		speed = Math.abs(cycleDifference* .02);
+		speed = Math.abs(cycleDifference* .01);
 		if (side == 0) {
 			if (cycleDifference > 0)// im to the right
-				driveTrain.setSpeeds(speed, 0);// turn left
+				driveTrain.setSpeeds(-speed, 0);// turn left
 			else
-				driveTrain.setSpeeds(-speed, 0);// turn right
-		} else if (side == 1) {
-				
+				driveTrain.setSpeeds(speed, 0);// turn right
 		} else if (side == 2) {
 			if (cycleDifference > 0)// im to the right
-				driveTrain.setSpeeds(0, -speed);// turn left
+				driveTrain.setSpeeds(0, speed);// turn left
 			else
-				driveTrain.setSpeeds(0, speed);// turn right
+				driveTrain.setSpeeds(0, -speed);// turn right
 		}
 	}
 

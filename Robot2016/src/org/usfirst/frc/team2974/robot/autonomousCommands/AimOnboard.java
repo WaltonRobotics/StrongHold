@@ -11,7 +11,7 @@ import edu.wpi.first.wpilibj.command.Command;
  */
 public class AimOnboard extends Command {
 	// 0 =left, 2 = right
-	double side;
+	int side;
 	private double speed = .35;
 	private double brakingSpeed = 0.05;
 	public static final double centerX = 95;
@@ -20,9 +20,8 @@ public class AimOnboard extends Command {
 	DriveTrain driveTrain = Robot.driveTrain;
 	Camera camera = Robot.camera;
 	
-	public AimOnboard(double side) {
+	public AimOnboard(int side) {
 		requires(Robot.driveTrain);
-		//requires(Robot.camera);
 		this.side = side;
 	}
 
@@ -32,7 +31,6 @@ public class AimOnboard extends Command {
 
 	// Called repeatedly when this Command is scheduled to run
 	protected void execute() {
-		//PIDController controller = new PIDController(1, .5, 0, source, output)
 		if (side == 0)
 			cycleDifference = camera.getXLeft() - centerX;
 		else if (side == 2)
@@ -45,9 +43,6 @@ public class AimOnboard extends Command {
 					driveTrain.setSpeeds(-speed, brakingSpeed);// turn left
 				else
 					driveTrain.setSpeeds(speed, -brakingSpeed);// turn right
-			} else if (side == 1) {
-					//y u do this to meeeeeeeee
-					//imma do nothing
 			} else if (side == 2) {
 				if (cycleDifference > 0)// im to the right
 					driveTrain.setSpeeds(-brakingSpeed, speed);// turn left

@@ -6,6 +6,10 @@ import java.util.Arrays;
 //import org.usfirst.frc.team2974.robot.commands.ControlAim;
 //import org.usfirst.frc.team2974.robot.commands.ControlAim.aimState;
 
+import org.usfirst.frc.team2974.robot.Robot;
+import org.usfirst.frc.team2974.robot.commands.ControlAim;
+import org.usfirst.frc.team2974.robot.commands.ControlAim.aimState;
+
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.networktables.NetworkTable;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -21,7 +25,7 @@ public class Camera extends Subsystem {
 //	double centerY;
 
 	public void initDefaultCommand() {
-		//setDefaultCommand(new ControlAim());
+		setDefaultCommand(new ControlAim());
 	}
 
 	public Camera() {
@@ -68,24 +72,24 @@ public class Camera extends Subsystem {
 	}
 
 	public void setNetTable() {
-//		if(Robot.aimingState == aimState.cpu)
-//		{
+		if(Robot.aimingState == aimState.cpu)
+		{
 			try {
 				table = NetworkTable.getTable("GRIP/report");
 			} catch (Exception e) {
 				table = null;
 			}
-//		}
-//		/else
-//		{
-//			try
-//			{
-//				table = NetworkTable.getTable("GRIP/reportOnboard");
-//			}catch(Exception e)
-//			{
-//				table = null;
-//			}
-//		}
+		}
+		else
+		{
+			try
+			{
+				table = NetworkTable.getTable("GRIP/reportOnboard");
+			}catch(Exception e)
+			{
+				table = null;
+			}
+		}
 	}
 
 //	public double getX() {
@@ -95,6 +99,7 @@ public class Camera extends Subsystem {
 //	
 	public double getXLeft()
 	{
+		setNetTable();
 		double left = -1;
 		try
 		{
@@ -111,6 +116,7 @@ public class Camera extends Subsystem {
 	}
 	public double getXRight()
 	{
+		setNetTable();
 		double right = -1;
 		try
 		{

@@ -11,7 +11,8 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import org.usfirst.frc.team2974.robot.autonomousCommandGroups.*;
 import org.usfirst.frc.team2974.robot.autonomousCommands.DoNothing;
 import org.usfirst.frc.team2974.robot.commands.Aim;
-//import org.usfirst.frc.team2974.robot.commands.ControlAim.aimState;
+import org.usfirst.frc.team2974.robot.commands.ControlAim.aimState;
+
 import org.usfirst.frc.team2974.robot.commands.ShowInputs;
 import org.usfirst.frc.team2974.robot.subsystems.*;
 
@@ -33,7 +34,7 @@ public class Robot extends IterativeRobot {
 	public static Command autonomousCommand;
 
 	public static double startAngle;
-	//public static aimState aimingState = aimState.cpu;
+	public static aimState aimingState = aimState.onbaord;
 	/**
 	 * This function is run when the robot is first started up and should be
 	 * used for any initialization code.
@@ -110,7 +111,7 @@ public class Robot extends IterativeRobot {
 		Robot.arm.dumpSmartDashboardValues();
 		Robot.shooter.dumpSmartDashboardValues();
 		
-		SmartDashboard.putBoolean("aimed", Math.abs(Robot.camera.getXRight()-Aim.centerX)<Aim.threshold);
+		SmartDashboard.putBoolean("aimed", Math.abs(Robot.camera.getXLeft()-Aim.centerX)<Aim.threshold);
 		SmartDashboard.putBoolean("left", Robot.camera.getXRight()-Aim.centerX > 0);
 		SmartDashboard.putBoolean("right", Robot.camera.getXRight()-Aim.centerX < 0);
 	}
@@ -131,7 +132,7 @@ public class Robot extends IterativeRobot {
 		autonomousCommand = (Command) autoChooser.getSelected();
 		autonomousCommand.start();
 		Scheduler.getInstance().add(new ShowInputs());
-		SmartDashboard.putBoolean("aimed", Math.abs(Robot.camera.getXRight()-Aim.centerX)<Aim.threshold);
+		SmartDashboard.putBoolean("aimed", Math.abs(Robot.camera.getXLeft()-Aim.centerX)<Aim.threshold);
 
 	}
 

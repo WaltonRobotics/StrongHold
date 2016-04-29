@@ -68,8 +68,8 @@ public class OI {
 		
 		shoot = new JoystickButton(right, 1);
 		
-//		changeAim1 = new JoystickButton(left, 6);
-//		changeAim2 = new JoystickButton(right, 6);
+		changeAim1 = new JoystickButton(left, 6);
+		changeAim2 = new JoystickButton(right, 6);
 				
 		aimLeft = new JoystickButton(right,4);
 		aimRight = new JoystickButton(right,5);
@@ -84,8 +84,8 @@ public class OI {
 		
 		resetShooter.whenPressed(new ShooterReset());
 		
-		aimLeft.whenPressed(new Aim(0));
-		aimRight.whenPressed(new Aim(2));
+//		aimLeft.whenPressed(new Aim(0));
+//		aimRight.whenPressed(new Aim(2));
 		
 		
 		autoShoot = false;
