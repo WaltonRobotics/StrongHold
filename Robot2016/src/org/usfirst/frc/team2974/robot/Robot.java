@@ -138,7 +138,7 @@ public class Robot extends IterativeRobot {
 	 * to the switch structure below with additional strings & commands.
 	 */
 	public void autonomousInit() {
-		// compass.initializeCompass();
+		compass.initializeCompass();
 		autonomousCommand = (Command) autoChooser.getSelected();
 		autonomousCommand.start();
 		Scheduler.getInstance().add(new ShowInputs());
