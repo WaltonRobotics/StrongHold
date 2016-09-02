@@ -19,7 +19,8 @@ import org.usfirst.frc.team2974.robot.subsystems.*;
 public class Robot extends IterativeRobot {
 
 	public static SendableChooser autoChooser;
-
+	public static SendableChooser locationChooser;
+	
 	public static OI oi;
 	public static DriveTrain driveTrain;
 	public static Arm arm;
@@ -73,6 +74,14 @@ public class Robot extends IterativeRobot {
 
 	private void createAutonomousChooser() {
 
+		locationChooser = new SendableChooser();
+		autoChooser.addDefault("Do Nothing", new AutonLocator(AutonPossibleLocation.NO_AUTON_TAKEN));
+		autoChooser.addDefault("A", new AutonLocator(AutonPossibleLocation.A));
+		autoChooser.addDefault("B", new AutonLocator(AutonPossibleLocation.B));
+		autoChooser.addDefault("C", new AutonLocator(AutonPossibleLocation.C));
+		autoChooser.addDefault("D", new AutonLocator(AutonPossibleLocation.D));
+		autoChooser.addDefault("E", new AutonLocator(AutonPossibleLocation.E));
+		
 		autoChooser = new SendableChooser();
 		autoChooser.addDefault("Do Nothing", new DoNothing());
 		//autoChooser.addObject("Lowbar", new LowBar());
@@ -90,7 +99,8 @@ public class Robot extends IterativeRobot {
 //		autoChooser.addObject("Rock Wall Return", new RockWallReturn());
 		autoChooser.addObject("Rock wall",new RockWall());
 		autoChooser.addObject("Rough Terain", new RoughTerrain());
-		SmartDashboard.putData("PICK AN ", autoChooser);
+		SmartDashboard.putData("Pick Location", autoChooser);
+		SmartDashboard.putData("Pick Obsticle", autoChooser);
 
 	}
 
