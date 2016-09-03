@@ -102,6 +102,7 @@ public class Robot extends IterativeRobot {
 		autoChooser.addObject("Low Bar", new LowBar());
 		autoChooser.addObject("ChivalDeFreze", new ChivalDeFreze());
 		autoChooser.addObject("Moat", new Moat());
+		autoChooser.addObject("Ramparts", new Ramparts());
 		
 		SmartDashboard.putData("Pick Location", autoChooser);
 		SmartDashboard.putData("Pick Obsticle", autoChooser);
