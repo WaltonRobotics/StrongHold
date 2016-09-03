@@ -35,7 +35,7 @@ public class Compass extends Subsystem {
      * right decrease
      * @return yaw (turn)
      */
-    public double getYaw()
+    public double getYaw() //Horizonal tilt
     {
     	try {
 			return compass.getVector(BNO055.VectorType.VECTOR_EULER)[0];
@@ -50,7 +50,7 @@ public class Compass extends Subsystem {
      * up negative
      * @return pitch
      */
-    public double getPitch()
+    public double getPitch() //Vertical tilt
     {
        	try {
     			return compass.getVector(BNO055.VectorType.VECTOR_EULER)[1];
@@ -64,7 +64,7 @@ public class Compass extends Subsystem {
      * i dont care
      * @return roll
      */
-    public double getRoll()
+    public double getRoll() //Spin in Z axis - rolling over
     {
        	try {
     			return compass.getVector(BNO055.VectorType.VECTOR_EULER)[2];

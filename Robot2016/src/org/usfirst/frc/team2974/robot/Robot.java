@@ -99,6 +99,10 @@ public class Robot extends IterativeRobot {
 //		autoChooser.addObject("Rock Wall Return", new RockWallReturn());
 		autoChooser.addObject("Rock wall",new RockWall());
 		autoChooser.addObject("Rough Terain", new RoughTerrain());
+		autoChooser.addObject("Low Bar", new LowBar());
+		autoChooser.addObject("ChivalDeFreze", new ChivalDeFreze());
+		autoChooser.addObject("Moat", new Moat());
+		
 		SmartDashboard.putData("Pick Location", autoChooser);
 		SmartDashboard.putData("Pick Obsticle", autoChooser);
 
