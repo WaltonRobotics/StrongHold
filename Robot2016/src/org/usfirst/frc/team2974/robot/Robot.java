@@ -4,6 +4,7 @@ package org.usfirst.frc.team2974.robot;
 import edu.wpi.first.wpilibj.CameraServer;
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj.command.CommandGroup;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -31,6 +32,7 @@ public class Robot extends IterativeRobot {
 	public static Flipper flipper;
 	public static Intake intake;
 	public static IntakeWheels intakeWheels;
+	public static PositionSubsystem positionSubsystem;
 
 	public static Command autonomousCommand;
 
@@ -61,6 +63,7 @@ public class Robot extends IterativeRobot {
 		flipper = new Flipper();
 		intake = new Intake();
 		intakeWheels = new IntakeWheels();
+		positionSubsystem = new PositionSubsystem();
 	
 		createAutonomousChooser();
 		oi = new OI();
@@ -144,7 +147,7 @@ public class Robot extends IterativeRobot {
 	 */
 	public void autonomousInit() {
 		compass.initializeCompass();
-		autonomousCommand = (Command) autoChooser.getSelected();
+		autonomousCommand = (Command) new FullRunnableAuton((CommandGroup)autoChooser.getSelected(),(AutonLocator)locationChooser.getSelected());
 		autonomousCommand.start();
 		Scheduler.getInstance().add(new ShowInputs());
 		SmartDashboard.putBoolean("aimed", Math.abs(Robot.camera.getXLeft()-Aim.centerX)<Aim.threshold);
