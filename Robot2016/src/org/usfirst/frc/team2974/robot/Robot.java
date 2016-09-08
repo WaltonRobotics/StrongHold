@@ -32,7 +32,6 @@ public class Robot extends IterativeRobot {
 	public static Flipper flipper;
 	public static Intake intake;
 	public static IntakeWheels intakeWheels;
-	public static PositionSubsystem positionSubsystem;
 
 	public static Command autonomousCommand;
 
@@ -63,7 +62,6 @@ public class Robot extends IterativeRobot {
 		flipper = new Flipper();
 		intake = new Intake();
 		intakeWheels = new IntakeWheels();
-		positionSubsystem = new PositionSubsystem();
 	
 		createAutonomousChooser();
 		oi = new OI();
@@ -78,12 +76,12 @@ public class Robot extends IterativeRobot {
 	private void createAutonomousChooser() {
 
 		locationChooser = new SendableChooser();
-		autoChooser.addDefault("Do Nothing", new AutonLocator(AutonPossibleLocation.NO_AUTON_TAKEN));
-		autoChooser.addDefault("A", new AutonLocator(AutonPossibleLocation.A));
-		autoChooser.addDefault("B", new AutonLocator(AutonPossibleLocation.B));
-		autoChooser.addDefault("C", new AutonLocator(AutonPossibleLocation.C));
-		autoChooser.addDefault("D", new AutonLocator(AutonPossibleLocation.D));
-		autoChooser.addDefault("E", new AutonLocator(AutonPossibleLocation.E));
+		locationChooser.addDefault("Do Nothing", new AutonLocator(AutonPossibleLocation.NO_AUTON_TAKEN));
+		locationChooser.addDefault("A", new AutonLocator(AutonPossibleLocation.A));
+		locationChooser.addDefault("B", new AutonLocator(AutonPossibleLocation.B));
+		locationChooser.addDefault("C", new AutonLocator(AutonPossibleLocation.C));
+		locationChooser.addDefault("D", new AutonLocator(AutonPossibleLocation.D));
+		locationChooser.addDefault("E", new AutonLocator(AutonPossibleLocation.E));
 		
 		autoChooser = new SendableChooser();
 		autoChooser.addDefault("Do Nothing", new DoNothing());
@@ -107,7 +105,7 @@ public class Robot extends IterativeRobot {
 		autoChooser.addObject("Moat", new Moat());
 		autoChooser.addObject("Ramparts", new Ramparts());
 		
-		SmartDashboard.putData("Pick Location", autoChooser);
+		SmartDashboard.putData("Pick Location", locationChooser);
 		SmartDashboard.putData("Pick Obsticle", autoChooser);
 
 	}

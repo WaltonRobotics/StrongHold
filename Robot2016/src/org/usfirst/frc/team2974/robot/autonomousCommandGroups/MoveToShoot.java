@@ -13,9 +13,9 @@ public class MoveToShoot extends CommandGroup {
 	public MoveToShoot(AutonLocator location){
 		addSequential(new DriveLocate());
 		addSequential(new DriveStraight(.5,3));//get actual numbers
-		addSequential(new TurnToAngle(Robot.positionSubsystem.getAngle(location.getLocation(), location.getLocationShoot())));
+		addSequential(new TurnToAngle(location.getAngle(location.getLocation(), location.getLocationShoot())));
 		//Test with different speeds
-		addSequential(new DriveDistance(30,Robot.positionSubsystem.getDistance(location.getLocation(), location.getLocationShoot())));
-		addSequential(new TurnToAngle(Robot.positionSubsystem.getAngle(location.getLocationShoot(), location.getLocationGoal())));
+		addSequential(new DriveDistance(30,location.getDistance(location.getLocation(), location.getLocationShoot())));
+		addSequential(new TurnToAngle(location.getAngle(location.getLocationShoot(), location.getLocationGoal())));
 	}
 }

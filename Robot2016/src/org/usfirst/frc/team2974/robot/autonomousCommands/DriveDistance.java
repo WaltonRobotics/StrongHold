@@ -23,7 +23,7 @@ public class DriveDistance extends Command{
 	@Override
 	protected void execute() {
 		// TODO Auto-generated method stub
-		if(Robot.driveTrain.leftController.get()<distance);
+		if(Robot.driveTrain.leftController.get()<distance);//we will need a conversion rate
 			end();
 	}
 

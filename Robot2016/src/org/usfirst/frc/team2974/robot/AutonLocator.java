@@ -13,94 +13,93 @@ public class AutonLocator {
 	public AutonPossibleLocation getAutonPossibleLocation(){
 		return location;
 	}
-	
-	public double getXposition(){
-		switch(location){
-		//There are no break statements because the code will never pass the return statement.
-		case A:
-			return 0;//replace all numbers with measured numbers
-		case B:
-			return 0;
-		case C:
-			return 0;
-		case D:
-			return 0;
-		case E:
-			return 0;
-		default:
-			return 0;
-		}
+	public double getAngle (Point start, Point finish){
+		
+		double positionY = (start.getY() - finish.getY());
+		double positionX = (start.getX() - finish.getX());
+		return Math.atan(positionY/positionX);
+
 	}
 	
-	public double getYposition(){
-		switch(location){
-		//There are no break statements because the code will never pass the return statement.
-		case A:
-			return 0;
-		case B:
-			return 0;
-		case C:
-			return 0;
-		case D:
-			return 0;
-		case E:
-			return 0;
-		default:
-			return 0;
-		}
+	public double getDistance (Point start, Point finish){
+		double positionY = (start.getY() - finish.getY());
+		double positionX = (start.getX() - finish.getX());
+		return Math.sqrt(Math.pow(positionX, 2) + Math.pow(positionY, 2));
 	}
 	
-	public double getXpositionShoot(){
-		switch(location){
-		//There are no break statements because the code will never pass the return statement.
-		case A:
-			return 0;//replace all numbers with measured numbers
-		case B:
-			return 0;
-		case C:
-			return 0;
-		case D:
-			return 0;
-		case E:
-			return 0;
-		default:
-			return 0;
-		}
-	}
-	
-	public double getYpositionShoot(){
-		switch(location){
-		//There are no break statements because the code will never pass the return statement.
-		case A:
-			return 0;
-		case B:
-			return 0;
-		case C:
-			return 0;
-		case D:
-			return 0;
-		case E:
-			return 0;
-		default:
-			return 0;
-		}
-	}
 	
 	public Point getLocation(){
 		Point p = new Point();
-		p.setLocation(getXposition(), getYposition());
+		switch(location){
+		case A:
+			p.setLocation(0, 0);//replace all numbers with measured numbers
+			break;
+		case B:
+			p.setLocation(0, 0);
+			break;
+		case C:
+			p.setLocation(0, 0);
+			break;
+		case D:
+			p.setLocation(0, 0);
+			break;
+		case E:
+			p.setLocation(0, 0);
+			break;
+		default:
+			p.setLocation(0, 0);
+			break;
+		}
 		return p;
 	}
 	
 	public Point getLocationGoal(){
 		Point p = new Point();
-		p.setLocation(0,0);//set to goal location
+		switch(location){
+		case A:
+			p.setLocation(0, 0);//replace all numbers with measured numbers
+			break;
+		case B:
+			p.setLocation(0, 0);
+			break;
+		case C:
+			p.setLocation(0, 0);
+			break;
+		case D:
+			p.setLocation(0, 0);
+			break;
+		case E:
+			p.setLocation(0, 0);
+			break;
+		default:
+			p.setLocation(0, 0);
+			break;
+		}
 		return p;
 	}
 	
 	public Point getLocationShoot(){
 		Point p = new Point();
-		p.setLocation(getXpositionShoot(), getYpositionShoot());
+		switch(location){
+		case A:
+			p.setLocation(0, 0);//replace all numbers with measured numbers
+			break;
+		case B:
+			p.setLocation(0, 0);
+			break;
+		case C:
+			p.setLocation(0, 0);
+			break;
+		case D:
+			p.setLocation(0, 0);
+			break;
+		case E:
+			p.setLocation(0, 0);
+			break;
+		default:
+			p.setLocation(0, 0);
+			break;
+		}
 		return p;
 	}
 }
