@@ -1,5 +1,6 @@
 package org.usfirst.frc.team2974.robot;
 
+import org.usfirst.frc.team2974.robot.autonomousCommands.DriveLocate;
 import org.usfirst.frc.team2974.robot.commands.Aim;
 import org.usfirst.frc.team2974.robot.commands.ShooterReset;
 import org.usfirst.frc.team2974.robot.commands.Tension;
@@ -41,6 +42,7 @@ public class OI {
 	public Button startUntensioning;
 	public Button startTensioning;
 	public Button normalTensioning;
+	public Button testCommand;
 	
 	public boolean autoShoot;
 	
@@ -78,12 +80,15 @@ public class OI {
 		startTensioning = new JoystickButton(left, 11);
 		normalTensioning = new JoystickButton(left, 9);
 		resetShooter = new JoystickButton(left, 10);
-
+		
 		startUntensioning.whenPressed(new UnTension());
 		startTensioning.whenPressed(new Tension());
 		
 		resetShooter.whenPressed(new ShooterReset());
+			
+		testCommand = new JoystickButton(right, 2);
 		
+		testCommand.whenPressed(new DriveLocate());
 //		aimLeft.whenPressed(new Aim(0));
 //		aimRight.whenPressed(new Aim(2));
 		
