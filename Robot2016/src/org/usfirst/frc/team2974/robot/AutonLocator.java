@@ -35,16 +35,16 @@ public class AutonLocator {
 			p.setLocation(0, 0);//replace all numbers with measured numbers
 			break;
 		case B:
-			p.setLocation(0, 0);
+			p.setLocation(1.3462, 0);
 			break;
 		case C:
-			p.setLocation(0, 0);
+			p.setLocation(2.6924, 0);
 			break;
 		case D:
-			p.setLocation(0, 0);
+			p.setLocation(4.0386, 0);
 			break;
 		case E:
-			p.setLocation(0, 0);
+			p.setLocation(5.3848, 0);
 			break;
 		default:
 			p.setLocation(0, 0);
@@ -57,19 +57,19 @@ public class AutonLocator {
 		Point p = new Point();
 		switch(location){
 		case A:
-			p.setLocation(0, 0);//replace all numbers with measured numbers
+			p.setLocation(3.3655, 4.2164);
 			break;
 		case B:
-			p.setLocation(0, 0);
+			p.setLocation(3.3655, 4.2164);
 			break;
 		case C:
-			p.setLocation(0, 0);
+			p.setLocation(2.2352, 4.2672);
 			break;
 		case D:
-			p.setLocation(0, 0);
+			p.setLocation(2.2352, 4.2672);
 			break;
 		case E:
-			p.setLocation(0, 0);
+			p.setLocation(2.2352, 4.2672);
 			break;
 		default:
 			p.setLocation(0, 0);
@@ -82,19 +82,19 @@ public class AutonLocator {
 		Point p = new Point();
 		switch(location){
 		case A:
-			p.setLocation(0, 0);//replace all numbers with measured numbers
+			p.setLocation(0.7747, 2.9972);//replace all numbers with measured numbers
 			break;
 		case B:
-			p.setLocation(0, 0);
+			p.setLocation(0.7747, 2.9972);
 			break;
 		case C:
-			p.setLocation(0, 0);
+			p.setLocation(2.5654, 1.8542);
 			break;
 		case D:
-			p.setLocation(0, 0);
+			p.setLocation(2.5654, 1.8542);
 			break;
 		case E:
-			p.setLocation(0, 0);
+			p.setLocation(2.5654, 1.8542);
 			break;
 		default:
 			p.setLocation(0, 0);

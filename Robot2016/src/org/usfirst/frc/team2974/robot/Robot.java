@@ -126,6 +126,7 @@ public class Robot extends IterativeRobot {
 		Robot.camera.dumpSmartDshboardValues();
 		Robot.arm.dumpSmartDashboardValues();
 		Robot.shooter.dumpSmartDashboardValues();
+		Robot.driveTrain.dumpSmartdashboardValues();
 		
 		SmartDashboard.putBoolean("aimed", Math.abs(Robot.camera.getXLeft()-Aim.centerX)<Aim.threshold);
 		SmartDashboard.putBoolean("left", Robot.camera.getXRight()-Aim.centerX > 0);
@@ -181,5 +182,6 @@ public class Robot extends IterativeRobot {
 		SmartDashboard.putBoolean("aimed", Math.abs(Robot.camera.getXRight()-Aim.centerX)<Aim.threshold);
 		SmartDashboard.putBoolean("left", Robot.camera.getXRight()-Aim.centerX > 0);
 		SmartDashboard.putBoolean("right", Robot.camera.getXRight()-Aim.centerX < 0);
+		Robot.driveTrain.dumpSmartdashboardValues();
 	}
 }
