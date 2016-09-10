@@ -31,6 +31,10 @@ public class DriveStraightMC extends Command{
         	t2 = t3 - vDrive / aMax;
         	t1 = vDrive / aMax;
         }
+        
+        System.out.println(String.format("x3 = %1$.2f", x3));
+        System.out.println(String.format("t1 = %1$.2f t2 = %2$.2f t3 = %3$.2f", t1, t2, t3));
+
 	}
 	
 	@Override

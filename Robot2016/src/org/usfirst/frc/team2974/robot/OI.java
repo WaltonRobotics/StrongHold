@@ -99,7 +99,7 @@ public class OI {
 		
 		//testAuton = new JoystickButton(gamepad, 6);//remove l8er TODO
 		//testAuton.whenPressed(new TestAuton());
-		SmartDashboard.putData("Drive Forwarwd 1m", new DriveStraightMC(1.0, 0.5, 0.1));
+		SmartDashboard.putData("Drive Forward 1m", new DriveStraightMC(1.0, 0.5, 0.1));
 	}
 
 }
