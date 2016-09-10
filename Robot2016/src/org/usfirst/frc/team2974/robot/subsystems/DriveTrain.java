@@ -96,6 +96,10 @@ public class DriveTrain extends Subsystem {
     	encoderLeft.reset();
     	encoderRight.reset();
     }
+    
+    public double getMeanDistance(){
+    	return (encoderRight.getDistance() + encoderLeft.getDistance())/2;
+    }
 //    public void setSetPoint(MotionControl mc, double time)
 //    {
     	//fix acceleration

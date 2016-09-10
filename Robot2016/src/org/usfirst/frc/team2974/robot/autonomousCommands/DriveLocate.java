@@ -23,8 +23,8 @@ public class DriveLocate extends Command{
         requires(Robot.compass);
         driveTrain = Robot.driveTrain;
         compass = Robot.compass;
-        aMax = 0.1; //TEST
-        vDrive = 0.5; //TEST
+        aMax = 0.1; //TEST - 0.1 seems slow
+        vDrive = 0.5; //TEST - 0.5 so that V can end up being 1
         		
     }
 	
