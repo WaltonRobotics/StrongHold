@@ -1,6 +1,7 @@
 package org.usfirst.frc.team2974.robot;
 
 import org.usfirst.frc.team2974.robot.autonomousCommands.DriveLocate;
+import org.usfirst.frc.team2974.robot.autonomousCommands.DriveStraightMC;
 import org.usfirst.frc.team2974.robot.commands.Aim;
 import org.usfirst.frc.team2974.robot.commands.ShooterReset;
 import org.usfirst.frc.team2974.robot.commands.Tension;
@@ -9,6 +10,7 @@ import org.usfirst.frc.team2974.robot.commands.UnTension;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.Button;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 
 /**
@@ -97,6 +99,7 @@ public class OI {
 		
 		//testAuton = new JoystickButton(gamepad, 6);//remove l8er TODO
 		//testAuton.whenPressed(new TestAuton());
+		SmartDashboard.putData("Drive Forwarwd 1m", new DriveStraightMC(1.0, 0.5, 0.1));
 	}
 
 }

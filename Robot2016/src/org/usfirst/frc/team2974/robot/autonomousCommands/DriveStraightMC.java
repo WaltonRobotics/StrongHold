@@ -5,7 +5,7 @@ import org.usfirst.frc.team2974.robot.subsystems.DriveTrain;
 
 import edu.wpi.first.wpilibj.command.Command;
 
-public class DriveSraightMC extends Command{
+public class DriveStraightMC extends Command{
 	
 	private double aMax;
 	private double vDrive;
@@ -15,7 +15,7 @@ public class DriveSraightMC extends Command{
 	final double timeOut = 2;
 	DriveTrain driveTrain;
 	
-	public void DriveStraightMC(double distance, double velocity, double accel){
+	public DriveStraightMC(double distance, double velocity, double accel){
 		requires(Robot.driveTrain);
         driveTrain = Robot.driveTrain;
         aMax = Math.abs(accel);
