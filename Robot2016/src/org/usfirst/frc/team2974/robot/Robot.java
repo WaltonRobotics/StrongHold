@@ -11,6 +11,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 import org.usfirst.frc.team2974.robot.autonomousCommandGroups.*;
 import org.usfirst.frc.team2974.robot.autonomousCommands.DoNothing;
+import org.usfirst.frc.team2974.robot.autonomousCommands.DriveLocate;
 import org.usfirst.frc.team2974.robot.commands.Aim;
 import org.usfirst.frc.team2974.robot.commands.ControlAim.aimState;
 
@@ -127,6 +128,15 @@ public class Robot extends IterativeRobot {
 		Robot.arm.dumpSmartDashboardValues();
 		Robot.shooter.dumpSmartDashboardValues();
 		Robot.driveTrain.dumpSmartdashboardValues();
+		
+		SmartDashboard.putData("DriveLocate", new DriveLocate());
+		SmartDashboard.putData("ChivalDeFreze", new ChivalDeFreze());
+		SmartDashboard.putData("Rock wall",new RockWall());
+		SmartDashboard.putData("Rough Terain", new RoughTerrain());
+		SmartDashboard.putData("Low Bar", new LowBar());
+		SmartDashboard.putData("Moat", new Moat());
+		SmartDashboard.putData("Ramparts", new Ramparts());
+		
 		
 		SmartDashboard.putBoolean("aimed", Math.abs(Robot.camera.getXLeft()-Aim.centerX)<Aim.threshold);
 		SmartDashboard.putBoolean("left", Robot.camera.getXRight()-Aim.centerX > 0);
