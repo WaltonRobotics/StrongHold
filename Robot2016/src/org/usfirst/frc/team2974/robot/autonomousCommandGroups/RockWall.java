@@ -3,8 +3,9 @@ package org.usfirst.frc.team2974.robot.autonomousCommandGroups;
 import org.usfirst.frc.team2974.robot.autonomousCommands.ArmDown;
 import org.usfirst.frc.team2974.robot.autonomousCommands.DriveStraight;
 import org.usfirst.frc.team2974.robot.autonomousCommands.FlapDownTime;
-import org.usfirst.frc.team2974.robot.autonomousCommands.IntakeOut;
+import org.usfirst.frc.team2974.robot.autonomousCommands.IntakeIn;
 import org.usfirst.frc.team2974.robot.autonomousCommands.ShiftDown;
+import org.usfirst.frc.team2974.robot.autonomousCommands.TurnToAngle;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
 
@@ -13,16 +14,13 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
  */
 public class RockWall extends CommandGroup {
     
-    public  RockWall() {
+    public  RockWall() {  	
     	addSequential(new ShiftDown());   	
-    	addSequential(new IntakeOut());
-    	
-    	addSequential(new FlapDownTime(.2));
+    	addSequential(new IntakeIn());
+    	addSequential(new TurnToAngle(180));
+    	//addSequential(new FlapDownTime(.2));
     	
     	addParallel(new ArmDown());
-    	addSequential(new DriveStraight(5, -.7));
-    	
-    	
-    	
+    	addSequential(new DriveStraight(2, .7)); //Test this number
     }
 }
