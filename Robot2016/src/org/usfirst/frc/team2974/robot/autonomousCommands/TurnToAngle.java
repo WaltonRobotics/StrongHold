@@ -9,57 +9,58 @@ import edu.wpi.first.wpilibj.command.Command;
  */
 public class TurnToAngle extends Command {
 
+	private final double SPEED = .5;
+	private final double TOLERANCE = 10;
+    private final double goalAngle;
+    
+    private  double startYawAngle;
+    private boolean turnClockwise;
+    private double anglesToTurn;
+	
     public TurnToAngle(double angle) {
         requires(Robot.driveTrain);
         requires(Robot.compass);
-        this.angle = Math.abs(angle);
+        this.goalAngle = Math.abs(angle);
     }
-    double speed = .5;
-    double speed1;
-    double speed2;
-    double angle;
-    double tolerance = 10;
-    double startYaw;
-
-    // Called just before this Command runs the first time
-    protected void initialize() {
-    	startYaw = Robot.compass.getYaw();
-    	if(angle<0)
-    	{
-    		speed2 = -1*speed;
-    		speed1 = speed;
-    	}
-    	else
-    	{
-    		speed2 = speed;
-    		speed1 = -1*speed;
-    	}
-    		
+    
+    // Called once after isFinished returns true
+    @Override
+	protected void end() {
     }
 
     // Called repeatedly when this Command is scheduled to run
-    protected void execute() {
-    	double deltaYaw = Math.abs(Robot.compass.getYaw()-startYaw);
-    	if(deltaYaw>180)
-    		deltaYaw = 360-deltaYaw;
-
-    	if(deltaYaw > angle)
-    		Robot.driveTrain.setSpeeds(speed1, 0);
+    @Override
+	protected void execute() {
+    	double deltaYawAngle = Math.abs(Robot.compass.getYaw()- startYawAngle); 	
+    	
+    	if(turnClockwise)
+    		if(Math.abs(deltaYawAngle - startYawAngle) < anglesToTurn)
+    			Robot.driveTrain.setSpeeds(SPEED, -SPEED);
+    	
+    	else if(Math.abs(deltaYawAngle - startYawAngle) < anglesToTurn)
+    		Robot.driveTrain.setSpeeds(-SPEED, SPEED);
+    	
     	else
-    		Robot.driveTrain.setSpeeds(speed2, 0);
+    		Robot.driveTrain.setSpeeds(0, 0);
     }
 
-    // Make this return true when this Command no longer needs to run execute()
-    protected boolean isFinished() {
-        return Math.abs(Math.abs(Robot.compass.getYaw()-startYaw) - angle) <tolerance;
-    }
-
-    // Called once after isFinished returns true
-    protected void end() {
+    // Called just before this Command runs the first time
+    @Override
+	protected void initialize() {
+    	startYawAngle = Robot.compass.getYaw();
+    	turnClockwise = Math.abs(goalAngle - startYawAngle) <= 180;
+    	anglesToTurn = turnClockwise? Math.abs(goalAngle - startYawAngle): 360 - Math.abs(goalAngle - startYawAngle);
     }
 
     // Called when another command which requires one or more of the same
     // subsystems is scheduled to run
-    protected void interrupted() {
+    @Override
+	protected void interrupted() {
+    }
+
+    // Make this return true when this Command no longer needs to run execute()
+    @Override
+	protected boolean isFinished() {
+        return Math.abs(Math.abs(Robot.compass.getYaw() -startYawAngle) - goalAngle) <= TOLERANCE;
     }
 }
