@@ -1,6 +1,28 @@
 
 package org.usfirst.frc.team2974.robot;
 
+import org.usfirst.frc.team2974.robot.autonomousCommandGroups.ChivalDeFreze;
+import org.usfirst.frc.team2974.robot.autonomousCommandGroups.FullRunnableAuton;
+import org.usfirst.frc.team2974.robot.autonomousCommandGroups.LowBar;
+import org.usfirst.frc.team2974.robot.autonomousCommandGroups.Moat;
+import org.usfirst.frc.team2974.robot.autonomousCommandGroups.Ramparts;
+import org.usfirst.frc.team2974.robot.autonomousCommandGroups.RockWall;
+import org.usfirst.frc.team2974.robot.autonomousCommandGroups.RoughTerrain;
+import org.usfirst.frc.team2974.robot.autonomousCommands.DoNothing;
+import org.usfirst.frc.team2974.robot.autonomousCommands.DriveLocate;
+import org.usfirst.frc.team2974.robot.commands.Aim;
+import org.usfirst.frc.team2974.robot.commands.ControlAim.aimState;
+import org.usfirst.frc.team2974.robot.commands.ShowInputs;
+import org.usfirst.frc.team2974.robot.subsystems.Arm;
+import org.usfirst.frc.team2974.robot.subsystems.Camera;
+import org.usfirst.frc.team2974.robot.subsystems.Compass;
+import org.usfirst.frc.team2974.robot.subsystems.DriveTrain;
+import org.usfirst.frc.team2974.robot.subsystems.Flipper;
+import org.usfirst.frc.team2974.robot.subsystems.Inputs;
+import org.usfirst.frc.team2974.robot.subsystems.Intake;
+import org.usfirst.frc.team2974.robot.subsystems.IntakeWheels;
+import org.usfirst.frc.team2974.robot.subsystems.Shooter;
+
 import edu.wpi.first.wpilibj.CameraServer;
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.command.Command;
@@ -8,14 +30,6 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-
-import org.usfirst.frc.team2974.robot.autonomousCommandGroups.*;
-import org.usfirst.frc.team2974.robot.autonomousCommands.DoNothing;
-import org.usfirst.frc.team2974.robot.commands.Aim;
-import org.usfirst.frc.team2974.robot.commands.ControlAim.aimState;
-
-import org.usfirst.frc.team2974.robot.commands.ShowInputs;
-import org.usfirst.frc.team2974.robot.subsystems.*;
 
 public class Robot extends IterativeRobot {
 
@@ -127,6 +141,14 @@ public class Robot extends IterativeRobot {
 		Robot.arm.dumpSmartDashboardValues();
 		Robot.shooter.dumpSmartDashboardValues();
 		Robot.driveTrain.dumpSmartdashboardValues();
+		
+		SmartDashboard.putData("DriveLocate", new DriveLocate());
+		SmartDashboard.putData("ChivalDeFreze", new ChivalDeFreze());
+		SmartDashboard.putData("Rock wall",new RockWall());
+		SmartDashboard.putData("Rough Terain", new RoughTerrain());
+		SmartDashboard.putData("Low Bar", new LowBar());
+		SmartDashboard.putData("Moat", new Moat());
+		SmartDashboard.putData("Ramparts", new Ramparts());
 		
 		SmartDashboard.putBoolean("aimed", Math.abs(Robot.camera.getXLeft()-Aim.centerX)<Aim.threshold);
 		SmartDashboard.putBoolean("left", Robot.camera.getXRight()-Aim.centerX > 0);

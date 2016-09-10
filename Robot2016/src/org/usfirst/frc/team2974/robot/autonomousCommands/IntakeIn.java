@@ -8,16 +8,16 @@ import edu.wpi.first.wpilibj.command.Command;
 /**
  *
  */
-public class IntakeOut extends Command {
+public class IntakeIn extends Command {
 	private double startTime;
-    public IntakeOut() {
+    public IntakeIn() {
         requires(Robot.intake);
     }
 
     // Called just before this Command runs the first time
     protected void initialize() {
     	startTime = Timer.getFPGATimestamp();
-    	Robot.intake.extend();
+    	Robot.intake.retract();
     }
 
     // Called repeatedly when this Command is scheduled to run

@@ -68,8 +68,8 @@ public class DriveLocate extends Command{
 			errorAngle += 360;
 		}
 		
-		return (timeSinceInitialized() > timeOut) && 
-				(Robot.compass.getPitch() < thresholdPitch) ;//&&
+		return (timeSinceInitialized() > timeOut) || 
+				(Math.abs(Robot.compass.getPitch()) > thresholdPitch) ;//&& 
 				//(Math.abs(errorAngle) < thresholdYaw); 
 	}
 

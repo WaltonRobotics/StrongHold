@@ -64,7 +64,7 @@ public class DriveTrain extends Subsystem {
 		//diameter = 8.25 in= .21 m 
 		//18 drive shaft
 		//60 wheel
-		//.21*pi/(128*3*60/18) = distance per pulse
+		//.21*pi/(128*3*60/18) = distance per pulse		
 		resetEncoders();
 		
 		encoderLeft.setDistancePerPulse(distancePerPulse);
@@ -75,8 +75,10 @@ public class DriveTrain extends Subsystem {
 		
 		leftController = new PIDControllerAccel(1, 0, 0,1, RobotMap.encoderLeft,  
 				new SharedDrive(left1,left2,true), kV, 0);
+		leftController.disable();
 		rightController = new PIDControllerAccel(1, 0, 0,1, RobotMap.encoderRight,  
 				new SharedDrive( right1, right2,false), kV, 0);
+		rightController.disable();
 		
 	}
     public void initDefaultCommand() {
