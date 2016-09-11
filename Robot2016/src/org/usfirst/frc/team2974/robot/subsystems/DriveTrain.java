@@ -38,7 +38,7 @@ public class DriveTrain extends Subsystem {
 		SpeedController one;
 		SpeedController two;
 		
-		Boolean isLeft;
+		boolean isLeft;
 		
 		public SharedDrive(SpeedController one,SpeedController two, boolean isLeft)
 		{
