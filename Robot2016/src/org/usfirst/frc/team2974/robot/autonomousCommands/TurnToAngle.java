@@ -1,65 +1,65 @@
 package org.usfirst.frc.team2974.robot.autonomousCommands;
 
-import org.usfirst.frc.team2974.robot.Robot;
-
 import edu.wpi.first.wpilibj.command.Command;
+import org.usfirst.frc.team2974.robot.Robot;
 
 /**
  *
  */
 public class TurnToAngle extends Command {
 
+    private final double GOAL_ANGLE;
+    private final double START_YAW_ANGLE;// = Robot.compass.getYaw();
+    private final boolean TURN_CLOCKWISE;
+    private final double ANGLES_TO_TURN;
+    final double TOLERANCE;
+
     public TurnToAngle(double angle) {
         requires(Robot.driveTrain);
         requires(Robot.compass);
-        this.angle = Math.abs(angle);
-    }
-    double speed = .5;
-    double speed1;
-    double speed2;
-    double angle;
-    double tolerance = 10;
-    double startYaw;
-
-    // Called just before this Command runs the first time
-    protected void initialize() {
-    	startYaw = Robot.compass.getYaw();
-    	if(angle<0)
-    	{
-    		speed2 = -1*speed;
-    		speed1 = speed;
-    	}
-    	else
-    	{
-    		speed2 = speed;
-    		speed1 = -1*speed;
-    	}
-    		
-    }
-
-    // Called repeatedly when this Command is scheduled to run
-    protected void execute() {
-    	double deltaYaw = Math.abs(Robot.compass.getYaw()-startYaw);
-    	if(deltaYaw>180)
-    		deltaYaw = 360-deltaYaw;
-
-    	if(deltaYaw > angle)
-    		Robot.driveTrain.setSpeeds(speed1, 0);
-    	else
-    		Robot.driveTrain.setSpeeds(speed2, 0);
-    }
-
-    // Make this return true when this Command no longer needs to run execute()
-    protected boolean isFinished() {
-        return Math.abs(Math.abs(Robot.compass.getYaw()-startYaw) - angle) <tolerance;
+        TOLERANCE = 10;
+        this.GOAL_ANGLE = Math.abs(angle);
+        this.START_YAW_ANGLE = Robot.compass.getYaw();
+        this.TURN_CLOCKWISE = Math.abs(this.GOAL_ANGLE - this.START_YAW_ANGLE) <= 180;
+        this.ANGLES_TO_TURN = TURN_CLOCKWISE ? Math.abs(GOAL_ANGLE - START_YAW_ANGLE) : 360 - Math.abs(GOAL_ANGLE - START_YAW_ANGLE);
     }
 
     // Called once after isFinished returns true
+    @Override
     protected void end() {
+    }
+
+    // Called repeatedly when this Command is scheduled to run
+    @Override
+    protected void execute() {
+        double deltaYawAngle = Math.abs(Robot.compass.getYaw() - START_YAW_ANGLE);
+
+        double SPEED = .5;
+        if (TURN_CLOCKWISE)
+            if (Math.abs(deltaYawAngle - START_YAW_ANGLE) < ANGLES_TO_TURN)
+                Robot.driveTrain.setSpeeds(SPEED, -SPEED);
+
+            else if (Math.abs(deltaYawAngle - START_YAW_ANGLE) < ANGLES_TO_TURN)
+                Robot.driveTrain.setSpeeds(-SPEED, SPEED);
+
+            else
+                Robot.driveTrain.setSpeeds(0, 0);
+    }
+
+    // Called just before this Command runs the first time
+    @Override
+    protected void initialize() {
     }
 
     // Called when another command which requires one or more of the same
     // subsystems is scheduled to run
+    @Override
     protected void interrupted() {
+    }
+
+    // Make this return true when this Command no longer needs to run execute()
+    @Override
+    protected boolean isFinished() {
+        return Math.abs(Math.abs(Robot.compass.getYaw() - START_YAW_ANGLE) - GOAL_ANGLE) <= TOLERANCE;
     }
 }
