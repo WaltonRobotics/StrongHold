@@ -4,9 +4,16 @@ import edu.wpi.first.wpilibj.command.Command;
 import org.usfirst.frc.team2974.robot.Robot;
 
 /**
- *
+ *This class is used to turn the robot from its current angle (START_ANGLE) to its GOAL_ANGLE
+ * it does this by turn form a point.
  */
 public class TurnToAngle extends Command {
+
+    private final double GOAL_ANGLE;
+    private final double START_YAW_ANGLE;// = Robot.compass.getYaw();
+    private final boolean TURN_CLOCKWISE;
+    private final double ANGLES_TO_TURN;
+    final double TOLERANCE;
 
     private final double GOAL_ANGLE;
     private final double START_YAW_ANGLE;// = Robot.compass.getYaw();
