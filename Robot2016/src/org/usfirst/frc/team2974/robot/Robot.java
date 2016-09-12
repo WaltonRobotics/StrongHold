@@ -21,7 +21,7 @@ import org.usfirst.frc.team2974.robot.subsystems.DriveTrain;
 import org.usfirst.frc.team2974.robot.subsystems.Flipper;
 import org.usfirst.frc.team2974.robot.subsystems.Inputs;
 import org.usfirst.frc.team2974.robot.subsystems.Intake;
-import org.usfirst.frc.team2974.robot.subsystems.IntakeWheels;
+//import org.usfirst.frc.team2974.robot.subsystems.IntakeWheels;
 import org.usfirst.frc.team2974.robot.subsystems.Shooter;
 
 import edu.wpi.first.wpilibj.CameraServer;
@@ -35,19 +35,95 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class Robot extends IterativeRobot {
 
-	public static final aimState aimingState = aimState.onbaord;
-	public static OI oi;
-	public static DriveTrain driveTrain;
-	public static Arm arm;
-	public static Inputs inputs;
-	public static Shooter shooter;
-	public static Camera camera;
-	public static Compass compass;
-	public static Flipper flipper;
-	public static Intake intake;
+	private static final aimState aimingState = aimState.onbaord;
+	private static OI oi;
+	private static DriveTrain driveTrain;
+	private static Arm arm;
+	private static Inputs inputs;
+	private static Shooter shooter;
+	private static Camera camera;
+	private static Compass compass;
+	private static Flipper flipper;
+	private static Intake intake;
 	private static SendableChooser autoChooser;
 	private static SendableChooser locationChooser;
 	private static Command autonomousCommand;
+
+	public static aimState getAimingstate() {
+		return aimingState;
+	}
+
+	public static Arm getArm() {
+		return arm;
+	}
+
+	public static Camera getCamera() {
+		return camera;
+	}
+
+	public static Compass getCompass() {
+		return compass;
+	}
+
+	public static DriveTrain getDriveTrain() {
+		return driveTrain;
+	}
+
+	public static Flipper getFlipper() {
+		return flipper;
+	}
+
+	public static Inputs getInputs() {
+		return inputs;
+	}
+
+	public static Intake getIntake() {
+		return intake;
+	}
+
+	public static OI getOi() {
+		return oi;
+	}
+
+	public static Shooter getShooter() {
+		return shooter;
+	}
+
+	public static void setArm(Arm arm) {
+		Robot.arm = arm;
+	}
+
+	public static void setCamera(Camera camera) {
+		Robot.camera = camera;
+	}
+
+	public static void setCompass(Compass compass) {
+		Robot.compass = compass;
+	}
+
+	public static void setDriveTrain(DriveTrain driveTrain) {
+		Robot.driveTrain = driveTrain;
+	}
+
+	public static void setFlipper(Flipper flipper) {
+		Robot.flipper = flipper;
+	}
+
+	public static void setInputs(Inputs inputs) {
+		Robot.inputs = inputs;
+	}
+
+	public static void setIntake(Intake intake) {
+		Robot.intake = intake;
+	}
+
+	public static void setOi(OI oi) {
+		Robot.oi = oi;
+	}
+
+	public static void setShooter(Shooter shooter) {
+		Robot.shooter = shooter;
+	}
 
 	/**
 	 * This autonomous (along with the chooser code above) shows how to select
@@ -62,12 +138,12 @@ public class Robot extends IterativeRobot {
 	 */
 	@Override
 	public void autonomousInit() {
-		compass.initializeCompass();
+		getCompass().initializeCompass();
 		autonomousCommand = new FullRunnableAuton((CommandGroup) autoChooser.getSelected(),
 				(AutonLocator) locationChooser.getSelected());
 		autonomousCommand.start();
 		Scheduler.getInstance().add(new ShowInputs());
-		SmartDashboard.putBoolean("aimed", Math.abs(Robot.camera.getXLeft() - Aim.centerX) < Aim.threshold);
+		SmartDashboard.putBoolean("aimed", Math.abs(Robot.getCamera().getXLeft() - Aim.centerX) < Aim.threshold);
 
 	}
 
@@ -77,7 +153,7 @@ public class Robot extends IterativeRobot {
 	@Override
 	public void autonomousPeriodic() {
 		Scheduler.getInstance().run();
-		SmartDashboard.putBoolean("aimed", Math.abs(Robot.camera.getXRight() - Aim.centerX) < Aim.threshold);
+		SmartDashboard.putBoolean("aimed", Math.abs(Robot.getCamera().getXRight() - Aim.centerX) < Aim.threshold);
 
 	}
 
@@ -138,13 +214,13 @@ public class Robot extends IterativeRobot {
 	@Override
 	public void disabledPeriodic() {
 
-		Robot.inputs.updateSmartDashboard();
-		Robot.compass.dumpSmartDashboardValues();
-		Robot.camera.setNetTable();
-		Robot.camera.dumpSmartDshboardValues();
-		Robot.arm.dumpSmartDashboardValues();
-		Robot.shooter.dumpSmartDashboardValues();
-		Robot.driveTrain.dumpSmartdashboardValues();
+		Robot.getInputs().updateSmartDashboard();
+		Robot.getCompass().dumpSmartDashboardValues();
+		Robot.getCamera().setNetTable();
+		Robot.getCamera().dumpSmartDshboardValues();
+		Robot.getArm().dumpSmartDashboardValues();
+		Robot.getShooter().dumpSmartDashboardValues();
+		Robot.getDriveTrain().dumpSmartdashboardValues();
 
 		SmartDashboard.putData("DriveLocate", new DriveLocate());
 		SmartDashboard.putData("ChivalDeFreze", new ChivalDeFreze());
@@ -154,9 +230,9 @@ public class Robot extends IterativeRobot {
 		SmartDashboard.putData("Moat", new Moat());
 		SmartDashboard.putData("Ramparts", new Ramparts());
 
-		SmartDashboard.putBoolean("aimed", Math.abs(Robot.camera.getXLeft() - Aim.centerX) < Aim.threshold);
-		SmartDashboard.putBoolean("left", Robot.camera.getXRight() - Aim.centerX > 0);
-		SmartDashboard.putBoolean("right", Robot.camera.getXRight() - Aim.centerX < 0);
+		SmartDashboard.putBoolean("aimed", Math.abs(Robot.getCamera().getXLeft() - Aim.centerX) < Aim.threshold);
+		SmartDashboard.putBoolean("left", Robot.getCamera().getXRight() - Aim.centerX > 0);
+		SmartDashboard.putBoolean("right", Robot.getCamera().getXRight() - Aim.centerX < 0);
 	}
 
 	/**
@@ -176,18 +252,18 @@ public class Robot extends IterativeRobot {
 		// }
 		RobotMap.init();
 
-		driveTrain = new DriveTrain();
-		inputs = new Inputs();
-		arm = new Arm();
-		shooter = new Shooter();
-		camera = new Camera();
-		compass = new Compass();
-		flipper = new Flipper();
-		intake = new Intake();
-		IntakeWheels intakeWheels = new IntakeWheels();
+		setDriveTrain(new DriveTrain());
+		setInputs(new Inputs());
+		setArm(new Arm());
+		setShooter(new Shooter());
+		setCamera(new Camera());
+		setCompass(new Compass());
+		setFlipper(new Flipper());
+		setIntake(new Intake());
+		// IntakeWheels intakeWheels = new IntakeWheels();
 
 		createAutonomousChooser();
-		oi = new OI();
+		setOi(new OI());
 
 		CameraServer server = CameraServer.getInstance();
 		server.setQuality(0);
@@ -209,14 +285,14 @@ public class Robot extends IterativeRobot {
 
 	@Override
 	public void teleopInit() {
-		compass.initializeCompass();
+		getCompass().initializeCompass();
 		if (autonomousCommand != null)
 			autonomousCommand.cancel();
 		Scheduler.getInstance().add(new ShowInputs());
 
-		SmartDashboard.putBoolean("aimed", Math.abs(Robot.camera.getXRight() - Aim.centerX) < Aim.threshold);
-		SmartDashboard.putBoolean("left", Robot.camera.getXRight() - Aim.centerX > 0);
-		SmartDashboard.putBoolean("right", Robot.camera.getXRight() - Aim.centerX < 0);
+		SmartDashboard.putBoolean("aimed", Math.abs(Robot.getCamera().getXRight() - Aim.centerX) < Aim.threshold);
+		SmartDashboard.putBoolean("left", Robot.getCamera().getXRight() - Aim.centerX > 0);
+		SmartDashboard.putBoolean("right", Robot.getCamera().getXRight() - Aim.centerX < 0);
 	}
 
 	/**
@@ -226,9 +302,9 @@ public class Robot extends IterativeRobot {
 	public void teleopPeriodic() {
 		Scheduler.getInstance().run();
 
-		SmartDashboard.putBoolean("aimed", Math.abs(Robot.camera.getXRight() - Aim.centerX) < Aim.threshold);
-		SmartDashboard.putBoolean("left", Robot.camera.getXRight() - Aim.centerX > 0);
-		SmartDashboard.putBoolean("right", Robot.camera.getXRight() - Aim.centerX < 0);
-		Robot.driveTrain.dumpSmartdashboardValues();
+		SmartDashboard.putBoolean("aimed", Math.abs(Robot.getCamera().getXRight() - Aim.centerX) < Aim.threshold);
+		SmartDashboard.putBoolean("left", Robot.getCamera().getXRight() - Aim.centerX > 0);
+		SmartDashboard.putBoolean("right", Robot.getCamera().getXRight() - Aim.centerX < 0);
+		Robot.getDriveTrain().dumpSmartdashboardValues();
 	}
 }

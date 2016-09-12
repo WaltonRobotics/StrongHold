@@ -1,7 +1,7 @@
 package org.usfirst.frc.team2974.robot.autonomousCommands;
 
 import org.usfirst.frc.team2974.robot.Robot;
-import org.usfirst.frc.team2974.robot.subsystems.Compass;
+//import org.usfirst.frc.team2974.robot.subsystems.Compass;
 import org.usfirst.frc.team2974.robot.subsystems.DriveTrain;
 
 import edu.wpi.first.wpilibj.command.Command;
@@ -10,16 +10,16 @@ public class DriveLocate extends Command {
 	private final double aMax;
 	private final double vDrive;
 	private final DriveTrain driveTrain;
-	double conversionRateL;
-	double conversionRateR;
-	double thresholdYaw;
+	private double conversionRateL;
+	private double conversionRateR;
+	private double thresholdYaw;
 	private double targetAngle;
 
 	public DriveLocate() {
-		requires(Robot.driveTrain);
-		requires(Robot.compass);
-		driveTrain = Robot.driveTrain;
-		Compass compass = Robot.compass;
+		requires(Robot.getDriveTrain());
+		requires(Robot.getCompass());
+		driveTrain = Robot.getDriveTrain();
+		// Compass compass = Robot.compass;
 		aMax = 0.1; // TEST - 0.1 seems slow
 		vDrive = 0.5; // TEST - 0.5 so that V can end up being 1
 
@@ -50,6 +50,18 @@ public class DriveLocate extends Command {
 
 	}
 
+	public double getConversionRateL() {
+		return conversionRateL;
+	}
+
+	public double getConversionRateR() {
+		return conversionRateR;
+	}
+
+	public double getThresholdYaw() {
+		return thresholdYaw;
+	}
+
 	@Override
 	protected void initialize() {
 		driveTrain.resetEncoders();
@@ -67,7 +79,7 @@ public class DriveLocate extends Command {
 	protected boolean isFinished() {
 		// Returns true if both tests are satisfied
 
-		double errorAngle = Robot.compass.getYaw() - targetAngle;
+		double errorAngle = Robot.getCompass().getYaw() - targetAngle;
 
 		if (errorAngle > 180) {
 			errorAngle -= 360;
@@ -78,8 +90,20 @@ public class DriveLocate extends Command {
 
 		double timeOut = 3;
 		double thresholdPitch = 5;
-		return (timeSinceInitialized() > timeOut) || (Math.abs(Robot.compass.getPitch()) > thresholdPitch);// &&
+		return (timeSinceInitialized() > timeOut) || (Math.abs(Robot.getCompass().getPitch()) > thresholdPitch);// &&
 		// (Math.abs(errorAngle) < thresholdYaw);
+	}
+
+	public void setConversionRateL(double conversionRateL) {
+		this.conversionRateL = conversionRateL;
+	}
+
+	public void setConversionRateR(double conversionRateR) {
+		this.conversionRateR = conversionRateR;
+	}
+
+	public void setThresholdYaw(double thresholdYaw) {
+		this.thresholdYaw = thresholdYaw;
 	}
 
 }

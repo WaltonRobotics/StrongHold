@@ -17,25 +17,33 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  */
 public class OI {
 
-	public final Joystick left;
-	public final Joystick right;
-	public final Gamepad gamepad;
+	private final Joystick left;
+	private final Joystick right;
+	private final Gamepad gamepad;
 
-	public final Button shiftUp;
-	public final Button shiftDown;
+	private final Button shiftUp;
 
-	public final Button flapperDown;
-	public final Button retractIntake;
-	public final Button extendIntake;
+	private final Button shiftDown;
 
-	public final Button aimLeft;
-	public final Button aimRight;
+	private final Button flapperDown;
 
-	public final Button shoot;
+	private final Button retractIntake;
 
-	public final Button normalTensioning;
+	private final Button extendIntake;
+	private final Button intake;
+	private final Button outtake;
 
-	public boolean autoShoot;
+	private final Button stoptake;
+	private final Button changeAim1;
+	private final Button changeAim2;
+
+	private final Button aimLeft;
+	private final Button aimRight;
+
+	private final Button shoot;
+	private final Button normalTensioning;
+
+	private boolean autoShoot;
 
 	public Button testAuton;
 
@@ -46,30 +54,30 @@ public class OI {
 		right = new Joystick(1);
 		gamepad = new Gamepad(2);
 
-		shiftUp = new JoystickButton(left, 3);
-		shiftDown = new JoystickButton(left, 2);
+		shiftUp = new JoystickButton(getLeft(), 3);
+		shiftDown = new JoystickButton(getLeft(), 2);
 
 		flapperDown = new JoystickButton(gamepad, 8);
 
-		Button intake = new JoystickButton(gamepad, 1);
-		Button outtake = new JoystickButton(gamepad, 3);
-		Button stoptake = new JoystickButton(gamepad, 2);
+		intake = new JoystickButton(gamepad, 1);
+		outtake = new JoystickButton(gamepad, 3);
+		stoptake = new JoystickButton(gamepad, 2);
 
 		extendIntake = new JoystickButton(gamepad, 5);
 		retractIntake = new JoystickButton(gamepad, 6);
 
 		shoot = new JoystickButton(right, 1);
 
-		Button changeAim1 = new JoystickButton(left, 6);
-		Button changeAim2 = new JoystickButton(right, 6);
+		changeAim1 = new JoystickButton(getLeft(), 6);
+		changeAim2 = new JoystickButton(right, 6);
 
 		aimLeft = new JoystickButton(right, 4);
 		aimRight = new JoystickButton(right, 5);
 
-		Button startUntensioning = new JoystickButton(left, 8);
-		Button startTensioning = new JoystickButton(left, 11);
-		normalTensioning = new JoystickButton(left, 9);
-		Button resetShooter = new JoystickButton(left, 10);
+		Button startUntensioning = new JoystickButton(getLeft(), 8);
+		Button startTensioning = new JoystickButton(getLeft(), 11);
+		normalTensioning = new JoystickButton(getLeft(), 9);
+		Button resetShooter = new JoystickButton(getLeft(), 10);
 
 		startUntensioning.whenPressed(new UnTension());
 		startTensioning.whenPressed(new Tension());
@@ -82,11 +90,87 @@ public class OI {
 		// aimLeft.whenPressed(new Aim(0));
 		// aimRight.whenPressed(new Aim(2));
 
-		autoShoot = false;
+		setAutoShoot(false);
 
 		// testAuton = new JoystickButton(gamepad, 6);//remove l8er TODO
 		// testAuton.whenPressed(new TestAuton());
 		SmartDashboard.putData("Drive Forward 1m", new DriveStraightMC(1.0, 0.5, 0.1));
+	}
+
+	public Button getAimLeft() {
+		return aimLeft;
+	}
+
+	public Button getAimRight() {
+		return aimRight;
+	}
+
+	public Button getChangeAim1() {
+		return changeAim1;
+	}
+
+	public Button getChangeAim2() {
+		return changeAim2;
+	}
+
+	public Button getExtendIntake() {
+		return extendIntake;
+	}
+
+	public Button getFlapperDown() {
+		return flapperDown;
+	}
+
+	public Gamepad getGamepad() {
+		return gamepad;
+	}
+
+	public Button getIntake() {
+		return intake;
+	}
+
+	public Joystick getLeft() {
+		return left;
+	}
+
+	public Button getNormalTensioning() {
+		return normalTensioning;
+	}
+
+	public Button getOuttake() {
+		return outtake;
+	}
+
+	public Button getRetractIntake() {
+		return retractIntake;
+	}
+
+	public Joystick getRight() {
+		return right;
+	}
+
+	public Button getShiftDown() {
+		return shiftDown;
+	}
+
+	public Button getShiftUp() {
+		return shiftUp;
+	}
+
+	public Button getShoot() {
+		return shoot;
+	}
+
+	public Button getStoptake() {
+		return stoptake;
+	}
+
+	public boolean isAutoShoot() {
+		return autoShoot;
+	}
+
+	public void setAutoShoot(boolean autoShoot) {
+		this.autoShoot = autoShoot;
 	}
 
 }
