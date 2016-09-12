@@ -192,18 +192,19 @@ public class Robot extends IterativeRobot {
 		CameraServer server = CameraServer.getInstance();
 		server.setQuality(0);
 		server.startAutomaticCapture("cam1");
-		
+
 		File imageFile = new File("TestImage.jpg");
 		File errorImage = new File("ErrorMessage.png");
-		
-		if(imageFile.exists())
+
+		if (imageFile.exists())
 			SmartDashboard.putData("Image", (NamedSendable) imageFile);
-		
-		else if(errorImage.exists())
+
+		else if (errorImage.exists())
 			SmartDashboard.putData("Image", (NamedSendable) errorImage);
-		
+
 		else
-			SmartDashboard.putString("Image Error", "No image found: " + imageFile.getName() + ", " + errorImage.getName());
+			SmartDashboard.putString("Image Error",
+					"No image found: " + imageFile.getName() + ", " + errorImage.getName());
 	}
 
 	@Override
