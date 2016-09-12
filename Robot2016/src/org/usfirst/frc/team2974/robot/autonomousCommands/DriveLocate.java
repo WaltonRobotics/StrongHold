@@ -11,7 +11,7 @@ public class DriveLocate extends Command{
 	double conversionRateL;
 	double conversionRateR;
 	double thresholdYaw;
-	final double thresholdPitch = 5;//find numbers
+	final double thresholdPitch = 5;
 	double targetAngle;
 	double aMax;
 	double vDrive;

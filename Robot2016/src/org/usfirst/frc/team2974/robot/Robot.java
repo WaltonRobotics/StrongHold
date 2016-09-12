@@ -1,5 +1,6 @@
 package org.usfirst.frc.team2974.robot;
 
+import java.awt.Image;
 import java.io.File;
 
 import org.usfirst.frc.team2974.robot.autonomousCommandGroups.ChivalDeFreze;
