@@ -7,145 +7,148 @@ import edu.wpi.first.wpilibj.Joystick;
  */
 public class Gamepad extends Joystick {
 
-    /**
-     * @param port the port of the controller
-     */
-    public Gamepad(int port) {
+	/**
+	 * non d-pad buttons enum
+	 */
+	public enum Button {
+		A(1), B(2), X(3), Y(4), L(5), R(6), BACK(7), START(8);
 
-        super(port);
-    }
+		private final int index;
 
-    /**
-     * the button to get A,B,X,Y,L,R,START, or BACK
-     *
-     * @param b
-     * @return boolean
-     */
-    public boolean getButton(Button b) {
+		Button(int index) {
 
-        return b.getPressed(this);
-    }
+			this.index = index;
+		}
 
-    /**
-     * @param index the index of the button A( 0 ), B( 1 ), X( 2 ), Y( 3 ), L( 4
-     *              ), R( 5 ), BACK( 6 ), START( 7 );
-     * @return true if button pressed false if not pressed
-     */
-    public boolean getButton(int index) {
+		boolean getPressed(Gamepad g) {
 
-        return getRawButton(index);
-    }
+			return g.getRawButton(index);
+		}
+	}
 
-    /**
-     * 0 is not pressed and 1 is completely pressed
-     *
-     * @return the left trigger value between 0 and 1
-     */
-    public double getLeftTrigger() {
+	/**
+	 * d-pad buttons enum
+	 */
+	public enum POV {
+		N(0), S(180), E(90), W(270), NE(45), SE(135), NW(315), SW(225), CENTER(0);
 
-        return getRawAxis(2);
-    }
+		private final int angle;
 
-    /**
-     * left is 1 right is -1 //TODO check this
-     *
-     * @return the left thumb stick x value between -1 and 1
-     */
-    public double getLeftX() {
+		POV(int angle) {
 
-        return getRawAxis(0);
-    }
+			this.angle = angle;
+		}
 
-    /**
-     * forward is -1 and backward is 1 //TODO check this
-     *
-     * @return the left thumb stick y value between -1 and 1
-     */
-    public double getLeftY() {
+		boolean getPressed(Gamepad g) {
 
-        return getRawAxis(1);
-    }
+			return g.getPOV() == angle;
+		}
+	}
 
-    public boolean getPOVButton(int angle) {
-        return getPOV() == angle;
-    }
+	/**
+	 * @param port
+	 *            the port of the controller
+	 */
+	public Gamepad(int port) {
 
-    /**
-     * @param p the POV to get based on compass directions
-     *          N,S,E,W,NE,NW,SE,SW, or CENTER
-     * @return true if the POV button is pressed false if not
-     */
-    public boolean getPOVButton(POV p) {
+		super(port);
+	}
 
-        return p.getPressed(this);
-    }
+	/**
+	 * the button to get A,B,X,Y,L,R,START, or BACK
+	 *
+	 * @param b
+	 * @return boolean
+	 */
+	public boolean getButton(Button b) {
 
-    /**
-     * 0 is not pressed and 1 is completely pressed
-     *
-     * @return the right trigger value between 0 and 1
-     */
-    public double getRightTrigger() {
+		return b.getPressed(this);
+	}
 
-        return getRawAxis(3);
-    }
+	/**
+	 * @param index
+	 *            the index of the button A( 0 ), B( 1 ), X( 2 ), Y( 3 ), L( 4
+	 *            ), R( 5 ), BACK( 6 ), START( 7 );
+	 * @return true if button pressed false if not pressed
+	 */
+	public boolean getButton(int index) {
 
-    /**
-     * left is 1 right is -1 //TODO check this
-     *
-     * @return the right thumb stick x value between -1 and 1
-     */
-    public double getRightX() {
+		return getRawButton(index);
+	}
 
-        return getRawAxis(4);
-    }
+	/**
+	 * 0 is not pressed and 1 is completely pressed
+	 *
+	 * @return the left trigger value between 0 and 1
+	 */
+	public double getLeftTrigger() {
 
-    /**
-     * forward is -1 and backward is 1 //TODO check this
-     *
-     * @return the right thumb stick y value between -1 and 1
-     */
-    public double getRightY() {
-        return getRawAxis(3);
-        // return getRawAxis(5);
-    }
+		return getRawAxis(2);
+	}
 
-    /**
-     * non d-pad buttons enum
-     */
-    public enum Button {
-        A(1), B(2), X(3), Y(4), L(5), R(6), BACK(7), START(8);
+	/**
+	 * left is 1 right is -1 //TODO check this
+	 *
+	 * @return the left thumb stick x value between -1 and 1
+	 */
+	public double getLeftX() {
 
-        private final int index;
+		return getRawAxis(0);
+	}
 
-        Button(int index) {
+	/**
+	 * forward is -1 and backward is 1 //TODO check this
+	 *
+	 * @return the left thumb stick y value between -1 and 1
+	 */
+	public double getLeftY() {
 
-            this.index = index;
-        }
+		return getRawAxis(1);
+	}
 
-        boolean getPressed(Gamepad g) {
+	public boolean getPOVButton(int angle) {
+		return getPOV() == angle;
+	}
 
-            return g.getRawButton(index);
-        }
-    }
+	/**
+	 * @param p
+	 *            the POV to get based on compass directions
+	 *            N,S,E,W,NE,NW,SE,SW, or CENTER
+	 * @return true if the POV button is pressed false if not
+	 */
+	public boolean getPOVButton(POV p) {
 
-    /**
-     * d-pad buttons enum
-     */
-    public enum POV {
-        N(0), S(180), E(90), W(270), NE(45), SE(135), NW(315), SW(225), CENTER(0);
+		return p.getPressed(this);
+	}
 
-        private final int angle;
+	/**
+	 * 0 is not pressed and 1 is completely pressed
+	 *
+	 * @return the right trigger value between 0 and 1
+	 */
+	public double getRightTrigger() {
 
-        POV(int angle) {
+		return getRawAxis(3);
+	}
 
-            this.angle = angle;
-        }
+	/**
+	 * left is 1 right is -1 //TODO check this
+	 *
+	 * @return the right thumb stick x value between -1 and 1
+	 */
+	public double getRightX() {
 
-        boolean getPressed(Gamepad g) {
+		return getRawAxis(4);
+	}
 
-            return g.getPOV() == angle;
-        }
-    }
+	/**
+	 * forward is -1 and backward is 1 //TODO check this
+	 *
+	 * @return the right thumb stick y value between -1 and 1
+	 */
+	public double getRightY() {
+		return getRawAxis(3);
+		// return getRawAxis(5);
+	}
 
 }

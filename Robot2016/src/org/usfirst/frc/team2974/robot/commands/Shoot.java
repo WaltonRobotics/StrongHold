@@ -1,13 +1,14 @@
 package org.usfirst.frc.team2974.robot.commands;
 
-import edu.wpi.first.wpilibj.Timer;
-import edu.wpi.first.wpilibj.command.Command;
-import edu.wpi.first.wpilibj.command.Scheduler;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import org.usfirst.frc.team2974.robot.Robot;
 import org.usfirst.frc.team2974.robot.autonomousCommands.FlapDown;
 import org.usfirst.frc.team2974.robot.autonomousCommands.IntakeIn;
 import org.usfirst.frc.team2974.robot.subsystems.Shooter;
+
+import edu.wpi.first.wpilibj.Timer;
+import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj.command.Scheduler;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 //import org.usfirst.frc.team2974.robot.autonomousCommands.FlapDown;
 //import edu.wpi.first.wpilibj.command.Scheduler;
@@ -17,219 +18,220 @@ import org.usfirst.frc.team2974.robot.subsystems.Shooter;
  */
 public class Shoot extends Command {
 
-    private final Shooter shooter = Robot.shooter;
-    private State currentState;
+	class Latched extends State {
+		@Override
+		void end() {
+			currentState = new Ready();
+		}
 
-    public Shoot() {
-        requires(shooter);
-    }
+		@Override
+		void execute() {
+			shooter.tension();
+		}
 
-    // Called once after isFinished returns true
-    @Override
-    protected void end() {
-    }
+		@Override
+		void init() {
 
-    // Called repeatedly when this Command is scheduled to run
-    @Override
-    protected void execute() {
-        if (!currentState.init) {
-            currentState.init();
-            currentState.init = true;
-        } else if (currentState.isFinished())
-            currentState.end();
-        else
-            currentState.execute();
+		}
 
-        // Log.instance().logCall(new LogMessage(Severity.INFORMATION,
-        // SubSystem.SHOOTER, "Shooter", "Shooter State" +
-        // currentState.getClass()+"", 120));
-        SmartDashboard.putString("Shooter State", currentState.getClass() + "");
-        SmartDashboard.putString("Tensioner State", shooter.getState() + "");
+		@Override
+		boolean isFinished() {
+			return shooter.getState() == Shooter.TensionerState.tensioned;
+		}
+	}
 
-    }
+	class MovingFlapper extends State {
+		double initTime;
 
-    // Called just before this Command runs the first time
-    @Override
-    protected void initialize() {
-        if (shooter.isShooterDown())
-            currentState = new Latched();
-        else
-            currentState = new Returning();
-    }
+		@Override
+		void end() {
+			currentState = new Shooting();
 
-    // Called when another command which requires one or more of the same
-    // subsystems is scheduled to run
-    @Override
-    protected void interrupted() {
-    }
+		}
 
-    // Make this return true when this Command no longer needs to run execute()
-    @Override
-    protected boolean isFinished() {
-        return false;
-    }
+		@Override
+		void execute() {
+		}
 
-    class Latched extends State {
-        @Override
-        void end() {
-            currentState = new Ready();
-        }
+		@Override
+		void init() {
+			initTime = Timer.getFPGATimestamp();
+			Scheduler.getInstance().add(new FlapDown());
+		}
 
-        @Override
-        void execute() {
-            shooter.tension();
-        }
+		@Override
+		boolean isFinished() {
+			return Timer.getFPGATimestamp() - initTime > .5;
+		}
 
-        @Override
-        void init() {
+	}
 
-        }
+	class MovingIntake extends State {
+		double startTime;
 
-        @Override
-        boolean isFinished() {
-            return shooter.getState() == Shooter.TensionerState.tensioned;
-        }
-    }
+		@Override
+		void end() {
+			currentState = new MovingFlapper();
 
-    class MovingFlapper extends State {
-        double initTime;
+		}
 
-        @Override
-        void end() {
-            currentState = new Shooting();
+		@Override
+		void execute() {
+			// TODO Auto-generated method stub
 
-        }
+		}
 
-        @Override
-        void execute() {
-        }
+		@Override
+		void init() {
+			startTime = Timer.getFPGATimestamp();
+			Scheduler.getInstance().add(new IntakeIn());
+		}
 
-        @Override
-        void init() {
-            initTime = Timer.getFPGATimestamp();
-            Scheduler.getInstance().add(new FlapDown());
-        }
+		@Override
+		boolean isFinished() {
+			// TODO Auto-generated method stub
+			return Timer.getFPGATimestamp() - startTime > .1;
+		}
 
-        @Override
-        boolean isFinished() {
-            return Timer.getFPGATimestamp() - initTime > .5;
-        }
+	}
 
-    }
+	class Ready extends State {
+		@Override
+		void end() {
+			currentState = new MovingFlapper();
+			Robot.oi.autoShoot = false;
+		}
 
-    class MovingIntake extends State {
-        double startTime;
+		@Override
+		void execute() {
+			shooter.holdTension();
+		}
 
-        @Override
-        void end() {
-            currentState = new MovingFlapper();
+		@Override
+		void init() {
+		}
 
-        }
+		@Override
+		boolean isFinished() {
 
-        @Override
-        void execute() {
-            // TODO Auto-generated method stub
+			return Robot.oi.shoot.get() || Robot.oi.autoShoot;
+		}
+	}
 
-        }
+	class Returning extends State {
+		double readyTime = -1;
 
-        @Override
-        void init() {
-            startTime = Timer.getFPGATimestamp();
-            Scheduler.getInstance().add(new IntakeIn());
-        }
+		@Override
+		void end() {
+			shooter.latch();
+			currentState = new Latched();
 
-        @Override
-        boolean isFinished() {
-            // TODO Auto-generated method stub
-            return Timer.getFPGATimestamp() - startTime > .1;
-        }
+		}
 
-    }
+		@Override
+		void execute() {
+			shooter.unTension();
+			if (shooter.isShooterDown() && readyTime == -1)
+				readyTime = Timer.getFPGATimestamp();
+		}
 
-    class Ready extends State {
-        @Override
-        void end() {
-            currentState = new MovingFlapper();
-            Robot.oi.autoShoot = false;
-        }
+		@Override
+		void init() {
+		}
 
-        @Override
-        void execute() {
-            shooter.holdTension();
-        }
+		@Override
+		boolean isFinished() {
+			return readyTime != -1 && ((Timer.getFPGATimestamp() - readyTime) > 1);
+		}
+	}
 
-        @Override
-        void init() {
-        }
+	class Shooting extends State {
+		double initTime;
 
-        @Override
-        boolean isFinished() {
+		@Override
+		void end() {
+			currentState = new Returning();
+		}
 
-            return Robot.oi.shoot.get() || Robot.oi.autoShoot;
-        }
-    }
+		@Override
+		void execute() {
+			shooter.setZero();
+		}
 
-    class Returning extends State {
-        double readyTime = -1;
+		@Override
+		void init() {
+			shooter.unlatch();
+			initTime = Timer.getFPGATimestamp();
+		}
 
-        @Override
-        void end() {
-            shooter.latch();
-            currentState = new Latched();
+		@Override
+		boolean isFinished() {
+			return !Robot.oi.shoot.get() && Timer.getFPGATimestamp() - initTime > 1;
+		}
+	}
 
-        }
+	abstract class State {
+		boolean init = false;
 
-        @Override
-        void execute() {
-            shooter.unTension();
-            if (shooter.isShooterDown() && readyTime == -1)
-                readyTime = Timer.getFPGATimestamp();
-        }
+		abstract void end();
 
-        @Override
-        void init() {
-        }
+		abstract void execute();
 
-        @Override
-        boolean isFinished() {
-            return readyTime != -1 && ((Timer.getFPGATimestamp() - readyTime) > 1);
-        }
-    }
+		abstract void init();
 
-    class Shooting extends State {
-        double initTime;
+		abstract boolean isFinished();
+	}
 
-        @Override
-        void end() {
-            currentState = new Returning();
-        }
+	private final Shooter shooter = Robot.shooter;
 
-        @Override
-        void execute() {
-            shooter.setZero();
-        }
+	private State currentState;
 
-        @Override
-        void init() {
-            shooter.unlatch();
-            initTime = Timer.getFPGATimestamp();
-        }
+	public Shoot() {
+		requires(shooter);
+	}
 
-        @Override
-        boolean isFinished() {
-            return !Robot.oi.shoot.get() && Timer.getFPGATimestamp() - initTime > 1;
-        }
-    }
+	// Called once after isFinished returns true
+	@Override
+	protected void end() {
+	}
 
-    abstract class State {
-        boolean init = false;
+	// Called repeatedly when this Command is scheduled to run
+	@Override
+	protected void execute() {
+		if (!currentState.init) {
+			currentState.init();
+			currentState.init = true;
+		} else if (currentState.isFinished())
+			currentState.end();
+		else
+			currentState.execute();
 
-        abstract void end();
+		// Log.instance().logCall(new LogMessage(Severity.INFORMATION,
+		// SubSystem.SHOOTER, "Shooter", "Shooter State" +
+		// currentState.getClass()+"", 120));
+		SmartDashboard.putString("Shooter State", currentState.getClass() + "");
+		SmartDashboard.putString("Tensioner State", shooter.getState() + "");
 
-        abstract void execute();
+	}
 
-        abstract void init();
+	// Called just before this Command runs the first time
+	@Override
+	protected void initialize() {
+		if (shooter.isShooterDown())
+			currentState = new Latched();
+		else
+			currentState = new Returning();
+	}
 
-        abstract boolean isFinished();
-    }
+	// Called when another command which requires one or more of the same
+	// subsystems is scheduled to run
+	@Override
+	protected void interrupted() {
+	}
+
+	// Make this return true when this Command no longer needs to run execute()
+	@Override
+	protected boolean isFinished() {
+		return false;
+	}
 }

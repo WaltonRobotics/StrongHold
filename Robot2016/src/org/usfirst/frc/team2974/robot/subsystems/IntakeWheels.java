@@ -1,8 +1,9 @@
 package org.usfirst.frc.team2974.robot.subsystems;
 
+import org.usfirst.frc.team2974.robot.RobotMap;
+
 import edu.wpi.first.wpilibj.Talon;
 import edu.wpi.first.wpilibj.command.Subsystem;
-import org.usfirst.frc.team2974.robot.RobotMap;
 
 //import org.usfirst.frc.team2974.robot.commands.LoadBall;
 
@@ -10,44 +11,45 @@ import org.usfirst.frc.team2974.robot.RobotMap;
  *
  */
 public class IntakeWheels extends Subsystem {
-    private static WheelState state;
-    private final Talon intakeMotor = RobotMap.intakeMotor;
+	public enum WheelState {
+		in, stop, out
+	}
 
-    public IntakeWheels() {
-        state = WheelState.stop;
-    }
+	private static WheelState state;
 
-    public WheelState getState() {
-        return state;
-    }
+	private final Talon intakeMotor = RobotMap.intakeMotor;
 
-    @Override
-    public void initDefaultCommand() {
-        // setDefaultCommand(new LoadBall());
-    }
+	public IntakeWheels() {
+		state = WheelState.stop;
+	}
 
-    public void input() {
-        intakeMotor.set(-1);
-        state = WheelState.in;
-    }
+	public WheelState getState() {
+		return state;
+	}
 
-    public void output() {
-        double speed = .39;
-        intakeMotor.set(speed);
-        state = WheelState.out;
-    }
+	@Override
+	public void initDefaultCommand() {
+		// setDefaultCommand(new LoadBall());
+	}
 
-    public void stop() {
-        intakeMotor.set(0);
-        state = WheelState.stop;
-    }
+	public void input() {
+		intakeMotor.set(-1);
+		state = WheelState.in;
+	}
 
-    public enum WheelState {
-        in, stop, out
-    }
+	public void output() {
+		double speed = .39;
+		intakeMotor.set(speed);
+		state = WheelState.out;
+	}
 
-    // public void setMotor(double value)
-    // {
-    // intakeMotor.set(value);
-    // }
+	public void stop() {
+		intakeMotor.set(0);
+		state = WheelState.stop;
+	}
+
+	// public void setMotor(double value)
+	// {
+	// intakeMotor.set(value);
+	// }
 }

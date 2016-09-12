@@ -4,10 +4,10 @@ import edu.wpi.first.wpilibj.command.Subsystem;
 
 class TrackingSubsystem extends Subsystem {
 
-    @Override
-    protected void initDefaultCommand() {
-        // TODO Auto-generated method stub
+	@Override
+	protected void initDefaultCommand() {
+		// TODO Auto-generated method stub
 
-    }
+	}
 
 }

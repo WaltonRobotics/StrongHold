@@ -1,186 +1,191 @@
 package org.usfirst.frc.team2974.robot.commands;
 
-import edu.wpi.first.wpilibj.Timer;
-import edu.wpi.first.wpilibj.command.Command;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import org.usfirst.frc.team2974.robot.Robot;
 import org.usfirst.frc.team2974.robot.subsystems.Camera;
 import org.usfirst.frc.team2974.robot.subsystems.DriveTrain;
+
+import edu.wpi.first.wpilibj.Timer;
+import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  *
  */
 public class Aim extends Command {
 
-    public static final double threshold = 3;
-    public static final double centerX = 95;
-    private static double cycleDifference;
-    private final DriveTrain driveTrain = Robot.driveTrain;
-    private final Camera camera = Robot.camera;
-    private final double side;// 0 is left, 2 is right
-    private double gain = .0035;
-    private State currentState;
+	public class Cycle extends State {
+		double startTime;
 
-    public Aim() {
-        this(1);
-    }
+		@Override
+		void end() {
+			currentState = new Wait();
 
-    public Aim(int side) {
-        SmartDashboard.putNumber("gain", gain);
-        requires(Robot.driveTrain);
-        this.side = side;
-    }
+		}
 
-    // Called once after isFinished returns true
-    @Override
-    protected void end() {
-        driveTrain.setSpeeds(0, 0);
-    }
+		@Override
+		void execute() {
+			double brakingSpeed = 0.05;
+			double speed = .35;
+			if (side == 0) {// aim to the left goal
+				if (cycleDifference > 0)// im to the right
+					driveTrain.setSpeeds(-speed, brakingSpeed);// turn left
+				else
+					driveTrain.setSpeeds(speed, -brakingSpeed);// turn right
+			} else if (side == 2) {// aim to the right goal
+				if (cycleDifference > 0)// im to the right
+					driveTrain.setSpeeds(-brakingSpeed, speed);// turn left
+				else
+					driveTrain.setSpeeds(brakingSpeed, -speed);// turn right
+			}
+		}
 
-    // Called repeatedly when this Command is scheduled to run
-    @Override
-    protected void execute() {
-        if (camera.getXLeft() != -1) {
-            if (!currentState.init) {
-                currentState.init();
-                currentState.init = true;
-            } else if (currentState.isFinished())
-                currentState.end();
-            else
-                currentState.execute();
+		@Override
+		void init() {
+			startTime = Timer.getFPGATimestamp();
+		}
 
-        } else {
-            driveTrain.setSpeeds(0, 0);
-            currentState = new Reset();
+		@Override
+		boolean isFinished() {
+			return Timer.getFPGATimestamp() - startTime > gain * Math.abs(cycleDifference);
+		}
+	}
 
-        }
-        SmartDashboard.putString("aim state", currentState.toString());
-    }
+	class Reset extends State {
+		@Override
+		void end() {
+			currentState = new Cycle();
+		}
 
-    // Called just before this Command runs the first time
-    @Override
-    protected void initialize() {
-        Robot.driveTrain.shiftDown();
-        gain = SmartDashboard.getNumber("gain");
-        currentState = new Reset();
-    }
+		@Override
+		void execute() {
 
-    // Called when another command which requires one or more of the same
-    // subsystems is scheduled to run
-    @Override
-    protected void interrupted() {
-    }
+			if (side == 0)
+				cycleDifference = camera.getXLeft() - centerX;
+			else if (side == 2)
+				cycleDifference = camera.getXRight() - centerX;
 
-    // Make this return true when this Command no longer needs to run execute()
-    @Override
-    protected boolean isFinished() {
-        if (side == 0)
-            return !Robot.oi.aimLeft.get();
-        return !Robot.oi.aimRight.get();
-    }
+		}
 
-    public class Cycle extends State {
-        double startTime;
+		@Override
+		void init() {
 
-        @Override
-        void end() {
-            currentState = new Wait();
+			if (side == 0)
+				cycleDifference = camera.getXLeft() - centerX;
+			else if (side == 2)
+				cycleDifference = camera.getXRight() - centerX;
+		}
 
-        }
+		@Override
+		boolean isFinished() {
+			return Math.abs(cycleDifference) > threshold;
+		}
+	}
 
-        @Override
-        void execute() {
-            double brakingSpeed = 0.05;
-            double speed = .35;
-            if (side == 0) {// aim to the left goal
-                if (cycleDifference > 0)// im to the right
-                    driveTrain.setSpeeds(-speed, brakingSpeed);// turn left
-                else
-                    driveTrain.setSpeeds(speed, -brakingSpeed);// turn right
-            } else if (side == 2) {// aim to the right goal
-                if (cycleDifference > 0)// im to the right
-                    driveTrain.setSpeeds(-brakingSpeed, speed);// turn left
-                else
-                    driveTrain.setSpeeds(brakingSpeed, -speed);// turn right
-            }
-        }
+	public abstract class State {
+		boolean init = false;
 
-        @Override
-        void init() {
-            startTime = Timer.getFPGATimestamp();
-        }
+		abstract void end();
 
-        @Override
-        boolean isFinished() {
-            return Timer.getFPGATimestamp() - startTime > gain * Math.abs(cycleDifference);
-        }
-    }
+		abstract void execute();
 
-    class Reset extends State {
-        @Override
-        void end() {
-            currentState = new Cycle();
-        }
+		abstract void init();
 
-        @Override
-        void execute() {
+		abstract boolean isFinished();
+	}
 
-            if (side == 0)
-                cycleDifference = camera.getXLeft() - centerX;
-            else if (side == 2)
-                cycleDifference = camera.getXRight() - centerX;
+	public class Wait extends State {
+		final double waitTime = .1;
+		double startTime;
 
-        }
+		@Override
+		void end() {
+			currentState = new Reset();
+		}
 
-        @Override
-        void init() {
+		@Override
+		void execute() {
+			driveTrain.setSpeeds(0, 0);
+		}
 
-            if (side == 0)
-                cycleDifference = camera.getXLeft() - centerX;
-            else if (side == 2)
-                cycleDifference = camera.getXRight() - centerX;
-        }
+		@Override
+		void init() {
+			startTime = Timer.getFPGATimestamp();
+		}
 
-        @Override
-        boolean isFinished() {
-            return Math.abs(cycleDifference) > threshold;
-        }
-    }
+		@Override
+		boolean isFinished() {
+			return Timer.getFPGATimestamp() - startTime > waitTime;
+		}
+	}
 
-    public abstract class State {
-        boolean init = false;
+	public static final double threshold = 3;
+	public static final double centerX = 95;
+	private static double cycleDifference;
+	private final DriveTrain driveTrain = Robot.driveTrain;
 
-        abstract void end();
+	private final Camera camera = Robot.camera;
 
-        abstract void execute();
+	private final double side;// 0 is left, 2 is right
 
-        abstract void init();
+	private double gain = .0035;
 
-        abstract boolean isFinished();
-    }
+	private State currentState;
 
-    public class Wait extends State {
-        final double waitTime = .1;
-        double startTime;
+	public Aim() {
+		this(1);
+	}
 
-        @Override
-        void end() {
-            currentState = new Reset();
-        }
+	public Aim(int side) {
+		SmartDashboard.putNumber("gain", gain);
+		requires(Robot.driveTrain);
+		this.side = side;
+	}
 
-        @Override
-        void execute() {
-            driveTrain.setSpeeds(0, 0);
-        }
+	// Called once after isFinished returns true
+	@Override
+	protected void end() {
+		driveTrain.setSpeeds(0, 0);
+	}
 
-        @Override
-        void init() {
-            startTime = Timer.getFPGATimestamp();
-        }
+	// Called repeatedly when this Command is scheduled to run
+	@Override
+	protected void execute() {
+		if (camera.getXLeft() != -1) {
+			if (!currentState.init) {
+				currentState.init();
+				currentState.init = true;
+			} else if (currentState.isFinished())
+				currentState.end();
+			else
+				currentState.execute();
 
-        @Override
-        boolean isFinished() {
-            return Timer.getFPGATimestamp() - startTime > waitTime;
-        }
-    }
+		} else {
+			driveTrain.setSpeeds(0, 0);
+			currentState = new Reset();
+
+		}
+		SmartDashboard.putString("aim state", currentState.toString());
+	}
+
+	// Called just before this Command runs the first time
+	@Override
+	protected void initialize() {
+		Robot.driveTrain.shiftDown();
+		gain = SmartDashboard.getNumber("gain");
+		currentState = new Reset();
+	}
+
+	// Called when another command which requires one or more of the same
+	// subsystems is scheduled to run
+	@Override
+	protected void interrupted() {
+	}
+
+	// Make this return true when this Command no longer needs to run execute()
+	@Override
+	protected boolean isFinished() {
+		if (side == 0)
+			return !Robot.oi.aimLeft.get();
+		return !Robot.oi.aimRight.get();
+	}
 }
