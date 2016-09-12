@@ -18,7 +18,7 @@ public class TurnLeft extends Command {
 	}
 
 	public TurnLeft(double time, double speed) {
-		requires(Robot.driveTrain);
+		requires(Robot.getDriveTrain());
 		// SmartDashboard.putNumber("timeTurn", time);
 		// SmartDashboard.putNumber("speedTurn", speed);
 		this.time = time;
@@ -28,13 +28,13 @@ public class TurnLeft extends Command {
 	// Called once after isFinished returns true
 	@Override
 	protected void end() {
-		Robot.driveTrain.setSpeeds(0, 0);
+		Robot.getDriveTrain().setSpeeds(0, 0);
 	}
 
 	// Called repeatedly when this Command is scheduled to run
 	@Override
 	protected void execute() {
-		Robot.driveTrain.setSpeeds(-speed, speed);
+		Robot.getDriveTrain().setSpeeds(-speed, speed);
 	}
 
 	// Called just before this Command runs the first time

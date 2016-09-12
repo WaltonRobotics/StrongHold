@@ -121,9 +121,9 @@ public class Aim extends Command {
 	public static final double threshold = 3;
 	public static final double centerX = 95;
 	private static double cycleDifference;
-	private final DriveTrain driveTrain = Robot.driveTrain;
+	private final DriveTrain driveTrain = Robot.getDriveTrain();
 
-	private final Camera camera = Robot.camera;
+	private final Camera camera = Robot.getCamera();
 
 	private final double side;// 0 is left, 2 is right
 
@@ -137,7 +137,7 @@ public class Aim extends Command {
 
 	public Aim(int side) {
 		SmartDashboard.putNumber("gain", gain);
-		requires(Robot.driveTrain);
+		requires(Robot.getDriveTrain());
 		this.side = side;
 	}
 
@@ -170,7 +170,7 @@ public class Aim extends Command {
 	// Called just before this Command runs the first time
 	@Override
 	protected void initialize() {
-		Robot.driveTrain.shiftDown();
+		Robot.getDriveTrain().shiftDown();
 		gain = SmartDashboard.getNumber("gain");
 		currentState = new Reset();
 	}
@@ -185,7 +185,7 @@ public class Aim extends Command {
 	@Override
 	protected boolean isFinished() {
 		if (side == 0)
-			return !Robot.oi.aimLeft.get();
-		return !Robot.oi.aimRight.get();
+			return !Robot.getOi().getAimLeft().get();
+		return !Robot.getOi().getAimRight().get();
 	}
 }

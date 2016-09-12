@@ -12,7 +12,7 @@ public class ShiftDown extends Command {
 	private final double startTime;
 
 	public ShiftDown() {
-		requires(Robot.driveTrain);
+		requires(Robot.getDriveTrain());
 		startTime = Timer.getFPGATimestamp();
 	}
 
@@ -29,7 +29,7 @@ public class ShiftDown extends Command {
 	// Called just before this Command runs the first time
 	@Override
 	protected void initialize() {
-		Robot.driveTrain.shiftDown();
+		Robot.getDriveTrain().shiftDown();
 	}
 
 	// Called when another command which requires one or more of the same

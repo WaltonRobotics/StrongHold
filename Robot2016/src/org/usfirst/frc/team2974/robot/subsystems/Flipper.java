@@ -17,7 +17,7 @@ public class Flipper extends Subsystem {
 
 	// Put methods for controlling this subsystem
 	// here. Call these from Commands.
-	private final Solenoid flapper = RobotMap.flapper;
+	private final Solenoid flapper = RobotMap.getFlapper();
 
 	@Override
 	public void initDefaultCommand() {

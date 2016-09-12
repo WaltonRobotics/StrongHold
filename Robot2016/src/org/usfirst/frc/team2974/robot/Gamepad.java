@@ -57,7 +57,8 @@ public class Gamepad extends Joystick {
 	/**
 	 * the button to get A,B,X,Y,L,R,START, or BACK
 	 *
-	 * @param b is the button given
+	 * @param b
+	 *            is the button given
 	 * @return boolean
 	 */
 	public boolean getButton(Button b) {

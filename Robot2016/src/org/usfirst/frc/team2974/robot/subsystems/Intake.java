@@ -17,7 +17,7 @@ public class Intake extends Subsystem {
 		in, out, middle
 	}
 
-	private final Solenoid intakeExtender = RobotMap.intakeExtender;
+	private final Solenoid intakeExtender = RobotMap.getIntakeExtender();
 	private final double time;
 
 	private final IntakeExtenderState state;

@@ -14,13 +14,13 @@ public class ArmDown extends Command {
 	private double startTime;
 
 	public ArmDown() {
-		requires(Robot.arm);
+		requires(Robot.getArm());
 	}
 
 	// Called once after isFinished returns true
 	@Override
 	protected void end() {
-		Robot.arm.moveArmPower(0);
+		Robot.getArm().moveArmPower(0);
 		SmartDashboard.putString("Autonomous stuff", "There ya go, arm is down");
 	}
 
@@ -28,7 +28,7 @@ public class ArmDown extends Command {
 	@Override
 	protected void execute() {
 		double armPower = -1;
-		Robot.arm.moveArmPower(armPower);
+		Robot.getArm().moveArmPower(armPower);
 	}
 
 	// Called just before this Command runs the first time
@@ -41,7 +41,7 @@ public class ArmDown extends Command {
 	// subsystems is scheduled to run
 	@Override
 	protected void interrupted() {
-		Robot.arm.moveArmPower(0);
+		Robot.getArm().moveArmPower(0);
 	}
 
 	// Make this return true when this Command no longer needs to run execute()

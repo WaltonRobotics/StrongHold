@@ -17,11 +17,11 @@ public class TurnToAngle extends Command {
 	private final double TOLERANCE;
 
 	public TurnToAngle(double angle) {
-		requires(Robot.driveTrain);
-		requires(Robot.compass);
+		requires(Robot.getDriveTrain());
+		requires(Robot.getCompass());
 		this.TOLERANCE = 10;
 		this.GOAL_ANGLE = Math.abs(angle);
-		this.START_YAW_ANGLE = Robot.compass.getYaw();
+		this.START_YAW_ANGLE = Robot.getCompass().getYaw();
 		this.TURN_CLOCKWISE = Math.abs(this.GOAL_ANGLE - this.START_YAW_ANGLE) <= 180;
 		this.ANGLES_TO_TURN = TURN_CLOCKWISE ? Math.abs(GOAL_ANGLE - START_YAW_ANGLE)
 				: 360 - Math.abs(GOAL_ANGLE - START_YAW_ANGLE);
@@ -35,18 +35,18 @@ public class TurnToAngle extends Command {
 	// Called repeatedly when this Command is scheduled to run
 	@Override
 	protected void execute() {
-		double deltaYawAngle = Math.abs(Robot.compass.getYaw() - START_YAW_ANGLE);
+		double deltaYawAngle = Math.abs(Robot.getCompass().getYaw() - START_YAW_ANGLE);
 
 		double SPEED = .5;
 		if (TURN_CLOCKWISE)
 			if (Math.abs(deltaYawAngle - START_YAW_ANGLE) < ANGLES_TO_TURN)
-				Robot.driveTrain.setSpeeds(SPEED, -SPEED);
+				Robot.getDriveTrain().setSpeeds(SPEED, -SPEED);
 
 			else if (Math.abs(deltaYawAngle - START_YAW_ANGLE) < ANGLES_TO_TURN)
-				Robot.driveTrain.setSpeeds(-SPEED, SPEED);
+				Robot.getDriveTrain().setSpeeds(-SPEED, SPEED);
 
 			else
-				Robot.driveTrain.setSpeeds(0, 0);
+				Robot.getDriveTrain().setSpeeds(0, 0);
 	}
 
 	// Called just before this Command runs the first time
@@ -63,6 +63,6 @@ public class TurnToAngle extends Command {
 	// Make this return true when this Command no longer needs to run execute()
 	@Override
 	protected boolean isFinished() {
-		return Math.abs(Math.abs(Robot.compass.getYaw() - START_YAW_ANGLE) - GOAL_ANGLE) <= TOLERANCE;
+		return Math.abs(Math.abs(Robot.getCompass().getYaw() - START_YAW_ANGLE) - GOAL_ANGLE) <= TOLERANCE;
 	}
 }

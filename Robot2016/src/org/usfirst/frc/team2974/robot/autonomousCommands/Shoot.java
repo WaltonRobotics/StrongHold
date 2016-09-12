@@ -19,14 +19,14 @@ public class Shoot extends Command {
 	// Called once after isFinished returns true
 	@Override
 	protected void end() {
-		Robot.oi.autoShoot = false;
+		Robot.getOi().setAutoShoot(false);
 		SmartDashboard.putString("Autonomous stuff", "There ya go, ball in da goal");
 	}
 
 	// Called repeatedly when this Command is scheduled to run
 	@Override
 	protected void execute() {
-		SmartDashboard.putBoolean("autoshoot", Robot.oi.autoShoot);
+		SmartDashboard.putBoolean("autoshoot", Robot.getOi().isAutoShoot());
 
 	}
 
@@ -35,14 +35,14 @@ public class Shoot extends Command {
 	protected void initialize() {
 
 		startTime = Timer.getFPGATimestamp();
-		Robot.oi.autoShoot = true;
+		Robot.getOi().setAutoShoot(true);
 	}
 
 	// Called when another command which requires one or more of the same
 	// subsystems is scheduled to run
 	@Override
 	protected void interrupted() {
-		Robot.oi.autoShoot = false;
+		Robot.getOi().setAutoShoot(false);
 	}
 
 	// Make this return true when this Command no longer needs to run execute()

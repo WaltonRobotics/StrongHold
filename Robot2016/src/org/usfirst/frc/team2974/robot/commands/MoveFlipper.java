@@ -10,13 +10,13 @@ import edu.wpi.first.wpilibj.command.Command;
  *
  */
 public class MoveFlipper extends Command {
-	boolean bool2;
-	double time2;
+	private boolean bool2;
+	private double time2;
 	private boolean bool;
 	private double time;
 
 	public MoveFlipper() {
-		requires(Robot.flipper);
+		requires(Robot.getFlipper());
 	}
 
 	// Called once after isFinished returns true
@@ -27,17 +27,17 @@ public class MoveFlipper extends Command {
 	// Called repeatedly when this Command is scheduled to run
 	@Override
 	protected void execute() {
-		if (Robot.oi.flapperDown.get()) {
+		if (Robot.getOi().getFlapperDown().get()) {
 			// if(Robot.intake.getState() == Intake.IntakeExtenderState.out)
 			if (!bool) {
-				Robot.intake.extend();
+				Robot.getIntake().extend();
 				time = Timer.getFPGATimestamp();
 				bool = true;
 			} else {
 				if (Timer.getFPGATimestamp() - time > .4) {
 					bool = false;
 				} else if (Timer.getFPGATimestamp() - time > .2) {
-					Robot.flipper.setFlapper(Flipper.FlipperState.down);
+					Robot.getFlipper().setFlapper(Flipper.FlipperState.down);
 					bool = false;
 				}
 
@@ -54,7 +54,7 @@ public class MoveFlipper extends Command {
 			// if (Timer.getFPGATimestamp() - time2 > .4) {
 			// bool2 = false;
 			// } else if (Timer.getFPGATimestamp() - time2 > .1) {
-			Robot.flipper.setFlapper(Flipper.FlipperState.up);
+			Robot.getFlipper().setFlapper(Flipper.FlipperState.up);
 			// bool2 = false;
 			// }
 
@@ -64,6 +64,10 @@ public class MoveFlipper extends Command {
 		// Scheduler.getInstance().add(new IntakeOut());
 		// }
 
+	}
+
+	public double getTime2() {
+		return time2;
 	}
 
 	// Called just before this Command runs the first time
@@ -78,9 +82,21 @@ public class MoveFlipper extends Command {
 	protected void interrupted() {
 	}
 
+	public boolean isBool2() {
+		return bool2;
+	}
+
 	// Make this return true when this Command no longer needs to run execute()
 	@Override
 	protected boolean isFinished() {
 		return false;
+	}
+
+	public void setBool2(boolean bool2) {
+		this.bool2 = bool2;
+	}
+
+	public void setTime2(double time2) {
+		this.time2 = time2;
 	}
 }

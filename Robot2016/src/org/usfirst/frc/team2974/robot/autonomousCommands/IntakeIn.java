@@ -10,7 +10,7 @@ import edu.wpi.first.wpilibj.command.Command;
 public class IntakeIn extends Command {
 
 	public IntakeIn() {
-		requires(Robot.intake);
+		requires(Robot.getIntake());
 	}
 
 	// Called once after isFinished returns true
@@ -26,7 +26,7 @@ public class IntakeIn extends Command {
 	// Called just before this Command runs the first time
 	@Override
 	protected void initialize() {
-		Robot.intake.retract();
+		Robot.getIntake().retract();
 	}
 
 	// Called when another command which requires one or more of the same

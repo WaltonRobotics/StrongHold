@@ -10,7 +10,7 @@ import edu.wpi.first.wpilibj.command.Command;
  *
  */
 public class ShooterReset extends Command {
-	private final Shooter shooter = Robot.shooter;
+	private final Shooter shooter = Robot.getShooter();
 	private double initTime;
 
 	public ShooterReset() {

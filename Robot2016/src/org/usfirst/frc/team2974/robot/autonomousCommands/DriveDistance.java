@@ -10,7 +10,7 @@ public class DriveDistance extends Command {
 	private final double distance;// in meters
 
 	public DriveDistance(double speed, double distance) {
-		requires(Robot.driveTrain);
+		requires(Robot.getDriveTrain());
 		this.speed = speed;
 		this.distance = distance;
 	}
@@ -18,20 +18,20 @@ public class DriveDistance extends Command {
 	@Override
 	protected void end() {
 		// TODO Auto-generated method stub
-		Robot.driveTrain.setSpeeds(0, 0);
+		Robot.getDriveTrain().setSpeeds(0, 0);
 	}
 
 	@Override
 	protected void execute() {
 		// TODO Auto-generated method stub
-		if (Robot.driveTrain.leftController.get() < distance)
+		if (Robot.getDriveTrain().getLeftController().get() < distance)
 			;// we will need a conversion rate
 		end();
 	}
 
 	@Override
 	protected void initialize() {
-		Robot.driveTrain.setSpeeds(speed, speed);
+		Robot.getDriveTrain().setSpeeds(speed, speed);
 	}
 
 	@Override

@@ -15,7 +15,7 @@ class TurnRight extends Command {
 	private double speed;
 
 	public TurnRight() {
-		requires(Robot.driveTrain);
+		requires(Robot.getDriveTrain());
 		SmartDashboard.putNumber("TurnTime", 1);
 		SmartDashboard.putNumber("TurnSpeed", .3);
 	}
@@ -28,7 +28,7 @@ class TurnRight extends Command {
 	// Called repeatedly when this Command is scheduled to run
 	@Override
 	protected void execute() {
-		Robot.driveTrain.setSpeeds(-speed, 0);
+		Robot.getDriveTrain().setSpeeds(-speed, 0);
 	}
 
 	// Called just before this Command runs the first time
@@ -48,6 +48,6 @@ class TurnRight extends Command {
 	// Make this return true when this Command no longer needs to run execute()
 	@Override
 	protected boolean isFinished() {
-		return Robot.camera.getXLeft() != -1 || Timer.getFPGATimestamp() - startTime > time;
+		return Robot.getCamera().getXLeft() != -1 || Timer.getFPGATimestamp() - startTime > time;
 	}
 }

@@ -26,7 +26,8 @@ class MoveToObstacle extends Command {
 
 	@Override
 	protected void initialize() {
-		Robot.driveTrain.setSpeeds(25, 25);// Magic number - change this after
+		Robot.getDriveTrain().setSpeeds(25, 25);// Magic number - change this
+												// after
 		// testing with actual robot
 		this.thisCompass = new Compass();
 		thisCompass.initializeCompass();

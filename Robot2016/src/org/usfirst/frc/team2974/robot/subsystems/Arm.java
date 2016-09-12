@@ -12,8 +12,8 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  *
  */
 public class Arm extends Subsystem {
-	private final CANTalon arm = RobotMap.arm;
-	private final AnalogPotentiometer armPot = RobotMap.armPot;
+	private final CANTalon arm = RobotMap.getArm();
+	private final AnalogPotentiometer armPot = RobotMap.getArmPot();
 
 	// private final double zeroPosition = 0;
 	// private PIDController pid = new PIDController(1, 0, 0, armPot, arm);

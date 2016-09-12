@@ -99,7 +99,7 @@ public class Shoot extends Command {
 		@Override
 		void end() {
 			currentState = new MovingFlapper();
-			Robot.oi.autoShoot = false;
+			Robot.getOi().setAutoShoot(false);
 		}
 
 		@Override
@@ -114,7 +114,7 @@ public class Shoot extends Command {
 		@Override
 		boolean isFinished() {
 
-			return Robot.oi.shoot.get() || Robot.oi.autoShoot;
+			return Robot.getOi().getShoot().get() || Robot.getOi().isAutoShoot();
 		}
 	}
 
@@ -166,7 +166,7 @@ public class Shoot extends Command {
 
 		@Override
 		boolean isFinished() {
-			return !Robot.oi.shoot.get() && Timer.getFPGATimestamp() - initTime > 1;
+			return !Robot.getOi().getShoot().get() && Timer.getFPGATimestamp() - initTime > 1;
 		}
 	}
 
@@ -182,7 +182,7 @@ public class Shoot extends Command {
 		abstract boolean isFinished();
 	}
 
-	private final Shooter shooter = Robot.shooter;
+	private final Shooter shooter = Robot.getShooter();
 
 	private State currentState;
 

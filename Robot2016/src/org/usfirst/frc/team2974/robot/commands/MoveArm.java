@@ -10,7 +10,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  *
  */
 public class MoveArm extends Command {
-	private final Arm arm = Robot.arm;
+	private final Arm arm = Robot.getArm();
 
 	public MoveArm() {
 		requires(arm);
@@ -24,7 +24,7 @@ public class MoveArm extends Command {
 	// Called repeatedly when this Command is scheduled to run
 	@Override
 	protected void execute() {
-		SmartDashboard.putNumber("armvalue", Robot.arm.getPotValue());
+		SmartDashboard.putNumber("armvalue", Robot.getArm().getPotValue());
 
 		// if (Robot.oi.gamepad.getPOVButton(Gamepad.POV.W))
 		// arm.moveArmPosition(positionLow);
@@ -33,7 +33,7 @@ public class MoveArm extends Command {
 		// else if (Robot.oi.gamepad.getPOVButton(Gamepad.POV.E))
 		// arm.moveArmPosition(positionUp);
 		// else
-		arm.moveArmPower(-1 * Robot.oi.gamepad.getLeftY());
+		arm.moveArmPower(-1 * Robot.getOi().getGamepad().getLeftY());
 
 	}
 

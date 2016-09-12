@@ -17,21 +17,21 @@ public class DriveStraight extends Command {
 	public DriveStraight(double time, double speed) {
 		this.speed = speed;
 		this.time = time;
-		requires(Robot.driveTrain);
+		requires(Robot.getDriveTrain());
 	}
 
 	// Called once after isFinished returns true
 	@Override
 	protected void end() {
 		SmartDashboard.putString("Autonomous stuff", "There ya go, you moved forward");
-		Robot.driveTrain.setSpeeds(0, 0);
+		Robot.getDriveTrain().setSpeeds(0, 0);
 
 	}
 
 	// Called repeatedly when this Command is scheduled to run
 	@Override
 	protected void execute() {
-		Robot.driveTrain.setSpeeds(speed, speed);
+		Robot.getDriveTrain().setSpeeds(speed, speed);
 
 	}
 

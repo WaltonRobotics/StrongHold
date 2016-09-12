@@ -14,7 +14,7 @@ public class MoveIntake extends Command {
 	private double time;
 
 	public MoveIntake() {
-		requires(Robot.intake);
+		requires(Robot.getIntake());
 	}
 
 	// Called once after isFinished returns true
@@ -25,21 +25,21 @@ public class MoveIntake extends Command {
 	// Called repeatedly when this Command is scheduled to run
 	@Override
 	protected void execute() {
-		if (Robot.oi.retractIntake.get()) {
+		if (Robot.getOi().getRetractIntake().get()) {
 			if (!bool) {
-				Robot.flipper.setFlapper(Flipper.FlipperState.up);
+				Robot.getFlipper().setFlapper(Flipper.FlipperState.up);
 				time = Timer.getFPGATimestamp();
 				bool = true;
 			} else {
 				if (Timer.getFPGATimestamp() - time > .4) {
 					bool = false;
 				} else if (Timer.getFPGATimestamp() - time > .2) {
-					Robot.intake.retract();
+					Robot.getIntake().retract();
 					bool = false;
 				}
 			}
-		} else if (Robot.oi.extendIntake.get()) {
-			Robot.intake.extend();
+		} else if (Robot.getOi().getExtendIntake().get()) {
+			Robot.getIntake().extend();
 		}
 
 	}

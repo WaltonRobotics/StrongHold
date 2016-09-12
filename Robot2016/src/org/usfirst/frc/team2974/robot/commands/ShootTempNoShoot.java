@@ -12,7 +12,7 @@ class ShootTempNoShoot extends Command {
 
 	public ShootTempNoShoot() {
 		// Use requires() here to declare subsystem dependencies
-		requires(Robot.shooter);
+		requires(Robot.getShooter());
 	}
 
 	// Called once after isFinished returns true

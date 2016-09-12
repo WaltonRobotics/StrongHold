@@ -11,7 +11,7 @@ public class Tension extends Command {
 
 	public Tension() {
 		// Use requires() here to declare subsystem dependencies
-		requires(Robot.shooter);
+		requires(Robot.getShooter());
 	}
 
 	// Called once after isFinished returns true
@@ -22,13 +22,13 @@ public class Tension extends Command {
 	// Called repeatedly when this Command is scheduled to run
 	@Override
 	protected void execute() {
-		Robot.shooter.tension();
+		Robot.getShooter().tension();
 	}
 
 	// Called just before this Command runs the first time
 	@Override
 	protected void initialize() {
-		Robot.shooter.tension();
+		Robot.getShooter().tension();
 	}
 
 	// Called when another command which requires one or more of the same
@@ -40,6 +40,6 @@ public class Tension extends Command {
 	// Make this return true when this Command no longer needs to run execute()
 	@Override
 	protected boolean isFinished() {
-		return Robot.oi.normalTensioning.get();
+		return Robot.getOi().getNormalTensioning().get();
 	}
 }

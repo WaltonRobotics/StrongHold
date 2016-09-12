@@ -13,7 +13,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  */
 public class Compass extends Subsystem {
 
-	private final BNO055 compass = RobotMap.compass;
+	private final BNO055 compass = RobotMap.getCompass();
 
 	public Compass() {
 		initializeCompass();

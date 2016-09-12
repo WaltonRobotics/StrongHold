@@ -14,12 +14,12 @@ class AimOnboard extends Command {
 	private static final double centerX = 95;
 	// 0 =left, 2 = right
 	private final double side;
-	private final DriveTrain driveTrain = Robot.driveTrain;
-	private final Camera camera = Robot.camera;
+	private final DriveTrain driveTrain = Robot.getDriveTrain();
+	private final Camera camera = Robot.getCamera();
 	private double cycleDifference;
 
 	public AimOnboard(double side) {
-		requires(Robot.driveTrain);
+		requires(Robot.getDriveTrain());
 		// requires(Robot.camera);
 		this.side = side;
 	}
@@ -66,8 +66,8 @@ class AimOnboard extends Command {
 	@Override
 	protected boolean isFinished() {
 		if (side == 0)
-			return (!Robot.oi.aimLeft.get());
+			return (!Robot.getOi().getAimLeft().get());
 		else
-			return side == 2 && (!Robot.oi.aimRight.get());
+			return side == 2 && (!Robot.getOi().getAimRight().get());
 	}
 }

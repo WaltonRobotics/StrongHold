@@ -18,17 +18,17 @@ public class Shooter extends Subsystem {
 		tensioned, untensioned, tensioning, untensioning
 	}
 
-	private final Solenoid latch = RobotMap.latch;
-	private final CANTalon tensioner = RobotMap.tensioner;
+	private final Solenoid latch = RobotMap.getLatch();
+	private final CANTalon tensioner = RobotMap.getTensioner();
 	private final double maxTensionerPower = 0.450;
 
-	private final DigitalInput forwardLimitSwitch = RobotMap.forwardLimit;
+	private final DigitalInput forwardLimitSwitch = RobotMap.getForwardLimit();
 	// private final double ForwardThreshold = 1000;
 	// private final double ReverseThreshold = 300;
 	// private final double ForwardLimit = 135000;
 	// private final double ReverseLimit = 1300;
-	private final DigitalInput reverseLimitSwitch = RobotMap.backwardLimit;
-	private final DigitalInput shooterLimitSwitch = RobotMap.shooterLimit;
+	private final DigitalInput reverseLimitSwitch = RobotMap.getBackwardLimit();
+	private final DigitalInput shooterLimitSwitch = RobotMap.getShooterLimit();
 
 	private TensionerState state;
 
@@ -42,7 +42,7 @@ public class Shooter extends Subsystem {
 	}
 
 	public void dumpSmartDashboardValues() {
-		SmartDashboard.putNumber("Tensioner Encoder", Robot.shooter.getTensionerValue());
+		SmartDashboard.putNumber("Tensioner Encoder", Robot.getShooter().getTensionerValue());
 		SmartDashboard.putNumber("Raw tensioner encoder value", tensioner.getAnalogInPosition());
 	}
 

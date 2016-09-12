@@ -14,12 +14,12 @@ class AimOnboard extends Command {
 	// 0 =left, 2 = right
 	private final int side;
 	private final double threshold = 3;
-	private final DriveTrain driveTrain = Robot.driveTrain;
-	private final Camera camera = Robot.camera;
+	private final DriveTrain driveTrain = Robot.getDriveTrain();
+	private final Camera camera = Robot.getCamera();
 	private double cycleDifference;
 
 	public AimOnboard(int side) {
-		requires(Robot.driveTrain);
+		requires(Robot.getDriveTrain());
 		this.side = side;
 	}
 

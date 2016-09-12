@@ -15,28 +15,28 @@ public class FlapDownTime extends Command {
 	private double startTime;
 
 	public FlapDownTime(double time) {
-		requires(Robot.flipper);
+		requires(Robot.getFlipper());
 		this.time = time;
 	}
 
 	// Called once after isFinished returns true
 	@Override
 	protected void end() {
-		Robot.flipper.setFlapper(FlipperState.up);
+		Robot.getFlipper().setFlapper(FlipperState.up);
 	}
 
 	// Called repeatedly when this Command is scheduled to run
 	@Override
 	protected void execute() {
-		if (Robot.intake.getState() == Intake.IntakeExtenderState.out)
-			Robot.flipper.setFlapper(FlipperState.down);
+		if (Robot.getIntake().getState() == Intake.IntakeExtenderState.out)
+			Robot.getFlipper().setFlapper(FlipperState.down);
 	}
 
 	// Called just before this Command runs the first time
 	@Override
 	protected void initialize() {
 		startTime = Timer.getFPGATimestamp();
-		Robot.intake.extend();
+		Robot.getIntake().extend();
 
 	}
 

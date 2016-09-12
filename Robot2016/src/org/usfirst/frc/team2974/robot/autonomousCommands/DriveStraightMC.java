@@ -16,8 +16,8 @@ public class DriveStraightMC extends Command {
 	private final DriveTrain driveTrain;
 
 	public DriveStraightMC(double distance, double velocity, double accel) {
-		requires(Robot.driveTrain);
-		driveTrain = Robot.driveTrain;
+		requires(Robot.getDriveTrain());
+		driveTrain = Robot.getDriveTrain();
 		aMax = Math.abs(accel);
 		vDrive = Math.signum(distance) * Math.abs(velocity);
 		x3 = distance;

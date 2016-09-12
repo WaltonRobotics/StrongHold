@@ -11,7 +11,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 class ShootTemp extends Command {
 
 	public ShootTemp() {
-		requires(Robot.shooter);
+		requires(Robot.getShooter());
 	}
 
 	// Called once after isFinished returns true
@@ -23,16 +23,16 @@ class ShootTemp extends Command {
 	@Override
 	protected void execute() {
 		// get rid of following code
-		if (Robot.oi.right.getRawButton(4))
-			Robot.shooter.tension();
-		else if (Robot.oi.right.getRawButton(5))
-			Robot.shooter.unTension();
+		if (Robot.getOi().getRight().getRawButton(4))
+			Robot.getShooter().tension();
+		else if (Robot.getOi().getRight().getRawButton(5))
+			Robot.getShooter().unTension();
 		else
-			Robot.shooter.setZero();
-		if (Robot.oi.right.getRawButton(10))
-			Robot.shooter.latch();
-		else if (Robot.oi.right.getRawButton(11))
-			Robot.shooter.unlatch();
+			Robot.getShooter().setZero();
+		if (Robot.getOi().getRight().getRawButton(10))
+			Robot.getShooter().latch();
+		else if (Robot.getOi().getRight().getRawButton(11))
+			Robot.getShooter().unlatch();
 
 		// get rid of following code
 		// if(Robot.oi.latchButton1.get())
@@ -44,7 +44,7 @@ class ShootTemp extends Command {
 		// Robot.shooter.getState(), 120));
 		// SmartDashboard.putString("Shooter State",
 		// currentState.getClass()+"");
-		SmartDashboard.putString("Tensioner State", Robot.shooter.getState() + "");
+		SmartDashboard.putString("Tensioner State", Robot.getShooter().getState() + "");
 	}
 
 	// Called just before this Command runs the first time

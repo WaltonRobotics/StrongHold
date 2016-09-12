@@ -17,7 +17,7 @@ public class ControlAim extends Command {
 	static aimState state;
 
 	public ControlAim() {
-		requires(Robot.camera);
+		requires(Robot.getCamera());
 	}
 
 	// Called once after isFinished returns true
@@ -35,14 +35,14 @@ public class ControlAim extends Command {
 		// else
 		// Robot.aimingState = aimState.cpu;
 		// }
-		if (Robot.oi.aimLeft.get()) {
-			if (Robot.aimingState == aimState.cpu)
+		if (Robot.getOi().getAimLeft().get()) {
+			if (Robot.getAimingstate() == aimState.cpu)
 				Scheduler.getInstance().add(new Aim(0));
 			else
 				Scheduler.getInstance().add(new AimOnboard(0));
 		}
-		if (Robot.oi.aimRight.get()) {
-			if (Robot.aimingState == aimState.cpu)
+		if (Robot.getOi().getAimRight().get()) {
+			if (Robot.getAimingstate() == aimState.cpu)
 				Scheduler.getInstance().add(new Aim(2));
 			else
 				Scheduler.getInstance().add(new AimOnboard(2));

@@ -14,7 +14,7 @@ public class Wait extends Command {
 	private double startTime;
 
 	public Wait(double time) {
-		requires(Robot.driveTrain);
+		requires(Robot.getDriveTrain());
 		this.time = time;
 	}
 
@@ -26,7 +26,7 @@ public class Wait extends Command {
 	// Called repeatedly when this Command is scheduled to run
 	@Override
 	protected void execute() {
-		Robot.driveTrain.setSpeeds(0, 0);
+		Robot.getDriveTrain().setSpeeds(0, 0);
 	}
 
 	// Called just before this Command runs the first time

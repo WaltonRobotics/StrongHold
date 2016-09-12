@@ -15,8 +15,8 @@ public class DriveObstacle extends Command {
 		drive, up, crossing, down, done
 	}
 
-	private final Compass compass = Robot.compass;
-	private final DriveTrain driveTrain = Robot.driveTrain;
+	private final Compass compass = Robot.getCompass();
+	private final DriveTrain driveTrain = Robot.getDriveTrain();
 	private double startYaw;
 	private driveState state;
 	private double time;
@@ -75,7 +75,7 @@ public class DriveObstacle extends Command {
 			}
 			break;
 		case done:
-			Robot.driveTrain.setSpeeds(0, 0);
+			Robot.getDriveTrain().setSpeeds(0, 0);
 			break;
 		}
 

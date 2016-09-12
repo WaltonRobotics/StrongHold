@@ -17,7 +17,7 @@ class DriveStraight2 extends Command {
 	public DriveStraight2(double time, double speed) {
 		this.speed = speed;
 		this.time = time;
-		requires(Robot.driveTrain);
+		requires(Robot.getDriveTrain());
 		SmartDashboard.putNumber("timeForward", time);
 		SmartDashboard.putNumber("speedForward", speed);
 	}
@@ -31,7 +31,7 @@ class DriveStraight2 extends Command {
 	// Called repeatedly when this Command is scheduled to run
 	@Override
 	protected void execute() {
-		Robot.driveTrain.setSpeeds(speed, speed);
+		Robot.getDriveTrain().setSpeeds(speed, speed);
 
 	}
 

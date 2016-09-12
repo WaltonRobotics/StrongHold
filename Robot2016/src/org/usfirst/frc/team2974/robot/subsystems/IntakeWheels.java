@@ -17,7 +17,7 @@ public class IntakeWheels extends Subsystem {
 
 	private static WheelState state;
 
-	private final Talon intakeMotor = RobotMap.intakeMotor;
+	private final Talon intakeMotor = RobotMap.getIntakeMotor();
 
 	public IntakeWheels() {
 		state = WheelState.stop;

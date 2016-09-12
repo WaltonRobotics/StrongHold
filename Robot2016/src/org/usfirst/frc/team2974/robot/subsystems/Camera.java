@@ -120,7 +120,7 @@ public class Camera extends Subsystem {
 	// }
 
 	public void setNetTable() {
-		if (Robot.aimingState == aimState.cpu) {
+		if (Robot.getAimingstate() == aimState.cpu) {
 			try {
 				table = NetworkTable.getTable("GRIP/report");
 			} catch (Exception e) {

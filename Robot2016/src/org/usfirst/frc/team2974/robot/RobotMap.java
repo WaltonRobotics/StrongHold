@@ -19,90 +19,342 @@ import edu.wpi.first.wpilibj.Talon;
 public class RobotMap {
 
 	// compass
-	public static final BNO055 compass = new BNO055(BNO055.BNO055_ADDRESS_A);
-	public static DigitalInput digital0;
-	public static DigitalInput digital1;
-	public static DigitalInput digital2;
-	public static DigitalInput digital3;
-	public static DigitalInput digital4;
-	public static DigitalInput digital5;
-	public static DigitalInput digital6;
-	public static DigitalInput digital7;
-	public static DigitalInput digital8;
-	public static DigitalInput digital9;
-	public static AnalogInput analog0;
-	public static AnalogInput analog1;
-	public static AnalogInput analog2;
-	public static AnalogInput analog3;
+	private static final BNO055 compass = new BNO055(BNO055.BNO055_ADDRESS_A);
+	private static DigitalInput digital0;
+	private static DigitalInput digital1;
+	private static DigitalInput digital2;
+	private static DigitalInput digital3;
+	private static DigitalInput digital4;
+	private static DigitalInput digital5;
+	private static DigitalInput digital6;
+	private static DigitalInput digital7;
+	private static DigitalInput digital8;
+	private static DigitalInput digital9;
+	private static AnalogInput analog0;
+	private static AnalogInput analog1;
+	private static AnalogInput analog2;
+	private static AnalogInput analog3;
 	// drive train
-	public static Talon driveTrainRight1;
-	public static Talon driveTrainRight2;
-	public static Talon driveTrainLeft1;
-	public static Talon driveTrainLeft2;
-	public static Encoder encoderLeft;
-	public static Encoder encoderRight;
-	public static Solenoid pnuematicsShifter;
+	private static Talon driveTrainRight1;
+	private static Talon driveTrainRight2;
+	private static Talon driveTrainLeft1;
+	private static Talon driveTrainLeft2;
+	private static Encoder encoderLeft;
+	private static Encoder encoderRight;
+	private static Solenoid pnuematicsShifter;
 	// intake
-	public static Solenoid flapper;
-	public static Talon intakeMotor;
-	public static Solenoid intakeExtender;
+	private static Solenoid flapper;
+	private static Talon intakeMotor;
+	private static Solenoid intakeExtender;
 	// shooter
-	public static Solenoid latch;
-	public static CANTalon tensioner;
+	private static Solenoid latch;
+	private static CANTalon tensioner;
 	// arm
-	public static CANTalon arm;
-	public static AnalogPotentiometer armPot;
-	public static DigitalInput forwardLimit;
-	public static DigitalInput backwardLimit;
-	public static DigitalInput shooterLimit;
+	private static CANTalon arm;
+	private static AnalogPotentiometer armPot;
+	private static DigitalInput forwardLimit;
+	private static DigitalInput backwardLimit;
+	private static DigitalInput shooterLimit;
+
+	public static AnalogInput getAnalog0() {
+		return analog0;
+	}
+
+	public static AnalogInput getAnalog1() {
+		return analog1;
+	}
+
+	public static AnalogInput getAnalog2() {
+		return analog2;
+	}
+
+	public static AnalogInput getAnalog3() {
+		return analog3;
+	}
+
+	public static CANTalon getArm() {
+		return arm;
+	}
+
+	public static AnalogPotentiometer getArmPot() {
+		return armPot;
+	}
+
+	public static DigitalInput getBackwardLimit() {
+		return backwardLimit;
+	}
+
+	public static BNO055 getCompass() {
+		return compass;
+	}
+
+	public static DigitalInput getDigital0() {
+		return digital0;
+	}
+
+	public static DigitalInput getDigital1() {
+		return digital1;
+	}
+
+	public static DigitalInput getDigital2() {
+		return digital2;
+	}
+
+	public static DigitalInput getDigital3() {
+		return digital3;
+	}
+
+	public static DigitalInput getDigital4() {
+		return digital4;
+	}
+
+	public static DigitalInput getDigital5() {
+		return digital5;
+	}
+
+	public static DigitalInput getDigital6() {
+		return digital6;
+	}
+
+	public static DigitalInput getDigital7() {
+		return digital7;
+	}
+
+	public static DigitalInput getDigital8() {
+		return digital8;
+	}
+
+	public static DigitalInput getDigital9() {
+		return digital9;
+	}
+
+	public static Talon getDriveTrainLeft1() {
+		return driveTrainLeft1;
+	}
+
+	public static Talon getDriveTrainLeft2() {
+		return driveTrainLeft2;
+	}
+
+	public static Talon getDriveTrainRight1() {
+		return driveTrainRight1;
+	}
+
+	public static Talon getDriveTrainRight2() {
+		return driveTrainRight2;
+	}
+
+	public static Encoder getEncoderLeft() {
+		return encoderLeft;
+	}
+
+	public static Encoder getEncoderRight() {
+		return encoderRight;
+	}
+
+	public static Solenoid getFlapper() {
+		return flapper;
+	}
+
+	public static DigitalInput getForwardLimit() {
+		return forwardLimit;
+	}
+
+	public static Solenoid getIntakeExtender() {
+		return intakeExtender;
+	}
+
+	public static Talon getIntakeMotor() {
+		return intakeMotor;
+	}
+
+	public static Solenoid getLatch() {
+		return latch;
+	}
+
+	public static Solenoid getPnuematicsShifter() {
+		return pnuematicsShifter;
+	}
+
+	public static DigitalInput getShooterLimit() {
+		return shooterLimit;
+	}
+
+	public static CANTalon getTensioner() {
+		return tensioner;
+	}
 
 	public static void init() {
 		// inputs
-		digital0 = new DigitalInput(0);
-		digital1 = new DigitalInput(1);
-		digital2 = new DigitalInput(2);
-		digital3 = new DigitalInput(3);
-		digital4 = new DigitalInput(4);
-		digital5 = new DigitalInput(5);
-		digital6 = new DigitalInput(6);
-		digital7 = new DigitalInput(7);
-		digital8 = new DigitalInput(8);
-		digital9 = new DigitalInput(9);
+		setDigital0(new DigitalInput(0));
+		setDigital1(new DigitalInput(1));
+		setDigital2(new DigitalInput(2));
+		setDigital3(new DigitalInput(3));
+		setDigital4(new DigitalInput(4));
+		setDigital5(new DigitalInput(5));
+		setDigital6(new DigitalInput(6));
+		setDigital7(new DigitalInput(7));
+		setDigital8(new DigitalInput(8));
+		setDigital9(new DigitalInput(9));
 
-		analog0 = new AnalogInput(0);
-		analog1 = new AnalogInput(1);
-		analog2 = new AnalogInput(2);
-		analog3 = new AnalogInput(3);
+		setAnalog0(new AnalogInput(0));
+		setAnalog1(new AnalogInput(1));
+		setAnalog2(new AnalogInput(2));
+		setAnalog3(new AnalogInput(3));
 
-		forwardLimit = digital2;// forward is tensioned
-		backwardLimit = digital1;
-		shooterLimit = digital0;
+		setForwardLimit(getDigital2());// forward is tensioned
+		setBackwardLimit(getDigital1());
+		setShooterLimit(getDigital0());
 
 		// drive train
-		encoderRight = new Encoder(digital6, digital7);
-		encoderLeft = new Encoder(digital9, digital8);
+		setEncoderRight(new Encoder(getDigital6(), getDigital7()));
+		setEncoderLeft(new Encoder(getDigital9(), getDigital8()));
 
-		driveTrainRight1 = new Talon(2);
-		driveTrainRight2 = new Talon(3);
+		setDriveTrainRight1(new Talon(2));
+		setDriveTrainRight2(new Talon(3));
 
-		driveTrainLeft1 = new Talon(0);
-		driveTrainLeft2 = new Talon(1);
+		setDriveTrainLeft1(new Talon(0));
+		setDriveTrainLeft2(new Talon(1));
 
 		// arm
-		arm = new CANTalon(2);
-		armPot = new AnalogPotentiometer(analog0, 1000, -750);
+		setArm(new CANTalon(2));
+		setArmPot(new AnalogPotentiometer(getAnalog0(), 1000, -750));
 
 		// shifter
-		pnuematicsShifter = new Solenoid(0);
+		setPnuematicsShifter(new Solenoid(0));
 
 		// shooter
-		latch = new Solenoid(2);
-		tensioner = new CANTalon(1);
+		setLatch(new Solenoid(2));
+		setTensioner(new CANTalon(1));
 
 		// intake
-		flapper = new Solenoid(1);
-		intakeMotor = new Talon(4);
-		intakeExtender = new Solenoid(3);
+		setFlapper(new Solenoid(1));
+		setIntakeMotor(new Talon(4));
+		setIntakeExtender(new Solenoid(3));
 
+	}
+
+	public static void setAnalog0(AnalogInput analog0) {
+		RobotMap.analog0 = analog0;
+	}
+
+	public static void setAnalog1(AnalogInput analog1) {
+		RobotMap.analog1 = analog1;
+	}
+
+	public static void setAnalog2(AnalogInput analog2) {
+		RobotMap.analog2 = analog2;
+	}
+
+	public static void setAnalog3(AnalogInput analog3) {
+		RobotMap.analog3 = analog3;
+	}
+
+	public static void setArm(CANTalon arm) {
+		RobotMap.arm = arm;
+	}
+
+	public static void setArmPot(AnalogPotentiometer armPot) {
+		RobotMap.armPot = armPot;
+	}
+
+	public static void setBackwardLimit(DigitalInput backwardLimit) {
+		RobotMap.backwardLimit = backwardLimit;
+	}
+
+	public static void setDigital0(DigitalInput digital0) {
+		RobotMap.digital0 = digital0;
+	}
+
+	public static void setDigital1(DigitalInput digital1) {
+		RobotMap.digital1 = digital1;
+	}
+
+	public static void setDigital2(DigitalInput digital2) {
+		RobotMap.digital2 = digital2;
+	}
+
+	public static void setDigital3(DigitalInput digital3) {
+		RobotMap.digital3 = digital3;
+	}
+
+	public static void setDigital4(DigitalInput digital4) {
+		RobotMap.digital4 = digital4;
+	}
+
+	public static void setDigital5(DigitalInput digital5) {
+		RobotMap.digital5 = digital5;
+	}
+
+	public static void setDigital6(DigitalInput digital6) {
+		RobotMap.digital6 = digital6;
+	}
+
+	public static void setDigital7(DigitalInput digital7) {
+		RobotMap.digital7 = digital7;
+	}
+
+	public static void setDigital8(DigitalInput digital8) {
+		RobotMap.digital8 = digital8;
+	}
+
+	public static void setDigital9(DigitalInput digital9) {
+		RobotMap.digital9 = digital9;
+	}
+
+	public static void setDriveTrainLeft1(Talon driveTrainLeft1) {
+		RobotMap.driveTrainLeft1 = driveTrainLeft1;
+	}
+
+	public static void setDriveTrainLeft2(Talon driveTrainLeft2) {
+		RobotMap.driveTrainLeft2 = driveTrainLeft2;
+	}
+
+	public static void setDriveTrainRight1(Talon driveTrainRight1) {
+		RobotMap.driveTrainRight1 = driveTrainRight1;
+	}
+
+	public static void setDriveTrainRight2(Talon driveTrainRight2) {
+		RobotMap.driveTrainRight2 = driveTrainRight2;
+	}
+
+	public static void setEncoderLeft(Encoder encoderLeft) {
+		RobotMap.encoderLeft = encoderLeft;
+	}
+
+	public static void setEncoderRight(Encoder encoderRight) {
+		RobotMap.encoderRight = encoderRight;
+	}
+
+	public static void setFlapper(Solenoid flapper) {
+		RobotMap.flapper = flapper;
+	}
+
+	public static void setForwardLimit(DigitalInput forwardLimit) {
+		RobotMap.forwardLimit = forwardLimit;
+	}
+
+	public static void setIntakeExtender(Solenoid intakeExtender) {
+		RobotMap.intakeExtender = intakeExtender;
+	}
+
+	public static void setIntakeMotor(Talon intakeMotor) {
+		RobotMap.intakeMotor = intakeMotor;
+	}
+
+	public static void setLatch(Solenoid latch) {
+		RobotMap.latch = latch;
+	}
+
+	public static void setPnuematicsShifter(Solenoid pnuematicsShifter) {
+		RobotMap.pnuematicsShifter = pnuematicsShifter;
+	}
+
+	public static void setShooterLimit(DigitalInput shooterLimit) {
+		RobotMap.shooterLimit = shooterLimit;
+	}
+
+	public static void setTensioner(CANTalon tensioner) {
+		RobotMap.tensioner = tensioner;
 	}
 }

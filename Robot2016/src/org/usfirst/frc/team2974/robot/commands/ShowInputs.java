@@ -11,7 +11,7 @@ public class ShowInputs extends Command {
 	private Accelerometer accel;
 
 	public ShowInputs() {
-		requires(Robot.inputs);
+		requires(Robot.getInputs());
 	}
 
 	// Called once after isFinished returns true
@@ -22,12 +22,12 @@ public class ShowInputs extends Command {
 	// Called repeatedly when this Command is scheduled to run
 	@Override
 	protected void execute() {
-		Robot.inputs.updateSmartDashboard();
-		Robot.compass.dumpSmartDashboardValues();
-		Robot.camera.setNetTable();
-		Robot.camera.dumpSmartDshboardValues();
-		Robot.arm.dumpSmartDashboardValues();
-		Robot.shooter.dumpSmartDashboardValues();
+		Robot.getInputs().updateSmartDashboard();
+		Robot.getCompass().dumpSmartDashboardValues();
+		Robot.getCamera().setNetTable();
+		Robot.getCamera().dumpSmartDshboardValues();
+		Robot.getArm().dumpSmartDashboardValues();
+		Robot.getShooter().dumpSmartDashboardValues();
 
 		// accel = new BuiltInAccelerometer();
 
@@ -42,13 +42,13 @@ public class ShowInputs extends Command {
 	// Called just before this Command runs the first time
 	@Override
 	protected void initialize() {
-		Robot.inputs.updateSmartDashboard();
-		Robot.compass.dumpSmartDashboardValues();
-		Robot.camera.setNetTable();
-		Robot.camera.dumpSmartDshboardValues();
-		Robot.arm.dumpSmartDashboardValues();
-		Robot.shooter.dumpSmartDashboardValues();
-		Robot.driveTrain.initSmartdashBoardValues();
+		Robot.getInputs().updateSmartDashboard();
+		Robot.getCompass().dumpSmartDashboardValues();
+		Robot.getCamera().setNetTable();
+		Robot.getCamera().dumpSmartDshboardValues();
+		Robot.getArm().dumpSmartDashboardValues();
+		Robot.getShooter().dumpSmartDashboardValues();
+		Robot.getDriveTrain().initSmartdashBoardValues();
 		accel = new BuiltInAccelerometer(Accelerometer.Range.k4G);
 	}
 

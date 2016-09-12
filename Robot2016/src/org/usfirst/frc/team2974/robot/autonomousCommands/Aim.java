@@ -114,8 +114,8 @@ public class Aim extends Command {
 		}
 	}
 
-	private final DriveTrain driveTrain = Robot.driveTrain;
-	private final Camera camera = Robot.camera;
+	private final DriveTrain driveTrain = Robot.getDriveTrain();
+	private final Camera camera = Robot.getCamera();
 	private final double threshold = 3;
 	private final double centerX = 95;
 	private final double totalTime;
@@ -140,7 +140,7 @@ public class Aim extends Command {
 
 	public Aim(int side, double totalTime, boolean shoot) {
 		SmartDashboard.putNumber("gain", gain);
-		requires(Robot.driveTrain);
+		requires(Robot.getDriveTrain());
 		this.side = side;
 		this.shoot = shoot;
 		this.totalTime = totalTime;
@@ -167,7 +167,7 @@ public class Aim extends Command {
 		} else {
 			driveTrain.setSpeeds(0, 0);
 			currentState = new Reset();
-			Robot.camera.setNetTable();
+			Robot.getCamera().setNetTable();
 		}
 		SmartDashboard.putString("aim state", currentState.toString());
 	}
@@ -175,7 +175,7 @@ public class Aim extends Command {
 	// Called just before this Command runs the first time
 	@Override
 	protected void initialize() {
-		Robot.driveTrain.shiftDown();
+		Robot.getDriveTrain().shiftDown();
 		gain = SmartDashboard.getNumber("gain");
 		currentState = new Reset();
 		startTime = Timer.getFPGATimestamp();

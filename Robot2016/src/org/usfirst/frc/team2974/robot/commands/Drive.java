@@ -11,7 +11,7 @@ public class Drive extends Command {
 
 	public Drive() {
 
-		requires(Robot.driveTrain);
+		requires(Robot.getDriveTrain());
 	}
 
 	// Called once after isFinished returns true
@@ -23,20 +23,20 @@ public class Drive extends Command {
 	@Override
 	protected void execute() {
 
-		double left = Robot.oi.left.getY();
-		double right = Robot.oi.right.getY();
+		double left = Robot.getOi().getLeft().getY();
+		double right = Robot.getOi().getRight().getY();
 
 		double deadband = .05;
 		if (Math.abs(left) < deadband)
 			left = 0;
 		if (Math.abs(right) < deadband)
 			right = 0;
-		Robot.driveTrain.setSpeeds(-1 * left, -1 * right);
+		Robot.getDriveTrain().setSpeeds(-1 * left, -1 * right);
 
-		if (Robot.oi.shiftDown.get())
-			Robot.driveTrain.shiftDown();
-		if (Robot.oi.shiftUp.get())
-			Robot.driveTrain.shiftUp();
+		if (Robot.getOi().getShiftDown().get())
+			Robot.getDriveTrain().shiftDown();
+		if (Robot.getOi().getShiftUp().get())
+			Robot.getDriveTrain().shiftUp();
 
 	}
 

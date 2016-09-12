@@ -16,27 +16,27 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  */
 public class Inputs extends Subsystem {
 
-	private final DigitalInput digital0 = RobotMap.digital0;
-	private final DigitalInput digital1 = RobotMap.digital1;
-	private final DigitalInput digital2 = RobotMap.digital2;
-	private final DigitalInput digital3 = RobotMap.digital3;
-	private final DigitalInput digital4 = RobotMap.digital4;
-	private final DigitalInput digital5 = RobotMap.digital5;
-	private final DigitalInput digital6 = RobotMap.digital6;
-	private final DigitalInput digital7 = RobotMap.digital7;
-	private final DigitalInput digital8 = RobotMap.digital8;
-	private final DigitalInput digital9 = RobotMap.digital9;
+	private final DigitalInput digital0 = RobotMap.getDigital0();
+	private final DigitalInput digital1 = RobotMap.getDigital1();
+	private final DigitalInput digital2 = RobotMap.getDigital2();
+	private final DigitalInput digital3 = RobotMap.getDigital3();
+	private final DigitalInput digital4 = RobotMap.getDigital4();
+	private final DigitalInput digital5 = RobotMap.getDigital5();
+	private final DigitalInput digital6 = RobotMap.getDigital6();
+	private final DigitalInput digital7 = RobotMap.getDigital7();
+	private final DigitalInput digital8 = RobotMap.getDigital8();
+	private final DigitalInput digital9 = RobotMap.getDigital9();
 
-	private final AnalogInput analog0 = RobotMap.analog0;
-	private final AnalogInput analog1 = RobotMap.analog1;
-	private final AnalogInput analog2 = RobotMap.analog2;
-	private final AnalogInput analog3 = RobotMap.analog3;
+	private final AnalogInput analog0 = RobotMap.getAnalog0();
+	private final AnalogInput analog1 = RobotMap.getAnalog1();
+	private final AnalogInput analog2 = RobotMap.getAnalog2();
+	private final AnalogInput analog3 = RobotMap.getAnalog3();
 
-	Potentiometer armPot = RobotMap.armPot;
-	CANTalon tensioner = RobotMap.tensioner;
+	Potentiometer armPot = RobotMap.getArmPot();
+	CANTalon tensioner = RobotMap.getTensioner();
 
-	Encoder encoderLeft = RobotMap.encoderLeft;
-	Encoder encoderRight = RobotMap.encoderRight;
+	Encoder encoderLeft = RobotMap.getEncoderLeft();
+	Encoder encoderRight = RobotMap.getEncoderRight();
 
 	@Override
 	protected void initDefaultCommand() {

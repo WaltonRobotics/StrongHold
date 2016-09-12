@@ -15,7 +15,7 @@ public class TurnRightUntilFind extends Command {
 	private double startTime;
 
 	public TurnRightUntilFind(double totalTime, double speed) {
-		requires(Robot.driveTrain);
+		requires(Robot.getDriveTrain());
 		this.totalTime = totalTime;
 		this.speed = speed;
 	}
@@ -23,16 +23,16 @@ public class TurnRightUntilFind extends Command {
 	// Called once after isFinished returns true
 	@Override
 	protected void end() {
-		Robot.driveTrain.setSpeeds(0, 0);
+		Robot.getDriveTrain().setSpeeds(0, 0);
 	}
 
 	// Called repeatedly when this Command is scheduled to run
 	@Override
 	protected void execute() {
 		if (Timer.getFPGATimestamp() - startTime < totalTime)
-			Robot.driveTrain.setSpeeds(speed, -speed);
+			Robot.getDriveTrain().setSpeeds(speed, -speed);
 		else
-			Robot.driveTrain.setSpeeds(0, 0);
+			Robot.getDriveTrain().setSpeeds(0, 0);
 	}
 
 	// Called just before this Command runs the first time
@@ -50,6 +50,6 @@ public class TurnRightUntilFind extends Command {
 	// Make this return true when this Command no longer needs to run execute()
 	@Override
 	protected boolean isFinished() {
-		return Robot.camera.getXLeft() != -1 && Timer.getFPGATimestamp() - startTime < 4;
+		return Robot.getCamera().getXLeft() != -1 && Timer.getFPGATimestamp() - startTime < 4;
 	}
 }
