@@ -1,7 +1,5 @@
 package org.usfirst.frc.team2974.robot;
 
-import java.io.File;
-
 import org.usfirst.frc.team2974.robot.autonomousCommandGroups.ChivalDeFreze;
 import org.usfirst.frc.team2974.robot.autonomousCommandGroups.FullRunnableAuton;
 import org.usfirst.frc.team2974.robot.autonomousCommandGroups.LowBar;
@@ -26,10 +24,12 @@ import org.usfirst.frc.team2974.robot.subsystems.Shooter;
 
 import edu.wpi.first.wpilibj.CameraServer;
 import edu.wpi.first.wpilibj.IterativeRobot;
-import edu.wpi.first.wpilibj.NamedSendable;
+import edu.wpi.first.wpilibj.Sendable;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.CommandGroup;
 import edu.wpi.first.wpilibj.command.Scheduler;
+import edu.wpi.first.wpilibj.image.NIVisionException;
+import edu.wpi.first.wpilibj.image.RGBImage;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
@@ -48,82 +48,6 @@ public class Robot extends IterativeRobot {
 	private static SendableChooser autoChooser;
 	private static SendableChooser locationChooser;
 	private static Command autonomousCommand;
-
-	public static aimState getAimingstate() {
-		return aimingState;
-	}
-
-	public static Arm getArm() {
-		return arm;
-	}
-
-	public static Camera getCamera() {
-		return camera;
-	}
-
-	public static Compass getCompass() {
-		return compass;
-	}
-
-	public static DriveTrain getDriveTrain() {
-		return driveTrain;
-	}
-
-	public static Flipper getFlipper() {
-		return flipper;
-	}
-
-	public static Inputs getInputs() {
-		return inputs;
-	}
-
-	public static Intake getIntake() {
-		return intake;
-	}
-
-	public static OI getOi() {
-		return oi;
-	}
-
-	public static Shooter getShooter() {
-		return shooter;
-	}
-
-	public static void setArm(Arm arm) {
-		Robot.arm = arm;
-	}
-
-	public static void setCamera(Camera camera) {
-		Robot.camera = camera;
-	}
-
-	public static void setCompass(Compass compass) {
-		Robot.compass = compass;
-	}
-
-	public static void setDriveTrain(DriveTrain driveTrain) {
-		Robot.driveTrain = driveTrain;
-	}
-
-	public static void setFlipper(Flipper flipper) {
-		Robot.flipper = flipper;
-	}
-
-	public static void setInputs(Inputs inputs) {
-		Robot.inputs = inputs;
-	}
-
-	public static void setIntake(Intake intake) {
-		Robot.intake = intake;
-	}
-
-	public static void setOi(OI oi) {
-		Robot.oi = oi;
-	}
-
-	public static void setShooter(Shooter shooter) {
-		Robot.shooter = shooter;
-	}
 
 	/**
 	 * This autonomous (along with the chooser code above) shows how to select
@@ -269,18 +193,16 @@ public class Robot extends IterativeRobot {
 		server.setQuality(0);
 		server.startAutomaticCapture("cam1");
 
-		File imageFile = new File("TestImage.jpg");
-		File errorImage = new File("ErrorMessage.png");
-
-		if (imageFile.exists())
-			SmartDashboard.putData("Image", (NamedSendable) imageFile);
-
-		else if (errorImage.exists())
-			SmartDashboard.putData("Image", (NamedSendable) errorImage);
-
-		else
-			SmartDashboard.putString("Image Error",
-					"No image found: " + imageFile.getName() + ", " + errorImage.getName());
+		//be sure to have the exact same name as the file and the extension, test without the extension
+		String imageName = "TestImage.png";
+		
+		//be sure to put the image in the same directory as this class
+		try {
+			SmartDashboard.putData("Image", (Sendable) new RGBImage(imageName));
+		} catch (NIVisionException e) {
+			// TODO Auto-generated catch block
+			SmartDashboard.putString("Error", imageName);
+		}
 	}
 
 	@Override
@@ -306,5 +228,81 @@ public class Robot extends IterativeRobot {
 		SmartDashboard.putBoolean("left", Robot.getCamera().getXRight() - Aim.centerX > 0);
 		SmartDashboard.putBoolean("right", Robot.getCamera().getXRight() - Aim.centerX < 0);
 		Robot.getDriveTrain().dumpSmartdashboardValues();
+	}
+	
+	public static aimState getAimingstate() {
+		return aimingState;
+	}
+
+	public static Arm getArm() {
+		return arm;
+	}
+
+	public static Camera getCamera() {
+		return camera;
+	}
+
+	public static Compass getCompass() {
+		return compass;
+	}
+
+	public static DriveTrain getDriveTrain() {
+		return driveTrain;
+	}
+
+	public static Flipper getFlipper() {
+		return flipper;
+	}
+
+	public static Inputs getInputs() {
+		return inputs;
+	}
+
+	public static Intake getIntake() {
+		return intake;
+	}
+
+	public static OI getOi() {
+		return oi;
+	}
+
+	public static Shooter getShooter() {
+		return shooter;
+	}
+
+	public static void setArm(Arm arm) {
+		Robot.arm = arm;
+	}
+
+	public static void setCamera(Camera camera) {
+		Robot.camera = camera;
+	}
+
+	public static void setCompass(Compass compass) {
+		Robot.compass = compass;
+	}
+
+	public static void setDriveTrain(DriveTrain driveTrain) {
+		Robot.driveTrain = driveTrain;
+	}
+
+	public static void setFlipper(Flipper flipper) {
+		Robot.flipper = flipper;
+	}
+
+	public static void setInputs(Inputs inputs) {
+		Robot.inputs = inputs;
+	}
+
+	public static void setIntake(Intake intake) {
+		Robot.intake = intake;
+	}
+
+	public static void setOi(OI oi) {
+		Robot.oi = oi;
+	}
+
+	public static void setShooter(Shooter shooter) {
+		Robot.shooter = shooter;
 	}
 }
