@@ -56,6 +56,57 @@ public class RobotMap {
 	private static DigitalInput backwardLimit;
 	private static DigitalInput shooterLimit;
 
+	
+	public static void init() {
+		// inputs
+		setDigital0(new DigitalInput(0));
+		setDigital1(new DigitalInput(1));
+		setDigital2(new DigitalInput(2));
+		setDigital3(new DigitalInput(3));
+		setDigital4(new DigitalInput(4));
+		setDigital5(new DigitalInput(5));
+		setDigital6(new DigitalInput(6));
+		setDigital7(new DigitalInput(7));
+		setDigital8(new DigitalInput(8));
+		setDigital9(new DigitalInput(9));
+
+		setAnalog0(new AnalogInput(0));
+		setAnalog1(new AnalogInput(1));
+		setAnalog2(new AnalogInput(2));
+		setAnalog3(new AnalogInput(3));
+
+		setForwardLimit(getDigital2());// forward is tensioned
+		setBackwardLimit(getDigital1());
+		setShooterLimit(getDigital0());
+
+		// drive train
+		setEncoderRight(new Encoder(getDigital6(), getDigital7()));
+		setEncoderLeft(new Encoder(getDigital9(), getDigital8()));
+
+		setDriveTrainRight1(new Talon(2));
+		setDriveTrainRight2(new Talon(3));
+
+		setDriveTrainLeft1(new Talon(0));
+		setDriveTrainLeft2(new Talon(1));
+
+		// arm
+		setArm(new CANTalon(2));
+		setArmPot(new AnalogPotentiometer(getAnalog0(), 1000, -750));
+
+		// shifter
+		setPnuematicsShifter(new Solenoid(0));
+
+		// shooter
+		setLatch(new Solenoid(2));
+		setTensioner(new CANTalon(1));
+
+		// intake
+		setFlapper(new Solenoid(1));
+		setIntakeMotor(new Talon(4));
+		setIntakeExtender(new Solenoid(3));
+
+	}
+	
 	public static AnalogInput getAnalog0() {
 		return analog0;
 	}
@@ -182,56 +233,6 @@ public class RobotMap {
 
 	public static CANTalon getTensioner() {
 		return tensioner;
-	}
-
-	public static void init() {
-		// inputs
-		setDigital0(new DigitalInput(0));
-		setDigital1(new DigitalInput(1));
-		setDigital2(new DigitalInput(2));
-		setDigital3(new DigitalInput(3));
-		setDigital4(new DigitalInput(4));
-		setDigital5(new DigitalInput(5));
-		setDigital6(new DigitalInput(6));
-		setDigital7(new DigitalInput(7));
-		setDigital8(new DigitalInput(8));
-		setDigital9(new DigitalInput(9));
-
-		setAnalog0(new AnalogInput(0));
-		setAnalog1(new AnalogInput(1));
-		setAnalog2(new AnalogInput(2));
-		setAnalog3(new AnalogInput(3));
-
-		setForwardLimit(getDigital2());// forward is tensioned
-		setBackwardLimit(getDigital1());
-		setShooterLimit(getDigital0());
-
-		// drive train
-		setEncoderRight(new Encoder(getDigital6(), getDigital7()));
-		setEncoderLeft(new Encoder(getDigital9(), getDigital8()));
-
-		setDriveTrainRight1(new Talon(2));
-		setDriveTrainRight2(new Talon(3));
-
-		setDriveTrainLeft1(new Talon(0));
-		setDriveTrainLeft2(new Talon(1));
-
-		// arm
-		setArm(new CANTalon(2));
-		setArmPot(new AnalogPotentiometer(getAnalog0(), 1000, -750));
-
-		// shifter
-		setPnuematicsShifter(new Solenoid(0));
-
-		// shooter
-		setLatch(new Solenoid(2));
-		setTensioner(new CANTalon(1));
-
-		// intake
-		setFlapper(new Solenoid(1));
-		setIntakeMotor(new Talon(4));
-		setIntakeExtender(new Solenoid(3));
-
 	}
 
 	public static void setAnalog0(AnalogInput analog0) {
