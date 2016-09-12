@@ -1,5 +1,8 @@
 package org.usfirst.frc.team2974.robot;
 
+import static java.nio.file.StandardOpenOption.APPEND;
+import static java.nio.file.StandardOpenOption.CREATE;
+
 import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.IOException;
@@ -10,13 +13,6 @@ import java.nio.file.Paths;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
-import static java.nio.file.StandardOpenOption.APPEND;
-import static java.nio.file.StandardOpenOption.CREATE;
-
-/**
- * Created by Marius Juston on 8/28/2016.
- */
-
 public class WarningMessages {
     private static File loginFile;
     //private FileWriter writer;
@@ -26,11 +22,16 @@ public class WarningMessages {
     }
 
     public static void initiateLoggerFile() {
-        loginFile = new File("Logger.txt");
+        File dir = new File("Logs");
+
+        if(!dir.exists())
+            dir.mkdir();
+
+        loginFile = new File("Logger".concat(getDate()).concat(".txt"));
     }
 
     public static void addWarning(String warning) {
-        final Path write = Paths.get("./".concat(getLoginFile().getName()));
+        final Path write = Paths.get("./Logs/".concat(getLoginFile().getName()));
 
         warning = String.format("%-11s%19s | %s\n", "[WARNING]", getSystemTime(), warning);
 
@@ -42,7 +43,7 @@ public class WarningMessages {
     }
 
     public static void addError(String warning) {
-        final Path write = Paths.get("./".concat(getLoginFile().getName()));
+        final Path write = Paths.get("./Logs/".concat(getLoginFile().getName()));
 
         warning = String.format("%-11s%19s | %s\n", "[ERROR]", getSystemTime(), warning);
 
@@ -55,5 +56,10 @@ public class WarningMessages {
 
     public static String getSystemTime() {
         return LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss"));
+    }
+
+    public static String getDate()
+    {
+        return LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyy_MM_dd"));
     }
 }
