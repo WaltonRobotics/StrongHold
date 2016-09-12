@@ -100,7 +100,7 @@ public class Shooter extends Subsystem {
 
 		} else {
 			tensioner.set(power);
-			SmartDashboard.putString("im going to power", "" + power);
+			SmartDashboard.putString("im going to power", String.valueOf(power));
 		}
 
 		// if(isForwardLimit())

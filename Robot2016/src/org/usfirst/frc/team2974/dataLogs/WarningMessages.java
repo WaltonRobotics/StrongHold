@@ -1,7 +1,4 @@
-package org.usfirst.frc.team2974.robot;
-
-import static java.nio.file.StandardOpenOption.APPEND;
-import static java.nio.file.StandardOpenOption.CREATE;
+package org.usfirst.frc.team2974.dataLogs;
 
 import java.io.BufferedOutputStream;
 import java.io.File;
@@ -13,9 +10,11 @@ import java.nio.file.Paths;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
+import static java.nio.file.StandardOpenOption.APPEND;
+import static java.nio.file.StandardOpenOption.CREATE;
+
 public class WarningMessages {
     private static File loginFile;
-    //private FileWriter writer;
 
     public static File getLoginFile() {
         return loginFile;
@@ -24,8 +23,12 @@ public class WarningMessages {
     public static void initiateLoggerFile() {
         File dir = new File("Logs");
 
-        if(!dir.exists())
-            dir.mkdir();
+        if (!dir.exists())
+            if(dir.mkdir())
+                System.out.println("Manage to add directory");
+            else
+                System.out.println("Did not manage to add directory.");
+
 
         loginFile = new File("Logger".concat(getDate()).concat(".txt"));
     }
@@ -38,7 +41,7 @@ public class WarningMessages {
         try (OutputStream out = new BufferedOutputStream(Files.newOutputStream(write, CREATE, APPEND))) {
             out.write(warning.getBytes(), 0, warning.getBytes().length);
         } catch (IOException e) {
-            e.printStackTrace();
+            System.out.println("Did not manage to write to " + getLoginFile().getName());
         }
     }
 
@@ -50,7 +53,7 @@ public class WarningMessages {
         try (OutputStream out = new BufferedOutputStream(Files.newOutputStream(write, CREATE, APPEND))) {
             out.write(warning.getBytes(), 0, warning.getBytes().length);
         } catch (IOException e) {
-            e.printStackTrace();
+            System.out.println("Did not manage to write to " + getLoginFile().getName());
         }
     }
 
@@ -58,8 +61,7 @@ public class WarningMessages {
         return LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss"));
     }
 
-    public static String getDate()
-    {
+    public static String getDate() {
         return LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyy_MM_dd"));
     }
 }

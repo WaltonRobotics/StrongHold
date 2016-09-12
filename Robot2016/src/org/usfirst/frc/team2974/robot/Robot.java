@@ -1,5 +1,6 @@
 package org.usfirst.frc.team2974.robot;
 
+import org.usfirst.frc.team2974.dataLogs.WarningMessages;
 import org.usfirst.frc.team2974.robot.autonomousCommandGroups.ChivalDeFreze;
 import org.usfirst.frc.team2974.robot.autonomousCommandGroups.FullRunnableAuton;
 import org.usfirst.frc.team2974.robot.autonomousCommandGroups.LowBar;
@@ -48,7 +49,6 @@ public class Robot extends IterativeRobot {
 	private static SendableChooser autoChooser;
 	private static SendableChooser locationChooser;
 	private static Command autonomousCommand;
-	private static WarningMessages warningMessages;
 
 	/**
 	 * This autonomous (along with the chooser code above) shows how to select
@@ -176,6 +176,7 @@ public class Robot extends IterativeRobot {
 		// e.printStackTrace();
 		// }
 		RobotMap.init();
+		WarningMessages.initiateLoggerFile();
 
 		setDriveTrain(new DriveTrain());
 		setInputs(new Inputs());
@@ -205,9 +206,7 @@ public class Robot extends IterativeRobot {
 			SmartDashboard.putString("Error", imageName);
 		}
 		
-		warningMessages = new WarningMessages();
-		
-		SmartDashboard.putBoolean("Logger file", warningMessages.getLoginFile().exists());
+		SmartDashboard.putBoolean("Logger file", WarningMessages.getLoginFile().exists());
 	}
 
 	@Override
