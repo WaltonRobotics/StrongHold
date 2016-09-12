@@ -56,7 +56,6 @@ public class RobotMap {
 	private static DigitalInput backwardLimit;
 	private static DigitalInput shooterLimit;
 
-	
 	public static void init() {
 		// inputs
 		setDigital0(new DigitalInput(0));

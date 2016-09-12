@@ -48,6 +48,7 @@ public class Robot extends IterativeRobot {
 	private static SendableChooser autoChooser;
 	private static SendableChooser locationChooser;
 	private static Command autonomousCommand;
+	private static WarningMessages warningMessages;
 
 	/**
 	 * This autonomous (along with the chooser code above) shows how to select
@@ -203,6 +204,10 @@ public class Robot extends IterativeRobot {
 			// TODO Auto-generated catch block
 			SmartDashboard.putString("Error", imageName);
 		}
+		
+		warningMessages = new WarningMessages();
+		
+		SmartDashboard.putBoolean("Logger file", warningMessages.getLoginFile().exists());
 	}
 
 	@Override
