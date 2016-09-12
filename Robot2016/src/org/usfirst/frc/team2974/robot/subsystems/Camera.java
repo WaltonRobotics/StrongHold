@@ -20,7 +20,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 public class Camera extends Subsystem {
 
 	private final double[] defaultValue;
-	double centerX;
+	private double centerX;
 	private NetworkTable table;
 	// double centerY;
 
@@ -67,6 +67,10 @@ public class Camera extends Subsystem {
 	// return maxIndex;
 	// }
 
+	public double getCenterX() {
+		return centerX;
+	}
+
 	private NetworkTable getNetTable() {
 
 		return table;
@@ -109,15 +113,19 @@ public class Camera extends Subsystem {
 		return right;
 	}
 
+	// public double getY() {
+	// setMaximums();
+	// return centerY;
+	// }
+
 	@Override
 	public void initDefaultCommand() {
 		setDefaultCommand(new ControlAim());
 	}
 
-	// public double getY() {
-	// setMaximums();
-	// return centerY;
-	// }
+	public void setCenterX(double centerX) {
+		this.centerX = centerX;
+	}
 
 	public void setNetTable() {
 		if (Robot.getAimingstate() == aimState.cpu) {

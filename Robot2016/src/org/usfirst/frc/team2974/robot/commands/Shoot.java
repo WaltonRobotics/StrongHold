@@ -41,7 +41,7 @@ public class Shoot extends Command {
 	}
 
 	class MovingFlapper extends State {
-		double initTime;
+		private double initTime;
 
 		@Override
 		void end() {
@@ -67,7 +67,7 @@ public class Shoot extends Command {
 	}
 
 	class MovingIntake extends State {
-		double startTime;
+		private double startTime;
 
 		@Override
 		void end() {
@@ -119,7 +119,7 @@ public class Shoot extends Command {
 	}
 
 	class Returning extends State {
-		double readyTime = -1;
+		private double readyTime = -1;
 
 		@Override
 		void end() {
@@ -146,7 +146,7 @@ public class Shoot extends Command {
 	}
 
 	class Shooting extends State {
-		double initTime;
+		private double initTime;
 
 		@Override
 		void end() {
@@ -171,7 +171,7 @@ public class Shoot extends Command {
 	}
 
 	abstract class State {
-		boolean init = false;
+		private boolean init = false;
 
 		abstract void end();
 

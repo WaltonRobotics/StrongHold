@@ -13,6 +13,8 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  */
 public class Aim extends Command {
 
+	// make the inner classes public to all classes as these classes are used
+	// twice
 	public class Cycle extends State {
 		double startTime;
 
