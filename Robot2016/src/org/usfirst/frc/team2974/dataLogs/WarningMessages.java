@@ -25,7 +25,7 @@ public class WarningMessages {
 
         if (!dir.exists())
             if(dir.mkdir())
-                System.out.println("Manage to add directory");
+                System.out.println("Manage to add folder " + dir.getName() + " to " + dir.getAbsolutePath());
             else
                 System.out.println("Did not manage to add directory.");
 
@@ -57,11 +57,11 @@ public class WarningMessages {
         }
     }
 
-    public static String getSystemTime() {
+    private static String getSystemTime() {
         return LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss"));
     }
 
-    public static String getDate() {
+    private static String getDate() {
         return LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyy_MM_dd"));
     }
 }

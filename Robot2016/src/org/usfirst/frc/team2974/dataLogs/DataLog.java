@@ -1,44 +1,39 @@
 package org.usfirst.frc.team2974.dataLogs;
 
 import java.io.File;
-import java.lang.reflect.Method;
 import java.util.ArrayList;
+import java.util.Arrays;
 
-import org.usfirst.frc.team2974.robot.Robot;
 
 public class DataLog {
-	 public static void printFields() throws Exception {
-	        String path = new File(DataLog.class.getName()).getAbsolutePath();
-	        path = path.substring(0,path.lastIndexOf(DataLog.class.getPackage().getName()));
+    public static void getJavaClasses() {
+        String path = new File(DataLog.class.getName()).getAbsolutePath();
+        path = path.substring(0, path.lastIndexOf(DataLog.class.getPackage().getName()));
 
-	        System.out.println(path);
+        File f = new File(path);
 
-	        File dir = new File(path);
+        ArrayList<File[]> directories = new ArrayList<>();
+        directories.add(f.listFiles());
+        ArrayList<File> javaFiles = new ArrayList<>();
 
-	        for(File d: dir.listFiles())
-	            for (File dt: d.listFiles())
-	                System.out.println(dt.getName());
-	    }
-    
-    private static ArrayList<Method> methodFinder(CharSequence keyword, Object... objects)
-    {
-        ArrayList<Method> methods = new ArrayList<>();
-        
-        for(Object obj: objects)
-            for(Method method: obj.getClass().getDeclaredMethods())
-                if(method.getName().contains(keyword))
-                    methods.add(method);
-        
-        return methods;
+        for (int i = 0; i < directories.size(); i++)
+            for (File file : directories.get(i)) {
+                File[] toAdd = file.listFiles();
+
+                if (toAdd != null && toAdd.length != 0) {
+                    directories.add(toAdd);
+                }
+                if (file.getName().contains(".java"))
+                    javaFiles.add(file);
+            }
+
+
+        System.out.println(Arrays.toString(javaFiles.toArray()));
     }
     
-    public static void main(String args[])
-    {
-    	try {
-			printFields();
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-    }
+// used for testing purposes
+//    public static void main(String args[])
+//    {
+//        getJavaClasses();
+//    }
 }
