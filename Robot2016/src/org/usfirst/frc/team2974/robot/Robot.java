@@ -50,6 +50,82 @@ public class Robot extends IterativeRobot {
 	private static SendableChooser locationChooser;
 	private static Command autonomousCommand;
 
+	public static aimState getAimingstate() {
+		return aimingState;
+	}
+
+	public static Arm getArm() {
+		return arm;
+	}
+
+	public static Camera getCamera() {
+		return camera;
+	}
+
+	public static Compass getCompass() {
+		return compass;
+	}
+
+	public static DriveTrain getDriveTrain() {
+		return driveTrain;
+	}
+
+	public static Flipper getFlipper() {
+		return flipper;
+	}
+
+	public static Inputs getInputs() {
+		return inputs;
+	}
+
+	public static Intake getIntake() {
+		return intake;
+	}
+
+	public static OI getOi() {
+		return oi;
+	}
+
+	public static Shooter getShooter() {
+		return shooter;
+	}
+
+	public static void setArm(Arm arm) {
+		Robot.arm = arm;
+	}
+
+	public static void setCamera(Camera camera) {
+		Robot.camera = camera;
+	}
+
+	public static void setCompass(Compass compass) {
+		Robot.compass = compass;
+	}
+
+	public static void setDriveTrain(DriveTrain driveTrain) {
+		Robot.driveTrain = driveTrain;
+	}
+
+	public static void setFlipper(Flipper flipper) {
+		Robot.flipper = flipper;
+	}
+
+	public static void setInputs(Inputs inputs) {
+		Robot.inputs = inputs;
+	}
+
+	public static void setIntake(Intake intake) {
+		Robot.intake = intake;
+	}
+
+	public static void setOi(OI oi) {
+		Robot.oi = oi;
+	}
+
+	public static void setShooter(Shooter shooter) {
+		Robot.shooter = shooter;
+	}
+
 	/**
 	 * This autonomous (along with the chooser code above) shows how to select
 	 * between different autonomous modes using the dashboard. The sendable
@@ -195,18 +271,17 @@ public class Robot extends IterativeRobot {
 		server.setQuality(0);
 		server.startAutomaticCapture("cam1");
 
-		//be sure to have the exact same name as the file and the extension, test without the extension
+		// be sure to have the exact same name as the file and the extension,
+		// test without the extension
 		String imageName = "TestImage.png";
-		
-		//be sure to put the image in the same directory as this class
+
+		// be sure to put the image in the same directory as this class
 		try {
 			SmartDashboard.putData("Image", (Sendable) new RGBImage(imageName));
 		} catch (NIVisionException e) {
 			// TODO Auto-generated catch block
 			SmartDashboard.putString("Error", imageName);
 		}
-		
-		SmartDashboard.putBoolean("Logger file", WarningMessages.getLoginFile().exists());
 	}
 
 	@Override
@@ -232,81 +307,5 @@ public class Robot extends IterativeRobot {
 		SmartDashboard.putBoolean("left", Robot.getCamera().getXRight() - Aim.centerX > 0);
 		SmartDashboard.putBoolean("right", Robot.getCamera().getXRight() - Aim.centerX < 0);
 		Robot.getDriveTrain().dumpSmartdashboardValues();
-	}
-	
-	public static aimState getAimingstate() {
-		return aimingState;
-	}
-
-	public static Arm getArm() {
-		return arm;
-	}
-
-	public static Camera getCamera() {
-		return camera;
-	}
-
-	public static Compass getCompass() {
-		return compass;
-	}
-
-	public static DriveTrain getDriveTrain() {
-		return driveTrain;
-	}
-
-	public static Flipper getFlipper() {
-		return flipper;
-	}
-
-	public static Inputs getInputs() {
-		return inputs;
-	}
-
-	public static Intake getIntake() {
-		return intake;
-	}
-
-	public static OI getOi() {
-		return oi;
-	}
-
-	public static Shooter getShooter() {
-		return shooter;
-	}
-
-	public static void setArm(Arm arm) {
-		Robot.arm = arm;
-	}
-
-	public static void setCamera(Camera camera) {
-		Robot.camera = camera;
-	}
-
-	public static void setCompass(Compass compass) {
-		Robot.compass = compass;
-	}
-
-	public static void setDriveTrain(DriveTrain driveTrain) {
-		Robot.driveTrain = driveTrain;
-	}
-
-	public static void setFlipper(Flipper flipper) {
-		Robot.flipper = flipper;
-	}
-
-	public static void setInputs(Inputs inputs) {
-		Robot.inputs = inputs;
-	}
-
-	public static void setIntake(Intake intake) {
-		Robot.intake = intake;
-	}
-
-	public static void setOi(OI oi) {
-		Robot.oi = oi;
-	}
-
-	public static void setShooter(Shooter shooter) {
-		Robot.shooter = shooter;
 	}
 }
