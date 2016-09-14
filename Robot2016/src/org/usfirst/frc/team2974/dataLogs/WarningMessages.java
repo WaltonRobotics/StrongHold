@@ -106,7 +106,7 @@ public class WarningMessages {
 	}
 
 	public static void initiateLoggerFile() {
-		dir = new File("Logs");
+		dir = new File(System.getProperty("user.home").concat("\\Desktop\\Logs"));
 
 		if (!dir.exists())
 			if (dir.mkdir())
