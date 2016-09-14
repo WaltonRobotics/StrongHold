@@ -14,7 +14,9 @@ import org.usfirst.frc.team2974.robot.autonomousCommands.DoNothing;
 import org.usfirst.frc.team2974.robot.autonomousCommands.DriveLocate;
 import org.usfirst.frc.team2974.robot.commands.Aim;
 import org.usfirst.frc.team2974.robot.commands.ControlAim.aimState;
+import org.usfirst.frc.team2974.robot.commands.Drive;
 import org.usfirst.frc.team2974.robot.commands.ShowInputs;
+import org.usfirst.frc.team2974.robot.commands.SwitchDrives;
 import org.usfirst.frc.team2974.robot.subsystems.Arm;
 import org.usfirst.frc.team2974.robot.subsystems.Camera;
 import org.usfirst.frc.team2974.robot.subsystems.Compass;
@@ -138,7 +140,9 @@ public class Robot extends IterativeRobot {
 
 	@Override
 	public void disabledPeriodic() {
-
+		
+		SmartDashboard.putString("Drive Mode:",Drive.driveMode);
+		
 		Robot.inputs.updateSmartDashboard();
 		Robot.compass.dumpSmartDashboardValues();
 		Robot.camera.setNetTable();
@@ -154,6 +158,8 @@ public class Robot extends IterativeRobot {
 		SmartDashboard.putData("Low Bar", new LowBar());
 		SmartDashboard.putData("Moat", new Moat());
 		SmartDashboard.putData("Ramparts", new Ramparts());
+		
+		SmartDashboard.putData("Switch Drives", new SwitchDrives());
 
 		SmartDashboard.putBoolean("aimed", Math.abs(Robot.camera.getXLeft() - Aim.centerX) < Aim.threshold);
 		SmartDashboard.putBoolean("left", Robot.camera.getXRight() - Aim.centerX > 0);

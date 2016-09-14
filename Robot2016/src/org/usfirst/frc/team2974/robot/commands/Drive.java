@@ -10,6 +10,10 @@ import edu.wpi.first.wpilibj.command.Command;
  */
 public class Drive extends Command {
 	private final double deadband = .05;
+    
+	public static boolean isTank = true;
+	public static String driveMode = "Tank";
+	
     public Drive() {
     	
         requires(Robot.driveTrain);
@@ -23,20 +27,35 @@ public class Drive extends Command {
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
     	
-    	double left = Robot.oi.left.getY();
-    	double right = Robot.oi.right.getY();
+    	if (Drive.isTank){
+    		double left = Robot.oi.left.getY();
+    		double right = Robot.oi.right.getY();
     	
-    	if(Math.abs(left)<deadband)
-    		left = 0;
-    	if(Math.abs(right)<deadband)
-    		right = 0;
-    	Robot.driveTrain.setSpeeds(-1*left,-1*right);
+    		if(Math.abs(left)<deadband)
+    			left = 0;
+    		if(Math.abs(right)<deadband)
+    			right = 0;
+    		Robot.driveTrain.setSpeeds(-1*left,-1*right);
     	
-    	if(Robot.oi.shiftDown.get())
-    		Robot.driveTrain.shiftDown();
-    	if(Robot.oi.shiftUp.get())
-    		Robot.driveTrain.shiftUp();
-
+    		if(Robot.oi.shiftDown.get())
+    			Robot.driveTrain.shiftDown();
+    		if(Robot.oi.shiftUp.get())
+    			Robot.driveTrain.shiftUp();
+    	}else{
+    		double direction = Robot.oi.left.getX();
+    		double throttle = Robot.oi.right.getY();
+    		
+    		if(Math.abs(direction)<deadband)
+    			direction = 0;
+    		if(Math.abs(throttle)<deadband)
+    			throttle = 0;
+    		Robot.driveTrain.setSpeeds(-1*throttle + direction,-1*throttle - direction);
+    		
+    		if(Robot.oi.shiftDown.get())
+    			Robot.driveTrain.shiftDown();
+    		if(Robot.oi.shiftUp.get())
+    			Robot.driveTrain.shiftUp();
+    	}
 
     }
 

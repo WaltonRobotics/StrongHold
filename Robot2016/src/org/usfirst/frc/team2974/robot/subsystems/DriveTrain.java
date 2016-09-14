@@ -17,7 +17,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  *
  */
 public class DriveTrain extends Subsystem {
-    
+	
 	private Talon right1 = RobotMap.driveTrainRight1;
 	private Talon left1 = RobotMap.driveTrainLeft1;
 	private Talon right2 = RobotMap.driveTrainRight2;
