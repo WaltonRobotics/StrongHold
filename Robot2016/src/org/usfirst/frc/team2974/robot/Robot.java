@@ -49,6 +49,9 @@ public class Robot extends IterativeRobot {
 	private static SendableChooser autoChooser;
 	private static SendableChooser locationChooser;
 	private static Command autonomousCommand;
+	
+	private static String startTime;
+	private static String endTime;
 
 	public static aimState getAimingstate() {
 		return aimingState;
@@ -234,6 +237,8 @@ public class Robot extends IterativeRobot {
 		SmartDashboard.putBoolean("aimed", Math.abs(Robot.getCamera().getXLeft() - Aim.centerX) < Aim.threshold);
 		SmartDashboard.putBoolean("left", Robot.getCamera().getXRight() - Aim.centerX > 0);
 		SmartDashboard.putBoolean("right", Robot.getCamera().getXRight() - Aim.centerX < 0);
+	
+		WarningMessages.printWarningsBetweenTime(startTime);
 	}
 
 	/**
@@ -281,6 +286,8 @@ public class Robot extends IterativeRobot {
 		} catch (NIVisionException e) {
 			WarningMessages.addError("Unable to add image", this);
 		}
+		
+		startTime = WarningMessages.getDateMessageStyle();
 	}
 
 	@Override

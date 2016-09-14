@@ -13,6 +13,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class WarningMessages {
@@ -71,7 +72,7 @@ public class WarningMessages {
         return LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyy_MM_dd"));
     }
 
-    private static String getDateMessageStyle() {
+    public static String getDateMessageStyle() {
         return LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyy/MM/dd"));
     }
 
@@ -189,6 +190,65 @@ public class WarningMessages {
 					 * if(previousSize != size) SmartDashboard.initTable(new
 					 * Table()); previousSize = size;
 					 */
+                } catch (FileNotFoundException e) {
+                    System.out.println("Cannot read from file");
+                }
+            }
+        }
+    }
+    
+    public static void printWarningsBetweenTime(String start, String end) {
+        File dir = new File("Logs");
+
+        if (dir.exists()) {
+            File file = new File(dir.getName().concat("\\Logger".concat(getDate()).concat(".txt")));
+
+            if (file.exists()) {
+                try (Scanner scanner = new Scanner(file)) {
+                    if (file.exists())
+                    {
+                    	boolean hasSeenStart = false;
+                    	
+                        while (scanner.hasNext()) {
+                            String message = scanner.nextLine();
+                            if (message.contains(start)) 
+                            	hasSeenStart = true;
+                            
+                            if(hasSeenStart)
+                            	System.out.println(message);
+                            
+                            if(message.contains(end))
+                            	hasSeenStart = false;
+                        }
+                    }
+                } catch (FileNotFoundException e) {
+                    System.out.println("Cannot read from file");
+                }
+            }
+        }
+    }
+    
+    public static void printWarningsBetweenTime(String start) {
+        File dir = new File("Logs");
+
+        if (dir.exists()) {
+            File file = new File(dir.getName().concat("\\Logger".concat(getDate()).concat(".txt")));
+
+            if (file.exists()) {
+                try (Scanner scanner = new Scanner(file)) {
+                    if (file.exists())
+                    {
+                    	boolean hasSeenStart = false;
+                    	
+                        while (scanner.hasNext()) {
+                            String message = scanner.nextLine();
+                            if (message.contains(start)) 
+                            	hasSeenStart = true;
+                            
+                            if(hasSeenStart)
+                            	System.out.println(message);
+                        }
+                    }
                 } catch (FileNotFoundException e) {
                     System.out.println("Cannot read from file");
                 }
