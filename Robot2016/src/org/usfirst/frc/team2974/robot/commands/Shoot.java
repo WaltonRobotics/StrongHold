@@ -2,7 +2,7 @@ package org.usfirst.frc.team2974.robot.commands;
 
 import org.usfirst.frc.team2974.robot.Robot;
 import org.usfirst.frc.team2974.robot.autonomousCommands.FlapDown;
-import org.usfirst.frc.team2974.robot.autonomousCommands.IntakeOut;
+import org.usfirst.frc.team2974.robot.autonomousCommands.IntakeIn;
 //import org.usfirst.frc.team2974.robot.autonomousCommands.FlapDown;
 import org.usfirst.frc.team2974.robot.subsystems.Shooter;
 
@@ -131,7 +131,7 @@ public class Shoot extends Command {
 		@Override
 		void init() {
 			startTime = Timer.getFPGATimestamp();
-			Scheduler.getInstance().add(new IntakeOut());
+			Scheduler.getInstance().add(new IntakeIn());
 		}
 
 		@Override

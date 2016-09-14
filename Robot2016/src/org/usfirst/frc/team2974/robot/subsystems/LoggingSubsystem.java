@@ -55,7 +55,7 @@ public class LoggingSubsystem extends Subsystem {
 //		}
 	}
 	/** booleans represented by strings
-	 * determine what gets writtn to file
+	 * determine what gets written to file
 	 */
 
 	public void establishLogging() {

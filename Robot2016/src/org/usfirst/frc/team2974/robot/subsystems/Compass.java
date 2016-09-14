@@ -12,6 +12,10 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  *
  */
 public class Compass extends Subsystem {
+	
+	private final double PITCHOFFSET = 2.5;
+	public double yawOffset = 0;
+	
     BNO055 compass = RobotMap.compass;
 
     public void initDefaultCommand() {}
@@ -21,6 +25,7 @@ public class Compass extends Subsystem {
     	initializeCompass();
 
     }
+    
     public void initializeCompass()
     {
     	try {
@@ -35,10 +40,10 @@ public class Compass extends Subsystem {
      * right decrease
      * @return yaw (turn)
      */
-    public double getYaw()
+    public double getYaw() //Horizonal tilt
     {
     	try {
-			return compass.getVector(BNO055.VectorType.VECTOR_EULER)[0];
+			return compass.getVector(BNO055.VectorType.VECTOR_EULER)[0] - yawOffset;
 		} catch (BNO055Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -50,10 +55,10 @@ public class Compass extends Subsystem {
      * up negative
      * @return pitch
      */
-    public double getPitch()
+    public double getPitch() //Vertical tilt
     {
        	try {
-    			return compass.getVector(BNO055.VectorType.VECTOR_EULER)[1];
+    			return compass.getVector(BNO055.VectorType.VECTOR_EULER)[1] - PITCHOFFSET;
     		} catch (BNO055Exception e) {
     			// TODO Auto-generated catch block
     			e.printStackTrace();
@@ -64,7 +69,7 @@ public class Compass extends Subsystem {
      * i dont care
      * @return roll
      */
-    public double getRoll()
+    public double getRoll() //Spin in Z axis - rolling over
     {
        	try {
     			return compass.getVector(BNO055.VectorType.VECTOR_EULER)[2];

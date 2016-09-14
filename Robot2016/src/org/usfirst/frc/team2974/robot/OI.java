@@ -1,5 +1,7 @@
 package org.usfirst.frc.team2974.robot;
 
+import org.usfirst.frc.team2974.robot.autonomousCommands.DriveLocate;
+import org.usfirst.frc.team2974.robot.autonomousCommands.DriveStraightMC;
 import org.usfirst.frc.team2974.robot.commands.Aim;
 import org.usfirst.frc.team2974.robot.commands.ShooterReset;
 import org.usfirst.frc.team2974.robot.commands.Tension;
@@ -8,6 +10,7 @@ import org.usfirst.frc.team2974.robot.commands.UnTension;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.Button;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 
 /**
@@ -41,6 +44,7 @@ public class OI {
 	public Button startUntensioning;
 	public Button startTensioning;
 	public Button normalTensioning;
+	public Button testCommand;
 	
 	public boolean autoShoot;
 	
@@ -78,12 +82,15 @@ public class OI {
 		startTensioning = new JoystickButton(left, 11);
 		normalTensioning = new JoystickButton(left, 9);
 		resetShooter = new JoystickButton(left, 10);
-
+		
 		startUntensioning.whenPressed(new UnTension());
 		startTensioning.whenPressed(new Tension());
 		
 		resetShooter.whenPressed(new ShooterReset());
+			
+		testCommand = new JoystickButton(right, 2);
 		
+		testCommand.whenPressed(new DriveLocate());
 //		aimLeft.whenPressed(new Aim(0));
 //		aimRight.whenPressed(new Aim(2));
 		
@@ -92,6 +99,7 @@ public class OI {
 		
 		//testAuton = new JoystickButton(gamepad, 6);//remove l8er TODO
 		//testAuton.whenPressed(new TestAuton());
+		SmartDashboard.putData("Drive Forward 1m", new DriveStraightMC(1.0, 0.5, 0.1));
 	}
 
 }

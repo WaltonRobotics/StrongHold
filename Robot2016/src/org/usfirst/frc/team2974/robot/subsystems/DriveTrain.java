@@ -17,7 +17,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  *
  */
 public class DriveTrain extends Subsystem {
-    
+	
 	private Talon right1 = RobotMap.driveTrainRight1;
 	private Talon left1 = RobotMap.driveTrainLeft1;
 	private Talon right2 = RobotMap.driveTrainRight2;
@@ -32,7 +32,7 @@ public class DriveTrain extends Subsystem {
 	public PIDControllerAccel rightController;
 	
 	public final double distancePerPulse  = .000515417;
-	
+	private final double kV = 0.5; //Max speed is 2
 	private class SharedDrive implements PIDOutput
 	{
 		SpeedController one;
@@ -64,7 +64,7 @@ public class DriveTrain extends Subsystem {
 		//diameter = 8.25 in= .21 m 
 		//18 drive shaft
 		//60 wheel
-		//.21*pi/(128*3*60/18) = distance per pulse
+		//.21*pi/(128*3*60/18) = distance per pulse		
 		resetEncoders();
 		
 		encoderLeft.setDistancePerPulse(distancePerPulse);
@@ -73,8 +73,12 @@ public class DriveTrain extends Subsystem {
 		encoderLeft.setPIDSourceType(PIDSourceType.kDisplacement);
 		encoderRight.setPIDSourceType(PIDSourceType.kDisplacement);
 		
-		leftController = new PIDControllerAccel(1, 0, 0,1, RobotMap.encoderLeft,  new SharedDrive(left1,left2,true),1,0);
-		rightController = new PIDControllerAccel(1, 0, 0,1, RobotMap.encoderRight,  new SharedDrive( right1, right2,false),1,0);
+		leftController = new PIDControllerAccel(1, 0, 0,1, RobotMap.encoderLeft,  
+				new SharedDrive(left1,left2,true), kV, 0);
+		leftController.disable();
+		rightController = new PIDControllerAccel(1, 0, 0,1, RobotMap.encoderRight,  
+				new SharedDrive( right1, right2,false), kV, 0);
+		rightController.disable();
 		
 	}
     public void initDefaultCommand() {
@@ -94,12 +98,31 @@ public class DriveTrain extends Subsystem {
     	encoderLeft.reset();
     	encoderRight.reset();
     }
+    
+    public double getMeanDistance(){
+    	return (encoderRight.getDistance() + encoderLeft.getDistance())/2;
+    }
 //    public void setSetPoint(MotionControl mc, double time)
 //    {
     	//fix acceleration
 //    	leftController.setSetpoint(mc.distanceleft(time),mc.velocityLeft(time),0);
 //    	rightController.setSetpoint(mc.distanceRight(time),mc.velocityRight(time),0);
 //    }
+	public void setSetPoint(double dist, double velocity) {
+		// fix acceleration
+		leftController.setSetpoint(dist, velocity, 0);
+		rightController.setSetpoint(dist, velocity, 0);
+	}
+	
+	public void disableMotionController(){
+		leftController.disable();
+		rightController.disable();
+	}
+	
+	public void enableMotionController(){
+		leftController.enable();
+		rightController.enable();
+	}
     
     public void shiftUp()
     {
