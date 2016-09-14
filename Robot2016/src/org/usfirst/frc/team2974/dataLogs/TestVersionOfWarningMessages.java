@@ -15,10 +15,10 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Scanner;
 
-public class WarningMessages {
+public class TestVersionOfWarningMessages {
     private final static File loginFile;
-    private static Path write;
-    private static File dir;
+    private final static Path write;
+    private final static File dir;
 
     // private static long previousSize = 0;
 
@@ -100,9 +100,9 @@ public class WarningMessages {
     public static String getSystemTime() {
         return LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss"));
     }
-    
+
     static {
-    	dir = new File(System.getProperty("user.home").concat("\\Desktop\\Logs"));
+        dir = new File(System.getProperty("user.home").concat("\\Desktop\\Logs"));
 
         if (!dir.exists())
             if (dir.mkdir())
@@ -120,7 +120,6 @@ public class WarningMessages {
                 System.out.println("Directory " + getDir().getName() + " is " + dirSize / 1000000
                         + " megabytes. The folder is too large, the folder will be purged.");
                 deleteAll();
-                initiateLoggerFile();
                 message(true, "DIRECTORY CONGLOMERATION TOO BIG, ALL FILES WERE DESTROYED", null);
             }
         }
@@ -138,10 +137,6 @@ public class WarningMessages {
             System.out.println(loginFile.getName() + " already exists");
 
         write = Paths.get(getLoginFile().getAbsolutePath());
-    }
-
-    public static void initiateLoggerFile() {
-        
     }
 
     private static void message(final boolean error, final String warning) {
@@ -257,7 +252,6 @@ public class WarningMessages {
 
     private static void reinitializeSequence(final boolean error, final String message, final Object obj) {
         deleteDir(getLoginFile());
-        initiateLoggerFile();
         message(error, message, obj);
     }
 }
