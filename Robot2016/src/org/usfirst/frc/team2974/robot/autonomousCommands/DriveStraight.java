@@ -1,5 +1,6 @@
 package org.usfirst.frc.team2974.robot.autonomousCommands;
 
+import org.usfirst.frc.team2974.dataLogs.WarningMessages;
 import org.usfirst.frc.team2974.robot.Robot;
 
 import edu.wpi.first.wpilibj.Timer;
@@ -7,17 +8,22 @@ import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
- *
+ * Use WarningMessages so that if there is an important offset when driving set
+ * it will record a warning
  */
 public class DriveStraight extends Command {
 	private final double time;
 	private final double speed;
 	private double startTime;
+	private double previousYawValue;
 
 	public DriveStraight(double time, double speed) {
+		requires(Robot.getCompass());
+		requires(Robot.getDriveTrain());
+
 		this.speed = speed;
 		this.time = time;
-		requires(Robot.getDriveTrain());
+		this.previousYawValue = Robot.getCompass().getYaw();
 	}
 
 	// Called once after isFinished returns true
@@ -25,7 +31,6 @@ public class DriveStraight extends Command {
 	protected void end() {
 		SmartDashboard.putString("Autonomous stuff", "There ya go, you moved forward");
 		Robot.getDriveTrain().setSpeeds(0, 0);
-
 	}
 
 	// Called repeatedly when this Command is scheduled to run
@@ -33,6 +38,13 @@ public class DriveStraight extends Command {
 	protected void execute() {
 		Robot.getDriveTrain().setSpeeds(speed, speed);
 
+		final int offset = (int) previousYawValue - (int) Robot.getCompass().getYaw();
+
+		if (Math.abs(offset) <= 1) {
+			WarningMessages.addWarning(
+					"The robot is not moving staright there is an offset of ".concat(String.valueOf(offset)), this);
+			previousYawValue = previousYawValue + offset;
+		}
 	}
 
 	// Called just before this Command runs the first time

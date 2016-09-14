@@ -20,12 +20,22 @@ public class WarningMessages {
 	private static Path write;
 	private static File dir;
 
-	public static void addError(String warning) {
+	// private static long previousSize = 0;
+
+	public static void addError(final String warning) {
 		message(true, warning);
 	}
 
-	public static void addWarning(String warning) {
+	public static void addError(final String warning, final Object obj) {
+		message(true, warning, obj);
+	}
+
+	public static void addWarning(final String warning) {
 		message(false, warning);
+	}
+
+	public static void addWarning(final String warning, final Object obj) {
+		message(false, warning, obj);
 	}
 
 	private static void checker() {
@@ -45,7 +55,7 @@ public class WarningMessages {
 					"Directory has not been initiated yet please insert the WarningMessages.initiateLoggerFile() method before this one");
 	}
 
-	private static void deleteDir(File file) {
+	private static void deleteDir(final File file) {
 		File[] contents = file.listFiles();
 		if (contents != null)
 			for (File f : contents) {
@@ -87,6 +97,20 @@ public class WarningMessages {
 		return write;
 	}
 
+	private static int getSize() {
+		int size = 0;
+
+		if (getDir() != null) {
+			File[] contents = getDir().listFiles();
+
+			if (contents != null)
+				for (File f : contents)
+					size += f.length();
+		}
+
+		return size;
+	}
+
 	private static String getSystemTime() {
 		return LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss"));
 	}
@@ -102,9 +126,9 @@ public class WarningMessages {
 		else {
 			System.out.println("Directory " + dir.getName() + " already exists");
 
-			long dirSize = getSize(0);
+			long dirSize = getSize();
 
-			System.out.println("Directory size is currently " + dirSize + " bytes == " + dirSize / 1000 + " kilobytes");
+			System.out.println("Directory size is currently " + dirSize + " bytes == " + dirSize / 1000 + " megabytes");
 
 			if (dir.length() / 100 >= 10) {
 				System.out.println(
@@ -128,50 +152,52 @@ public class WarningMessages {
 		write = Paths.get("./Logs/".concat(getLoginFile().getName()));
 	}
 
-	private static int getSize(long s) {
-		int size = 0;
-
-		if (getDir() != null) {
-			File[] contents = getDir().listFiles();
-
-			if (contents != null)
-				for (File f : contents)
-					size += f.length();
-		}
-
-		return size;
+	private static void message(final boolean error, final String warning) {
+		message(error, warning, null);
 	}
 
-	private static void message(boolean error, String warning) {
-		warning = String.format("%-11s%19s | %s\n", error ? "[ERROR]" : "[WARNING]", getSystemTime(), warning);
+	private static void message(final boolean error, String warning, final Object obj) {
+		warning = String.format("%-11s%19s %s | %s\n", error ? "[ERROR]" : "[WARNING]", getSystemTime(),
+				obj == null ? "" : obj.getClass().getName(), warning);
 
-		if (getLoginFile() == null)
-			reinitializeSequence(error, warning);
+		checker();
 
 		try (OutputStream out = new BufferedOutputStream(Files.newOutputStream(getPath(), CREATE, APPEND))) {
 			out.write(warning.getBytes(), 0, warning.getBytes().length);
 		} catch (IOException e) {
 			System.out.println("Did not manage to write to " + getLoginFile().getName()
 					+ "reinitializing will delete current file and create a new one, all current logs will be deleted.");
-			reinitializeSequence(error, warning);
+			reinitializeSequence(error, warning, obj);
 		}
 	}
 
 	public static void printWarningsFromToday() {
-		// ITable table = new ITable();
 		File dir = new File("Logs");
 
 		if (dir.exists()) {
 			File file = new File(dir.getName().concat("\\Logger".concat(getDate()).concat(".txt")));
+
+			// ArrayList<String> warnings = new ArrayList<>();
 
 			if (file.exists()) {
 				try (Scanner scanner = new Scanner(file)) {
 					if (file.exists())
 						while (scanner.hasNext()) {
 							String message = scanner.nextLine();
-							if (message.contains(getDateMessageStyle()))
+							if (message.contains(getDateMessageStyle())) {
 								System.out.println(message);
+								// warnings.add(message);
+							}
 						}
+
+					/*
+					 * make it so that the above array list prints out all the
+					 * data in SmartDashboard and not using System.out.prinltn
+					 * long size = getSize();
+					 *
+					 * if(previousSize != size) SmartDashboard.initTable(new
+					 * Table()); previousSize = size;
+					 */
 				} catch (FileNotFoundException e) {
 					System.out.println("Cannot read from file");
 				}
@@ -179,10 +205,10 @@ public class WarningMessages {
 		}
 	}
 
-	private static void reinitializeSequence(boolean error, String message) {
+	private static void reinitializeSequence(final boolean error, final String message, final Object obj) {
 		checker();
 		deleteDir(getLoginFile());
 		initiateLoggerFile();
-		message(error, message);
+		message(error, message, obj);
 	}
 }

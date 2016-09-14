@@ -279,8 +279,7 @@ public class Robot extends IterativeRobot {
 		try {
 			SmartDashboard.putData("Image", (Sendable) new RGBImage(imageName));
 		} catch (NIVisionException e) {
-			// TODO Auto-generated catch block
-			SmartDashboard.putString("Error", imageName);
+			WarningMessages.addError("Unable to add image", this);
 		}
 	}
 

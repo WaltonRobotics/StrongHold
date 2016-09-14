@@ -1,5 +1,8 @@
 package org.usfirst.frc.team2974.robot.autonomousCommands;
 
+import java.util.ArrayList;
+
+import org.usfirst.frc.team2974.dataLogs.WarningMessages;
 import org.usfirst.frc.team2974.robot.Robot;
 
 import edu.wpi.first.wpilibj.command.Command;
@@ -16,6 +19,8 @@ public class TurnToAngle extends Command {
 	private final double ANGLES_TO_TURN;
 	private final double TOLERANCE;
 
+	private ArrayList<Double> offsets;
+
 	public TurnToAngle(double angle) {
 		requires(Robot.getDriveTrain());
 		requires(Robot.getCompass());
@@ -23,13 +28,23 @@ public class TurnToAngle extends Command {
 		this.GOAL_ANGLE = Math.abs(angle);
 		this.START_YAW_ANGLE = Robot.getCompass().getYaw();
 		this.TURN_CLOCKWISE = Math.abs(this.GOAL_ANGLE - this.START_YAW_ANGLE) <= 180;
-		this.ANGLES_TO_TURN = TURN_CLOCKWISE ? Math.abs(GOAL_ANGLE - START_YAW_ANGLE)
-				: 360 - Math.abs(GOAL_ANGLE - START_YAW_ANGLE);
+		this.ANGLES_TO_TURN = TURN_CLOCKWISE ? Math.abs(GOAL_ANGLE - START_YAW_ANGLE) - getOffsetsAverage()
+				: 360 - Math.abs(GOAL_ANGLE - START_YAW_ANGLE) + getOffsetsAverage();
+
+		offsets = new ArrayList<>();
 	}
 
 	// Called once after isFinished returns true
 	@Override
 	protected void end() {
+		final double offset = Robot.getCompass().getYaw() - START_YAW_ANGLE - GOAL_ANGLE;
+
+		if (Math.abs(offset) <= 1) {
+			WarningMessages.addWarning(
+					"The robot is not moving staright there is an offset of ".concat(String.valueOf(offset)), this);
+		}
+
+		offsets.add(Math.abs(offset));
 	}
 
 	// Called repeatedly when this Command is scheduled to run
@@ -47,6 +62,20 @@ public class TurnToAngle extends Command {
 
 			else
 				Robot.getDriveTrain().setSpeeds(0, 0);
+	}
+
+	public ArrayList<Double> getOffsets() {
+		return offsets;
+	}
+
+	public double getOffsetsAverage() {
+		double average = 0;
+
+		if (getOffsets() != null && getOffsets().size() != 0)
+			for (Double offset : getOffsets())
+				average += offset;
+
+		return average;
 	}
 
 	// Called just before this Command runs the first time
