@@ -51,7 +51,6 @@ public class Robot extends IterativeRobot {
 	private static Command autonomousCommand;
 	
 	private static String startTime;
-	private static String endTime;
 
 	public static aimState getAimingstate() {
 		return aimingState;
@@ -93,6 +92,10 @@ public class Robot extends IterativeRobot {
 		return shooter;
 	}
 
+	public static String getStartTime() {
+		return startTime;
+	}
+
 	public static void setArm(Arm arm) {
 		Robot.arm = arm;
 	}
@@ -127,6 +130,10 @@ public class Robot extends IterativeRobot {
 
 	public static void setShooter(Shooter shooter) {
 		Robot.shooter = shooter;
+	}
+
+	public static void setStartTime(String startTime) {
+		Robot.startTime = startTime;
 	}
 
 	/**
@@ -238,7 +245,8 @@ public class Robot extends IterativeRobot {
 		SmartDashboard.putBoolean("left", Robot.getCamera().getXRight() - Aim.centerX > 0);
 		SmartDashboard.putBoolean("right", Robot.getCamera().getXRight() - Aim.centerX < 0);
 	
-		WarningMessages.printWarningsBetweenTime(startTime);
+		WarningMessages.printWarningsBetweenTime(getStartTime());
+		setStartTime(WarningMessages.getDateMessageStyle());
 	}
 
 	/**
@@ -287,7 +295,8 @@ public class Robot extends IterativeRobot {
 			WarningMessages.addError("Unable to add image", this);
 		}
 		
-		startTime = WarningMessages.getDateMessageStyle();
+		WarningMessages.printWarningsFromToday();
+		setStartTime(WarningMessages.getDateMessageStyle());
 	}
 
 	@Override
@@ -313,5 +322,8 @@ public class Robot extends IterativeRobot {
 		SmartDashboard.putBoolean("left", Robot.getCamera().getXRight() - Aim.centerX > 0);
 		SmartDashboard.putBoolean("right", Robot.getCamera().getXRight() - Aim.centerX < 0);
 		Robot.getDriveTrain().dumpSmartdashboardValues();
+		
+		WarningMessages.printWarningsBetweenTime(getStartTime());
+		setStartTime(WarningMessages.getDateMessageStyle());
 	}
 }
