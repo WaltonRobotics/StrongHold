@@ -14,6 +14,8 @@ public class FullRunnableAuton extends CommandGroup {
 
 		if (location.getAutonPossibleLocation().equals(AutonPossibleLocation.A))
 			addSequential(new LowBar());
+		else
+			addSequential(obstacleCommand);
 
 		addSequential(obstacleCommand);
 		addSequential(new MoveToShoot(location));
