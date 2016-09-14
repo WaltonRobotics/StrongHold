@@ -10,9 +10,11 @@ class WarningMessagesTest {
 
 		WarningMessages.initiateLoggerFile();
 
-		WarningMessages.addError("Hello");
-		WarningMessages.addWarning("ERROR");
-
+//		for (int i = 0; i < 100; i++) {
+//		WarningMessages.addError("Hello wowo you have ice long hair how do you do it?");
+//		WarningMessages.addWarning("ERROR your name bob not joeye and my name is marius!!!");
+//		}
+		
 		WarningMessages.printWarningsFromToday();
 	}
 }

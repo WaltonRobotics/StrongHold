@@ -38,14 +38,6 @@ public class WarningMessages {
 		message(false, warning, obj);
 	}
 
-	private static void checker() {
-		if (getDir() == null)
-			initiateLoggerFile();
-
-		else if (getLoginFile() == null)
-			initiateLoggerFile();
-	}
-
 	public static void deleteAll() {
 		if (getDir() != null)
 			deleteDir(getDir());
@@ -120,7 +112,7 @@ public class WarningMessages {
 
 		if (!dir.exists())
 			if (dir.mkdir())
-				System.out.println("Manage to add folder " + dir.getName() + " to " + dir.getAbsolutePath());
+				System.out.println("Managed to add folder " + dir.getName() + " to " + dir.getAbsolutePath());
 			else
 				System.out.println("Did not manage to add directory.");
 		else {
@@ -130,10 +122,12 @@ public class WarningMessages {
 
 			System.out.println("Directory size is currently " + dirSize + " bytes == " + dirSize / 1000 + " megabytes");
 
-			if (dir.length() / 100 >= 10) {
-				System.out.println(
-						"Director is " + dirSize / 100 + ". The folder is too large, the folder will be purged.");
+			if (dirSize / 1000 >= 50) {
+				System.out.println("Director is " + dirSize / 1000
+						+ " megabytes. The folder is too large, the folder will be purged.");
 				deleteAll();
+				initiateLoggerFile();
+				message(true, "DIRECTORY CONGLOMERATION TOO BIG, ALL FILES WERE DESTROYED", null);
 			}
 		}
 
@@ -157,16 +151,15 @@ public class WarningMessages {
 	}
 
 	private static void message(final boolean error, String warning, final Object obj) {
+
 		warning = String.format("%-11s%19s %s | %s\n", error ? "[ERROR]" : "[WARNING]", getSystemTime(),
 				obj == null ? "" : obj.getClass().getName(), warning);
 
-		checker();
-
 		try (OutputStream out = new BufferedOutputStream(Files.newOutputStream(getPath(), CREATE, APPEND))) {
 			out.write(warning.getBytes(), 0, warning.getBytes().length);
-		} catch (IOException e) {
+		} catch (Exception e) {
 			System.out.println("Did not manage to write to " + getLoginFile().getName()
-					+ "reinitializing will delete current file and create a new one, all current logs will be deleted.");
+					+ " reinitializing will delete current file and create a new one, all current logs will be deleted.");
 			reinitializeSequence(error, warning, obj);
 		}
 	}
@@ -206,7 +199,6 @@ public class WarningMessages {
 	}
 
 	private static void reinitializeSequence(final boolean error, final String message, final Object obj) {
-		checker();
 		deleteDir(getLoginFile());
 		initiateLoggerFile();
 		message(error, message, obj);
