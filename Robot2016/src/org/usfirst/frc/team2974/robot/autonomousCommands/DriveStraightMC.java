@@ -15,7 +15,7 @@ public class DriveStraightMC extends Command {
 	private final double t2;
 	private final double t3;
 	private final DriveTrain driveTrain;
-	
+
 	private double previousYawValue;
 
 	public DriveStraightMC(double distance, double velocity, double accel) {
@@ -64,7 +64,7 @@ public class DriveStraightMC extends Command {
 			v = 0;
 		}
 		driveTrain.setSetPoint(x, v);
-		
+
 		final int offset = (int) previousYawValue - (int) Robot.getCompass().getYaw();
 
 		if (Math.abs(offset) <= 1) {
@@ -80,7 +80,7 @@ public class DriveStraightMC extends Command {
 		driveTrain.setSetPoint(0, 0);
 		driveTrain.enableMotionController();
 		requires(Robot.getCompass());
-		
+
 		this.previousYawValue = Robot.getCompass().getYaw();
 	}
 
