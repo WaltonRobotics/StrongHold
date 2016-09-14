@@ -16,6 +16,9 @@ class WarningMessagesTest {
 		// WarningMessages.addWarning("ERROR your name bob not joeye and my name
 		// is marius!!!");
 		// }
+		
+		for(int i =0; i < 10000; i++)
+		WarningMessages.addError("Hello wowo you have ice long hair how do");
 
 		WarningMessages.printWarningsFromToday();
 	}

@@ -60,11 +60,7 @@ public class WarningMessages {
                     System.out.println(f.getName() + " at " + f.getAbsolutePath() + " has been deleted");
             }
 
-        if (file.delete() && file.exists())
-            System.out.println(file.getName() + " at " + file.getAbsolutePath() + " has not been deleted");
-
-        else
-            System.out.println(file.getName() + " at " + file.getAbsolutePath() + " has been deleted");
+        file.delete();
     }
 
     private static String getDate() {
@@ -101,7 +97,7 @@ public class WarningMessages {
         return size;
     }
 
-    private static String getSystemTime() {
+    public static String getSystemTime() {
         return LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss"));
     }
 
@@ -118,10 +114,10 @@ public class WarningMessages {
 
             long dirSize = getSize();
 
-            System.out.println("Directory size is currently " + dirSize + " bytes == " + dirSize / 1000 + " megabytes");
+            System.out.println("Directory size is currently " + dirSize + " bytes == " + dirSize / 1000000 + " megabytes");
 
-            if (dirSize / 1000 >= 50) {
-                System.out.println("Director is " + dirSize / 1000
+            if (dirSize  / 1000000 >= 1) {
+                System.out.println("Directory " + getDir().getName() + " is " + dirSize / 1000000
                         + " megabytes. The folder is too large, the folder will be purged.");
                 deleteAll();
                 initiateLoggerFile();
@@ -155,6 +151,8 @@ public class WarningMessages {
 
         try (OutputStream out = new BufferedOutputStream(Files.newOutputStream(getPath(), CREATE, APPEND))) {
             out.write(warning.getBytes(), 0, warning.getBytes().length);
+
+            System.out.println(warning.substring(0,warning.indexOf("\n")));
         } catch (Exception e) {
             System.out.println("Did not manage to write to " + getLoginFile().getName()
                     + " reinitializing will delete current file and create a new one, all current logs will be deleted.");
@@ -162,68 +160,68 @@ public class WarningMessages {
         }
     }
 
-    public static void printWarningsBetweenTime(String start) {
-        File dir = new File(System.getProperty("user.home").concat("\\Desktop\\Logs"));
+//    public static void printWarningsBetweenTime(String start) {
+//        File dir = new File(System.getProperty("user.home").concat("\\Desktop\\Logs"));
+//
+//        if (dir.exists()) {
+//            File file = new File(dir.getAbsolutePath().concat("\\Logger".concat(getDate()).concat(".txt")));
+//
+//            if (file.exists()) {
+//                try (Scanner scanner = new Scanner(file)) {
+//                    if (file.exists()) {
+//                        boolean hasSeenStart = false;
+//
+//                        while (scanner.hasNext()) {
+//                            String message = scanner.nextLine();
+//                            if (message.contains(start))
+//                                hasSeenStart = true;
+//
+//                            if (hasSeenStart)
+//                                System.out.println(message);
+//                        }
+//                    }
+//                } catch (FileNotFoundException e) {
+//                    System.out.println("Cannot read from file");
+//                }
+//            }
+//        }
+//    }
 
-        if (dir.exists()) {
-            File file = new File(dir.getName().concat("\\Logger".concat(getDate()).concat(".txt")));
-
-            if (file.exists()) {
-                try (Scanner scanner = new Scanner(file)) {
-                    if (file.exists()) {
-                        boolean hasSeenStart = false;
-
-                        while (scanner.hasNext()) {
-                            String message = scanner.nextLine();
-                            if (message.contains(start))
-                                hasSeenStart = true;
-
-                            if (hasSeenStart)
-                                System.out.println(message);
-                        }
-                    }
-                } catch (FileNotFoundException e) {
-                    System.out.println("Cannot read from file");
-                }
-            }
-        }
-    }
-
-    public static void printWarningsBetweenTime(String start, String end) {
-        File dir = new File(System.getProperty("user.home").concat("\\Desktop\\Logs"));
-
-        if (dir.exists()) {
-            File file = new File(dir.getName().concat("\\Logger".concat(getDate()).concat(".txt")));
-
-            if (file.exists()) {
-                try (Scanner scanner = new Scanner(file)) {
-                    if (file.exists()) {
-                        boolean hasSeenStart = false;
-
-                        while (scanner.hasNext()) {
-                            String message = scanner.nextLine();
-                            if (message.contains(start))
-                                hasSeenStart = true;
-
-                            if (hasSeenStart)
-                                System.out.println(message);
-
-                            if (message.contains(end))
-                                hasSeenStart = false;
-                        }
-                    }
-                } catch (FileNotFoundException e) {
-                    System.out.println("Cannot read from file");
-                }
-            }
-        }
-    }
+//    public static void printWarningsBetweenTime(String start, String end) {
+//        File dir = new File(System.getProperty("user.home").concat("\\Desktop\\Logs"));
+//
+//        if (dir.exists()) {
+//            File file = new File(dir.getAbsolutePath().concat("\\Logger".concat(getDate()).concat(".txt")));
+//
+//            if (file.exists()) {
+//                try (Scanner scanner = new Scanner(file)) {
+//                    if (file.exists()) {
+//                        boolean hasSeenStart = false;
+//
+//                        while (scanner.hasNext()) {
+//                            String message = scanner.nextLine();
+//                            if (message.contains(start))
+//                                hasSeenStart = true;
+//
+//                            if (hasSeenStart)
+//                                System.out.println(message);
+//
+//                            if (message.contains(end))
+//                                hasSeenStart = false;
+//                        }
+//                    }
+//                } catch (FileNotFoundException e) {
+//                    System.out.println("Cannot read from file");
+//                }
+//            }
+//        }
+//    }
 
     public static void printWarningsFromToday() {
         File dir = new File(System.getProperty("user.home").concat("\\Desktop\\Logs"));
 
         if (dir.exists()) {
-            File file = new File(dir.getName().concat("\\Logger".concat(getDate()).concat(".txt")));
+            File file = new File(dir.getAbsolutePath().concat("\\Logger".concat(getDate()).concat(".txt")));
 
             // ArrayList<String> warnings = new ArrayList<>();
 
