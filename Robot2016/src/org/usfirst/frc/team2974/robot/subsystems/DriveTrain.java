@@ -1,32 +1,18 @@
 package org.usfirst.frc.team2974.robot.subsystems;
 
-
-
 import org.usfirst.frc.team2974.robot.RobotMap;
-
 import org.usfirst.frc.team2974.robot.commands.Drive;
 
-
-
 import edu.wpi.first.wpilibj.Encoder;
-
 import edu.wpi.first.wpilibj.PIDOutput;
-
 import edu.wpi.first.wpilibj.PIDSourceType;
-
 import edu.wpi.first.wpilibj.Solenoid;
-
 import edu.wpi.first.wpilibj.SpeedController;
-
 import edu.wpi.first.wpilibj.Talon;
-
 import edu.wpi.first.wpilibj.command.Subsystem;
-
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 //import motionProfilling.MotionControl;
-
-
 
 /**
 
@@ -36,7 +22,53 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class DriveTrain extends Subsystem {
 
-	
+	public Solenoid getShifter() {
+		return shifter;
+	}
+
+	public void setShifter(Solenoid shifter) {
+		this.shifter = shifter;
+	}
+
+	public Talon getRight1() {
+		return right1;
+	}
+
+	public Talon getLeft1() {
+		return left1;
+	}
+
+	public Talon getRight2() {
+		return right2;
+	}
+
+	public Talon getLeft2() {
+		return left2;
+	}
+
+	public Encoder getEncoderLeft() {
+		return encoderLeft;
+	}
+
+	public Encoder getEncoderRight() {
+		return encoderRight;
+	}
+
+	public PIDControllerAccel getLeftController() {
+		return leftController;
+	}
+
+	public PIDControllerAccel getRightController() {
+		return rightController;
+	}
+
+	public double getDistancePerPulse() {
+		return distancePerPulse;
+	}
+
+	public double getkV() {
+		return kV;
+	}
 
 	private final Talon right1 = RobotMap.getDriveTrainRight1();
 
@@ -46,27 +78,19 @@ public class DriveTrain extends Subsystem {
 
 	private final Talon left2 = RobotMap.getDriveTrainLeft2();
 
-	
-
 	private final Encoder encoderLeft = RobotMap.getEncoderLeft();
 
 	private final Encoder encoderRight = RobotMap.getEncoderRight();
 
-	
-
 	private Solenoid shifter = RobotMap.getPnuematicsShifter();
-
-	
 
 	private final PIDControllerAccel leftController;
 
 	private final PIDControllerAccel rightController;
 
-	
+	private final double distancePerPulse = .000515417;
 
-	private  final double distancePerPulse  = .000515417;
-
-	private final double kV = 0.5; //Max speed is 2
+	private final double kV = 0.5; // Max speed is 2
 
 	private class SharedDrive implements PIDOutput
 
@@ -76,13 +100,9 @@ public class DriveTrain extends Subsystem {
 
 		SpeedController two;
 
-		
-
 		Boolean isLeft;
 
-		
-
-		public SharedDrive(SpeedController one,SpeedController two, boolean isLeft)
+		public SharedDrive(SpeedController one, SpeedController two, boolean isLeft)
 
 		{
 
@@ -100,11 +120,9 @@ public class DriveTrain extends Subsystem {
 
 		{
 
-			if(!isLeft)
+			if (!isLeft)
 
-				out*=-1;
-
-			
+				out *= -1;
 
 			one.set(out);
 
@@ -114,109 +132,98 @@ public class DriveTrain extends Subsystem {
 
 	}
 
-	
-
 	public DriveTrain()
 
 	{
 
-		//128 pluses per revolution
+		// 128 pluses per revolution
 
-		//3x revolution for each turn of big motor
+		// 3x revolution for each turn of big motor
 
-		//diameter = 8.25 in= .21 m 
+		// diameter = 8.25 in= .21 m
 
-		//18 drive shaft
+		// 18 drive shaft
 
-		//60 wheel
+		// 60 wheel
 
-		//.21*pi/(128*3*60/18) = distance per pulse		
+		// .21*pi/(128*3*60/18) = distance per pulse
 
 		resetEncoders();
-
-		
 
 		encoderLeft.setDistancePerPulse(distancePerPulse);
 
 		encoderRight.setDistancePerPulse(distancePerPulse);
 
-		
-
 		encoderLeft.setPIDSourceType(PIDSourceType.kDisplacement);
 
 		encoderRight.setPIDSourceType(PIDSourceType.kDisplacement);
 
-		
+		leftController = new PIDControllerAccel(1, 0, 0, 1, RobotMap.getEncoderLeft(),
 
-		leftController = new PIDControllerAccel(1, 0, 0,1, RobotMap.getEncoderLeft(),  
-
-				new SharedDrive(left1,left2,true), kV, 0);
+				new SharedDrive(left1, left2, true), kV, 0);
 
 		leftController.disable();
 
-		rightController = new PIDControllerAccel(1, 0, 0, 1, RobotMap.getEncoderRight(),  
+		rightController = new PIDControllerAccel(1, 0, 0, 1, RobotMap.getEncoderRight(),
 
-				new SharedDrive( right1, right2,false), kV, 0);
+				new SharedDrive(right1, right2, false), kV, 0);
 
 		rightController.disable();
 
-		
+	}
+
+	@Override
+	public void initDefaultCommand() {
+
+		setDefaultCommand(new Drive());
 
 	}
 
-    public void initDefaultCommand() {
+	public void setSpeeds(double left, double right)
 
-        setDefaultCommand(new Drive());
+	{
 
-    }
+		this.right1.set(-right);
 
-    public void setSpeeds(double left, double right)
+		this.right2.set(-right);
 
-    {
+		this.left1.set(left);
 
-    	this.right1.set(-right);
+		this.left2.set(left);
 
-    	this.right2.set(-right);
+		SmartDashboard.putNumber("left", left);
 
-    	this.left1.set(left);
+		SmartDashboard.putNumber("right", -right);
 
-    	this.left2.set(left);
+	}
 
-    	SmartDashboard.putNumber("left", left);
+	public void resetEncoders()
 
-    	SmartDashboard.putNumber("right", -right);
+	{
 
-    }
+		encoderLeft.reset();
 
-    public void resetEncoders()
+		encoderRight.reset();
 
-    {
+	}
 
-    	encoderLeft.reset();
+	public double getMeanDistance() {
 
-    	encoderRight.reset();
+		return (encoderRight.getDistance() + encoderLeft.getDistance()) / 2;
 
-    }
+	}
 
-    
+	// public void setSetPoint(MotionControl mc, double time)
 
-    public double getMeanDistance(){
+	// {
 
-    	return (encoderRight.getDistance() + encoderLeft.getDistance())/2;
+	// fix acceleration
 
-    }
+	// leftController.setSetpoint(mc.distanceleft(time),mc.velocityLeft(time),0);
 
-//    public void setSetPoint(MotionControl mc, double time)
+	// rightController.setSetpoint(mc.distanceRight(time),mc.velocityRight(time),0);
 
-//    {
-
-    	//fix acceleration
-
-//    	leftController.setSetpoint(mc.distanceleft(time),mc.velocityLeft(time),0);
-
-//    	rightController.setSetpoint(mc.distanceRight(time),mc.velocityRight(time),0);
-
-//    }
+	// }
 
 	public void setSetPoint(double dist, double velocity) {
 
@@ -228,9 +235,7 @@ public class DriveTrain extends Subsystem {
 
 	}
 
-	
-
-	public void disableMotionController(){
+	public void disableMotionController() {
 
 		leftController.disable();
 
@@ -238,9 +243,7 @@ public class DriveTrain extends Subsystem {
 
 	}
 
-	
-
-	public void enableMotionController(){
+	public void enableMotionController() {
 
 		leftController.enable();
 
@@ -248,65 +251,61 @@ public class DriveTrain extends Subsystem {
 
 	}
 
-    
+	public void shiftUp()
 
-    public void shiftUp()
+	{
 
-    {
+		if (!shifter.get())
 
-    	if(!shifter.get())
+		{
 
-    	{
+			shifter.set(true);
 
-    		shifter.set(true);
+		}
 
-    	}
+	}
 
-    }
+	public void shiftDown()
 
-    public void shiftDown()
+	{
 
-    {
+		if (shifter.get())
 
-    	if(shifter.get())
+		{
 
-    	{
+			shifter.set(false);
 
-    		shifter.set(false);
+		}
 
-    	}
+	}
 
-    }
+	public void dumpSmartdashboardValues()
 
-    public void dumpSmartdashboardValues()
+	{
 
-    {
-
-    	SmartDashboard.putNumber("EncoderLeft", encoderLeft.getDistance());
+		SmartDashboard.putNumber("EncoderLeft", encoderLeft.getDistance());
 
 		SmartDashboard.putNumber("EncoderRight", encoderRight.getDistance());
-
-		
 
 		SmartDashboard.putNumber("Velocity Left", encoderLeft.getRate());
 
 		SmartDashboard.putNumber("Velocity Right", encoderRight.getRate());
 
-    }
+	}
 
-    public void initSmartdashBoardValues()
+	public void initSmartdashBoardValues()
 
-    {
+	{
 
-        SmartDashboard.putNumber("kV", 1.0/1.5);
+		SmartDashboard.putNumber("kV", 1.0 / 1.5);
 
-    	SmartDashboard.putNumber("kA", 0);
+		SmartDashboard.putNumber("kA", 0);
 
-    	SmartDashboard.putNumber("P", 0);
+		SmartDashboard.putNumber("P", 0);
 
-    	SmartDashboard.putNumber("I", 0);
+		SmartDashboard.putNumber("I", 0);
 
-    	SmartDashboard.putNumber("D", 0);
+		SmartDashboard.putNumber("D", 0);
 
-    }
+	}
 }

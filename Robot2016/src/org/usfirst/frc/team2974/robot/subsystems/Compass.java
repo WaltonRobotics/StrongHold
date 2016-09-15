@@ -1,17 +1,12 @@
 package org.usfirst.frc.team2974.robot.subsystems;
 
 import org.usfirst.frc.team2974.robot.Robot;
-
 import org.usfirst.frc.team2974.robot.RobotMap;
-
 import org.usfirst.frc.team2974.robot.sensors.BNO055;
-
 import org.usfirst.frc.team2974.robot.sensors.BNO055.BNO055Exception;
-
 import org.usfirst.frc.team2974.robot.sensors.BNO055.OperationMode;
 
 import edu.wpi.first.wpilibj.command.Subsystem;
-
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
@@ -30,6 +25,7 @@ public class Compass extends Subsystem {
 
 	private final BNO055 compass = RobotMap.getCompass();
 
+	@Override
 	public void initDefaultCommand() {
 	}
 

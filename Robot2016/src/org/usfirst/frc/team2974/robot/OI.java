@@ -49,8 +49,8 @@ public class OI {
 
 	public OI() {
 		// SmartDashboard.putData(new DriveSpline());
-		//SmartDashboard.putData(new DriveSpline());
-		
+		// SmartDashboard.putData(new DriveSpline());
+
 		left = new Joystick(0);
 		right = new Joystick(1);
 		gamepad = new Gamepad(2);
@@ -85,7 +85,6 @@ public class OI {
 
 		resetShooter.whenPressed(new ShooterReset());
 
-
 		Button testCommand = new JoystickButton(right, 2);
 
 		testCommand.whenPressed(new DriveLocate());
@@ -97,11 +96,11 @@ public class OI {
 		// testAuton = new JoystickButton(gamepad, 6);//remove l8er TODO
 		// testAuton.whenPressed(new TestAuton());
 
-//		aimLeft.whenPressed(new Aim(0));
-//		aimRight.whenPressed(new Aim(2));
-		
-		//testAuton = new JoystickButton(gamepad, 6);//remove l8er TODO
-		//testAuton.whenPressed(new TestAuton());
+		// aimLeft.whenPressed(new Aim(0));
+		// aimRight.whenPressed(new Aim(2));
+
+		// testAuton = new JoystickButton(gamepad, 6);//remove l8er TODO
+		// testAuton.whenPressed(new TestAuton());
 
 		SmartDashboard.putData("Drive Forward 1m", new DriveStraightMC(1.0, 0.5, 0.1));
 	}

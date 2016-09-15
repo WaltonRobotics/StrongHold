@@ -7,18 +7,67 @@ import org.usfirst.frc.team2974.robot.subsystems.DriveTrain;
 
 import edu.wpi.first.wpilibj.command.Command;
 
-public class DriveLocate extends Command{
+public class DriveLocate extends Command {
 	private final double timeOut = 3;
-	double conversionRateL;
-	double conversionRateR;
-	double thresholdYaw;
-	final double thresholdPitch = 5;
-	double targetAngle;
-	double aMax;
-	double vDrive;
-	DriveTrain driveTrain;
-	Compass compass;
-	
+	private double conversionRateL;
+	private double conversionRateR;
+	private double thresholdYaw;
+	private final double thresholdPitch = 5;
+	private double targetAngle;
+	private double aMax;
+
+	public double getTargetAngle() {
+		return targetAngle;
+	}
+
+	public void setTargetAngle(double targetAngle) {
+		this.targetAngle = targetAngle;
+	}
+
+	public double getaMax() {
+		return aMax;
+	}
+
+	public void setaMax(double aMax) {
+		this.aMax = aMax;
+	}
+
+	public double getvDrive() {
+		return vDrive;
+	}
+
+	public void setvDrive(double vDrive) {
+		this.vDrive = vDrive;
+	}
+
+	public DriveTrain getDriveTrain() {
+		return driveTrain;
+	}
+
+	public void setDriveTrain(DriveTrain driveTrain) {
+		this.driveTrain = driveTrain;
+	}
+
+	public Compass getCompass() {
+		return compass;
+	}
+
+	public void setCompass(Compass compass) {
+		this.compass = compass;
+	}
+
+	public double getTimeOut() {
+		return timeOut;
+	}
+
+	public double getThresholdPitch() {
+		return thresholdPitch;
+	}
+
+	private double vDrive;
+	private DriveTrain driveTrain;
+	private Compass compass;
+
 	public DriveLocate() {
 		requires(Robot.getDriveTrain());
 		requires(Robot.getCompass());
