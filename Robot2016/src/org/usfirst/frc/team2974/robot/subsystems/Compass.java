@@ -1,5 +1,6 @@
 package org.usfirst.frc.team2974.robot.subsystems;
 
+import org.usfirst.frc.team2974.robot.Robot;
 import org.usfirst.frc.team2974.robot.RobotMap;
 import org.usfirst.frc.team2974.robot.sensors.BNO055;
 import org.usfirst.frc.team2974.robot.sensors.BNO055.BNO055Exception;
@@ -14,7 +15,8 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 public class Compass extends Subsystem {
 	
 	private final double PITCHOFFSET = 2.5;
-	public double yawOffset = 0;
+	private double pitchOffset = 0;
+	private double yawOffset = 0;
 	
     BNO055 compass = RobotMap.compass;
 
@@ -34,6 +36,11 @@ public class Compass extends Subsystem {
 		} catch (BNO055Exception e) {
 			e.printStackTrace();
 		}
+    	Robot.compass.zeroRobot();
+    }
+    public void zeroRobot(){
+    	yawOffset = getYaw();
+    	pitchOffset = PITCHOFFSET;
     }
     /**
      * left increase
@@ -58,7 +65,7 @@ public class Compass extends Subsystem {
     public double getPitch() //Vertical tilt
     {
        	try {
-    			return compass.getVector(BNO055.VectorType.VECTOR_EULER)[1] - PITCHOFFSET;
+    			return compass.getVector(BNO055.VectorType.VECTOR_EULER)[1] - pitchOffset;
     		} catch (BNO055Exception e) {
     			// TODO Auto-generated catch block
     			e.printStackTrace();

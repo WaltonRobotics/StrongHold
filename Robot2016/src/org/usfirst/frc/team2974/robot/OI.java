@@ -48,8 +48,6 @@ public class OI {
 	
 	public boolean autoShoot;
 	
-	public Button testAuton;
-	
 	public OI()
 	{
 		//SmartDashboard.putData(new DriveSpline());
@@ -87,10 +85,6 @@ public class OI {
 		startTensioning.whenPressed(new Tension());
 		
 		resetShooter.whenPressed(new ShooterReset());
-			
-		testCommand = new JoystickButton(right, 2);
-		
-		testCommand.whenPressed(new DriveLocate());
 //		aimLeft.whenPressed(new Aim(0));
 //		aimRight.whenPressed(new Aim(2));
 		

@@ -7,14 +7,16 @@ import edu.wpi.first.wpilibj.command.Command;
 
 public class MoveToObstacle extends Command{
 	double threshold;
-	Compass thisCompass;
+	double direction;
+	
+	public MoveToObstacle(double direction){
+		this.direction = direction;
+	}
 	
 	@Override
 	protected void initialize() {
-		Robot.driveTrain.setSpeeds(25, 25);//Magic number - change this after testing with actual robot
-		Compass thisCompass = new Compass(); 
-		thisCompass.initializeCompass();
-		threshold = 25; //another magic number to test
+		Robot.driveTrain.setSpeeds(1*direction, 1*direction);//Magic number - change this after testing with actual robot
+		threshold = 7*direction; //another magic number to test
 	}
 	
 	@Override
@@ -29,7 +31,7 @@ public class MoveToObstacle extends Command{
 	@Override
 	protected boolean isFinished() {
 		// Create an if statement which will call end
-		if(thisCompass.getYaw() > threshold){
+		if(Robot.compass.getPitch() > threshold){
 			return true;
 		}
 		return false;
@@ -38,13 +40,14 @@ public class MoveToObstacle extends Command{
 	@Override
 	protected void end() {
 		// TODO Auto-generated method stub
+		Robot.driveTrain.setSpeeds(0, 0);
 		
 	}
 
 	@Override
 	protected void interrupted() {
 		// TODO Auto-generated method stub
-		
+		end();
 	}
 
 }

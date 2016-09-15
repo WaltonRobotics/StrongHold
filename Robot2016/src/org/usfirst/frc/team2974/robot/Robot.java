@@ -12,6 +12,8 @@ import org.usfirst.frc.team2974.robot.autonomousCommandGroups.RockWall;
 import org.usfirst.frc.team2974.robot.autonomousCommandGroups.RoughTerrain;
 import org.usfirst.frc.team2974.robot.autonomousCommands.DoNothing;
 import org.usfirst.frc.team2974.robot.autonomousCommands.DriveLocate;
+import org.usfirst.frc.team2974.robot.autonomousCommands.MoveToObstacle;
+import org.usfirst.frc.team2974.robot.autonomousCommands.TurnToAngle;
 import org.usfirst.frc.team2974.robot.commands.Aim;
 import org.usfirst.frc.team2974.robot.commands.ControlAim.aimState;
 import org.usfirst.frc.team2974.robot.commands.Drive;
@@ -151,16 +153,6 @@ public class Robot extends IterativeRobot {
 		Robot.shooter.dumpSmartDashboardValues();
 		Robot.driveTrain.dumpSmartdashboardValues();
 
-		SmartDashboard.putData("DriveLocate", new DriveLocate());
-		SmartDashboard.putData("ChivalDeFreze", new ChivalDeFreze());
-		SmartDashboard.putData("Rock wall", new RockWall());
-		SmartDashboard.putData("Rough Terain", new RoughTerrain());
-		SmartDashboard.putData("Low Bar", new LowBar());
-		SmartDashboard.putData("Moat", new Moat());
-		SmartDashboard.putData("Ramparts", new Ramparts());
-		
-		SmartDashboard.putData("Switch Drives", new SwitchDrives());
-
 		SmartDashboard.putBoolean("aimed", Math.abs(Robot.camera.getXLeft() - Aim.centerX) < Aim.threshold);
 		SmartDashboard.putBoolean("left", Robot.camera.getXRight() - Aim.centerX > 0);
 		SmartDashboard.putBoolean("right", Robot.camera.getXRight() - Aim.centerX < 0);
@@ -211,6 +203,22 @@ public class Robot extends IterativeRobot {
 		
 		else
 			SmartDashboard.putString("Image Error", "No image found: " + imageFile.getName() + ", " + errorImage.getName());
+		
+		SmartDashboard.putData("DriveLocate", new DriveLocate());
+		SmartDashboard.putData("ChivalDeFreze", new ChivalDeFreze());
+		SmartDashboard.putData("Rock wall", new RockWall());
+		SmartDashboard.putData("Rough Terain", new RoughTerrain());
+		SmartDashboard.putData("Low Bar", new LowBar());
+		SmartDashboard.putData("Moat", new Moat());
+		SmartDashboard.putData("Ramparts", new Ramparts());
+		SmartDashboard.putData("TurnNorth",new TurnToAngle(0));
+		SmartDashboard.putData("TurnSouth",new TurnToAngle(180));
+		SmartDashboard.putData("TurnEast",new TurnToAngle(90));
+		SmartDashboard.putData("TurnWest",new TurnToAngle(270));
+		SmartDashboard.putData("ApproachForward",new MoveToObstacle(1));
+		SmartDashboard.putData("ApproachBackward",new MoveToObstacle(-1));
+		
+		SmartDashboard.putData("Switch Drives", new SwitchDrives());
 	}
 
 	@Override
