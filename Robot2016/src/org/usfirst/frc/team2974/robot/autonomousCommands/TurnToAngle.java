@@ -12,86 +12,53 @@ import edu.wpi.first.wpilibj.command.Command;
  * its GOAL_ANGLE it does this by turn form a point.
  */
 public class TurnToAngle extends Command {
+	 final double SPEED = .5;
+	 final double GOAL_ANGLE;
+	 final double TOLERANCE = 10;
+	 private final double PROPORTIONAL_ZONE = 30;
+	    
+   public TurnToAngle(double angle) {
+       requires(Robot.getDriveTrain());
+       requires(Robot.getCompass());
+       this.GOAL_ANGLE = angle;
+   }
 
-	private final double GOAL_ANGLE;
-	private final double START_YAW_ANGLE;// = Robot.compass.getYaw();
-	private final boolean TURN_CLOCKWISE;
-	private final double ANGLES_TO_TURN;
-	private final double TOLERANCE;
+   // Called just before this Command runs the first time
+   protected void initialize() {
+   }
 
-	private ArrayList<Double> offsets;
+   // Called repeatedly when this Command is scheduled to run
+   protected void execute() {
+   	double deltaYaw = errorAngle();
+   	double direction = Math.signum(deltaYaw);
+   	double speedMag = Math.abs(deltaYaw)/PROPORTIONAL_ZONE;
+   	Robot.getDriveTrain().setSpeeds(speedMag * direction, -speedMag * direction);
+   }
 
-	public TurnToAngle(double angle) {
-		requires(Robot.getDriveTrain());
-		requires(Robot.getCompass());
-		this.TOLERANCE = 10;
-		this.GOAL_ANGLE = Math.abs(angle);
-		this.START_YAW_ANGLE = Robot.getCompass().getYaw();
-		this.TURN_CLOCKWISE = Math.abs(this.GOAL_ANGLE - this.START_YAW_ANGLE) <= 180;
-		this.ANGLES_TO_TURN = TURN_CLOCKWISE ? Math.abs(GOAL_ANGLE - START_YAW_ANGLE) - getOffsetsAverage()
-				: 360 - Math.abs(GOAL_ANGLE - START_YAW_ANGLE) + getOffsetsAverage();
-
-		offsets = new ArrayList<>();
-	}
-
-	// Called once after isFinished returns true
-	@Override
-	protected void end() {
-		final double offset = Robot.getCompass().getYaw() - START_YAW_ANGLE - GOAL_ANGLE;
-
-		if (Math.abs(offset) <= 1) {
-			Message.addWarning("The robot is not moving staright there is an offset of ".concat(String.valueOf(offset)),
-					this);
+   // Make this return true when this Command no longer needs to run execute()
+   protected boolean isFinished() {
+   	return Math.abs(errorAngle()) <= TOLERANCE;
+   }
+   
+   private double errorAngle(){
+   	double deltaYaw = Robot.getCompass().getYaw()- GOAL_ANGLE;
+   	if(deltaYaw > 180){
+			deltaYaw -= 360;
 		}
+		if(deltaYaw < -180){
+			deltaYaw += 360;
+		}
+		return deltaYaw;
+   }
 
-		offsets.add(Math.abs(offset));
-	}
+   // Called once after isFinished returns true
+   protected void end() {
+   	Robot.getDriveTrain().setSpeeds(0, 0);
+   }
 
-	// Called repeatedly when this Command is scheduled to run
-	@Override
-	protected void execute() {
-		double deltaYawAngle = Math.abs(Robot.getCompass().getYaw() - START_YAW_ANGLE);
-
-		double SPEED = .5;
-		if (TURN_CLOCKWISE)
-			if (Math.abs(deltaYawAngle - START_YAW_ANGLE) < ANGLES_TO_TURN)
-				Robot.getDriveTrain().setSpeeds(SPEED, -SPEED);
-
-			else if (Math.abs(deltaYawAngle - START_YAW_ANGLE) < ANGLES_TO_TURN)
-				Robot.getDriveTrain().setSpeeds(-SPEED, SPEED);
-
-			else
-				Robot.getDriveTrain().setSpeeds(0, 0);
-	}
-
-	public ArrayList<Double> getOffsets() {
-		return offsets;
-	}
-
-	public double getOffsetsAverage() {
-		double average = 0;
-
-		if (getOffsets() != null && getOffsets().size() != 0)
-			for (Double offset : getOffsets())
-				average += offset;
-
-		return average;
-	}
-
-	// Called just before this Command runs the first time
-	@Override
-	protected void initialize() {
-	}
-
-	// Called when another command which requires one or more of the same
-	// subsystems is scheduled to run
-	@Override
-	protected void interrupted() {
-	}
-
-	// Make this return true when this Command no longer needs to run execute()
-	@Override
-	protected boolean isFinished() {
-		return Math.abs(Math.abs(Robot.getCompass().getYaw() - START_YAW_ANGLE) - GOAL_ANGLE) <= TOLERANCE;
-	}
+   // Called when another command which requires one or more of the same
+   // subsystems is scheduled to run
+   protected void interrupted() {
+   	end();
+   }
 }

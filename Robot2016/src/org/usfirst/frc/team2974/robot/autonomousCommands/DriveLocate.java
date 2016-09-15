@@ -1,20 +1,24 @@
 package org.usfirst.frc.team2974.robot.autonomousCommands;
 
 import org.usfirst.frc.team2974.robot.Robot;
+import org.usfirst.frc.team2974.robot.subsystems.Compass;
 //import org.usfirst.frc.team2974.robot.subsystems.Compass;
 import org.usfirst.frc.team2974.robot.subsystems.DriveTrain;
 
 import edu.wpi.first.wpilibj.command.Command;
 
-public class DriveLocate extends Command {
-	private final double aMax;
-	private final double vDrive;
-	private final DriveTrain driveTrain;
-	private double conversionRateL;
-	private double conversionRateR;
-	private double thresholdYaw;
-	private double targetAngle;
-
+public class DriveLocate extends Command{
+	private final double timeOut = 3;
+	double conversionRateL;
+	double conversionRateR;
+	double thresholdYaw;
+	final double thresholdPitch = 5;
+	double targetAngle;
+	double aMax;
+	double vDrive;
+	DriveTrain driveTrain;
+	Compass compass;
+	
 	public DriveLocate() {
 		requires(Robot.getDriveTrain());
 		requires(Robot.getCompass());

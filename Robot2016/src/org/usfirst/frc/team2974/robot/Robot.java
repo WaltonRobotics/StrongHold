@@ -1,6 +1,11 @@
 package org.usfirst.frc.team2974.robot;
 
+
 import org.usfirst.frc.team2974.dataLogs.Message;
+
+import java.awt.Image;
+import java.io.File;
+
 import org.usfirst.frc.team2974.robot.autonomousCommandGroups.ChivalDeFreze;
 import org.usfirst.frc.team2974.robot.autonomousCommandGroups.FullRunnableAuton;
 import org.usfirst.frc.team2974.robot.autonomousCommandGroups.LowBar;
@@ -10,9 +15,13 @@ import org.usfirst.frc.team2974.robot.autonomousCommandGroups.RockWall;
 import org.usfirst.frc.team2974.robot.autonomousCommandGroups.RoughTerrain;
 import org.usfirst.frc.team2974.robot.autonomousCommands.DoNothing;
 import org.usfirst.frc.team2974.robot.autonomousCommands.DriveLocate;
+import org.usfirst.frc.team2974.robot.autonomousCommands.MoveToObstacle;
+import org.usfirst.frc.team2974.robot.autonomousCommands.TurnToAngle;
 import org.usfirst.frc.team2974.robot.commands.Aim;
 import org.usfirst.frc.team2974.robot.commands.ControlAim.aimState;
+import org.usfirst.frc.team2974.robot.commands.Drive;
 import org.usfirst.frc.team2974.robot.commands.ShowInputs;
+import org.usfirst.frc.team2974.robot.commands.SwitchDrives;
 import org.usfirst.frc.team2974.robot.subsystems.Arm;
 import org.usfirst.frc.team2974.robot.subsystems.Camera;
 import org.usfirst.frc.team2974.robot.subsystems.Compass;
@@ -20,12 +29,17 @@ import org.usfirst.frc.team2974.robot.subsystems.DriveTrain;
 import org.usfirst.frc.team2974.robot.subsystems.Flipper;
 import org.usfirst.frc.team2974.robot.subsystems.Inputs;
 import org.usfirst.frc.team2974.robot.subsystems.Intake;
+import org.usfirst.frc.team2974.robot.subsystems.IntakeWheels;
 //import org.usfirst.frc.team2974.robot.subsystems.IntakeWheels;
 import org.usfirst.frc.team2974.robot.subsystems.Shooter;
 
 import edu.wpi.first.wpilibj.CameraServer;
 import edu.wpi.first.wpilibj.IterativeRobot;
+
 import edu.wpi.first.wpilibj.Sendable;
+
+import edu.wpi.first.wpilibj.NamedSendable;
+
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.CommandGroup;
 import edu.wpi.first.wpilibj.command.Scheduler;
@@ -35,6 +49,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class Robot extends IterativeRobot {
+
 
 	private static final aimState aimingState = aimState.onbaord;
 	private static OI oi;
@@ -46,6 +61,7 @@ public class Robot extends IterativeRobot {
 	private static Compass compass;
 	private static Flipper flipper;
 	private static Intake intake;
+
 	private static SendableChooser autoChooser;
 	private static SendableChooser locationChooser;
 	private static Command autonomousCommand;
@@ -139,12 +155,12 @@ public class Robot extends IterativeRobot {
 	 */
 	@Override
 	public void autonomousInit() {
-		getCompass().initializeCompass();
+		compass.initializeCompass();
 		autonomousCommand = new FullRunnableAuton((CommandGroup) autoChooser.getSelected(),
 				(AutonLocator) locationChooser.getSelected());
 		autonomousCommand.start();
 		Scheduler.getInstance().add(new ShowInputs());
-		SmartDashboard.putBoolean("aimed", Math.abs(Robot.getCamera().getXLeft() - Aim.centerX) < Aim.threshold);
+		SmartDashboard.putBoolean("aimed", Math.abs(Robot.camera.getXLeft() - Aim.centerX) < Aim.threshold);
 
 	}
 
@@ -154,7 +170,7 @@ public class Robot extends IterativeRobot {
 	@Override
 	public void autonomousPeriodic() {
 		Scheduler.getInstance().run();
-		SmartDashboard.putBoolean("aimed", Math.abs(Robot.getCamera().getXRight() - Aim.centerX) < Aim.threshold);
+		SmartDashboard.putBoolean("aimed", Math.abs(Robot.camera.getXRight() - Aim.centerX) < Aim.threshold);
 
 	}
 
@@ -214,6 +230,8 @@ public class Robot extends IterativeRobot {
 
 	@Override
 	public void disabledPeriodic() {
+		
+		SmartDashboard.putString("Drive Mode:",Drive.driveMode);
 
 		Robot.getInputs().updateSmartDashboard();
 		Robot.getCompass().dumpSmartDashboardValues();
@@ -223,17 +241,9 @@ public class Robot extends IterativeRobot {
 		Robot.getShooter().dumpSmartDashboardValues();
 		Robot.getDriveTrain().dumpSmartdashboardValues();
 
-		SmartDashboard.putData("DriveLocate", new DriveLocate());
-		SmartDashboard.putData("ChivalDeFreze", new ChivalDeFreze());
-		SmartDashboard.putData("Rock wall", new RockWall());
-		SmartDashboard.putData("Rough Terain", new RoughTerrain());
-		SmartDashboard.putData("Low Bar", new LowBar());
-		SmartDashboard.putData("Moat", new Moat());
-		SmartDashboard.putData("Ramparts", new Ramparts());
-
-		SmartDashboard.putBoolean("aimed", Math.abs(Robot.getCamera().getXLeft() - Aim.centerX) < Aim.threshold);
-		SmartDashboard.putBoolean("left", Robot.getCamera().getXRight() - Aim.centerX > 0);
-		SmartDashboard.putBoolean("right", Robot.getCamera().getXRight() - Aim.centerX < 0);
+		SmartDashboard.putBoolean("aimed", Math.abs(Robot.camera.getXLeft() - Aim.centerX) < Aim.threshold);
+		SmartDashboard.putBoolean("left", Robot.camera.getXRight() - Aim.centerX > 0);
+		SmartDashboard.putBoolean("right", Robot.camera.getXRight() - Aim.centerX < 0);
 	}
 
 	/**
@@ -252,33 +262,35 @@ public class Robot extends IterativeRobot {
 		// e.printStackTrace();
 		// }
 		RobotMap.init();
-		setDriveTrain(new DriveTrain());
-		setInputs(new Inputs());
-		setArm(new Arm());
-		setShooter(new Shooter());
-		setCamera(new Camera());
-		setCompass(new Compass());
-		setFlipper(new Flipper());
-		setIntake(new Intake());
-		// IntakeWheels intakeWheels = new IntakeWheels();
+
+		driveTrain = new DriveTrain();
+		inputs = new Inputs();
+		arm = new Arm();
+		shooter = new Shooter();
+		camera = new Camera();
+		compass = new Compass();
+		flipper = new Flipper();
+		intake = new Intake();
+		IntakeWheels intakeWheels = new IntakeWheels();
 
 		createAutonomousChooser();
-		setOi(new OI());
+		oi = new OI();
 
 		CameraServer server = CameraServer.getInstance();
 		server.setQuality(0);
 		server.startAutomaticCapture("cam1");
-
-		// be sure to have the exact same name as the file and the extension,
-		// test without the extension
-		String imageName = "TestImage.png";
-
-		// be sure to put the image in the same directory as this class
-		try {
-			SmartDashboard.putData("Image", (Sendable) new RGBImage(imageName));
-		} catch (NIVisionException e) {
-			Message.addError("Unable to add image", this);
-		}
+		
+		File imageFile = new File("TestImage.jpg");
+		File errorImage = new File("ErrorMessage.png");
+		
+		if(imageFile.exists())
+			SmartDashboard.putData("Image", (NamedSendable) imageFile);
+		
+		else if(errorImage.exists())
+			SmartDashboard.putData("Image", (NamedSendable) errorImage);
+		
+		else
+			SmartDashboard.putString("Image Error", "No image found: " + imageFile.getName() + ", " + errorImage.getName());
 	}
 
 	@Override
@@ -288,9 +300,10 @@ public class Robot extends IterativeRobot {
 			autonomousCommand.cancel();
 		Scheduler.getInstance().add(new ShowInputs());
 
-		SmartDashboard.putBoolean("aimed", Math.abs(Robot.getCamera().getXRight() - Aim.centerX) < Aim.threshold);
-		SmartDashboard.putBoolean("left", Robot.getCamera().getXRight() - Aim.centerX > 0);
-		SmartDashboard.putBoolean("right", Robot.getCamera().getXRight() - Aim.centerX < 0);
+
+		SmartDashboard.putBoolean("aimed", Math.abs(Robot.camera.getXRight() - Aim.centerX) < Aim.threshold);
+		SmartDashboard.putBoolean("left", Robot.camera.getXRight() - Aim.centerX > 0);
+		SmartDashboard.putBoolean("right", Robot.camera.getXRight() - Aim.centerX < 0);
 	}
 
 	/**

@@ -5,45 +5,47 @@ import org.usfirst.frc.team2974.robot.subsystems.Compass;
 
 import edu.wpi.first.wpilibj.command.Command;
 
-class MoveToObstacle extends Command {
+public class MoveToObstacle extends Command{
+	double threshold;
+	double direction;
 	private Compass thisCompass;
-	private double threshold;
-
+	
+	public MoveToObstacle(double direction){
+		this.direction = direction;
+	}
+	
 	@Override
-	protected void end() {
-		// TODO Auto-generated method stub
-
+	protected void initialize() {
+		Robot.getDriveTrain().setSpeeds(1*direction, 1*direction);//Magic number - change this after testing with actual robot
+		threshold = 7*direction; //another magic number to test
 	}
 
 	@Override
 	protected void execute() {
 		// Create an if statement which calls is finished
-		if (isFinished()) {
+		if (isFinished()) 
 			end();
-		}
-
-	}
-
-	@Override
-	protected void initialize() {
-		Robot.getDriveTrain().setSpeeds(25, 25);// Magic number - change this
-												// after
-		// testing with actual robot
-		this.thisCompass = new Compass();
-		thisCompass.initializeCompass();
-		threshold = 25; // another magic number to test
-	}
-
-	@Override
-	protected void interrupted() {
-		// TODO Auto-generated method stub
-
 	}
 
 	@Override
 	protected boolean isFinished() {
 		// Create an if statement which will call end
-		return thisCompass.getYaw() > threshold;
+		if(Robot.getCompass().getPitch() > threshold){
+			return true;
+		}
+		return false;
+	}
+
+	@Override
+	protected void interrupted() {
+		// TODO Auto-generated method stub
+		end();
+	}
+
+	@Override
+	protected void end() {
+		// TODO Auto-generated method stub
+		
 	}
 
 }
