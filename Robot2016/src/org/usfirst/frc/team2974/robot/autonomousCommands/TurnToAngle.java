@@ -2,7 +2,7 @@ package org.usfirst.frc.team2974.robot.autonomousCommands;
 
 import java.util.ArrayList;
 
-import org.usfirst.frc.team2974.dataLogs.WarningMessages;
+import org.usfirst.frc.team2974.dataLogs.Message;
 import org.usfirst.frc.team2974.robot.Robot;
 
 import edu.wpi.first.wpilibj.command.Command;
@@ -40,8 +40,8 @@ public class TurnToAngle extends Command {
 		final double offset = Robot.getCompass().getYaw() - START_YAW_ANGLE - GOAL_ANGLE;
 
 		if (Math.abs(offset) <= 1) {
-			WarningMessages.addWarning(
-					"The robot is not moving staright there is an offset of ".concat(String.valueOf(offset)), this);
+			Message.addWarning("The robot is not moving staright there is an offset of ".concat(String.valueOf(offset)),
+					this);
 		}
 
 		offsets.add(Math.abs(offset));

@@ -1,6 +1,6 @@
 package org.usfirst.frc.team2974.robot;
 
-import org.usfirst.frc.team2974.dataLogs.WarningMessages;
+import org.usfirst.frc.team2974.dataLogs.Message;
 import org.usfirst.frc.team2974.robot.autonomousCommandGroups.ChivalDeFreze;
 import org.usfirst.frc.team2974.robot.autonomousCommandGroups.FullRunnableAuton;
 import org.usfirst.frc.team2974.robot.autonomousCommandGroups.LowBar;
@@ -252,8 +252,6 @@ public class Robot extends IterativeRobot {
 		// e.printStackTrace();
 		// }
 		RobotMap.init();
-		WarningMessages.initiateLoggerFile();
-
 		setDriveTrain(new DriveTrain());
 		setInputs(new Inputs());
 		setArm(new Arm());
@@ -279,10 +277,8 @@ public class Robot extends IterativeRobot {
 		try {
 			SmartDashboard.putData("Image", (Sendable) new RGBImage(imageName));
 		} catch (NIVisionException e) {
-			WarningMessages.addError("Unable to add image", this);
+			Message.addError("Unable to add image", this);
 		}
-
-		WarningMessages.printWarningsFromToday();
 	}
 
 	@Override

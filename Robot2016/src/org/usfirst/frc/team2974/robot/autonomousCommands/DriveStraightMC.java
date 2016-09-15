@@ -1,6 +1,6 @@
 package org.usfirst.frc.team2974.robot.autonomousCommands;
 
-import org.usfirst.frc.team2974.dataLogs.WarningMessages;
+import org.usfirst.frc.team2974.dataLogs.Message;
 import org.usfirst.frc.team2974.robot.Robot;
 import org.usfirst.frc.team2974.robot.subsystems.DriveTrain;
 
@@ -68,8 +68,8 @@ public class DriveStraightMC extends Command {
 		final int offset = (int) previousYawValue - (int) Robot.getCompass().getYaw();
 
 		if (Math.abs(offset) <= 1) {
-			WarningMessages.addWarning(
-					"The robot is not moving staright there is an offset of ".concat(String.valueOf(offset)), this);
+			Message.addWarning("The robot is not moving staright there is an offset of ".concat(String.valueOf(offset)),
+					this);
 			previousYawValue = previousYawValue + offset;
 		}
 	}
