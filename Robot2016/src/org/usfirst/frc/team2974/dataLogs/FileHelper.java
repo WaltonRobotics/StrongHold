@@ -7,27 +7,27 @@ import java.io.IOException;
 
 public class FileHelper {
     public static File create(String path) {
-        final File toReturn = new File(path);
+        File temp = null;
 
         if (path.contains(".")) {
-            for (int i = path.indexOf("\\"); i >= 0 && i < path.length(); i = path.indexOf("\\", i + 1)) {
-                final File f = new File(path.substring(0, i));
+            temp = new File(path.substring(0, path.lastIndexOf("\\")));
 
-                if (!f.exists())
-                    if (f.mkdir())
-                        System.out.println("Managed to create directory " + f.getName());
+            if (temp.mkdirs())
+                System.out.println("Managed to create directory ".concat(temp.getAbsolutePath()));
+            else
+                System.out.println("Did not managed to create directory ".concat(temp.getAbsolutePath()));
+
+            temp = new File(path);
+
+            try {
+                if (temp.createNewFile())
+                    System.out.println("Managed to create ".concat(temp.getName()));
+            } catch (IOException e) {
+                System.out.println("Could not manage to create " + temp.getName());
             }
         }
 
-        if (!toReturn.exists())
-            try {
-                if (toReturn.createNewFile())
-                    System.out.println("Managed to create file " + toReturn.getName());
-            } catch (IOException e) {
-                System.out.println("Did not manage to create file " + toReturn.getName());
-            }
-
-        return toReturn;
+        return temp;
     }
 
     public static void writeToFile(String message, File file) {
@@ -40,7 +40,6 @@ public class FileHelper {
     }
 
     public static String formatFilePath(String path) {
-
         if (!File.separator.equals("\\"))
             while (path.contains("\\"))
                 path = path.replace("\\", File.separator);
