@@ -4,7 +4,7 @@ import java.awt.Image;
 import java.io.File;
 
 import org.usfirst.frc.team2974.robot.autonomousCommandGroups.ChivalDeFreze;
-import org.usfirst.frc.team2974.robot.autonomousCommandGroups.FullRunnableAuton;
+import org.usfirst.frc.team2974.robot.autonomousCommandGroups.ActivateAuton;
 import org.usfirst.frc.team2974.robot.autonomousCommandGroups.LowBar;
 import org.usfirst.frc.team2974.robot.autonomousCommandGroups.Moat;
 import org.usfirst.frc.team2974.robot.autonomousCommandGroups.Ramparts;
@@ -68,7 +68,7 @@ public class Robot extends IterativeRobot {
 	@Override
 	public void autonomousInit() {
 		compass.initializeCompass();
-		autonomousCommand = new FullRunnableAuton((CommandGroup) autoChooser.getSelected(),
+		autonomousCommand = new ActivateAuton((CommandGroup) autoChooser.getSelected(),
 				(AutonLocator) locationChooser.getSelected());
 		autonomousCommand.start();
 		Scheduler.getInstance().add(new ShowInputs());
@@ -219,6 +219,7 @@ public class Robot extends IterativeRobot {
 		SmartDashboard.putData("ApproachBackward",new MoveToObstacle(-1));
 		
 		SmartDashboard.putData("Switch Drives", new SwitchDrives());
+		
 	}
 
 	@Override
@@ -239,7 +240,8 @@ public class Robot extends IterativeRobot {
 	@Override
 	public void teleopPeriodic() {
 		Scheduler.getInstance().run();
-
+		
+		SmartDashboard.putString("Drive Mode:",Drive.driveMode);
 		SmartDashboard.putBoolean("aimed", Math.abs(Robot.camera.getXRight() - Aim.centerX) < Aim.threshold);
 		SmartDashboard.putBoolean("left", Robot.camera.getXRight() - Aim.centerX > 0);
 		SmartDashboard.putBoolean("right", Robot.camera.getXRight() - Aim.centerX < 0);

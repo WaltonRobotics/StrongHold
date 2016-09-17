@@ -9,8 +9,8 @@ import org.usfirst.frc.team2974.robot.autonomousCommands.TurnToAngle;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
 
-public class FullRunnableAuton extends CommandGroup {
-	public FullRunnableAuton(CommandGroup obstacleCommand, AutonLocator location) {
+public class ActivateAuton extends CommandGroup {
+	public ActivateAuton(CommandGroup obstacleCommand, AutonLocator location) {
 		Robot.compass.zeroRobot();
 		
 		if (obstacleCommand.getName().equals("RockWall")){

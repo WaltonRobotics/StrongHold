@@ -15,8 +15,8 @@ public class MoveToObstacle extends Command{
 	
 	@Override
 	protected void initialize() {
-		Robot.driveTrain.setSpeeds(1*direction, 1*direction);//Magic number - change this after testing with actual robot
-		threshold = 7*direction; //another magic number to test
+		Robot.driveTrain.setSpeeds(1*direction, 1*direction);
+		threshold = 7*direction;
 	}
 	
 	@Override
