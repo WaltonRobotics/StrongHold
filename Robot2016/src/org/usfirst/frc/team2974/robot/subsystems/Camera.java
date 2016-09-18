@@ -2,6 +2,7 @@ package org.usfirst.frc.team2974.robot.subsystems;
 
 import java.util.Arrays;
 
+import org.usfirst.frc.team2974.dataLogs.Message;
 import org.usfirst.frc.team2974.robot.Robot;
 import org.usfirst.frc.team2974.robot.commands.ControlAim;
 import org.usfirst.frc.team2974.robot.commands.ControlAim.aimState;
@@ -90,7 +91,7 @@ public class Camera extends Subsystem {
 			Arrays.sort(X);
 			left = X[0];
 		} catch (Exception ignored) {
-
+			Message.addError("Could not get the net table for getXLeft() to function correctly", this);
 		}
 		return left;
 
@@ -108,7 +109,7 @@ public class Camera extends Subsystem {
 			} else
 				right = X[0];
 		} catch (Exception ignored) {
-
+			Message.addError("Could not get the net table for getXRight() to function correctly", this);
 		}
 		return right;
 	}
@@ -133,12 +134,14 @@ public class Camera extends Subsystem {
 				table = NetworkTable.getTable("GRIP/report");
 			} catch (Exception e) {
 				table = null;
+				Message.addError("Could not recieve the table from GRIP/report",this);
 			}
 		} else {
 			try {
 				table = NetworkTable.getTable("GRIP/reportOnboard");
 			} catch (Exception e) {
 				table = null;
+				Message.addError("Could not recieve the table from GRIP/reportOnboard",this);
 			}
 		}
 	}

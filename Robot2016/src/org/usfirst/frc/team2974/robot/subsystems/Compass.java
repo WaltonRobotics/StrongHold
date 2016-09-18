@@ -1,5 +1,6 @@
 package org.usfirst.frc.team2974.robot.subsystems;
 
+import org.usfirst.frc.team2974.dataLogs.Message;
 import org.usfirst.frc.team2974.robot.Robot;
 import org.usfirst.frc.team2974.robot.RobotMap;
 import org.usfirst.frc.team2974.robot.sensors.BNO055;
@@ -46,15 +47,14 @@ public class Compass extends Subsystem {
 			compass.initialize(OperationMode.OPERATION_MODE_IMUPLUS);
 
 			// compass.setMode(OperationMode.OPERATION_MODE_IMUPLUS);
+			Message.addAction("Initialized compass sucssefully in implus mode", this);
 
 		} catch (BNO055Exception e) {
 
+			Message.addError("Could not inititalize compass", this);
 			e.printStackTrace();
 
 		}
-
-		Robot.getCompass().zeroRobot();
-
 	}
 
 	public void zeroRobot() {
@@ -63,6 +63,7 @@ public class Compass extends Subsystem {
 
 		pitchOffset = PITCHOFFSET;
 
+		Message.addAction("Zeroed the compass to start at an offset of ".concat(String.valueOf(yawOffset).concat(" and a pitch offset of ").concat(String.valueOf(pitchOffset))));
 	}
 
 	/**
@@ -76,9 +77,7 @@ public class Compass extends Subsystem {
 	 */
 
 	public double getYaw() // Horizonal tilt
-
 	{
-
 		try {
 
 			return compass.getVector(BNO055.VectorType.VECTOR_EULER)[0] - yawOffset;
@@ -86,13 +85,11 @@ public class Compass extends Subsystem {
 		} catch (BNO055Exception e) {
 
 			// TODO Auto-generated catch block
-
+			Message.addError("Did not managed to read the yaw value from the compass", this);
 			e.printStackTrace();
-
 		}
 
 		return 0;
-
 	}
 
 	/**
@@ -116,7 +113,7 @@ public class Compass extends Subsystem {
 		} catch (BNO055Exception e) {
 
 			// TODO Auto-generated catch block
-
+			Message.addError("Did not managed to read the pitch value from the compass", this);
 			e.printStackTrace();
 
 		}
@@ -144,7 +141,7 @@ public class Compass extends Subsystem {
 		} catch (BNO055Exception e) {
 
 			// TODO Auto-generated catch block
-
+			Message.addError("Did not managed to read the roll value from the compass", this);
 			e.printStackTrace();
 
 		}
@@ -162,5 +159,4 @@ public class Compass extends Subsystem {
 		SmartDashboard.putNumber("Roll", getRoll());
 
 	}
-
 }
