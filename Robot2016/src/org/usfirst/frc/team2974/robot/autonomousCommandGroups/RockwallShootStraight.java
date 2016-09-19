@@ -7,7 +7,6 @@ import org.usfirst.frc.team2974.robot.autonomousCommands.FlapDownTime;
 import org.usfirst.frc.team2974.robot.autonomousCommands.ShiftDown;
 import org.usfirst.frc.team2974.robot.autonomousCommands.Shoot;
 import org.usfirst.frc.team2974.robot.autonomousCommands.TurnLeft;
-import org.usfirst.frc.team2974.robot.autonomousCommands.TurnRightUntilFind;
 import org.usfirst.frc.team2974.robot.autonomousCommands.Wait;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;

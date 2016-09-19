@@ -1,8 +1,6 @@
 package org.usfirst.frc.team2974.robot;
 
-import org.usfirst.frc.team2974.robot.autonomousCommands.DriveLocate;
 import org.usfirst.frc.team2974.robot.autonomousCommands.DriveStraightMC;
-import org.usfirst.frc.team2974.robot.commands.Aim;
 import org.usfirst.frc.team2974.robot.commands.ShooterReset;
 import org.usfirst.frc.team2974.robot.commands.Tension;
 import org.usfirst.frc.team2974.robot.commands.UnTension;

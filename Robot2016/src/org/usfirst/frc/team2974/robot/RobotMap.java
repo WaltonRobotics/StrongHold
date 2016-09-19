@@ -1,15 +1,14 @@
 package org.usfirst.frc.team2974.robot;
 
-import edu.wpi.first.wpilibj.Encoder;
-
 import org.usfirst.frc.team2974.robot.sensors.BNO055;
 
 import edu.wpi.first.wpilibj.AnalogInput;
+import edu.wpi.first.wpilibj.AnalogPotentiometer;
 import edu.wpi.first.wpilibj.CANTalon;
 import edu.wpi.first.wpilibj.DigitalInput;
+import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.Talon;
-import edu.wpi.first.wpilibj.AnalogPotentiometer;
 
 /**
  * The RobotMap is a mapping from the ports sensors and actuators are wired into

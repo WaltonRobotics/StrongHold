@@ -4,6 +4,7 @@ package org.usfirst.frc.team2974.robot.commands;
 import org.usfirst.frc.team2974.robot.Robot;
 
 import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  *
@@ -27,7 +28,7 @@ public class Drive extends Command {
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
     	
-    	if (Drive.isTank){
+    	if (SmartDashboard.getString("Drive Mode:").equals("Tank")){
     		double left = Robot.oi.left.getY();
     		double right = Robot.oi.right.getY();
     	
@@ -42,14 +43,14 @@ public class Drive extends Command {
     		if(Robot.oi.shiftUp.get())
     			Robot.driveTrain.shiftUp();
     	}else{
-    		double direction = Robot.oi.left.getX();
-    		double throttle = Robot.oi.right.getY();
+    		double directionX = Robot.oi.right.getX();
+    		double directionY = Robot.oi.right.getY();
+    		double throttle = (Robot.oi.left.getY() + 1)/2;//returns a value between 0 and 1
     		
-    		if(Math.abs(direction)<deadband)
-    			direction = 0;
+
     		if(Math.abs(throttle)<deadband)
     			throttle = 0;
-    		Robot.driveTrain.setSpeeds(-1*throttle + direction,-1*throttle - direction);
+    		Robot.driveTrain.setSpeeds(-1*throttle*directionY-directionX,-1*throttle*directionY+directionX);
     		
     		if(Robot.oi.shiftDown.get())
     			Robot.driveTrain.shiftDown();

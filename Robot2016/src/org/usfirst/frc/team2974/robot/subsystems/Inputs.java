@@ -2,6 +2,7 @@ package org.usfirst.frc.team2974.robot.subsystems;
 
 
 import org.usfirst.frc.team2974.robot.RobotMap;
+import org.usfirst.frc.team2974.robot.commands.ShowInputs;
 
 import edu.wpi.first.wpilibj.AnalogInput;
 import edu.wpi.first.wpilibj.CANTalon;
@@ -10,7 +11,6 @@ import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.interfaces.Potentiometer;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import org.usfirst.frc.team2974.robot.commands.*;
 /**
  * Shows Inputs
  */

@@ -1,10 +1,8 @@
 package org.usfirst.frc.team2974.robot.autonomousCommandGroups;
 
 import org.usfirst.frc.team2974.robot.AutonLocator;
-import org.usfirst.frc.team2974.robot.Robot;
 import org.usfirst.frc.team2974.robot.autonomousCommands.DriveDistance;
 import org.usfirst.frc.team2974.robot.autonomousCommands.DriveLocate;
-import org.usfirst.frc.team2974.robot.autonomousCommands.DriveStraight;
 import org.usfirst.frc.team2974.robot.autonomousCommands.TurnToAngle;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;

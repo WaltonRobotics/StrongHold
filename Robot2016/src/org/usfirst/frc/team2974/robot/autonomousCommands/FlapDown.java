@@ -3,9 +3,7 @@ package org.usfirst.frc.team2974.robot.autonomousCommands;
 import org.usfirst.frc.team2974.robot.Robot;
 import org.usfirst.frc.team2974.robot.subsystems.Flipper;
 import org.usfirst.frc.team2974.robot.subsystems.Intake;
-import org.usfirst.frc.team2974.robot.subsystems.Flipper.FlipperState;
 
-import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 

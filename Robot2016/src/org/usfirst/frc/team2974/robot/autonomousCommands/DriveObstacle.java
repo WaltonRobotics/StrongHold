@@ -4,8 +4,6 @@ import org.usfirst.frc.team2974.robot.Robot;
 import org.usfirst.frc.team2974.robot.subsystems.Compass;
 import org.usfirst.frc.team2974.robot.subsystems.DriveTrain;
 
-import com.ni.vision.NIVision.DrawMode;
-
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Command;
 

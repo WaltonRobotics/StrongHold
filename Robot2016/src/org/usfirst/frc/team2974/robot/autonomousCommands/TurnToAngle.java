@@ -8,11 +8,12 @@ import edu.wpi.first.wpilibj.command.Command;
  *
  */
 public class TurnToAngle extends Command {
+	//makes it move for a certain fixed and dynamically found time by using the speed the angle 
 	
-	 double speed = .5;
+	 double speed = .5;//speed normally at .5 and not .1
 	 double goalAngle;
-	 double tolerance = 10;
-	 private final double PROPORTIONAL_ZONE = 30;
+	 double tolerance = 5;
+	 private final double PROPORTIONAL_ZONE = 120;
 	    
     public TurnToAngle(double angle) {
         requires(Robot.driveTrain);
@@ -26,10 +27,13 @@ public class TurnToAngle extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
+    	if(isFinished()) return;
     	double deltaYaw = errorAngle();
     	double direction = Math.signum(deltaYaw);
     	double speedMag = Math.abs(deltaYaw)/PROPORTIONAL_ZONE;
-    	Robot.driveTrain.setSpeeds(speedMag * direction, -speedMag * direction);
+    	System.out.println("Speed Mag " + speedMag);
+    	System.out.println("\t\tDelta Yaw " + deltaYaw);
+    	Robot.driveTrain.setSpeeds(-speedMag * direction, speedMag * direction);
     }
 
     // Make this return true when this Command no longer needs to run execute()
@@ -46,7 +50,7 @@ public class TurnToAngle extends Command {
     	if(deltaYaw > 180){
 			deltaYaw -= 360;
 		}
-		if(deltaYaw < -180){
+    	else if(deltaYaw < -180){
 			deltaYaw += 360;
 		}
 		return deltaYaw;

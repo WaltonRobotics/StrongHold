@@ -1,13 +1,11 @@
 package org.usfirst.frc.team2974.robot;
 
-import java.awt.Image;
 import java.io.File;
 
-import org.usfirst.frc.team2974.robot.autonomousCommandGroups.ChivalDeFreze;
 import org.usfirst.frc.team2974.robot.autonomousCommandGroups.ActivateAuton;
+import org.usfirst.frc.team2974.robot.autonomousCommandGroups.ChivalDeFreze;
 import org.usfirst.frc.team2974.robot.autonomousCommandGroups.LowBar;
 import org.usfirst.frc.team2974.robot.autonomousCommandGroups.Moat;
-import org.usfirst.frc.team2974.robot.autonomousCommandGroups.MoveToShoot;
 import org.usfirst.frc.team2974.robot.autonomousCommandGroups.Ramparts;
 import org.usfirst.frc.team2974.robot.autonomousCommandGroups.RockWall;
 import org.usfirst.frc.team2974.robot.autonomousCommandGroups.RoughTerrain;
@@ -219,13 +217,13 @@ public class Robot extends IterativeRobot {
 		SmartDashboard.putData("TurnWest",new TurnToAngle(270));
 		SmartDashboard.putData("ApproachForward",new MoveToObstacle(1));
 		SmartDashboard.putData("ApproachBackward",new MoveToObstacle(-1));
-		SmartDashboard.putData("MoveToShoot",new MoveToShoot((AutonLocator)locationChooser.getSelected()));
+//		SmartDashboard.putData("MoveToShoot",new MoveToShoot((AutonLocator)locationChooser.getSelected()));
 		SmartDashboard.putData("Shoot",new Shoot());
 		
-		SmartDashboard.putData("Activate Autonomous",new ActivateAuton((CommandGroup) autoChooser.getSelected(),
-				(AutonLocator) locationChooser.getSelected()));
+//		SmartDashboard.putData("Activate Autonomous",new ActivateAuton((CommandGroup) autoChooser.getSelected(),
+//				(AutonLocator) locationChooser.getSelected()));
 		
-		SmartDashboard.putData("Switch Drives", new SwitchDrives());
+		//SmartDashboard.putData("Switch Drives", new SwitchDrives());
 		
 	}
 
@@ -247,8 +245,8 @@ public class Robot extends IterativeRobot {
 	@Override
 	public void teleopPeriodic() {
 		Scheduler.getInstance().run();
-		
-		SmartDashboard.putString("Drive Mode:",Drive.driveMode);
+
+		Robot.compass.dumpSmartDashboardValues();
 		SmartDashboard.putBoolean("aimed", Math.abs(Robot.camera.getXRight() - Aim.centerX) < Aim.threshold);
 		SmartDashboard.putBoolean("left", Robot.camera.getXRight() - Aim.centerX > 0);
 		SmartDashboard.putBoolean("right", Robot.camera.getXRight() - Aim.centerX < 0);

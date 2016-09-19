@@ -1,6 +1,5 @@
 package org.usfirst.frc.team2974.robot.subsystems;
 
-import org.usfirst.frc.team2974.robot.Robot;
 import org.usfirst.frc.team2974.robot.RobotMap;
 import org.usfirst.frc.team2974.robot.sensors.BNO055;
 import org.usfirst.frc.team2974.robot.sensors.BNO055.BNO055Exception;
@@ -16,7 +15,7 @@ public class Compass extends Subsystem {
 	
 	private final double PITCHOFFSET = 2.5;
 	private double pitchOffset = 0;
-	private double yawOffset = 0;
+	//private double yawOffset = 0;
 	
     BNO055 compass = RobotMap.compass;
 
@@ -36,10 +35,9 @@ public class Compass extends Subsystem {
 		} catch (BNO055Exception e) {
 			e.printStackTrace();
 		}
-    	Robot.compass.zeroRobot();
     }
     public void zeroRobot(){
-    	yawOffset = getYaw();
+    	//yawOffset = getYaw();
     	pitchOffset = PITCHOFFSET;
     }
     /**
@@ -50,7 +48,7 @@ public class Compass extends Subsystem {
     public double getYaw() //Horizonal tilt
     {
     	try {
-			return compass.getVector(BNO055.VectorType.VECTOR_EULER)[0] - yawOffset;
+			return compass.getVector(BNO055.VectorType.VECTOR_EULER)[0];// - yawOffset;
 		} catch (BNO055Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
