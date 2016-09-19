@@ -47,10 +47,13 @@ public class Drive extends Command {
     		double directionY = Robot.oi.right.getY();
     		double throttle = (Robot.oi.left.getY() + 1)/2;//returns a value between 0 and 1
     		
-
+    		double throttleCalc = throttle*-1*directionY;
+    		
+    		if(Math.abs(directionX)<deadband)
+    			directionX = 0;
     		if(Math.abs(throttle)<deadband)
-    			throttle = 0;
-    		Robot.driveTrain.setSpeeds(-1*throttle*directionY-directionX,-1*throttle*directionY+directionX);
+    			directionY = 0;
+    		Robot.driveTrain.setSpeeds(throttleCalc-(directionX*throttle),throttleCalc-(directionX*throttle));
     		
     		if(Robot.oi.shiftDown.get())
     			Robot.driveTrain.shiftDown();
