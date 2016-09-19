@@ -13,7 +13,7 @@ public class Wait extends Command {
 	private final double time;
 	private double startTime;
 
-	public Wait(double time) {
+	public Wait(final double time) {
 		requires(Robot.getDriveTrain());
 		this.time = time;
 	}

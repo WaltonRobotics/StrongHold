@@ -5,13 +5,13 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 /*
- * program meant to be able to reach out to every class in every package get the getter methods and 
+ * program meant to be able to reach out to every class in every package get the getter methods and
  * retrieve the data putting them separately in files
- * 
- * might not be useful 
+ *
+ * might not be useful
  * might not be possible
  * if somebody has the knowledge of doing so please try and do it i believe that you have to
- * get the information for the current thread and read all the data passing throughout 
+ * get the information for the current thread and read all the data passing throughout
  * problem is when the data returned is a class and you want to record the data from that class
  */
 public class DataLog {
@@ -19,19 +19,18 @@ public class DataLog {
 		String path = new File(DataLog.class.getName()).getAbsolutePath();
 		path = path.substring(0, path.lastIndexOf(DataLog.class.getPackage().getName()));
 
-		File f = new File(path);
+		final File f = new File(path);
 
-		ArrayList<File[]> directories = new ArrayList<>();
+		final ArrayList<File[]> directories = new ArrayList<>();
 		directories.add(f.listFiles());
-		ArrayList<File> javaFiles = new ArrayList<>();
+		final ArrayList<File> javaFiles = new ArrayList<>();
 
 		for (int i = 0; i < directories.size(); i++)
-			for (File file : directories.get(i)) {
-				File[] toAdd = file.listFiles();
+			for (final File file : directories.get(i)) {
+				final File[] toAdd = file.listFiles();
 
-				if (toAdd != null && toAdd.length != 0) {
+				if (toAdd != null && toAdd.length != 0)
 					directories.add(toAdd);
-				}
 				if (file.getName().contains(".java"))
 					javaFiles.add(file);
 			}

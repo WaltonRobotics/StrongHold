@@ -11,23 +11,21 @@ import org.usfirst.frc.team2974.robot.autonomousCommands.TurnToAngle;
 import edu.wpi.first.wpilibj.command.CommandGroup;
 
 public class ActivateAuton extends CommandGroup {
-	public ActivateAuton(CommandGroup obstacleCommand, AutonLocator location) {
+	public ActivateAuton(final CommandGroup obstacleCommand, final AutonLocator location) {
 		Robot.getCompass().zeroRobot();
 
 		if (obstacleCommand.getName().equals("RockWall")) {
 			addSequential(new TurnToAngle(180));
 			addSequential(new MoveToObstacle(-1));
-		} else {
+		} else
 			addSequential(new DriveStraightMC(2.0, 0.5, 0.1));// testing instead
 																// of move to
 																// obstical
-		}
 
-		if (location.getAutonPossibleLocation().equals(AutonPossibleLocation.A)) {
+		if (location.getAutonPossibleLocation().equals(AutonPossibleLocation.A))
 			addSequential(new LowBar());
-		} else {
+		else
 			addSequential(obstacleCommand);
-		}
 
 		addSequential(new MoveToShoot(location));
 		addSequential(new Shoot());

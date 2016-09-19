@@ -24,13 +24,74 @@ public class Compass extends Subsystem {
 
 	BNO055 compass = RobotMap.getCompass();
 
-	@Override
-	public void initDefaultCommand() {
-	}
-
 	public Compass() {
 		initializeCompass();
 
+	}
+
+	public void dumpSmartDashboardValues() {
+		SmartDashboard.putNumber("Yaw", getYaw());
+		SmartDashboard.putNumber("Pitch", getPitch());
+		SmartDashboard.putNumber("Roll", getRoll());
+
+	}
+
+	/**
+	 * down positive up negative
+	 *
+	 * @return pitch
+	 */
+	public double getPitch() // Vertical tilt
+	{
+		try {
+			return compass.getVector(BNO055.VectorType.VECTOR_EULER)[1] - pitchOffset;
+		} catch (final BNO055Exception e) {
+			// TODO Auto-generated catch block
+			Message.addError("Did not managed to read the pitch value from the compass", this);
+			e.printStackTrace();
+		}
+		return 0;
+	}
+
+	/**
+	 * i dont care
+	 *
+	 * @return roll
+	 */
+	public double getRoll() // Spin in Z axis - rolling over
+	{
+		try {
+			return compass.getVector(BNO055.VectorType.VECTOR_EULER)[2];
+		} catch (final BNO055Exception e) {
+			// TODO Auto-generated catch block
+			Message.addError("Did not managed to read the roll value from the compass", this);
+			e.printStackTrace();
+		}
+		return 0;
+	}
+
+	/**
+	 * left increase right decrease
+	 *
+	 * @return yaw (turn)
+	 */
+	public double getYaw() // Horizonal tilt
+	{
+		try {
+			return compass.getVector(BNO055.VectorType.VECTOR_EULER)[0];// -
+																		// yawOffset;
+		} catch (final BNO055Exception e) {
+
+			// TODO Auto-generated catch block
+			Message.addError("Did not managed to read the pitch value from the compass", this);
+			e.printStackTrace();
+
+		}
+		return 0;
+	}
+
+	@Override
+	public void initDefaultCommand() {
 	}
 
 	public void initializeCompass() {
@@ -40,7 +101,7 @@ public class Compass extends Subsystem {
 			// compass.setMode(OperationMode.OPERATION_MODE_IMUPLUS);
 			Message.addAction("Initialized compass sucssefully in implus mode", this);
 
-		} catch (BNO055Exception e) {
+		} catch (final BNO055Exception e) {
 
 			Message.addError("Could not inititalize compass", this);
 			e.printStackTrace();
@@ -51,66 +112,5 @@ public class Compass extends Subsystem {
 	public void zeroRobot() {
 		// yawOffset = getYaw();
 		pitchOffset = PITCHOFFSET;
-	}
-
-	/**
-	 * left increase right decrease
-	 * 
-	 * @return yaw (turn)
-	 */
-	public double getYaw() // Horizonal tilt
-	{
-		try {
-			return compass.getVector(BNO055.VectorType.VECTOR_EULER)[0];// -
-																		// yawOffset;
-		} catch (BNO055Exception e) {
-
-			// TODO Auto-generated catch block
-			Message.addError("Did not managed to read the pitch value from the compass", this);
-			e.printStackTrace();
-
-		}
-		return 0;
-	}
-
-	/**
-	 * down positive up negative
-	 * 
-	 * @return pitch
-	 */
-	public double getPitch() // Vertical tilt
-	{
-		try {
-			return compass.getVector(BNO055.VectorType.VECTOR_EULER)[1] - pitchOffset;
-		} catch (BNO055Exception e) {
-			// TODO Auto-generated catch block
-			Message.addError("Did not managed to read the pitch value from the compass", this);
-			e.printStackTrace();
-		}
-		return 0;
-	}
-
-	/**
-	 * i dont care
-	 * 
-	 * @return roll
-	 */
-	public double getRoll() // Spin in Z axis - rolling over
-	{
-		try {
-			return compass.getVector(BNO055.VectorType.VECTOR_EULER)[2];
-		} catch (BNO055Exception e) {
-			// TODO Auto-generated catch block
-			Message.addError("Did not managed to read the roll value from the compass", this);
-			e.printStackTrace();
-		}
-		return 0;
-	}
-
-	public void dumpSmartDashboardValues() {
-		SmartDashboard.putNumber("Yaw", getYaw());
-		SmartDashboard.putNumber("Pitch", getPitch());
-		SmartDashboard.putNumber("Roll", getRoll());
-
 	}
 }

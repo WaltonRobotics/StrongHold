@@ -14,7 +14,7 @@ public class TurnRightUntilFind extends Command {
 	private final double speed;
 	private double startTime;
 
-	public TurnRightUntilFind(double totalTime, double speed) {
+	public TurnRightUntilFind(final double totalTime, final double speed) {
 		requires(Robot.getDriveTrain());
 		this.totalTime = totalTime;
 		this.speed = speed;

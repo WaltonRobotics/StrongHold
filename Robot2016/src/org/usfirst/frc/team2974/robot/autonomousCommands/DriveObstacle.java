@@ -37,11 +37,11 @@ public class DriveObstacle extends Command {
 	// Called repeatedly when this Command is scheduled to run
 	@Override
 	protected void execute() {
-		double pitch = compass.getPitch();
+		final double pitch = compass.getPitch();
 		switch (state) {
 		case drive:
 			straight();
-			double upPitch = 15;
+			final double upPitch = 15;
 			if (pitch > upPitch) {
 				state = driveState.crossing;
 				startTime = Timer.getFPGATimestamp();
@@ -49,8 +49,8 @@ public class DriveObstacle extends Command {
 			break;
 		case up:
 			straight();
-			double timeUp = 1;
-			double crossPitch = 0;
+			final double timeUp = 1;
+			final double crossPitch = 0;
 			if (Timer.getFPGATimestamp() - startTime > timeUp && pitch < crossPitch) {
 				state = driveState.crossing;
 				startTime = Timer.getFPGATimestamp();
@@ -58,8 +58,8 @@ public class DriveObstacle extends Command {
 			break;
 		case crossing:
 			straight();
-			double timeCross = 1;
-			double downPitch = -15;
+			final double timeCross = 1;
+			final double downPitch = -15;
 			if (Timer.getFPGATimestamp() - startTime > timeCross && pitch < downPitch) {
 				state = driveState.down;
 				startTime = Timer.getFPGATimestamp();
@@ -67,12 +67,11 @@ public class DriveObstacle extends Command {
 			break;
 		case down:
 			straight();
-			double timeDown = 1;
-			double threshold = 5;
-			double normalPitch = 0;
-			if (Math.abs(normalPitch - pitch) < threshold && Timer.getFPGATimestamp() - time > timeDown) {
+			final double timeDown = 1;
+			final double threshold = 5;
+			final double normalPitch = 0;
+			if (Math.abs(normalPitch - pitch) < threshold && Timer.getFPGATimestamp() - time > timeDown)
 				state = driveState.done;
-			}
 			break;
 		case done:
 			Robot.getDriveTrain().setSpeeds(0, 0);
@@ -102,11 +101,11 @@ public class DriveObstacle extends Command {
 	}
 
 	private void straight() {
-		double speed = -.8;
+		final double speed = -.8;
 		double speedLeft = speed;
 		double speedRight = speed;
 
-		double multiplierConstatnt = 1.5;
+		final double multiplierConstatnt = 1.5;
 		if (compass.getYaw() > startYaw) {
 			// veering right
 			speedLeft -= Math.abs(compass.getYaw() - startYaw) * multiplierConstatnt;

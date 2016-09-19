@@ -18,7 +18,7 @@ class AimOnboard extends Command {
 	private final Camera camera = Robot.getCamera();
 	private double cycleDifference;
 
-	public AimOnboard(double side) {
+	public AimOnboard(final double side) {
 		requires(Robot.getDriveTrain());
 		// requires(Robot.camera);
 		this.side = side;
@@ -37,18 +37,17 @@ class AimOnboard extends Command {
 			cycleDifference = camera.getXLeft() - centerX;
 		else if (side == 2)
 			cycleDifference = camera.getXRight() - centerX;
-		double speed = Math.abs(cycleDifference * .01);
+		final double speed = Math.abs(cycleDifference * .01);
 		if (side == 0) {
 			if (cycleDifference > 0)// im to the right
 				driveTrain.setSpeeds(-speed, 0);// turn left
 			else
 				driveTrain.setSpeeds(speed, 0);// turn right
-		} else if (side == 2) {
+		} else if (side == 2)
 			if (cycleDifference > 0)// im to the right
 				driveTrain.setSpeeds(0, speed);// turn left
 			else
 				driveTrain.setSpeeds(0, -speed);// turn right
-		}
 	}
 
 	// Called just before this Command runs the first time
@@ -66,8 +65,8 @@ class AimOnboard extends Command {
 	@Override
 	protected boolean isFinished() {
 		if (side == 0)
-			return (!Robot.getOi().getAimLeft().get());
+			return !Robot.getOi().getAimLeft().get();
 		else
-			return side == 2 && (!Robot.getOi().getAimRight().get());
+			return side == 2 && !Robot.getOi().getAimRight().get();
 	}
 }

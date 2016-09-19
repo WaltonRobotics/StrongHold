@@ -18,7 +18,7 @@ public class DriveStraightMC extends Command {
 
 	private double previousYawValue;
 
-	public DriveStraightMC(double distance, double velocity, double accel) {
+	public DriveStraightMC(final double distance, final double velocity, final double accel) {
 		requires(Robot.getDriveTrain());
 		driveTrain = Robot.getDriveTrain();
 		aMax = Math.abs(accel);
@@ -47,7 +47,7 @@ public class DriveStraightMC extends Command {
 
 	@Override
 	protected void execute() {
-		double t = timeSinceInitialized();
+		final double t = timeSinceInitialized();
 		double x;
 		double v;
 		if (t < t1) {
@@ -81,7 +81,7 @@ public class DriveStraightMC extends Command {
 		driveTrain.enableMotionController();
 		requires(Robot.getCompass());
 
-		this.previousYawValue = Robot.getCompass().getYaw();
+		previousYawValue = Robot.getCompass().getYaw();
 	}
 
 	@Override
@@ -91,11 +91,11 @@ public class DriveStraightMC extends Command {
 
 	@Override
 	protected boolean isFinished() {
-		double t = timeSinceInitialized();
-		double tolerance = 0.1;
-		boolean isFinished = (Math.abs(driveTrain.getMeanDistance() - x3) < tolerance) && (t > t3);
-		double timeOut = 2;
-		boolean isTimedOut = t > (t3 + timeOut);
+		final double t = timeSinceInitialized();
+		final double tolerance = 0.1;
+		final boolean isFinished = Math.abs(driveTrain.getMeanDistance() - x3) < tolerance && t > t3;
+		final double timeOut = 2;
+		final boolean isTimedOut = t > t3 + timeOut;
 		return isFinished || isTimedOut;
 	}
 

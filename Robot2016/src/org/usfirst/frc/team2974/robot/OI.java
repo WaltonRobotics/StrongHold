@@ -75,17 +75,17 @@ public class OI {
 		aimLeft = new JoystickButton(right, 4);
 		aimRight = new JoystickButton(right, 5);
 
-		Button startUntensioning = new JoystickButton(getLeft(), 8);
-		Button startTensioning = new JoystickButton(getLeft(), 11);
+		final Button startUntensioning = new JoystickButton(getLeft(), 8);
+		final Button startTensioning = new JoystickButton(getLeft(), 11);
 		normalTensioning = new JoystickButton(getLeft(), 9);
-		Button resetShooter = new JoystickButton(getLeft(), 10);
+		final Button resetShooter = new JoystickButton(getLeft(), 10);
 
 		startUntensioning.whenPressed(new UnTension());
 		startTensioning.whenPressed(new Tension());
 
 		resetShooter.whenPressed(new ShooterReset());
 
-		Button testCommand = new JoystickButton(right, 2);
+		final Button testCommand = new JoystickButton(right, 2);
 
 		testCommand.whenPressed(new DriveLocate());
 		// aimLeft.whenPressed(new Aim(0));
@@ -184,7 +184,7 @@ public class OI {
 		return autoShoot;
 	}
 
-	public void setAutoShoot(boolean autoShoot) {
+	public void setAutoShoot(final boolean autoShoot) {
 		this.autoShoot = autoShoot;
 	}
 

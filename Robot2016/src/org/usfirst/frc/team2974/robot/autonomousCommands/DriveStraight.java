@@ -17,13 +17,13 @@ public class DriveStraight extends Command {
 	private double startTime;
 	private double previousYawValue;
 
-	public DriveStraight(double time, double speed) {
+	public DriveStraight(final double time, final double speed) {
 		requires(Robot.getCompass());
 		requires(Robot.getDriveTrain());
 
 		this.speed = speed;
 		this.time = time;
-		this.previousYawValue = Robot.getCompass().getYaw();
+		previousYawValue = Robot.getCompass().getYaw();
 	}
 
 	// Called once after isFinished returns true

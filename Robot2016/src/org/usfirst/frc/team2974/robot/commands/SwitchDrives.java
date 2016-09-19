@@ -7,6 +7,16 @@ import edu.wpi.first.wpilibj.command.Command;
 public class SwitchDrives extends Command {
 
 	@Override
+	protected void end() {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	protected void execute() {
+	}
+
+	@Override
 	protected void initialize() {
 		requires(Robot.getDriveTrain());
 		if (Drive.isTank) {
@@ -19,25 +29,15 @@ public class SwitchDrives extends Command {
 	}
 
 	@Override
-	protected void execute() {
+	protected void interrupted() {
+		// TODO Auto-generated method stub
+
 	}
 
 	@Override
 	protected boolean isFinished() {
 		// TODO Auto-generated method stub
 		return true;
-	}
-
-	@Override
-	protected void end() {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	protected void interrupted() {
-		// TODO Auto-generated method stub
-
 	}
 
 }

@@ -6,11 +6,11 @@ public class AutonLocator {
 
 	private final AutonPossibleLocation location;
 
-	public AutonLocator(AutonPossibleLocation location) {
+	public AutonLocator(final AutonPossibleLocation location) {
 		this.location = location;
 	}
 
-	public double getAngle(Point start, Point finish) {
+	public double getAngle(final Point start, final Point finish) {
 		return Math.atan((start.getY() - finish.getY()) / (start.getX() - finish.getX()));
 
 	}
@@ -19,12 +19,12 @@ public class AutonLocator {
 		return location;
 	}
 
-	public double getDistance(Point start, Point finish) {
-		return Math.sqrt(Math.pow((start.getX() - finish.getX()), 2) + Math.pow((start.getY() - finish.getY()), 2));
+	public double getDistance(final Point start, final Point finish) {
+		return Math.sqrt(Math.pow(start.getX() - finish.getX(), 2) + Math.pow(start.getY() - finish.getY(), 2));
 	}
 
 	public Point getLocation() {
-		Point p = new Point();
+		final Point p = new Point();
 		switch (location) {
 		case A:
 			p.setLocation(0, 0);// replace all numbers with measured numbers
@@ -49,7 +49,7 @@ public class AutonLocator {
 	}
 
 	public Point getLocationGoal() {
-		Point p = new Point();
+		final Point p = new Point();
 		switch (location) {
 		case A:
 			p.setLocation(3.3655, 4.2164);
@@ -74,7 +74,7 @@ public class AutonLocator {
 	}
 
 	public Point getLocationShoot() {
-		Point p = new Point();
+		final Point p = new Point();
 		switch (location) {
 		case A:
 			p.setLocation(0.7747, 2.9972);// replace all numbers with measured

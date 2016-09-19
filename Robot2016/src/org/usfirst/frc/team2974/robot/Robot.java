@@ -97,39 +97,39 @@ public class Robot extends IterativeRobot {
 		return shooter;
 	}
 
-	public static void setArm(Arm arm) {
+	public static void setArm(final Arm arm) {
 		Robot.arm = arm;
 	}
 
-	public static void setCamera(Camera camera) {
+	public static void setCamera(final Camera camera) {
 		Robot.camera = camera;
 	}
 
-	public static void setCompass(Compass compass) {
+	public static void setCompass(final Compass compass) {
 		Robot.compass = compass;
 	}
 
-	public static void setDriveTrain(DriveTrain driveTrain) {
+	public static void setDriveTrain(final DriveTrain driveTrain) {
 		Robot.driveTrain = driveTrain;
 	}
 
-	public static void setFlipper(Flipper flipper) {
+	public static void setFlipper(final Flipper flipper) {
 		Robot.flipper = flipper;
 	}
 
-	public static void setInputs(Inputs inputs) {
+	public static void setInputs(final Inputs inputs) {
 		Robot.inputs = inputs;
 	}
 
-	public static void setIntake(Intake intake) {
+	public static void setIntake(final Intake intake) {
 		Robot.intake = intake;
 	}
 
-	public static void setOi(OI oi) {
+	public static void setOi(final OI oi) {
 		Robot.oi = oi;
 	}
 
-	public static void setShooter(Shooter shooter) {
+	public static void setShooter(final Shooter shooter) {
 		Robot.shooter = shooter;
 	}
 
@@ -264,18 +264,18 @@ public class Robot extends IterativeRobot {
 		flipper = new Flipper();
 		intake = new Intake();
 
-		IntakeWheels intakeWheels = new IntakeWheels();
+		new IntakeWheels();
 
 		createAutonomousChooser();
 		oi = new OI();
 
-		CameraServer server = CameraServer.getInstance();
+		final CameraServer server = CameraServer.getInstance();
 		server.setQuality(0);
 		server.startAutomaticCapture("cam1");
 
 		try {
 			SmartDashboard.putData("Image", (NamedSendable) new RGBImage("TestImage.jpg"));
-		} catch (NIVisionException e) {
+		} catch (final NIVisionException e) {
 			// TODO Auto-generated catch block
 			Message.addWarning("Did not manage to add the TestImage.jpg image to SmartDashBoard");
 			e.printStackTrace();

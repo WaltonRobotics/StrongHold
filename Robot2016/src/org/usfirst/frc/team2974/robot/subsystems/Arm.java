@@ -55,7 +55,7 @@ public class Arm extends Subsystem {
 		setDefaultCommand(new MoveArm());
 	}
 
-	public void moveArmPower(double power) {
+	public void moveArmPower(final double power) {
 		// if(pid.isEnabled())
 		// pid.disable();
 		arm.set(power);

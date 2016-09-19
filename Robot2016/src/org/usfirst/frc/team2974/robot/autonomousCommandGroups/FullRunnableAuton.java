@@ -10,21 +10,19 @@ import org.usfirst.frc.team2974.robot.autonomousCommands.TurnToAngle;
 import edu.wpi.first.wpilibj.command.CommandGroup;
 
 public class FullRunnableAuton extends CommandGroup {
-	public FullRunnableAuton(CommandGroup obstacleCommand, AutonLocator location) {
+	public FullRunnableAuton(final CommandGroup obstacleCommand, final AutonLocator location) {
 		Robot.getCompass().zeroRobot();
 
 		if (obstacleCommand.getName().equals("RockWall")) {
 			addSequential(new TurnToAngle(180));
 			addSequential(new MoveToObstacle(-1));
-		} else {
+		} else
 			addSequential(new MoveToObstacle(1));
-		}
 
-		if (location.getAutonPossibleLocation().equals(AutonPossibleLocation.A)) {
+		if (location.getAutonPossibleLocation().equals(AutonPossibleLocation.A))
 			addSequential(new LowBar());
-		} else {
+		else
 			addSequential(obstacleCommand);
-		}
 
 		addSequential(new MoveToShoot(location));
 		addSequential(new Shoot());

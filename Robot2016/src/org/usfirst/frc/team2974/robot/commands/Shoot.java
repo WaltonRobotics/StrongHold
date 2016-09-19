@@ -141,7 +141,7 @@ public class Shoot extends Command {
 
 		@Override
 		boolean isFinished() {
-			return readyTime != -1 && ((Timer.getFPGATimestamp() - readyTime) > 1);
+			return readyTime != -1 && Timer.getFPGATimestamp() - readyTime > 1;
 		}
 	}
 

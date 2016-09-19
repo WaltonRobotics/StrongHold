@@ -33,18 +33,13 @@ public class MoveFlipper extends Command {
 				Robot.getIntake().extend();
 				time = Timer.getFPGATimestamp();
 				bool = true;
-			} else {
-				if (Timer.getFPGATimestamp() - time > .4) {
-					bool = false;
-				} else if (Timer.getFPGATimestamp() - time > .2) {
-					Robot.getFlipper().setFlapper(Flipper.FlipperState.down);
-					bool = false;
-				}
-
+			} else if (Timer.getFPGATimestamp() - time > .4)
+				bool = false;
+			else if (Timer.getFPGATimestamp() - time > .2) {
+				Robot.getFlipper().setFlapper(Flipper.FlipperState.down);
+				bool = false;
 			}
-			// else
-			// Scheduler.getInstance().add(new IntakeOut());
-		} else {
+		} else
 			// if(Robot.intake.getState() == Intake.IntakeExtenderState.out)
 			// if (!bool2) {
 			// Robot.intake.extend();
@@ -55,10 +50,8 @@ public class MoveFlipper extends Command {
 			// bool2 = false;
 			// } else if (Timer.getFPGATimestamp() - time2 > .1) {
 			Robot.getFlipper().setFlapper(Flipper.FlipperState.up);
-			// bool2 = false;
-			// }
-
-		}
+		// bool2 = false;
+		// }
 
 		// else
 		// Scheduler.getInstance().add(new IntakeOut());
@@ -92,11 +85,11 @@ public class MoveFlipper extends Command {
 		return false;
 	}
 
-	public void setBool2(boolean bool2) {
+	public void setBool2(final boolean bool2) {
 		this.bool2 = bool2;
 	}
 
-	public void setTime2(double time2) {
+	public void setTime2(final double time2) {
 		this.time2 = time2;
 	}
 }

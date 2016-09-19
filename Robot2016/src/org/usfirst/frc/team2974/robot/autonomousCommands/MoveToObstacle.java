@@ -10,16 +10,15 @@ public class MoveToObstacle extends Command {
 	double direction;
 	double startTime;
 
-	public MoveToObstacle(double direction) {
+	public MoveToObstacle(final double direction) {
 		this.direction = direction;
 		startTime = Timer.getFPGATimestamp();
 	}
 
 	@Override
-	protected void initialize() {
-		Robot.getDriveTrain().setSpeeds(1 * direction, 1 * direction);
-		threshold = 5 * direction;
-
+	protected void end() {
+		// TODO Auto-generated method stub
+		end();
 	}
 
 	@Override
@@ -31,13 +30,10 @@ public class MoveToObstacle extends Command {
 	}
 
 	@Override
-	protected boolean isFinished() {
-		// Create an if statement which will call end
+	protected void initialize() {
+		Robot.getDriveTrain().setSpeeds(1 * direction, 1 * direction);
+		threshold = 5 * direction;
 
-		if (Robot.getCompass().getPitch() > threshold && Timer.getFPGATimestamp() - startTime > 500) {
-			return true;
-		}
-		return false;
 	}
 
 	@Override
@@ -48,9 +44,12 @@ public class MoveToObstacle extends Command {
 	}
 
 	@Override
-	protected void end() {
-		// TODO Auto-generated method stub
-		end();
+	protected boolean isFinished() {
+		// Create an if statement which will call end
+
+		if (Robot.getCompass().getPitch() > threshold && Timer.getFPGATimestamp() - startTime > 500)
+			return true;
+		return false;
 	}
 
 }

@@ -48,7 +48,7 @@ public class Shoot extends Command {
 	// Make this return true when this Command no longer needs to run execute()
 	@Override
 	protected boolean isFinished() {
-		double time = .5;
+		final double time = .5;
 		return Timer.getFPGATimestamp() - startTime > time;
 	}
 }

@@ -87,10 +87,10 @@ public class Camera extends Subsystem {
 		setNetTable();
 		double left = -1;
 		try {
-			double[] X = getNetTable().getNumberArray("centerX", defaultValue);
+			final double[] X = getNetTable().getNumberArray("centerX", defaultValue);
 			Arrays.sort(X);
 			left = X[0];
-		} catch (Exception ignored) {
+		} catch (final Exception ignored) {
 			Message.addError("Could not get the net table for getXLeft() to function correctly", this);
 		}
 		return left;
@@ -101,14 +101,14 @@ public class Camera extends Subsystem {
 		setNetTable();
 		double right = -1;
 		try {
-			double[] X = getNetTable().getNumberArray("centerX", defaultValue);
+			final double[] X = getNetTable().getNumberArray("centerX", defaultValue);
 			if (X.length > 1) {
 				Arrays.sort(X);
 				right = X[1];
 
 			} else
 				right = X[0];
-		} catch (Exception ignored) {
+		} catch (final Exception ignored) {
 			Message.addError("Could not get the net table for getXRight() to function correctly", this);
 		}
 		return right;
@@ -124,25 +124,24 @@ public class Camera extends Subsystem {
 		setDefaultCommand(new ControlAim());
 	}
 
-	public void setCenterX(double centerX) {
+	public void setCenterX(final double centerX) {
 		this.centerX = centerX;
 	}
 
 	public void setNetTable() {
-		if (Robot.getAimingstate() == aimState.cpu) {
+		if (Robot.getAimingstate() == aimState.cpu)
 			try {
 				table = NetworkTable.getTable("GRIP/report");
-			} catch (Exception e) {
+			} catch (final Exception e) {
 				table = null;
 				Message.addError("Could not recieve the table from GRIP/report", this);
 			}
-		} else {
+		else
 			try {
 				table = NetworkTable.getTable("GRIP/reportOnboard");
-			} catch (Exception e) {
+			} catch (final Exception e) {
 				table = null;
 				Message.addError("Could not recieve the table from GRIP/reportOnboard", this);
 			}
-		}
 	}
 }

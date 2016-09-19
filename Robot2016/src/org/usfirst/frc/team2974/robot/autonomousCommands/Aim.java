@@ -23,19 +23,18 @@ public class Aim extends Command {
 
 		@Override
 		void execute() {
-			double brakingSpeed = .05;
-			double speed = .35;
+			final double brakingSpeed = .05;
+			final double speed = .35;
 			if (side == 0) {
 				if (cycleDifference > 0)// im to the right
 					driveTrain.setSpeeds(-speed, brakingSpeed);// turn left
 				else
 					driveTrain.setSpeeds(speed, -brakingSpeed);// turn right
-			} else if (side == 2) {
+			} else if (side == 2)
 				if (cycleDifference > 0)// im to the right
 					driveTrain.setSpeeds(-brakingSpeed, speed);// turn left
 				else
 					driveTrain.setSpeeds(brakingSpeed, -speed);// turn right
-			}
 		}
 
 		@Override
@@ -134,11 +133,11 @@ public class Aim extends Command {
 		this(1, 2, false);
 	}
 
-	public Aim(int side, double totalTime) {
+	public Aim(final int side, final double totalTime) {
 		this(side, totalTime, false);
 	}
 
-	public Aim(int side, double totalTime, boolean shoot) {
+	public Aim(final int side, final double totalTime, final boolean shoot) {
 		SmartDashboard.putNumber("gain", gain);
 		requires(Robot.getDriveTrain());
 		this.side = side;

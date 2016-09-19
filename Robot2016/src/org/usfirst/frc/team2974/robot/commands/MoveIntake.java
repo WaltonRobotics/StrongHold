@@ -30,17 +30,14 @@ public class MoveIntake extends Command {
 				Robot.getFlipper().setFlapper(Flipper.FlipperState.up);
 				time = Timer.getFPGATimestamp();
 				bool = true;
-			} else {
-				if (Timer.getFPGATimestamp() - time > .4) {
-					bool = false;
-				} else if (Timer.getFPGATimestamp() - time > .2) {
-					Robot.getIntake().retract();
-					bool = false;
-				}
+			} else if (Timer.getFPGATimestamp() - time > .4)
+				bool = false;
+			else if (Timer.getFPGATimestamp() - time > .2) {
+				Robot.getIntake().retract();
+				bool = false;
 			}
-		} else if (Robot.getOi().getExtendIntake().get()) {
+		} else if (Robot.getOi().getExtendIntake().get())
 			Robot.getIntake().extend();
-		}
 
 	}
 

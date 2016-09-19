@@ -15,12 +15,12 @@ public class Gamepad extends Joystick {
 
 		private final int index;
 
-		Button(int index) {
+		Button(final int index) {
 
 			this.index = index;
 		}
 
-		boolean getPressed(Gamepad g) {
+		boolean getPressed(final Gamepad g) {
 
 			return g.getRawButton(index);
 		}
@@ -34,12 +34,12 @@ public class Gamepad extends Joystick {
 
 		private final int angle;
 
-		POV(int angle) {
+		POV(final int angle) {
 
 			this.angle = angle;
 		}
 
-		boolean getPressed(Gamepad g) {
+		boolean getPressed(final Gamepad g) {
 
 			return g.getPOV() == angle;
 		}
@@ -49,7 +49,7 @@ public class Gamepad extends Joystick {
 	 * @param port
 	 *            the port of the controller
 	 */
-	public Gamepad(int port) {
+	public Gamepad(final int port) {
 
 		super(port);
 	}
@@ -61,7 +61,7 @@ public class Gamepad extends Joystick {
 	 *            is the button given
 	 * @return boolean
 	 */
-	public boolean getButton(Button b) {
+	public boolean getButton(final Button b) {
 
 		return b.getPressed(this);
 	}
@@ -72,7 +72,7 @@ public class Gamepad extends Joystick {
 	 *            ), R( 5 ), BACK( 6 ), START( 7 );
 	 * @return true if button pressed false if not pressed
 	 */
-	public boolean getButton(int index) {
+	public boolean getButton(final int index) {
 
 		return getRawButton(index);
 	}
@@ -107,7 +107,7 @@ public class Gamepad extends Joystick {
 		return getRawAxis(1);
 	}
 
-	public boolean getPOVButton(int angle) {
+	public boolean getPOVButton(final int angle) {
 		return getPOV() == angle;
 	}
 
@@ -117,7 +117,7 @@ public class Gamepad extends Joystick {
 	 *            N,S,E,W,NE,NW,SE,SW, or CENTER
 	 * @return true if the POV button is pressed false if not
 	 */
-	public boolean getPOVButton(POV p) {
+	public boolean getPOVButton(final POV p) {
 
 		return p.getPressed(this);
 	}

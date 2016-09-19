@@ -14,7 +14,7 @@ public class FlapDownTime extends Command {
 	private final double time;
 	private double startTime;
 
-	public FlapDownTime(double time) {
+	public FlapDownTime(final double time) {
 		requires(Robot.getFlipper());
 		this.time = time;
 	}

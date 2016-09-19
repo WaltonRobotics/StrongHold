@@ -35,18 +35,16 @@ public class ControlAim extends Command {
 		// else
 		// Robot.aimingState = aimState.cpu;
 		// }
-		if (Robot.getOi().getAimLeft().get()) {
+		if (Robot.getOi().getAimLeft().get())
 			if (Robot.getAimingstate() == aimState.cpu)
 				Scheduler.getInstance().add(new Aim(0));
 			else
 				Scheduler.getInstance().add(new AimOnboard(0));
-		}
-		if (Robot.getOi().getAimRight().get()) {
+		if (Robot.getOi().getAimRight().get())
 			if (Robot.getAimingstate() == aimState.cpu)
 				Scheduler.getInstance().add(new Aim(2));
 			else
 				Scheduler.getInstance().add(new AimOnboard(2));
-		}
 	}
 
 	// Called just before this Command runs the first time

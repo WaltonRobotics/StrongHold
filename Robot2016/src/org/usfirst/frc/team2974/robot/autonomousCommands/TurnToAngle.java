@@ -15,31 +15,16 @@ public class TurnToAngle extends Command {
 	double tolerance = 10;
 	private final double PROPORTIONAL_ZONE = 30;
 
-	public TurnToAngle(double angle) {
+	public TurnToAngle(final double angle) {
 		requires(Robot.getDriveTrain());
 		requires(Robot.getCompass());
-		this.goalAngle = angle;
+		goalAngle = angle;
 	}
 
-	// Called just before this Command runs the first time
+	// Called once after isFinished returns true
 	@Override
-	protected void initialize() {
-
-	}
-
-	// Called repeatedly when this Command is scheduled to run
-	@Override
-	protected void execute() {
-		double deltaYaw = errorAngle();
-		double direction = Math.signum(deltaYaw);
-		double speedMag = Math.abs(deltaYaw) / PROPORTIONAL_ZONE;
-		Robot.getDriveTrain().setSpeeds(speedMag * direction, -speedMag * direction);
-	}
-
-	// Make this return true when this Command no longer needs to run execute()
-	@Override
-	protected boolean isFinished() {
-		return Math.abs(errorAngle()) <= tolerance;
+	protected void end() {
+		Robot.getDriveTrain().setSpeeds(0, 0);
 	}
 
 	private double errorAngle() {
@@ -53,10 +38,19 @@ public class TurnToAngle extends Command {
 		return deltaYaw;
 	}
 
-	// Called once after isFinished returns true
+	// Called repeatedly when this Command is scheduled to run
 	@Override
-	protected void end() {
-		Robot.getDriveTrain().setSpeeds(0, 0);
+	protected void execute() {
+		final double deltaYaw = errorAngle();
+		final double direction = Math.signum(deltaYaw);
+		final double speedMag = Math.abs(deltaYaw) / PROPORTIONAL_ZONE;
+		Robot.getDriveTrain().setSpeeds(speedMag * direction, -speedMag * direction);
+	}
+
+	// Called just before this Command runs the first time
+	@Override
+	protected void initialize() {
+
 	}
 
 	// Called when another command which requires one or more of the same
@@ -64,5 +58,11 @@ public class TurnToAngle extends Command {
 	@Override
 	protected void interrupted() {
 		end();
+	}
+
+	// Make this return true when this Command no longer needs to run execute()
+	@Override
+	protected boolean isFinished() {
+		return Math.abs(errorAngle()) <= tolerance;
 	}
 }

@@ -25,7 +25,7 @@ public class Flipper extends Subsystem {
 	}
 
 	//
-	public void setFlapper(FlipperState state) {
+	public void setFlapper(final FlipperState state) {
 		switch (state) {
 		case up:
 			flapper.set(false);

@@ -9,7 +9,7 @@ public class DriveDistance extends Command {
 	private final double speed;
 	private final double distance;// in meters
 
-	public DriveDistance(double speed, double distance) {
+	public DriveDistance(final double speed, final double distance) {
 		requires(Robot.getDriveTrain());
 		this.speed = speed;
 		this.distance = distance;

@@ -17,7 +17,7 @@ public class TurnLeft extends Command {
 		this(1.25, .5);
 	}
 
-	public TurnLeft(double time, double speed) {
+	public TurnLeft(final double time, final double speed) {
 		requires(Robot.getDriveTrain());
 		// SmartDashboard.putNumber("timeTurn", time);
 		// SmartDashboard.putNumber("speedTurn", speed);
@@ -54,6 +54,6 @@ public class TurnLeft extends Command {
 	// Make this return true when this Command no longer needs to run execute()
 	@Override
 	protected boolean isFinished() {
-		return (Timer.getFPGATimestamp() - startTime > time);
+		return Timer.getFPGATimestamp() - startTime > time;
 	}
 }

@@ -10,7 +10,7 @@ public class MoveToShoot extends CommandGroup {
 
 	private final double speed = 0.7;
 
-	public MoveToShoot(AutonLocator location) {
+	public MoveToShoot(final AutonLocator location) {
 		// addSequential(new DriveLocate());
 		addSequential(new TurnToAngle(location.getAngle(location.getLocation(), location.getLocationShoot())));
 		// addSequential(new

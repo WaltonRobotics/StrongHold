@@ -66,7 +66,7 @@ public class Shooter extends Subsystem {
 	}
 
 	public void holdTension() {
-		double holdTensionerPower = .030;
+		final double holdTensionerPower = .030;
 		setTensionerPower(holdTensionerPower);
 	}
 
@@ -91,14 +91,13 @@ public class Shooter extends Subsystem {
 		latch.set(false);
 	}
 
-	private void setTensionerPower(double power) {
-		if (power < 0 && isReverseLimit()) {
+	private void setTensionerPower(final double power) {
+		if (power < 0 && isReverseLimit())
 			setZero();
-			// tensioner.setEncPosition(1000);
-		} else if (power > 0 && isForwardLimit()) {
+		// tensioner.setEncPosition(1000);
+		else if (power > 0 && isForwardLimit())
 			setZero();
-
-		} else {
+		else {
 			tensioner.set(power);
 			SmartDashboard.putString("im going to power", String.valueOf(power));
 		}

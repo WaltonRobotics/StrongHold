@@ -27,7 +27,7 @@ public class ArmDown extends Command {
 	// Called repeatedly when this Command is scheduled to run
 	@Override
 	protected void execute() {
-		double armPower = -1;
+		final double armPower = -1;
 		Robot.getArm().moveArmPower(armPower);
 	}
 
@@ -47,7 +47,7 @@ public class ArmDown extends Command {
 	// Make this return true when this Command no longer needs to run execute()
 	@Override
 	protected boolean isFinished() {
-		double totalTime = .2;
+		final double totalTime = .2;
 		return Timer.getFPGATimestamp() - startTime > totalTime;
 	}
 }

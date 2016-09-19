@@ -17,13 +17,13 @@ class DriveStraight2 extends Command {
 
 	private double previousYawValue;
 
-	public DriveStraight2(double time, double speed) {
+	public DriveStraight2(final double time, final double speed) {
 		requires(Robot.getDriveTrain());
 		requires(Robot.getCompass());
 
 		this.speed = speed;
 		this.time = time;
-		this.previousYawValue = Robot.getCompass().getYaw();
+		previousYawValue = Robot.getCompass().getYaw();
 
 		SmartDashboard.putNumber("timeForward", time);
 		SmartDashboard.putNumber("speedForward", speed);

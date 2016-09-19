@@ -15,9 +15,9 @@ public class DriveLocate extends Command {
 	private double thresholdYaw;
 	private final double thresholdPitch = 5;
 	private double targetAngle;
-	private double aMax;
-	private double vDrive;
-	private DriveTrain driveTrain;
+	private final double aMax;
+	private final double vDrive;
+	private final DriveTrain driveTrain;
 	private Compass compass;
 
 	public DriveLocate() {
@@ -40,19 +40,23 @@ public class DriveLocate extends Command {
 
 	@Override
 	protected void execute() {
-		double t = timeSinceInitialized();
-		double tDrive = vDrive / aMax;
+		final double t = timeSinceInitialized();
+		final double tDrive = vDrive / aMax;
 		double x;
 		double v;
 		if (t < tDrive) {
 			x = Math.pow(aMax, 2) * t;
 			v = aMax * t;
 		} else {
-			x = (Math.pow(aMax, 2) * tDrive) + vDrive * (t - tDrive);
+			x = Math.pow(aMax, 2) * tDrive + vDrive * (t - tDrive);
 			v = vDrive;
 		}
 		driveTrain.setSetPoint(x, v);
 
+	}
+
+	public Compass getCompass() {
+		return compass;
 	}
 
 	public double getConversionRateL() {
@@ -63,8 +67,16 @@ public class DriveLocate extends Command {
 		return conversionRateR;
 	}
 
+	public double getThresholdPitch() {
+		return thresholdPitch;
+	}
+
 	public double getThresholdYaw() {
 		return thresholdYaw;
+	}
+
+	public double getTimeOut() {
+		return timeOut;
 	}
 
 	@Override
@@ -86,45 +98,32 @@ public class DriveLocate extends Command {
 
 		double errorAngle = Robot.getCompass().getYaw() - targetAngle;
 
-		if (errorAngle > 180) {
+		if (errorAngle > 180)
 			errorAngle -= 360;
-		}
 
 		if (errorAngle < -180) {
 		}
 
-		double timeOut = 3;
-		double thresholdPitch = 5;
-		return (timeSinceInitialized() > timeOut) || (Math.abs(Robot.getCompass().getPitch()) > thresholdPitch);// &&
+		final double timeOut = 3;
+		final double thresholdPitch = 5;
+		return timeSinceInitialized() > timeOut || Math.abs(Robot.getCompass().getPitch()) > thresholdPitch;// &&
 		// (Math.abs(errorAngle) < thresholdYaw);
 	}
 
-	public void setConversionRateL(double conversionRateL) {
+	public void setCompass(final Compass compass) {
+		this.compass = compass;
+	}
+
+	public void setConversionRateL(final double conversionRateL) {
 		this.conversionRateL = conversionRateL;
 	}
 
-	public void setConversionRateR(double conversionRateR) {
+	public void setConversionRateR(final double conversionRateR) {
 		this.conversionRateR = conversionRateR;
 	}
 
-	public void setThresholdYaw(double thresholdYaw) {
+	public void setThresholdYaw(final double thresholdYaw) {
 		this.thresholdYaw = thresholdYaw;
-	}
-
-	public double getThresholdPitch() {
-		return thresholdPitch;
-	}
-
-	public double getTimeOut() {
-		return timeOut;
-	}
-
-	public Compass getCompass() {
-		return compass;
-	}
-
-	public void setCompass(Compass compass) {
-		this.compass = compass;
 	}
 
 }

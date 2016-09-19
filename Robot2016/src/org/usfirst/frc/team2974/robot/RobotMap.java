@@ -234,127 +234,127 @@ public class RobotMap {
 
 	}
 
-	public static void setAnalog0(AnalogInput analog0) {
+	public static void setAnalog0(final AnalogInput analog0) {
 		RobotMap.analog0 = analog0;
 	}
 
-	public static void setAnalog1(AnalogInput analog1) {
+	public static void setAnalog1(final AnalogInput analog1) {
 		RobotMap.analog1 = analog1;
 	}
 
-	public static void setAnalog2(AnalogInput analog2) {
+	public static void setAnalog2(final AnalogInput analog2) {
 		RobotMap.analog2 = analog2;
 	}
 
-	public static void setAnalog3(AnalogInput analog3) {
+	public static void setAnalog3(final AnalogInput analog3) {
 		RobotMap.analog3 = analog3;
 	}
 
-	public static void setArm(CANTalon arm) {
+	public static void setArm(final CANTalon arm) {
 		RobotMap.arm = arm;
 	}
 
-	public static void setArmPot(AnalogPotentiometer armPot) {
+	public static void setArmPot(final AnalogPotentiometer armPot) {
 		RobotMap.armPot = armPot;
 	}
 
-	public static void setBackwardLimit(DigitalInput backwardLimit) {
+	public static void setBackwardLimit(final DigitalInput backwardLimit) {
 		RobotMap.backwardLimit = backwardLimit;
 	}
 
-	public static void setDigital0(DigitalInput digital0) {
+	public static void setDigital0(final DigitalInput digital0) {
 		RobotMap.digital0 = digital0;
 	}
 
-	public static void setDigital1(DigitalInput digital1) {
+	public static void setDigital1(final DigitalInput digital1) {
 		RobotMap.digital1 = digital1;
 	}
 
-	public static void setDigital2(DigitalInput digital2) {
+	public static void setDigital2(final DigitalInput digital2) {
 		RobotMap.digital2 = digital2;
 	}
 
-	public static void setDigital3(DigitalInput digital3) {
+	public static void setDigital3(final DigitalInput digital3) {
 		RobotMap.digital3 = digital3;
 	}
 
-	public static void setDigital4(DigitalInput digital4) {
+	public static void setDigital4(final DigitalInput digital4) {
 		RobotMap.digital4 = digital4;
 	}
 
-	public static void setDigital5(DigitalInput digital5) {
+	public static void setDigital5(final DigitalInput digital5) {
 		RobotMap.digital5 = digital5;
 	}
 
-	public static void setDigital6(DigitalInput digital6) {
+	public static void setDigital6(final DigitalInput digital6) {
 		RobotMap.digital6 = digital6;
 	}
 
-	public static void setDigital7(DigitalInput digital7) {
+	public static void setDigital7(final DigitalInput digital7) {
 		RobotMap.digital7 = digital7;
 	}
 
-	public static void setDigital8(DigitalInput digital8) {
+	public static void setDigital8(final DigitalInput digital8) {
 		RobotMap.digital8 = digital8;
 	}
 
-	public static void setDigital9(DigitalInput digital9) {
+	public static void setDigital9(final DigitalInput digital9) {
 		RobotMap.digital9 = digital9;
 	}
 
-	public static void setDriveTrainLeft1(Talon driveTrainLeft1) {
+	public static void setDriveTrainLeft1(final Talon driveTrainLeft1) {
 		RobotMap.driveTrainLeft1 = driveTrainLeft1;
 	}
 
-	public static void setDriveTrainLeft2(Talon driveTrainLeft2) {
+	public static void setDriveTrainLeft2(final Talon driveTrainLeft2) {
 		RobotMap.driveTrainLeft2 = driveTrainLeft2;
 	}
 
-	public static void setDriveTrainRight1(Talon driveTrainRight1) {
+	public static void setDriveTrainRight1(final Talon driveTrainRight1) {
 		RobotMap.driveTrainRight1 = driveTrainRight1;
 	}
 
-	public static void setDriveTrainRight2(Talon driveTrainRight2) {
+	public static void setDriveTrainRight2(final Talon driveTrainRight2) {
 		RobotMap.driveTrainRight2 = driveTrainRight2;
 	}
 
-	public static void setEncoderLeft(Encoder encoderLeft) {
+	public static void setEncoderLeft(final Encoder encoderLeft) {
 		RobotMap.encoderLeft = encoderLeft;
 	}
 
-	public static void setEncoderRight(Encoder encoderRight) {
+	public static void setEncoderRight(final Encoder encoderRight) {
 		RobotMap.encoderRight = encoderRight;
 	}
 
-	public static void setFlapper(Solenoid flapper) {
+	public static void setFlapper(final Solenoid flapper) {
 		RobotMap.flapper = flapper;
 	}
 
-	public static void setForwardLimit(DigitalInput forwardLimit) {
+	public static void setForwardLimit(final DigitalInput forwardLimit) {
 		RobotMap.forwardLimit = forwardLimit;
 	}
 
-	public static void setIntakeExtender(Solenoid intakeExtender) {
+	public static void setIntakeExtender(final Solenoid intakeExtender) {
 		RobotMap.intakeExtender = intakeExtender;
 	}
 
-	public static void setIntakeMotor(Talon intakeMotor) {
+	public static void setIntakeMotor(final Talon intakeMotor) {
 		RobotMap.intakeMotor = intakeMotor;
 	}
 
-	public static void setLatch(Solenoid latch) {
+	public static void setLatch(final Solenoid latch) {
 		RobotMap.latch = latch;
 	}
 
-	public static void setPnuematicsShifter(Solenoid pnuematicsShifter) {
+	public static void setPnuematicsShifter(final Solenoid pnuematicsShifter) {
 		RobotMap.pnuematicsShifter = pnuematicsShifter;
 	}
 
-	public static void setShooterLimit(DigitalInput shooterLimit) {
+	public static void setShooterLimit(final DigitalInput shooterLimit) {
 		RobotMap.shooterLimit = shooterLimit;
 	}
 
-	public static void setTensioner(CANTalon tensioner) {
+	public static void setTensioner(final CANTalon tensioner) {
 		RobotMap.tensioner = tensioner;
 	}
 }

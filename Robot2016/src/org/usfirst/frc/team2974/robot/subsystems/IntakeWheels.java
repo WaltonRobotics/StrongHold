@@ -38,7 +38,7 @@ public class IntakeWheels extends Subsystem {
 	}
 
 	public void output() {
-		double speed = .39;
+		final double speed = .39;
 		intakeMotor.set(speed);
 		state = WheelState.out;
 	}
