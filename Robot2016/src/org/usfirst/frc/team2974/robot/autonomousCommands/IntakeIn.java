@@ -10,7 +10,7 @@ import edu.wpi.first.wpilibj.command.Command;
  */
 public class IntakeIn extends Command {
 
-	//private double startTime;
+	// private double startTime;
 
 	public IntakeIn() {
 		requires(Robot.getIntake());
@@ -30,7 +30,7 @@ public class IntakeIn extends Command {
 	// Called just before this Command runs the first time
 	@Override
 	protected void initialize() {
-		//startTime = Timer.getFPGATimestamp();
+		// startTime = Timer.getFPGATimestamp();
 		Robot.getIntake().retract();
 	}
 
