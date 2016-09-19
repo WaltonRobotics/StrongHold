@@ -16,9 +16,12 @@ public class FileHelper {
 	/**
 	 * This method uses the file path and creates the non-existent paths to
 	 * create the end file
-	 * 
+	 *
 	 * @param path
-	 * @return
+	 *            Path to be created must have a file to be created Ex:
+	 *            C:/Users/New Folder/Hello.txt
+	 * @return Returns a the created file from the given path if the path was
+	 *         not created then null is returned
 	 */
 	public static File create(String path) {
 		File temp = null;
@@ -48,9 +51,11 @@ public class FileHelper {
 	 * This method allow (given a non empty string, a non null file and that the
 	 * file exists) it will write the given text to the specific file a new file
 	 * is added after every message
-	 * 
+	 *
 	 * @param message
+	 *            The String message that will be appended to the specific file
 	 * @param file
+	 *            The file where the message will be written to
 	 */
 	public static void writeToFile(String message, File file) {
 		if (file != null && file.exists() && !message.trim().isEmpty())
@@ -65,9 +70,11 @@ public class FileHelper {
 	/**
 	 * formats a path to be able to be used for the operators operating system
 	 * system
-	 * 
+	 *
 	 * @param path
-	 * @return
+	 *            the path that will be formatted
+	 * @return path returns a path whose separators Ex: \ have been replaced to
+	 *         fit the operators system file separators
 	 */
 	public static String formatFilePath(String path) {
 		if (!File.separator.equals("\\"))
@@ -80,10 +87,14 @@ public class FileHelper {
 	/**
 	 * This method checks if the specific file contains the wanted text return
 	 * false if the file is null or the message is empty
-	 * 
+	 *
 	 * @param message
+	 *            the String message that will be search fro in the given file
+	 *            to see if it is present in the file
 	 * @param file
-	 * @return
+	 *            the file from where the method will search for the message
+	 * @return boolean returns true if the file contains the message or else the
+	 *         method return false
 	 */
 	public static boolean contains(String message, File file) {
 		if (file != null && !message.trim().isEmpty()) {
@@ -100,11 +111,12 @@ public class FileHelper {
 	/**
 	 * Return in the form a List<String> all the lines of the given not null
 	 * file if the file is null the method will return null as well
-	 * 
+	 *
 	 * @param file
-	 * @return
+	 *            the file file from where the method reads from
+	 * @return List<String> returns a list of all the lines in the file
 	 */
-	public static List<String> readFromFile(File file) {
+	private static List<String> readFromFile(File file) {
 		if (file != null) {
 			List<String> textLines = new ArrayList<>();
 
@@ -118,7 +130,7 @@ public class FileHelper {
 			return textLines;
 		}
 
-		System.out.println("There was no file inputed into the readFromFile methjod inside the FileHelper class");
+		System.out.println("There was no file imputed into the readFromFile method inside the FileHelper class");
 		return null;
 	}
 }
