@@ -17,7 +17,7 @@ public class Message {
 	 * @param message
 	 *            that string message that will be recorded in a given file
 	 */
-	public static void addAction(String message) {
+	public static void addAction(final String message) {
 		addAction(message, null);
 	}
 
@@ -33,7 +33,7 @@ public class Message {
 	 *            gives more information to the user by telling him/her where
 	 *            the method was executed
 	 */
-	public static void addAction(String message, Object object) {
+	public static void addAction(final String message, final Object object) {
 		addMessage("[ACTION]", message, object, "Action Logs");
 	}
 
@@ -44,7 +44,7 @@ public class Message {
 	 * @param message
 	 *            that string message that will be recorded in a given file
 	 */
-	public static void addError(String message) {
+	public static void addError(final String message) {
 		addError(message, null);
 	}
 
@@ -60,7 +60,7 @@ public class Message {
 	 *            gives more information to the user by telling him/her where
 	 *            the method was executed
 	 */
-	public static void addError(String message, Object object) {
+	public static void addError(final String message, final Object object) {
 		addMessage("[ERROR]", message, object, "Error Logs");
 	}
 
@@ -80,8 +80,8 @@ public class Message {
 	 * @param fileName
 	 *            decides what the file that will be created will be named
 	 */
-	private static void addMessage(String what, String message, Object object, String fileName) {
-		File file = FileHelper
+	private static void addMessage(final String what, String message, final Object object, final String fileName) {
+		final File file = FileHelper
 				.create(FileHelper.formatFilePath(System.getProperty("user.home").concat("\\Desktop\\Logs\\Log"
 						.concat(getSystemTime("yyyy_MM_dd").concat("\\".concat(fileName).concat(".txt"))))));
 
@@ -105,7 +105,7 @@ public class Message {
 	 * @param message
 	 *            that string message that will be recorded in a given file
 	 */
-	public static void addWarning(String message) {
+	public static void addWarning(final String message) {
 		addWarning(message, null);
 	}
 
@@ -121,7 +121,7 @@ public class Message {
 	 *            gives more information to the user by telling him/her where
 	 *            the method was executed
 	 */
-	public static void addWarning(String message, Object object) {
+	public static void addWarning(final String message, final Object object) {
 		addMessage("[WARNING]", message, object, "Warning Logs");
 	}
 
@@ -139,7 +139,7 @@ public class Message {
 	 *            specific way
 	 * @return the time given in a certain format
 	 */
-	private static String getSystemTime(String pattern) {
+	private static String getSystemTime(final String pattern) {
 		return LocalDateTime.now().format(DateTimeFormatter.ofPattern(pattern));
 	}
 }

@@ -6,7 +6,7 @@ package org.usfirst.frc.team2974.dataLogs;
  */
 class WarningMessagesTest {
 
-	public static void main(String[] args) {
+	public static void main(final String[] args) {
 
 		// for (int i = 0; i < 100; i++) {
 		// WarningMessages.addError("Hello wowo you have ice long hair how do
@@ -15,7 +15,8 @@ class WarningMessagesTest {
 		// is marius!!!");
 		// }
 
-		for (int i = 0; i < 10000; i++)
-			Message.addError("Hello wowo you have ice long hair how do");
+		Message.addAction("Hello");
+		Message.addError("What are you doing?");
+		Message.addWarning("My name is bob what about you?");
 	}
 }

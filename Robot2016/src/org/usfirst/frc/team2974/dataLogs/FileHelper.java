@@ -14,6 +14,30 @@ import java.util.Scanner;
 public class FileHelper {
 
 	/**
+	 * This method checks if the specific file contains the wanted text return
+	 * false if the file is null or the message is empty
+	 *
+	 * @param message
+	 *            the String message that will be search fro in the given file
+	 *            to see if it is present in the file
+	 * @param file
+	 *            the file from where the method will search for the message
+	 * @return boolean returns true if the file contains the message or else the
+	 *         method return false
+	 */
+	public static boolean contains(final String message, final File file) {
+		if (file != null && !message.trim().isEmpty()) {
+			final List<String> list = readFromFile(file);
+
+			if (list != null)
+				for (final String lines : list)
+					if (lines.contains(message))
+						return true;
+		}
+		return false;
+	}
+
+	/**
 	 * This method uses the file path and creates the non-existent paths to
 	 * create the end file
 	 *
@@ -23,11 +47,11 @@ public class FileHelper {
 	 * @return Returns a the created file from the given path if the path was
 	 *         not created then null is returned
 	 */
-	public static File create(String path) {
+	public static File create(final String path) {
 		File temp = null;
 
 		if (path.contains(".")) {
-			temp = new File(path.substring(0, path.lastIndexOf("\\")));
+			temp = new File(path.substring(0, path.lastIndexOf(File.separator)));
 
 			if (temp.mkdirs())
 				System.out.println("Managed to create directory ".concat(temp.getAbsolutePath()));
@@ -39,32 +63,12 @@ public class FileHelper {
 			try {
 				if (temp.createNewFile())
 					System.out.println("Managed to create ".concat(temp.getName()));
-			} catch (IOException e) {
+			} catch (final IOException e) {
 				System.out.println("Could not manage to create " + temp.getName());
 			}
 		}
 
 		return temp;
-	}
-
-	/**
-	 * This method allow (given a non empty string, a non null file and that the
-	 * file exists) it will write the given text to the specific file a new file
-	 * is added after every message
-	 *
-	 * @param message
-	 *            The String message that will be appended to the specific file
-	 * @param file
-	 *            The file where the message will be written to
-	 */
-	public static void writeToFile(String message, File file) {
-		if (file != null && file.exists() && !message.trim().isEmpty())
-			try (BufferedWriter writer = new BufferedWriter(new FileWriter(file, true))) {
-				writer.append(message);
-				writer.newLine();
-			} catch (IOException e) {
-				System.out.println("Could not write to file");
-			}
 	}
 
 	/**
@@ -85,30 +89,6 @@ public class FileHelper {
 	}
 
 	/**
-	 * This method checks if the specific file contains the wanted text return
-	 * false if the file is null or the message is empty
-	 *
-	 * @param message
-	 *            the String message that will be search fro in the given file
-	 *            to see if it is present in the file
-	 * @param file
-	 *            the file from where the method will search for the message
-	 * @return boolean returns true if the file contains the message or else the
-	 *         method return false
-	 */
-	public static boolean contains(String message, File file) {
-		if (file != null && !message.trim().isEmpty()) {
-			List<String> list = readFromFile(file);
-
-			if (list != null)
-				for (String lines : list)
-					if (lines.contains(message))
-						return true;
-		}
-		return false;
-	}
-
-	/**
 	 * Return in the form a List<String> all the lines of the given not null
 	 * file if the file is null the method will return null as well
 	 *
@@ -116,14 +96,14 @@ public class FileHelper {
 	 *            the file file from where the method reads from
 	 * @return List<String> returns a list of all the lines in the file
 	 */
-	private static List<String> readFromFile(File file) {
+	private static List<String> readFromFile(final File file) {
 		if (file != null) {
-			List<String> textLines = new ArrayList<>();
+			final List<String> textLines = new ArrayList<>();
 
 			try (Scanner scanner = new Scanner(file)) {
 				while (scanner.hasNext())
 					textLines.add(scanner.nextLine());
-			} catch (Exception e) {
+			} catch (final Exception e) {
 				System.out.println("could not read from file ".concat(file.getName()));
 			}
 
@@ -132,5 +112,25 @@ public class FileHelper {
 
 		System.out.println("There was no file imputed into the readFromFile method inside the FileHelper class");
 		return null;
+	}
+
+	/**
+	 * This method allow (given a non empty string, a non null file and that the
+	 * file exists) it will write the given text to the specific file a new file
+	 * is added after every message
+	 *
+	 * @param message
+	 *            The String message that will be appended to the specific file
+	 * @param file
+	 *            The file where the message will be written to
+	 */
+	public static void writeToFile(final String message, final File file) {
+		if (file != null && file.exists() && !message.trim().isEmpty())
+			try (BufferedWriter writer = new BufferedWriter(new FileWriter(file, true))) {
+				writer.append(message);
+				writer.newLine();
+			} catch (final IOException e) {
+				System.out.println("Could not write to file");
+			}
 	}
 }
