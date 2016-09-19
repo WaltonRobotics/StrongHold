@@ -3,6 +3,7 @@ package org.usfirst.frc.team2974.robot.autonomousCommandGroups;
 import org.usfirst.frc.team2974.robot.AutonLocator;
 import org.usfirst.frc.team2974.robot.AutonPossibleLocation;
 import org.usfirst.frc.team2974.robot.Robot;
+import org.usfirst.frc.team2974.robot.autonomousCommands.DriveStraightMC;
 import org.usfirst.frc.team2974.robot.autonomousCommands.MoveToObstacle;
 import org.usfirst.frc.team2974.robot.autonomousCommands.Shoot;
 import org.usfirst.frc.team2974.robot.autonomousCommands.TurnToAngle;
@@ -17,7 +18,7 @@ public class ActivateAuton extends CommandGroup {
 			addSequential(new TurnToAngle(180));
 			addSequential(new MoveToObstacle(-1));
 		}else{
-			addSequential(new MoveToObstacle(1));
+			addSequential(new DriveStraightMC(2.0, 0.5, 0.1));//testing instead of move to obstical
 		}
 
 		if (location.getAutonPossibleLocation().equals(AutonPossibleLocation.A)){

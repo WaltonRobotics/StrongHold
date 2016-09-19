@@ -143,8 +143,6 @@ public class Robot extends IterativeRobot {
 	@Override
 	public void disabledPeriodic() {
 		
-		SmartDashboard.putString("Drive Mode:",Drive.driveMode);
-		
 		Robot.inputs.updateSmartDashboard();
 		Robot.compass.dumpSmartDashboardValues();
 		Robot.camera.setNetTable();
