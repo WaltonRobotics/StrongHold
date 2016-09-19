@@ -102,6 +102,13 @@ public class OI {
 		// testAuton = new JoystickButton(gamepad, 6);//remove l8er TODO
 		// testAuton.whenPressed(new TestAuton());
 
+		// aimLeft.whenPressed(new Aim(0));
+		// aimRight.whenPressed(new Aim(2));
+
+		autoShoot = false;
+
+		// testAuton = new JoystickButton(gamepad, 6);//remove l8er TODO
+		// testAuton.whenPressed(new TestAuton());
 		SmartDashboard.putData("Drive Forward 1m", new DriveStraightMC(1.0, 0.5, 0.1));
 	}
 

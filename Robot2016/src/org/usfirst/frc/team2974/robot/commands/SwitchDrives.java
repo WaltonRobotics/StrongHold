@@ -20,8 +20,6 @@ public class SwitchDrives extends Command {
 
 	@Override
 	protected void execute() {
-		// TODO Auto-generated method stub
-
 	}
 
 	@Override

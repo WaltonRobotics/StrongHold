@@ -9,20 +9,22 @@ import edu.wpi.first.wpilibj.command.Command;
  * its GOAL_ANGLE it does this by turn form a point.
  */
 public class TurnToAngle extends Command {
-	final double SPEED = .5;
-	final double GOAL_ANGLE;
-	final double TOLERANCE = 10;
+
+	double speed = .5;
+	double goalAngle;
+	double tolerance = 10;
 	private final double PROPORTIONAL_ZONE = 30;
 
 	public TurnToAngle(double angle) {
 		requires(Robot.getDriveTrain());
 		requires(Robot.getCompass());
-		this.GOAL_ANGLE = angle;
+		this.goalAngle = angle;
 	}
 
 	// Called just before this Command runs the first time
 	@Override
 	protected void initialize() {
+
 	}
 
 	// Called repeatedly when this Command is scheduled to run
@@ -37,17 +39,17 @@ public class TurnToAngle extends Command {
 	// Make this return true when this Command no longer needs to run execute()
 	@Override
 	protected boolean isFinished() {
-		return Math.abs(errorAngle()) <= TOLERANCE;
+		return Math.abs(errorAngle()) <= tolerance;
 	}
 
 	private double errorAngle() {
-		double deltaYaw = Robot.getCompass().getYaw() - GOAL_ANGLE;
-		if (deltaYaw > 180) {
+		double deltaYaw = Robot.getCompass().getYaw() - goalAngle;
+		if (deltaYaw > 180)
 			deltaYaw -= 360;
-		}
-		if (deltaYaw < -180) {
+
+		else if (deltaYaw < -180)
 			deltaYaw += 360;
-		}
+
 		return deltaYaw;
 	}
 

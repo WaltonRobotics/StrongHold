@@ -24,9 +24,10 @@ public class DriveDistance extends Command {
 	@Override
 	protected void execute() {
 		// TODO Auto-generated method stub
+
 		if (Robot.getDriveTrain().getLeftController().get() < distance)
-			;// we will need a conversion rate
-		end();
+			end();
+
 	}
 
 	@Override

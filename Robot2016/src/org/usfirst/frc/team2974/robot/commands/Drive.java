@@ -3,6 +3,7 @@ package org.usfirst.frc.team2974.robot.commands;
 import org.usfirst.frc.team2974.robot.Robot;
 
 import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  *
@@ -29,7 +30,7 @@ public class Drive extends Command {
 	@Override
 	protected void execute() {
 
-		if (Drive.isTank) {
+		if (SmartDashboard.getString("Drive Mode:").equals("Tank")) {
 			double left = Robot.getOi().getLeft().getY();
 			double right = Robot.getOi().getRight().getY();
 
@@ -44,14 +45,23 @@ public class Drive extends Command {
 			if (Robot.getOi().getShiftUp().get())
 				Robot.getDriveTrain().shiftUp();
 		} else {
-			double direction = Robot.getOi().getLeft().getX();
-			double throttle = Robot.getOi().getRight().getY();
+			double directionX = Robot.getOi().getRight().getX();
+			double directionY = Robot.getOi().getRight().getY();
+			double throttle = (Robot.getOi().getLeft().getY() + 1) / 2;// returns
+																		// a
+																		// value
+																		// between
+																		// 0 and
+																		// 1
 
-			if (Math.abs(direction) < deadband)
-				direction = 0;
+			double throttleCalc = throttle * -1 * directionY;
+
+			if (Math.abs(directionX) < deadband)
+				directionX = 0;
 			if (Math.abs(throttle) < deadband)
-				throttle = 0;
-			Robot.getDriveTrain().setSpeeds(-1 * throttle + direction, -1 * throttle - direction);
+				directionY = 0;
+			Robot.getDriveTrain().setSpeeds(throttleCalc - (directionX * throttle),
+					throttleCalc - (directionX * throttle));
 
 			if (Robot.getOi().getShiftDown().get())
 				Robot.getDriveTrain().shiftDown();

@@ -1,45 +1,40 @@
 package org.usfirst.frc.team2974.robot.autonomousCommands;
 
 import org.usfirst.frc.team2974.robot.Robot;
-import org.usfirst.frc.team2974.robot.subsystems.Compass;
 
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Command;
 
 public class MoveToObstacle extends Command {
-	private double threshold;
-	private double direction;
-	private Compass thisCompass;
+	double threshold;
+	double direction;
+	double startTime;
 
 	public MoveToObstacle(double direction) {
 		this.direction = direction;
+		startTime = Timer.getFPGATimestamp();
 	}
 
 	@Override
 	protected void initialize() {
-		Robot.getDriveTrain().setSpeeds(1 * direction, 1 * direction);// Magic
-																		// number
-																		// -
-																		// change
-																		// this
-																		// after
-																		// testing
-																		// with
-																		// actual
-																		// robot
-		threshold = 7 * direction; // another magic number to test
+		Robot.getDriveTrain().setSpeeds(1 * direction, 1 * direction);
+		threshold = 5 * direction;
+
 	}
 
 	@Override
 	protected void execute() {
-		// Create an if statement which calls is finished
+
 		if (isFinished())
-			end();
+			return;
+		Robot.getDriveTrain().setSpeeds(1 * direction, 1 * direction);
 	}
 
 	@Override
 	protected boolean isFinished() {
 		// Create an if statement which will call end
-		if (Robot.getCompass().getPitch() > threshold) {
+
+		if (Robot.getCompass().getPitch() > threshold && Timer.getFPGATimestamp() - startTime > 500) {
 			return true;
 		}
 		return false;
@@ -47,22 +42,15 @@ public class MoveToObstacle extends Command {
 
 	@Override
 	protected void interrupted() {
-		// TODO Auto-generated method stub
-		end();
+
+		Robot.getDriveTrain().setSpeeds(0, 0);
+
 	}
 
 	@Override
 	protected void end() {
 		// TODO Auto-generated method stub
-
-	}
-
-	public Compass getThisCompass() {
-		return thisCompass;
-	}
-
-	public void setThisCompass(Compass thisCompass) {
-		this.thisCompass = thisCompass;
+		end();
 	}
 
 }
