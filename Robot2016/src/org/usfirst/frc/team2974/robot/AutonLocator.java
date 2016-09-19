@@ -11,10 +11,7 @@ public class AutonLocator {
 	}
 
 	public double getAngle(Point start, Point finish) {
-
-		double positionY = (start.getY() - finish.getY());
-		double positionX = (start.getX() - finish.getX());
-		return Math.atan(positionY / positionX);
+		return Math.atan((start.getY() - finish.getY()) / (start.getX() - finish.getX()));
 
 	}
 
@@ -23,9 +20,7 @@ public class AutonLocator {
 	}
 
 	public double getDistance(Point start, Point finish) {
-		double positionY = (start.getY() - finish.getY());
-		double positionX = (start.getX() - finish.getX());
-		return Math.sqrt(Math.pow(positionX, 2) + Math.pow(positionY, 2));
+		return Math.sqrt(Math.pow((start.getX() - finish.getX()), 2) + Math.pow((start.getY() - finish.getY()), 2));
 	}
 
 	public Point getLocation() {

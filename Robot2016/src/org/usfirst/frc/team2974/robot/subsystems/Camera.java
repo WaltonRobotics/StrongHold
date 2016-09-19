@@ -134,14 +134,14 @@ public class Camera extends Subsystem {
 				table = NetworkTable.getTable("GRIP/report");
 			} catch (Exception e) {
 				table = null;
-				Message.addError("Could not recieve the table from GRIP/report",this);
+				Message.addError("Could not recieve the table from GRIP/report", this);
 			}
 		} else {
 			try {
 				table = NetworkTable.getTable("GRIP/reportOnboard");
 			} catch (Exception e) {
 				table = null;
-				Message.addError("Could not recieve the table from GRIP/reportOnboard",this);
+				Message.addError("Could not recieve the table from GRIP/reportOnboard", this);
 			}
 		}
 	}

@@ -1,7 +1,6 @@
 package org.usfirst.frc.team2974.robot.subsystems;
 
 import org.usfirst.frc.team2974.dataLogs.Message;
-import org.usfirst.frc.team2974.robot.Robot;
 import org.usfirst.frc.team2974.robot.RobotMap;
 import org.usfirst.frc.team2974.robot.sensors.BNO055;
 import org.usfirst.frc.team2974.robot.sensors.BNO055.BNO055Exception;
@@ -63,7 +62,8 @@ public class Compass extends Subsystem {
 
 		pitchOffset = PITCHOFFSET;
 
-		Message.addAction("Zeroed the compass to start at an offset of ".concat(String.valueOf(yawOffset).concat(" and a pitch offset of ").concat(String.valueOf(pitchOffset))));
+		Message.addAction("Zeroed the compass to start at an offset of ".concat(
+				String.valueOf(yawOffset).concat(" and a pitch offset of ").concat(String.valueOf(pitchOffset))));
 	}
 
 	/**

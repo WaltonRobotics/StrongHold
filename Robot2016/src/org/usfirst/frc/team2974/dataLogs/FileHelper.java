@@ -8,7 +8,18 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
+/**
+ * This class utility class allows users to manipulate File objects
+ */
 public class FileHelper {
+
+	/**
+	 * This method uses the file path and creates the non-existent paths to
+	 * create the end file
+	 * 
+	 * @param path
+	 * @return
+	 */
 	public static File create(String path) {
 		File temp = null;
 
@@ -33,8 +44,16 @@ public class FileHelper {
 		return temp;
 	}
 
+	/**
+	 * This method allow (given a non empty string, a non null file and that the
+	 * file exists) it will write the given text to the specific file a new file
+	 * is added after every message
+	 * 
+	 * @param message
+	 * @param file
+	 */
 	public static void writeToFile(String message, File file) {
-		if (file != null && !message.trim().isEmpty())
+		if (file != null && file.exists() && !message.trim().isEmpty())
 			try (BufferedWriter writer = new BufferedWriter(new FileWriter(file, true))) {
 				writer.append(message);
 				writer.newLine();
@@ -43,6 +62,13 @@ public class FileHelper {
 			}
 	}
 
+	/**
+	 * formats a path to be able to be used for the operators operating system
+	 * system
+	 * 
+	 * @param path
+	 * @return
+	 */
 	public static String formatFilePath(String path) {
 		if (!File.separator.equals("\\"))
 			while (path.contains("\\"))
@@ -51,6 +77,14 @@ public class FileHelper {
 		return path;
 	}
 
+	/**
+	 * This method checks if the specific file contains the wanted text return
+	 * false if the file is null or the message is empty
+	 * 
+	 * @param message
+	 * @param file
+	 * @return
+	 */
 	public static boolean contains(String message, File file) {
 		if (file != null && !message.trim().isEmpty()) {
 			List<String> list = readFromFile(file);
@@ -63,6 +97,13 @@ public class FileHelper {
 		return false;
 	}
 
+	/**
+	 * Return in the form a List<String> all the lines of the given not null
+	 * file if the file is null the method will return null as well
+	 * 
+	 * @param file
+	 * @return
+	 */
 	public static List<String> readFromFile(File file) {
 		if (file != null) {
 			List<String> textLines = new ArrayList<>();

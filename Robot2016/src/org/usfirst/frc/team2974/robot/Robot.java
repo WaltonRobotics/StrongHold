@@ -1,7 +1,6 @@
 package org.usfirst.frc.team2974.robot;
 
-import java.io.File;
-
+import org.usfirst.frc.team2974.dataLogs.Message;
 import org.usfirst.frc.team2974.robot.autonomousCommandGroups.ChivalDeFreze;
 import org.usfirst.frc.team2974.robot.autonomousCommandGroups.FullRunnableAuton;
 import org.usfirst.frc.team2974.robot.autonomousCommandGroups.LowBar;
@@ -31,6 +30,8 @@ import edu.wpi.first.wpilibj.NamedSendable;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.CommandGroup;
 import edu.wpi.first.wpilibj.command.Scheduler;
+import edu.wpi.first.wpilibj.image.NIVisionException;
+import edu.wpi.first.wpilibj.image.RGBImage;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
@@ -265,18 +266,13 @@ public class Robot extends IterativeRobot {
 		server.setQuality(0);
 		server.startAutomaticCapture("cam1");
 
-		File imageFile = new File("TestImage.jpg");
-		File errorImage = new File("ErrorMessage.png");
-
-		if (imageFile.exists())
-			SmartDashboard.putData("Image", (NamedSendable) imageFile);
-
-		else if (errorImage.exists())
-			SmartDashboard.putData("Image", (NamedSendable) errorImage);
-
-		else
-			SmartDashboard.putString("Image Error",
-					"No image found: " + imageFile.getName() + ", " + errorImage.getName());
+		try {
+			SmartDashboard.putData("Image", (NamedSendable) new RGBImage("TestImage.jpg"));
+		} catch (NIVisionException e) {
+			// TODO Auto-generated catch block
+			Message.addWarning("Did not manage to add the TestImage.jpg image to SmartDashBoard");
+			e.printStackTrace();
+		}
 	}
 
 	@Override
