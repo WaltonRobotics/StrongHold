@@ -1,12 +1,7 @@
 package org.usfirst.frc.team2974.dataLogs;
 
-import java.io.BufferedWriter;
 import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Scanner;
 
 /**
  * This class utility class allows users to manipulate File objects
@@ -63,7 +58,7 @@ public class FileHelper {
 			try {
 				if (temp.createNewFile())
 					System.out.println("Managed to create ".concat(temp.getName()));
-			} catch (final IOException e) {
+			} catch (final java.io.IOException e) {
 				System.out.println("Could not manage to create " + temp.getName());
 			}
 		}
@@ -98,9 +93,9 @@ public class FileHelper {
 	 */
 	private static List<String> readFromFile(final File file) {
 		if (file != null) {
-			final List<String> textLines = new ArrayList<>();
+			final List<String> textLines = new java.util.ArrayList<>();
 
-			try (Scanner scanner = new Scanner(file)) {
+			try (java.util.Scanner scanner = new java.util.Scanner(file)) {
 				while (scanner.hasNext())
 					textLines.add(scanner.nextLine());
 			} catch (final Exception e) {
@@ -126,10 +121,10 @@ public class FileHelper {
 	 */
 	public static void writeToFile(final String message, final File file) {
 		if (file != null && file.exists() && !message.trim().isEmpty())
-			try (BufferedWriter writer = new BufferedWriter(new FileWriter(file, true))) {
+			try (java.io.BufferedWriter writer = new java.io.BufferedWriter(new java.io.FileWriter(file, true))) {
 				writer.append(message);
 				writer.newLine();
-			} catch (final IOException e) {
+			} catch (final java.io.IOException e) {
 				System.out.println("Could not write to file");
 			}
 	}
