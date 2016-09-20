@@ -18,7 +18,6 @@ import org.usfirst.frc.team2974.robot.commands.Aim;
 import org.usfirst.frc.team2974.robot.commands.ControlAim.aimState;
 import org.usfirst.frc.team2974.robot.commands.Drive;
 import org.usfirst.frc.team2974.robot.commands.ShowInputs;
-import org.usfirst.frc.team2974.robot.commands.SwitchDrives;
 import org.usfirst.frc.team2974.robot.subsystems.Arm;
 import org.usfirst.frc.team2974.robot.subsystems.Camera;
 import org.usfirst.frc.team2974.robot.subsystems.Compass;
