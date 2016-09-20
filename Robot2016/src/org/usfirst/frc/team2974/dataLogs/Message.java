@@ -1,9 +1,5 @@
 package org.usfirst.frc.team2974.dataLogs;
 
-import java.io.File;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
-
 /**
  * This class used is a utility class that allows you to log information such
  * as: errors, warnings and actions the code will give
@@ -81,7 +77,7 @@ public class Message {
 	 *            decides what the file that will be created will be named
 	 */
 	private static void addMessage(final String what, String message, final Object object, final String fileName) {
-		final File file = FileHelper
+		final java.io.File file = FileHelper
 				.create(FileHelper.formatFilePath(System.getProperty("user.home").concat("\\Desktop\\Logs\\Log"
 						.concat(getSystemTime("yyyy_MM_dd").concat("\\".concat(fileName).concat(".txt"))))));
 
@@ -140,6 +136,6 @@ public class Message {
 	 * @return the time given in a certain format
 	 */
 	private static String getSystemTime(final String pattern) {
-		return LocalDateTime.now().format(DateTimeFormatter.ofPattern(pattern));
+		return new java.text.SimpleDateFormat(pattern).format(new java.util.Date(System.currentTimeMillis()));
 	}
 }
