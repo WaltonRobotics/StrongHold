@@ -46,7 +46,7 @@ public class RobotMap {
     public static Solenoid pnuematicsShifter;
     
     //intake
-	public static Solenoid flapper;
+	public static Solenoid flipper;
 	public static Talon intakeMotor;
 	public static Solenoid intakeExtender;
 	
@@ -110,7 +110,7 @@ public class RobotMap {
         tensioner = new CANTalon(1);
         
         //intake
-        flapper = new Solenoid(1);
+        flipper = new Solenoid(1);
         intakeMotor = new Talon(4);
         intakeExtender = new Solenoid(3);
         

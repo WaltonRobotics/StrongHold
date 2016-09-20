@@ -11,18 +11,18 @@ import edu.wpi.first.wpilibj.command.Subsystem;
 /**
  *
  */
-public class Intake extends Subsystem {
+public class IntakeExtender extends Subsystem {
 	   Solenoid intakeExtender = RobotMap.intakeExtender;
 	   double time;
 	   IntakeExtenderState state;
-	   
 	   
 	    public void initDefaultCommand() {
 	    	setDefaultCommand(new MoveIntake());
 	    }
 	    
-	    public Intake()
+	    public IntakeExtender()
 	    {
+	    	intakeExtender.set(false);
 	    	state = IntakeExtenderState.in;
 	    	time = Timer.getFPGATimestamp();
 	    }
@@ -36,30 +36,28 @@ public class Intake extends Subsystem {
 	    public void extend()
 	    {
 	    	intakeExtender.set(true);
-//	    	if(getState() == IntakeExtenderState.in)
-//	    	{
-//	    		intakeExtender.set(true);
-//		    	state = IntakeExtenderState.out;
-//		    	time = Timer.getFPGATimestamp();
-//	    	}
+	    	if(state == IntakeExtenderState.in)
+	    	{
+		    	state = IntakeExtenderState.out;
+		    	time = Timer.getFPGATimestamp();
+	    	}
 	    	
 	    }
 	    
 	    public void retract()
 	    {
 	    	intakeExtender.set(false);
-//	    	if(getState() == IntakeExtenderState.out)
-//	    	{
-//		    	intakeExtender.set(false);
-//		    	state = IntakeExtenderState.in;
-//		    	time = Timer.getFPGATimestamp();
-//	    	}
+	    	if(state == IntakeExtenderState.out)
+	    	{
+		    	state = IntakeExtenderState.in;
+		    	time = Timer.getFPGATimestamp();
+	    	}
 
 	    }
 	    
 	    public IntakeExtenderState getState()
 	    {
-	    	if(Timer.getFPGATimestamp()-time>.1)
+	    	if(Timer.getFPGATimestamp()-time>.2)
 	    		return state;
 	    	else
 	    		return IntakeExtenderState.middle;

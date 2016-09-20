@@ -2,6 +2,7 @@ package org.usfirst.frc.team2974.robot.commands;
 
 import org.usfirst.frc.team2974.robot.Robot;
 import org.usfirst.frc.team2974.robot.subsystems.Flipper;
+import org.usfirst.frc.team2974.robot.subsystems.IntakeExtender;
 
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Command;
@@ -10,58 +11,33 @@ import edu.wpi.first.wpilibj.command.Command;
  *
  */
 public class MoveFlipper extends Command {
-	boolean bool;
+	boolean intakeOut;
 	double time;
-	boolean bool2;
-	double time2;
-
+	IntakeExtender intakeExtender;
 	public MoveFlipper() {
 		requires(Robot.flipper);
 	}
 
 	// Called just before this Command runs the first time
 	protected void initialize() {
-		bool = false;
+		intakeOut = false;
 	}
 
 	// Called repeatedly when this Command is scheduled to run
 	protected void execute() {
 		if (Robot.oi.flapperDown.get()) {
-			// if(Robot.intake.getState() == Intake.IntakeExtenderState.out)
-			if (!bool) {
-				Robot.intake.extend();
+			if (!intakeOut) {
+				intakeExtender.extend();
 				time = Timer.getFPGATimestamp();
-				bool = true;
-			} else {
-				if (Timer.getFPGATimestamp() - time > .4) {
-					bool = false;
-				} else if (Timer.getFPGATimestamp() - time > .2) {
-					Robot.flipper.setFlapper(Flipper.FlipperState.down);
-					bool = false;
-				}
-
+				intakeOut = true;
+			} else if (Timer.getFPGATimestamp() - time > .2) {
+				Robot.flipper.setFlipper(Flipper.FlipperState.down);
+				intakeOut = false;
 			}
-			// else
-			// Scheduler.getInstance().add(new IntakeOut());
 		} else {
-			// if(Robot.intake.getState() == Intake.IntakeExtenderState.out)
-//			if (!bool2) {
-//				Robot.intake.extend();
-//				time2 = Timer.getFPGATimestamp();
-//				bool2 = true;
-//			} else {
-//				if (Timer.getFPGATimestamp() - time2 > .4) {
-//					bool2 = false;
-//				} else if (Timer.getFPGATimestamp() - time2 > .1) {
-					Robot.flipper.setFlapper(Flipper.FlipperState.up);
-//					bool2 = false;
-//				}
-
-			}
-
-			// else
-			// Scheduler.getInstance().add(new IntakeOut());
-//		}
+			Robot.flipper.setFlipper(Flipper.FlipperState.up);
+			intakeOut = false;
+		}
 
 	}
 

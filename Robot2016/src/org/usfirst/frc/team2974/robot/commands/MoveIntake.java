@@ -2,6 +2,8 @@ package org.usfirst.frc.team2974.robot.commands;
 
 import org.usfirst.frc.team2974.robot.Robot;
 import org.usfirst.frc.team2974.robot.subsystems.Flipper;
+import org.usfirst.frc.team2974.robot.subsystems.IntakeExtender;
+import org.usfirst.frc.team2974.robot.subsystems.IntakeWheels;
 
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Command;
@@ -10,15 +12,17 @@ import edu.wpi.first.wpilibj.command.Command;
  *
  */
 public class MoveIntake extends Command {
-boolean bool;
+boolean flipperDown;
 double time;
+IntakeExtender intakeExtender;
+
     public MoveIntake() {
-        requires(Robot.intake);
+        requires(Robot.intakeExtender);
     }
 
     // Called just before this Command runs the first time
     protected void initialize() {
-    	bool =false;
+    	flipperDown =false;
     	
     }
 
@@ -26,28 +30,28 @@ double time;
     protected void execute() {
     	if(Robot.oi.retractIntake.get())
     	{
-    		if(!bool)
+    		if(!flipperDown)
     		{
-    			Robot.flipper.setFlapper(Flipper.FlipperState.up);
+    			Robot.flipper.setFlipper(Flipper.FlipperState.up);
     			time = Timer.getFPGATimestamp();
-    			bool =true;
+    			flipperDown =true;
     		}
     		else
     		{
     			if(Timer.getFPGATimestamp()-time>.4)
     			{
-    				bool = false;
+    				flipperDown = false;
     			}
     			else if(Timer.getFPGATimestamp()-time > .2){ 			
-    				Robot.intake.retract();
-    				bool = false;
+    				intakeExtender.retract();
+    				flipperDown = false;
     			}
     		}    		
     	}
     		
     	else if(Robot.oi.extendIntake.get())
     	{
-    		Robot.intake.extend();
+    		intakeExtender.extend();
     	}
     		
     }

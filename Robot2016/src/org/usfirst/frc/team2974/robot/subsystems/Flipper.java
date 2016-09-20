@@ -4,6 +4,7 @@ import org.usfirst.frc.team2974.robot.RobotMap;
 import org.usfirst.frc.team2974.robot.commands.MoveFlipper;
 
 import edu.wpi.first.wpilibj.Solenoid;
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
 /**
@@ -11,26 +12,52 @@ import edu.wpi.first.wpilibj.command.Subsystem;
  */
 public class Flipper extends Subsystem {
     
-    // Put methods for controlling this subsystem
-    // here. Call these from Commands.
-	Solenoid flapper = RobotMap.flapper;
+
+	Solenoid flipper = RobotMap.flipper;
+	double time;
+	FlipperState state;
+	
+	public Flipper()
+	{
+		time = Timer.getFPGATimestamp();
+		state = FlipperState.up;
+	}
+	
     public void initDefaultCommand() {
         setDefaultCommand(new MoveFlipper());
     }
     public enum FlipperState
     {
-    	up, down
+    	up, down, middle
     }
-//    
-    public void setFlapper(FlipperState state)
+    
+    public FlipperState getFlipperState()
+    {
+    	if(Timer.getFPGATimestamp()-time>.4)
+    		return state;
+    	else
+    		return FlipperState.middle;
+    }
+    
+    public void setFlipper(FlipperState state)
     {
     	switch(state)
     	{
     	case up:
-    		flapper.set(false);
+    		flipper.set(false);
+    		if(state == FlipperState.down)
+    		{
+    			time = Timer.getFPGATimestamp();
+    			state = FlipperState.down;
+    		}
     		break;
     	case down:
-    		flapper.set(true);
+    		flipper.set(true);
+    		if(state == FlipperState.up)
+    		{
+    			time = Timer.getFPGATimestamp();
+    			state = FlipperState.up;
+    		}
     	}
     }
 }

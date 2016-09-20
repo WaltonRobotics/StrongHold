@@ -2,7 +2,7 @@ package org.usfirst.frc.team2974.robot.autonomousCommands;
 
 import org.usfirst.frc.team2974.robot.Robot;
 import org.usfirst.frc.team2974.robot.subsystems.Flipper.FlipperState;
-import org.usfirst.frc.team2974.robot.subsystems.Intake;
+import org.usfirst.frc.team2974.robot.subsystems.IntakeExtender;
 
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Command;
@@ -21,14 +21,14 @@ double startTime;
     // Called just before this Command runs the first time
     protected void initialize() {
     	startTime = Timer.getFPGATimestamp();
-    	Robot.intake.extend();
+    	Robot.intakeExtender.extend();
     	
     }
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	if(Robot.intake.getState() == Intake.IntakeExtenderState.out)
-    	Robot.flipper.setFlapper(FlipperState.down);
+    	if(Robot.intakeExtender.getState() == IntakeExtender.IntakeExtenderState.out)
+    	Robot.flipper.setFlipper(FlipperState.down);
     }
 
     // Make this return true when this Command no longer needs to run execute()
@@ -38,7 +38,7 @@ double startTime;
 
     // Called once after isFinished returns true
     protected void end() {
-    	Robot.flipper.setFlapper(FlipperState.up);
+    	Robot.flipper.setFlipper(FlipperState.up);
     }
 
     // Called when another command which requires one or more of the same

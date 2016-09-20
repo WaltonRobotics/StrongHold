@@ -11,13 +11,13 @@ import edu.wpi.first.wpilibj.command.Command;
 public class IntakeIn extends Command {
 	private double startTime;
     public IntakeIn() {
-        requires(Robot.intake);
+        requires(Robot.intakeExtender);
     }
 
     // Called just before this Command runs the first time
     protected void initialize() {
     	startTime = Timer.getFPGATimestamp();
-    	Robot.intake.retract();
+    	Robot.intakeExtender.retract();
     }
 
     // Called repeatedly when this Command is scheduled to run

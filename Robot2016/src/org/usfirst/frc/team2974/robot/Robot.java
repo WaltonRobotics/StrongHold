@@ -24,7 +24,7 @@ import org.usfirst.frc.team2974.robot.subsystems.Compass;
 import org.usfirst.frc.team2974.robot.subsystems.DriveTrain;
 import org.usfirst.frc.team2974.robot.subsystems.Flipper;
 import org.usfirst.frc.team2974.robot.subsystems.Inputs;
-import org.usfirst.frc.team2974.robot.subsystems.Intake;
+import org.usfirst.frc.team2974.robot.subsystems.IntakeExtender;
 import org.usfirst.frc.team2974.robot.subsystems.IntakeWheels;
 import org.usfirst.frc.team2974.robot.subsystems.Shooter;
 
@@ -48,7 +48,7 @@ public class Robot extends IterativeRobot {
 	public static Camera camera;
 	public static Compass compass;
 	public static Flipper flipper;
-	public static Intake intake;
+	public static IntakeExtender intakeExtender;
 	public static IntakeWheels intakeWheels;
 	private static SendableChooser autoChooser;
 	private static SendableChooser locationChooser;
@@ -180,7 +180,7 @@ public class Robot extends IterativeRobot {
 		camera = new Camera();
 		compass = new Compass();
 		flipper = new Flipper();
-		intake = new Intake();
+		intakeExtender = new IntakeExtender();
 		intakeWheels = new IntakeWheels();
 
 		createAutonomousChooser();
