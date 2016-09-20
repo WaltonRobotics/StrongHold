@@ -12,12 +12,10 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 public class Drive extends Command {
 	private final double deadband = .05;
     
-	public static boolean isTank = true;
-	public static String driveMode = "Tank";
 	
     public Drive() {
-    	
         requires(Robot.driveTrain);
+        SmartDashboard.putBoolean("Tank", true);
     }
 
     // Called just before this Command runs the first time
@@ -28,7 +26,7 @@ public class Drive extends Command {
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
     	
-    	if (SmartDashboard.getString("Drive Mode:").equals("Tank")){
+    	if (SmartDashboard.getBoolean("Tank")){
     		double left = Robot.oi.left.getY();
     		double right = Robot.oi.right.getY();
     	
@@ -38,28 +36,25 @@ public class Drive extends Command {
     			right = 0;
     		Robot.driveTrain.setSpeeds(-1*left,-1*right);
     	
-    		if(Robot.oi.shiftDown.get())
-    			Robot.driveTrain.shiftDown();
-    		if(Robot.oi.shiftUp.get())
-    			Robot.driveTrain.shiftUp();
+
     	}else{
-    		double directionX = Robot.oi.right.getX();
-    		double directionY = Robot.oi.right.getY();
-    		double throttle = (Robot.oi.left.getY() + 1)/2;//returns a value between 0 and 1
-    		
-    		double throttleCalc = throttle*-1*directionY;
-    		
-    		if(Math.abs(directionX)<deadband)
-    			directionX = 0;
+    		double throttle = (-Robot.oi.left.getY()+1)/2;
+    		double forward = Robot.oi.right.getY();
+    		double turn = Robot.oi.right.getX();
+    		  		
+    		if(Math.abs(turn)<deadband)
+    			turn = 0;
+    		if(Math.abs(forward)<deadband)
+    			forward = 0;
     		if(Math.abs(throttle)<deadband)
-    			directionY = 0;
-    		Robot.driveTrain.setSpeeds(throttleCalc-(directionX*throttle),throttleCalc-(directionX*throttle));
+    			throttle = 0;
     		
-    		if(Robot.oi.shiftDown.get())
-    			Robot.driveTrain.shiftDown();
-    		if(Robot.oi.shiftUp.get())
-    			Robot.driveTrain.shiftUp();
+    		Robot.driveTrain.setSpeeds( throttle * ( forward + turn ), throttle * ( forward - turn ));
     	}
+		if(Robot.oi.shiftDown.get())
+			Robot.driveTrain.shiftDown();
+		if(Robot.oi.shiftUp.get())
+			Robot.driveTrain.shiftUp();
 
     }
 

@@ -9,7 +9,7 @@ import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
- *
+ * Represents the arm
  */
 public class Arm extends Subsystem {
     private CANTalon arm = RobotMap.arm;
