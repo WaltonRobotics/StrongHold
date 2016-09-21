@@ -121,15 +121,35 @@ public class Message {
 		addMessage("[WARNING]", message, object, "Warning Logs");
 	}
 
-	/*
-	 * yyyy/MM/dd HH:mm:ss yyyy_MM_dd
-	 */
-
 	/**
+	 * <p>
 	 * This method return the system time in a specific format such as:
-	 * yyyy/MM/dd HH:mm:ss or yyyy_MM_dd. y is the year, M is the month, d is
-	 * the day, H is the hour, m is the minutes, and s are the seconds.
-	 *
+	 * yyyy/MM/dd HH:mm:ss or yyyy_MM_dd.
+	 * </p>
+	 * <p>
+	 * <br>G = Era designator 
+	 * <br>y = Year
+	 * <br>Y = Week year
+	 * <br>M = Month in year
+	 * <br>w = Week in year
+	 * <br>W = Week in month
+	 * <br>D = Day in year
+	 * <br>d = Day in month
+	 * <br>F = Day of week in month
+	 * <br>E = Day name in week
+	 * <br>u = Day number of week (1 = Monday, ..., 7 = Sunday)
+	 * <br>a = Am/pm marker
+	 * <br>H = Hour in day (0-23)
+	 * <br>k = Hour in day (1-24)
+	 * <br>h = Hour in am/pm (1-12)
+	 * <br>m = Minute in hour
+	 * <br>s = Secnd in minute
+	 * <br>S = Milisecond
+	 * <br>z = Time zone Ex: Pacific Standard Time; PST; GMT-08:00 
+	 * <br>Z = Time zone Ex: -0800 
+	 * <br>X = Time zone Ex: -08; -0800; -08:00 
+	 * </p>
+	 * 
 	 * @param pattern
 	 *            is the parameter that will format the time to be shown a
 	 *            specific way
