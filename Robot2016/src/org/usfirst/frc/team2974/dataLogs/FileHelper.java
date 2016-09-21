@@ -58,7 +58,7 @@ public class FileHelper {
 				if (temp.createNewFile())
 					System.out.println("Managed to create ".concat(temp.getName()));
 			} catch (final java.io.IOException e) {
-				System.out.println("Could not manage to create " + temp.getName());
+				System.out.println("Could not manage to create ".concat(temp.getName()));
 			}
 		}
 

@@ -78,8 +78,8 @@ public class Message {
 	 */
 	private static void addMessage(final String what, String message, final Object object, final String fileName) {
 		final java.io.File file = FileHelper
-				.create(FileHelper.formatFilePath(System.getProperty("user.home").concat("\\Desktop\\Logs\\Log"
-						.concat(getSystemTime("yyyy_MM_dd").concat("\\".concat(fileName).concat(".txt"))))));
+                .create(FileHelper.formatFilePath(System.getProperty("user.home").concat("\\Desktop\\Logs\\Log")
+                        .concat(getSystemTime("yyyy_MM_dd")).concat("\\".concat(fileName)).concat(".txt")));
 
 		if (/*
 			 * is removed for now but if helpful uncomment this piece
