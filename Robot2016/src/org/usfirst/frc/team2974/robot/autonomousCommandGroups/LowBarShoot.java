@@ -8,9 +8,6 @@ import org.usfirst.frc.team2974.robot.autonomousCommands.TurnLeft;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
 
-/**
- *
- */
 class LowBarShoot extends CommandGroup {
 
 	public LowBarShoot() {

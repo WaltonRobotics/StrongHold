@@ -2,9 +2,6 @@ package org.usfirst.frc.team2974.robot.commands;
 
 import edu.wpi.first.wpilibj.command.Command;
 
-/**
- *
- */
 class TestAuton extends Command {
 
 	public TestAuton() {
@@ -40,6 +37,6 @@ class TestAuton extends Command {
 	// Make this return true when this Command no longer needs to run execute()
 	@Override
 	protected boolean isFinished() {
-		return true;// change this fool
+		return !isRunning();// change this fool
 	}
 }

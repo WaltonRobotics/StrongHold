@@ -7,9 +7,6 @@ import org.usfirst.frc.team2974.robot.subsystems.Intake;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Command;
 
-/**
- *
- */
 public class FlapDownTime extends Command {
 	private final double time;
 	private double startTime;

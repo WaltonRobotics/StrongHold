@@ -8,9 +8,6 @@ import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
-/**
- *
- */
 public class Aim extends Command {
 	public class Cycle extends State {
 		double startTime;
@@ -189,9 +186,9 @@ public class Aim extends Command {
 	// Make this return true when this Command no longer needs to run execute()
 	@Override
 	protected boolean isFinished() {
-		if (!shoot)
-			return Math.abs(cycleDifference) < threshold || Timer.getFPGATimestamp() - startTime > totalTime;
-		else
+		if (shoot)
 			return Math.abs(cycleDifference) < threshold;
+
+		return Math.abs(cycleDifference) < threshold || Timer.getFPGATimestamp() - startTime > totalTime;
 	}
 }

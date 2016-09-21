@@ -8,8 +8,8 @@ import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
- * Use WarningMessages so that if there is an important offset when driving set
- * it will record a warning
+ * Use Messages so that if there is an important offset when driving set it will
+ * record a warning
  */
 public class DriveStraight extends Command {
 	private final double time;

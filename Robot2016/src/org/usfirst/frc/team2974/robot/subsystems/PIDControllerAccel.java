@@ -13,11 +13,11 @@ public class PIDControllerAccel extends PIDController {
 
 	public PIDControllerAccel(final double Kp, final double Ki, final double Kd, final double Kf,
 			final PIDSource source, final PIDOutput output, final double kV, final double kA) {
+
 		super(Kp, Ki, Kd, Kf, source, output, .01);
 
 		this.kV = kV;
 		this.kA = kA;
-
 	}
 
 	@Override

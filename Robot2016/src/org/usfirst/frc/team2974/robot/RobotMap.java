@@ -17,7 +17,6 @@ import edu.wpi.first.wpilibj.Talon;
  * floating around.
  */
 public class RobotMap {
-
 	// compass
 	private static final BNO055 compass = new BNO055(BNO055.BNO055_ADDRESS_A);
 	private static DigitalInput digital0;

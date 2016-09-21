@@ -10,9 +10,6 @@ import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
-/**
- *
- */
 public class Shooter extends Subsystem {
 	public enum TensionerState {
 		tensioned, untensioned, tensioning, untensioning
@@ -126,5 +123,4 @@ public class Shooter extends Subsystem {
 		setTensionerPower(-maxTensionerPower);
 		state = TensionerState.untensioning;
 	}
-
 }

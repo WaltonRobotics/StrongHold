@@ -12,9 +12,6 @@ import org.usfirst.frc.team2974.robot.autonomousCommands.Wait;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
 
-/**
- *
- */
 class RockWallShootRight extends CommandGroup {
 
 	public RockWallShootRight() {

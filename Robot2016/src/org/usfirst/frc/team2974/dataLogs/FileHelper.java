@@ -13,7 +13,7 @@ public class FileHelper {
 	 * false if the file is null or the message is empty
 	 *
 	 * @param message
-	 *            the String message that will be search fro in the given file
+	 *            the String message that will be search for in the given file
 	 *            to see if it is present in the file
 	 * @param file
 	 *            the file from where the method will search for the message

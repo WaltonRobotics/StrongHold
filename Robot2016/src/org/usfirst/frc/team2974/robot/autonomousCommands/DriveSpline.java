@@ -2,9 +2,6 @@ package org.usfirst.frc.team2974.robot.autonomousCommands;
 
 import edu.wpi.first.wpilibj.command.Command;
 
-/**
- *
- */
 class DriveSpline extends Command {
 	// private MotionControl mc;
 	// private double offsetTime;
@@ -79,6 +76,6 @@ class DriveSpline extends Command {
 	protected boolean isFinished() {
 		// System.out.println(mc.getMaxTime());
 		// return Timer.getFPGATimestamp()-offsetTime>=mc.getMaxTime()+5;
-		return true;
+		return !isRunning();
 	}
 }

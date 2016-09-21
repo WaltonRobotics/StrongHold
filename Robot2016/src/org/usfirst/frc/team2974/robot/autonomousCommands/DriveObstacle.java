@@ -7,9 +7,6 @@ import org.usfirst.frc.team2974.robot.subsystems.DriveTrain;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Command;
 
-/**
- *
- */
 public class DriveObstacle extends Command {
 	enum driveState {
 		drive, up, crossing, down, done

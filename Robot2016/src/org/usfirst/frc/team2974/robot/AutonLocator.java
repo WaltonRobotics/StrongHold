@@ -12,7 +12,6 @@ public class AutonLocator {
 
 	public double getAngle(final Point start, final Point finish) {
 		return Math.atan((start.getY() - finish.getY()) / (start.getX() - finish.getX()));
-
 	}
 
 	public AutonPossibleLocation getAutonPossibleLocation() {

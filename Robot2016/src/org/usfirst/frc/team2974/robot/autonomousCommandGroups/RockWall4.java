@@ -2,9 +2,6 @@ package org.usfirst.frc.team2974.robot.autonomousCommandGroups;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
 
-/**
- *
- */
 class RockWall4 extends CommandGroup {
 
 	public RockWall4() {

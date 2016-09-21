@@ -6,9 +6,6 @@ import org.usfirst.frc.team2974.robot.subsystems.Flipper;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Command;
 
-/**
- *
- */
 public class MoveIntake extends Command {
 	private boolean bool;
 	private double time;
@@ -57,6 +54,6 @@ public class MoveIntake extends Command {
 	// Make this return true when this Command no longer needs to run execute()
 	@Override
 	protected boolean isFinished() {
-		return false;
+		return !isRunning();
 	}
 }

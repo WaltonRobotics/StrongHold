@@ -24,10 +24,6 @@ public class DriveDistance extends Command {
 	@Override
 	protected void execute() {
 		// TODO Auto-generated method stub
-
-		if (Robot.getDriveTrain().getLeftController().get() < distance)
-			end();
-
 	}
 
 	@Override
@@ -44,7 +40,7 @@ public class DriveDistance extends Command {
 	@Override
 	protected boolean isFinished() {
 		// TODO Auto-generated method stub
-		return false;
+		return Robot.getDriveTrain().getLeftController().get() < distance;
 	}
 
 }

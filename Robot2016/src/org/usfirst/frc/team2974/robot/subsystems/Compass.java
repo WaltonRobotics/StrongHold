@@ -9,12 +9,6 @@ import org.usfirst.frc.team2974.robot.sensors.BNO055.OperationMode;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
-/**
-
- *
-
- */
-
 public class Compass extends Subsystem {
 
 	private final double PITCHOFFSET = 2.5;
@@ -22,18 +16,16 @@ public class Compass extends Subsystem {
 	private double pitchOffset = 0;
 	// private double yawOffset = 0;
 
-	BNO055 compass = RobotMap.getCompass();
+	private final BNO055 compass = RobotMap.getCompass();
 
 	public Compass() {
 		initializeCompass();
-
 	}
 
 	public void dumpSmartDashboardValues() {
 		SmartDashboard.putNumber("Yaw", getYaw());
 		SmartDashboard.putNumber("Pitch", getPitch());
 		SmartDashboard.putNumber("Roll", getRoll());
-
 	}
 
 	/**
@@ -105,7 +97,6 @@ public class Compass extends Subsystem {
 
 			Message.addError("Could not inititalize compass", this);
 			e.printStackTrace();
-
 		}
 	}
 

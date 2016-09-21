@@ -7,9 +7,6 @@ import org.usfirst.frc.team2974.robot.autonomousCommands.ShiftDown;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
 
-/**
- *
- */
 public class RoughTerrain extends CommandGroup {
 
 	public RoughTerrain() {

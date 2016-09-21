@@ -51,8 +51,8 @@ public class DriveLocate extends Command {
 			x = Math.pow(aMax, 2) * tDrive + vDrive * (t - tDrive);
 			v = vDrive;
 		}
-		driveTrain.setSetPoint(x, v);
 
+		driveTrain.setSetPoint(x, v);
 	}
 
 	public Compass getCompass() {
@@ -101,12 +101,12 @@ public class DriveLocate extends Command {
 		if (errorAngle > 180)
 			errorAngle -= 360;
 
-		if (errorAngle < -180) {
-		}
+		/*
+		 * else if (errorAngle < -180) { }
+		 */
 
-		final double timeOut = 3;
-		final double thresholdPitch = 5;
-		return timeSinceInitialized() > timeOut || Math.abs(Robot.getCompass().getPitch()) > thresholdPitch;// &&
+		return timeSinceInitialized() > 3 /* this is the timeOut */ || Math.abs(Robot.getCompass()
+				.getPitch()) > 5 /* This is the thresholdPitch */;// &&
 		// (Math.abs(errorAngle) < thresholdYaw);
 	}
 

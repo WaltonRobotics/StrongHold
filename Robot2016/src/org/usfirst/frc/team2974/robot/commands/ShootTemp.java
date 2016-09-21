@@ -5,9 +5,6 @@ import org.usfirst.frc.team2974.robot.Robot;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
-/**
- *
- */
 class ShootTemp extends Command {
 
 	public ShootTemp() {
@@ -61,6 +58,6 @@ class ShootTemp extends Command {
 	// Make this return true when this Command no longer needs to run execute()
 	@Override
 	protected boolean isFinished() {
-		return false;
+		return !isRunning();
 	}
 }

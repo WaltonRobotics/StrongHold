@@ -5,9 +5,6 @@ import org.usfirst.frc.team2974.robot.Robot;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
-/**
- *
- */
 public class Drive extends Command {
 
 	public static boolean isTank = true;
@@ -37,12 +34,14 @@ public class Drive extends Command {
 				left = 0;
 			if (Math.abs(right) < deadband)
 				right = 0;
+
 			Robot.getDriveTrain().setSpeeds(-1 * left, -1 * right);
 
 			if (Robot.getOi().getShiftDown().get())
 				Robot.getDriveTrain().shiftDown();
 			if (Robot.getOi().getShiftUp().get())
 				Robot.getDriveTrain().shiftUp();
+
 		} else {
 			double directionX = Robot.getOi().getRight().getX();
 			double directionY = Robot.getOi().getRight().getY();
@@ -84,6 +83,6 @@ public class Drive extends Command {
 	// Make this return true when this Command no longer needs to run execute()
 	@Override
 	protected boolean isFinished() {
-		return false;
+		return !isRunning();
 	}
 }

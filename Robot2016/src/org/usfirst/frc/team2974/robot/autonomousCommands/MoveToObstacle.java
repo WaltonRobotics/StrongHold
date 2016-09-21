@@ -23,9 +23,9 @@ public class MoveToObstacle extends Command {
 
 	@Override
 	protected void execute() {
-
 		if (isFinished())
 			return;
+
 		Robot.getDriveTrain().setSpeeds(1 * direction, 1 * direction);
 	}
 
@@ -38,7 +38,6 @@ public class MoveToObstacle extends Command {
 
 	@Override
 	protected void interrupted() {
-
 		Robot.getDriveTrain().setSpeeds(0, 0);
 
 	}
@@ -46,10 +45,6 @@ public class MoveToObstacle extends Command {
 	@Override
 	protected boolean isFinished() {
 		// Create an if statement which will call end
-
-		if (Robot.getCompass().getPitch() > threshold && Timer.getFPGATimestamp() - startTime > 500)
-			return true;
-		return false;
+		return Robot.getCompass().getPitch() > threshold && Timer.getFPGATimestamp() - startTime > 500;
 	}
-
 }

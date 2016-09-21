@@ -9,9 +9,6 @@ import edu.wpi.first.wpilibj.command.Subsystem;
 
 //import org.usfirst.frc.team2974.robot.commands.LoadBall;
 
-/**
- *
- */
 public class Intake extends Subsystem {
 	public enum IntakeExtenderState {
 		in, out, middle
@@ -41,8 +38,8 @@ public class Intake extends Subsystem {
 	public IntakeExtenderState getState() {
 		if (Timer.getFPGATimestamp() - time > .1)
 			return state;
-		else
-			return IntakeExtenderState.middle;
+
+		return IntakeExtenderState.middle;
 	}
 
 	@Override
@@ -58,7 +55,5 @@ public class Intake extends Subsystem {
 		// state = IntakeExtenderState.in;
 		// time = Timer.getFPGATimestamp();
 		// }
-
 	}
-
 }

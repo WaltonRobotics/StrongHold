@@ -6,9 +6,6 @@ import org.usfirst.frc.team2974.robot.subsystems.Flipper;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Command;
 
-/**
- *
- */
 public class MoveFlipper extends Command {
 	private boolean bool2;
 	private double time2;
@@ -82,7 +79,7 @@ public class MoveFlipper extends Command {
 	// Make this return true when this Command no longer needs to run execute()
 	@Override
 	protected boolean isFinished() {
-		return false;
+		return !isRunning();
 	}
 
 	public void setBool2(final boolean bool2) {

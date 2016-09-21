@@ -8,9 +8,6 @@ import edu.wpi.first.wpilibj.CANTalon;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
-/**
- *
- */
 public class Arm extends Subsystem {
 	private final CANTalon arm = RobotMap.getArm();
 	private final AnalogPotentiometer armPot = RobotMap.getArmPot();

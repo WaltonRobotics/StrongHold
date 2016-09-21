@@ -15,9 +15,6 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 //import org.usfirst.frc.team2974.robot.commands.ControlAim;
 //import org.usfirst.frc.team2974.robot.commands.ControlAim.aimState;
 
-/**
- *
- */
 public class Camera extends Subsystem {
 
 	private final double[] defaultValue;

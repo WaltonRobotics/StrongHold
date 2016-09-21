@@ -6,9 +6,6 @@ import org.usfirst.frc.team2974.robot.commands.MoveFlipper;
 import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
-/**
- *
- */
 public class Flipper extends Subsystem {
 
 	public enum FlipperState {

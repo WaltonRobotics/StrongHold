@@ -13,9 +13,6 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 //import org.usfirst.frc.team2974.robot.autonomousCommands.FlapDown;
 //import edu.wpi.first.wpilibj.command.Scheduler;
 
-/**
- *
- */
 public class Shoot extends Command {
 
 	class Latched extends State {
@@ -232,6 +229,6 @@ public class Shoot extends Command {
 	// Make this return true when this Command no longer needs to run execute()
 	@Override
 	protected boolean isFinished() {
-		return false;
+		return !isRunning();
 	}
 }

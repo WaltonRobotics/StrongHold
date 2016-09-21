@@ -6,9 +6,6 @@ import org.usfirst.frc.team2974.robot.subsystems.DriveTrain;
 
 import edu.wpi.first.wpilibj.command.Command;
 
-/**
- *
- */
 class AimOnboard extends Command {
 	private static final double centerX = 95;
 	// 0 =left, 2 = right

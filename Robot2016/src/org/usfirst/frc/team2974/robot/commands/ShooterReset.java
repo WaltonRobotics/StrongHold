@@ -6,9 +6,6 @@ import org.usfirst.frc.team2974.robot.subsystems.Shooter;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Command;
 
-/**
- *
- */
 public class ShooterReset extends Command {
 	private final Shooter shooter = Robot.getShooter();
 	private double initTime;

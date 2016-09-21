@@ -5,9 +5,6 @@ import org.usfirst.frc.team2974.robot.Robot;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Command;
 
-/**
- *
- */
 public class ShiftDown extends Command {
 	private final double startTime;
 

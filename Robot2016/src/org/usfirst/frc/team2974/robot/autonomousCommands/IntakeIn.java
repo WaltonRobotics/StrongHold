@@ -5,9 +5,6 @@ import org.usfirst.frc.team2974.robot.Robot;
 //import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Command;
 
-/**
- *
- */
 public class IntakeIn extends Command {
 
 	// private double startTime;
@@ -43,6 +40,6 @@ public class IntakeIn extends Command {
 	// Make this return true when this Command no longer needs to run execute()
 	@Override
 	protected boolean isFinished() {
-		return true;
+		return !isRunning();
 	}
 }

@@ -7,9 +7,6 @@ import org.usfirst.frc.team2974.robot.subsystems.Intake;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 
-/**
- *
- */
 public class FlapDown extends Command {
 
 	public FlapDown() {
@@ -32,7 +29,6 @@ public class FlapDown extends Command {
 	// Called just before this Command runs the first time
 	@Override
 	protected void initialize() {
-
 		Scheduler.getInstance().add(new IntakeIn());
 		Robot.getIntake().extend();
 	}

@@ -7,9 +7,6 @@ import org.usfirst.frc.team2974.robot.autonomousCommands.ShiftDown;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
 
-/**
- *
- */
 public class RockWall extends CommandGroup {
 
 	public RockWall() {

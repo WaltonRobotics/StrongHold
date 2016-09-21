@@ -5,9 +5,6 @@ import org.usfirst.frc.team2974.robot.autonomousCommands.DriveStraight;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
 
-/**
- *
- */
 public class LowBar extends CommandGroup {
 
 	public LowBar() {

@@ -16,12 +16,10 @@ public class Gamepad extends Joystick {
 		private final int index;
 
 		Button(final int index) {
-
 			this.index = index;
 		}
 
 		boolean getPressed(final Gamepad g) {
-
 			return g.getRawButton(index);
 		}
 	}
@@ -35,12 +33,10 @@ public class Gamepad extends Joystick {
 		private final int angle;
 
 		POV(final int angle) {
-
 			this.angle = angle;
 		}
 
 		boolean getPressed(final Gamepad g) {
-
 			return g.getPOV() == angle;
 		}
 	}
@@ -50,7 +46,6 @@ public class Gamepad extends Joystick {
 	 *            the port of the controller
 	 */
 	public Gamepad(final int port) {
-
 		super(port);
 	}
 
@@ -62,7 +57,6 @@ public class Gamepad extends Joystick {
 	 * @return boolean
 	 */
 	public boolean getButton(final Button b) {
-
 		return b.getPressed(this);
 	}
 
@@ -73,7 +67,6 @@ public class Gamepad extends Joystick {
 	 * @return true if button pressed false if not pressed
 	 */
 	public boolean getButton(final int index) {
-
 		return getRawButton(index);
 	}
 
@@ -83,7 +76,6 @@ public class Gamepad extends Joystick {
 	 * @return the left trigger value between 0 and 1
 	 */
 	public double getLeftTrigger() {
-
 		return getRawAxis(2);
 	}
 
@@ -93,7 +85,6 @@ public class Gamepad extends Joystick {
 	 * @return the left thumb stick x value between -1 and 1
 	 */
 	public double getLeftX() {
-
 		return getRawAxis(0);
 	}
 
@@ -103,7 +94,6 @@ public class Gamepad extends Joystick {
 	 * @return the left thumb stick y value between -1 and 1
 	 */
 	public double getLeftY() {
-
 		return getRawAxis(1);
 	}
 
@@ -118,7 +108,6 @@ public class Gamepad extends Joystick {
 	 * @return true if the POV button is pressed false if not
 	 */
 	public boolean getPOVButton(final POV p) {
-
 		return p.getPressed(this);
 	}
 
@@ -128,7 +117,6 @@ public class Gamepad extends Joystick {
 	 * @return the right trigger value between 0 and 1
 	 */
 	public double getRightTrigger() {
-
 		return getRawAxis(3);
 	}
 
@@ -138,7 +126,6 @@ public class Gamepad extends Joystick {
 	 * @return the right thumb stick x value between -1 and 1
 	 */
 	public double getRightX() {
-
 		return getRawAxis(4);
 	}
 

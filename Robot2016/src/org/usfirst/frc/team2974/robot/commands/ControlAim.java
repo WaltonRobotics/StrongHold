@@ -5,9 +5,6 @@ import org.usfirst.frc.team2974.robot.Robot;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 
-/**
- *
- */
 public class ControlAim extends Command {
 
 	public enum aimState {
@@ -65,6 +62,6 @@ public class ControlAim extends Command {
 		// execute()
 	@Override
 	protected boolean isFinished() {
-		return false;
+		return !isRunning();
 	}
 }

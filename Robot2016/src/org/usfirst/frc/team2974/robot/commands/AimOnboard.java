@@ -6,9 +6,6 @@ import org.usfirst.frc.team2974.robot.subsystems.DriveTrain;
 
 import edu.wpi.first.wpilibj.command.Command;
 
-/**
- *
- */
 class AimOnboard extends Command {
 	// private double brakingSpeed = 0.05;
 	private static final double centerX = 95;

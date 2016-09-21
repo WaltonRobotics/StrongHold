@@ -7,16 +7,12 @@ import edu.wpi.first.wpilibj.command.Subsystem;
 
 //import org.usfirst.frc.team2974.robot.commands.LoadBall;
 
-/**
- *
- */
 public class IntakeWheels extends Subsystem {
 	public enum WheelState {
 		in, stop, out
 	}
 
 	private static WheelState state;
-
 	private final Talon intakeMotor = RobotMap.getIntakeMotor();
 
 	public IntakeWheels() {

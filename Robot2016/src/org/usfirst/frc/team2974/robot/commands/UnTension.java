@@ -4,9 +4,6 @@ import org.usfirst.frc.team2974.robot.Robot;
 
 import edu.wpi.first.wpilibj.command.Command;
 
-/**
- *
- */
 public class UnTension extends Command {
 
 	public UnTension() {
