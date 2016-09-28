@@ -194,14 +194,17 @@ public class Robot extends IterativeRobot {
 		File imageFile = new File("TestImage.jpg");
 		File errorImage = new File("ErrorMessage.png");
 		
-		if(imageFile.exists())
-			SmartDashboard.putData("Image", (NamedSendable) imageFile);
+//		if(imageFile.exists())
+//			SmartDashboard.putData("Image", (NamedSendable) imageFile);
+//		
+//		else if(errorImage.exists())
+//			SmartDashboard.putData("Image", (NamedSendable) errorImage);
+//		
+//		else
+//			SmartDashboard.putString("Image Error", "No image found: " + imageFile.getName() + ", " + errorImage.getName());
+//		
 		
-		else if(errorImage.exists())
-			SmartDashboard.putData("Image", (NamedSendable) errorImage);
-		
-		else
-			SmartDashboard.putString("Image Error", "No image found: " + imageFile.getName() + ", " + errorImage.getName());
+		SmartDashboard.putData(Scheduler.getInstance());//This is a special built in peice of code that will update even though it only runs once
 		
 		SmartDashboard.putData("DriveLocate", new DriveLocate());
 		SmartDashboard.putData("ChivalDeFreze", new ChivalDeFreze());
