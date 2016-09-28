@@ -2,6 +2,7 @@ package org.usfirst.frc.team2974.robot.autonomousCommands;
 
 import org.usfirst.frc.team2974.robot.Robot;
 
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Command;
 
 /**
@@ -13,7 +14,10 @@ public class TurnToAngle extends Command {
 	 double speed = .5;//speed normally at .5 and not .1
 	 double goalAngle;
 	 double tolerance = 5;
-	 private final double PROPORTIONAL_ZONE = 120;
+	 double startTime;
+	 double deltaTime = 5; //TODO decrease time
+	 double startYaw;
+	 private final double PROPORTIONAL_ZONE = 130;
 	    
     public TurnToAngle(double angle) {
         requires(Robot.driveTrain);
@@ -23,6 +27,8 @@ public class TurnToAngle extends Command {
 
     // Called just before this Command runs the first time
     protected void initialize() {
+    	startTime = Timer.getFPGATimestamp();
+    	startYaw = Robot.compass.getYaw();
     }
 
     // Called repeatedly when this Command is scheduled to run
@@ -40,13 +46,13 @@ public class TurnToAngle extends Command {
     protected boolean isFinished() {
     	double deltaYaw = errorAngle();
 
-    	if(Math.abs(deltaYaw) <= tolerance)
+    	if(Math.abs(deltaYaw) <= tolerance||Timer.getFPGATimestamp() - startTime > deltaTime)
     		return true;
     	return false;
     }
     
     private double errorAngle(){
-    	double deltaYaw = Robot.compass.getYaw()-goalAngle;
+    	double deltaYaw = Robot.compass.getYaw()-goalAngle-startYaw;
     	if(deltaYaw > 180){
 			deltaYaw -= 360;
 		}

@@ -2,8 +2,6 @@ package org.usfirst.frc.team2974.robot.subsystems;
 
 import org.usfirst.frc.team2974.robot.RobotMap;
 //import org.usfirst.frc.team2974.robot.commands.LoadBall;
-import org.usfirst.frc.team2974.robot.commands.LoadBall;
-
 import edu.wpi.first.wpilibj.Talon;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
@@ -17,7 +15,7 @@ public class IntakeWheels extends Subsystem {
 	   private double speed = .39;
 	   
 	    public void initDefaultCommand() {
-	    	setDefaultCommand(new LoadBall());
+	    	//setDefaultCommand(new LoadBall());
 	    }
 	    
 	    public IntakeWheels()

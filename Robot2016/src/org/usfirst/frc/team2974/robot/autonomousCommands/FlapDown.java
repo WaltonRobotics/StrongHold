@@ -20,7 +20,7 @@ public class FlapDown extends Command {
     // Called just before this Command runs the first time
     protected void initialize() {
 
-    	Scheduler.getInstance().add(new IntakeIn());
+    	Scheduler.getInstance().add(new IntakeOut());
     	Robot.intake.extend();
     }
 

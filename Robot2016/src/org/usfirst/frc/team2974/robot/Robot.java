@@ -6,6 +6,7 @@ import org.usfirst.frc.team2974.robot.autonomousCommandGroups.ActivateAuton;
 import org.usfirst.frc.team2974.robot.autonomousCommandGroups.ChivalDeFreze;
 import org.usfirst.frc.team2974.robot.autonomousCommandGroups.LowBar;
 import org.usfirst.frc.team2974.robot.autonomousCommandGroups.Moat;
+import org.usfirst.frc.team2974.robot.autonomousCommandGroups.MoveToShoot;
 import org.usfirst.frc.team2974.robot.autonomousCommandGroups.Ramparts;
 import org.usfirst.frc.team2974.robot.autonomousCommandGroups.RockWall;
 import org.usfirst.frc.team2974.robot.autonomousCommandGroups.RoughTerrain;
@@ -215,14 +216,11 @@ public class Robot extends IterativeRobot {
 		SmartDashboard.putData("TurnWest",new TurnToAngle(270));
 		SmartDashboard.putData("ApproachForward",new MoveToObstacle(1));
 		SmartDashboard.putData("ApproachBackward",new MoveToObstacle(-1));
-//		SmartDashboard.putData("MoveToShoot",new MoveToShoot((AutonLocator)locationChooser.getSelected()));
+		SmartDashboard.putData("MoveToShoot",new MoveToShoot(new AutonLocator(AutonPossibleLocation.C)));
 		SmartDashboard.putData("Shoot",new Shoot());
 		
 //		SmartDashboard.putData("Activate Autonomous",new ActivateAuton((CommandGroup) autoChooser.getSelected(),
 //				(AutonLocator) locationChooser.getSelected()));
-		
-		//SmartDashboard.putData("Switch Drives", new SwitchDrives());
-		
 	}
 
 	@Override

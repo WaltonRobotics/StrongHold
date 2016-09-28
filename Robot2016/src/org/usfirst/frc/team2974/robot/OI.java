@@ -1,6 +1,9 @@
 package org.usfirst.frc.team2974.robot;
 
 import org.usfirst.frc.team2974.robot.autonomousCommands.DriveStraightMC;
+import org.usfirst.frc.team2974.robot.autonomousCommands.TurnLeft;
+import org.usfirst.frc.team2974.robot.autonomousCommands.TurnRight;
+import org.usfirst.frc.team2974.robot.commands.DriveStraitSpecial;
 import org.usfirst.frc.team2974.robot.commands.ShooterReset;
 import org.usfirst.frc.team2974.robot.commands.Tension;
 import org.usfirst.frc.team2974.robot.commands.UnTension;
@@ -92,6 +95,11 @@ public class OI {
 		//testAuton = new JoystickButton(gamepad, 6);//remove l8er TODO
 		//testAuton.whenPressed(new TestAuton());
 		SmartDashboard.putData("Drive Forward 1m", new DriveStraightMC(1.0, 0.5, 0.1));
+		SmartDashboard.putData("Drive to Obstiqle", new DriveStraightMC(-1.4, 0.7, 0.7));
+		SmartDashboard.putData("DriveStraitSpecial", new DriveStraitSpecial());
+		SmartDashboard.putNumber("SpecialPower", 1);
+		SmartDashboard.putNumber("SpecialTime", 1);
+		SmartDashboard.putData("Turn180",new TurnLeft());		
 	}
 
 }
