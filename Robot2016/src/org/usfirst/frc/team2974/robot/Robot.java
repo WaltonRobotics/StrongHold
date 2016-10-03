@@ -10,6 +10,7 @@ import org.usfirst.frc.team2974.robot.autonomousCommandGroups.MoveToShoot;
 import org.usfirst.frc.team2974.robot.autonomousCommandGroups.Ramparts;
 import org.usfirst.frc.team2974.robot.autonomousCommandGroups.RockWall;
 import org.usfirst.frc.team2974.robot.autonomousCommandGroups.RoughTerrain;
+import org.usfirst.frc.team2974.robot.autonomousCommands.AutoTension;
 import org.usfirst.frc.team2974.robot.autonomousCommands.DoNothing;
 import org.usfirst.frc.team2974.robot.autonomousCommands.DriveLocate;
 import org.usfirst.frc.team2974.robot.autonomousCommands.MoveToObstacle;
@@ -72,6 +73,7 @@ public class Robot extends IterativeRobot {
 		autonomousCommand = new ActivateAuton((CommandGroup) autoChooser.getSelected(),
 				(AutonLocator) locationChooser.getSelected());
 		autonomousCommand.start();
+		new AutoTension().start();
 		Scheduler.getInstance().add(new ShowInputs());
 		SmartDashboard.putBoolean("aimed", Math.abs(Robot.camera.getXLeft() - Aim.centerX) < Aim.threshold);
 
@@ -190,9 +192,9 @@ public class Robot extends IterativeRobot {
 		CameraServer server = CameraServer.getInstance();
 		server.setQuality(0);
 		server.startAutomaticCapture("cam1");
-		
-		File imageFile = new File("TestImage.jpg");
-		File errorImage = new File("ErrorMessage.png");
+
+//		File imageFile = new File("TestImage.jpg");0
+//		File errorImage = new File("ErrorMessage.png");
 		
 //		if(imageFile.exists())
 //			SmartDashboard.putData("Image", (NamedSendable) imageFile);

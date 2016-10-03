@@ -32,22 +32,22 @@ public class AutonLocator {
 		RobotPoint p;
 		switch(location){
 		case A:
-			p= new RobotPoint(0, 0);//replace all numbers with measured numbers
+			p= new RobotPoint(0, .662);//replace all numbers with measured numbers
 			break;
 		case B:
-			p= new RobotPoint(1.3462, 0);
+			p= new RobotPoint(1.3462, 1.778);
 			break;
 		case C:
-			p= new RobotPoint(2.6924, 0);
+			p= new RobotPoint(2.6924, .2);
 			break;
 		case D:
-			p= new RobotPoint(4.0386, 0);
+			p= new RobotPoint(4.0386, .2);
 			break;
 		case E:
-			p= new RobotPoint(5.3848, 0);
+			p= new RobotPoint(5.3848, .2);
 			break;
 		default:
-			p= new RobotPoint(0, 0);
+			p= new RobotPoint(0, 1);
 			break;
 		}
 		return p;
@@ -78,28 +78,45 @@ public class AutonLocator {
 		return p;
 	}
 	
-	public RobotPoint getLocationShoot(){
+	public RobotPoint getLocationDistance(){
 		RobotPoint p;
 		switch(location){
 		case A:
-			p = new RobotPoint(0.7747, 2.9972);//replace all numbers with measured numbers
+			p = new RobotPoint(.5, 1.2);
 			break;
 		case B:
-			p= new RobotPoint(0.7747, 2.9972);
+			p= new RobotPoint(.7, 1.7);
 			break;
 		case C:
-			p= new RobotPoint(2.5654, 1.8542);
+			p= new RobotPoint(.5, .6);
 			break;
 		case D:
-			p= new RobotPoint(2.5654, 1.8542);
+			p= new RobotPoint(.5, .6);
 			break;
 		case E:
-			p= new RobotPoint(2.5654, 1.8542);
+			p= new RobotPoint(.5, .6);
 			break;
 		default:
 			p= new RobotPoint(0, 0);
 			break;
 		}
 		return p;
+	}
+
+	public double getAngleDead() {
+		switch(location){
+		case A:
+			return 50;
+		case B:
+			return 70;
+		case C:
+			return 0;
+		case D:
+			return -40;
+		case E:
+			return -50;
+		default:
+			return 0;
+		}
 	}
 }

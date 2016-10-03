@@ -4,28 +4,35 @@ import org.usfirst.frc.team2974.robot.Robot;
 import org.usfirst.frc.team2974.robot.subsystems.DriveTrain;
 
 import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
-public class DriveStraightMC extends Command{
+public class DriveStraightMCSpecial extends Command{
 	
 	private double aMax;
 	private double vDrive;
 	private double x3;
 	private double t1, t2, t3;
 	final double tolerance = 0.1; 
-	final double timeOut = 3;
+	final double timeOut = 2;
 	DriveTrain driveTrain;
 	
-	public DriveStraightMC(double distance, double velocity, double accel){
+	public DriveStraightMCSpecial(){
+		
+	}
+	
+	@Override
+	protected void initialize() {
 		requires(Robot.driveTrain);
         driveTrain = Robot.driveTrain;
-        aMax = Math.abs(accel);
-        vDrive = Math.signum(distance) * Math.abs(velocity); 
-        x3 = distance;
+        aMax = Math.abs(SmartDashboard.getNumber("SpecialAccel"));
+        vDrive = Math.signum(SmartDashboard.getNumber("SpecialTime")) * Math.abs(SmartDashboard.getNumber("SpecialPower")); 
+        x3 = SmartDashboard.getNumber("SpecialTime");
         if(x3 < 2 * Math.pow(vDrive, 2) / aMax){
         	t3 = 2 * Math.sqrt(x3 / 2 / aMax);
         	t2 = t3/2;
         	t1 = t2;
         }
+        
         else{
         	t3 = x3/vDrive + 2 * vDrive / aMax;
         	t2 = t3 - vDrive / aMax;
@@ -35,10 +42,6 @@ public class DriveStraightMC extends Command{
         System.out.println(String.format("x3 = %1$.2f", x3));
         System.out.println(String.format("t1 = %1$.2f t2 = %2$.2f t3 = %3$.2f", t1, t2, t3));
 
-	}
-	
-	@Override
-	protected void initialize() {
 		driveTrain.resetEncoders();
 		driveTrain.setSetPoint(0, 0);
 		driveTrain.enableMotionController();
@@ -73,9 +76,9 @@ public class DriveStraightMC extends Command{
 	@Override
 	protected boolean isFinished() {
 		double t = timeSinceInitialized();
-		boolean isFinished = (Math.abs(driveTrain.getMeanDistance() - x3) < tolerance) || 
+		boolean isFinished = (Math.abs(driveTrain.getMeanDistance() - x3) < tolerance) && 
 				(t > t3);
-		boolean isTimedOut = t > (timeOut);
+		boolean isTimedOut = t > (t3 + timeOut);
 		return isFinished || isTimedOut;
 	}
 

@@ -36,17 +36,17 @@ public class AimOnboard extends Command {
 			cycleDifference = camera.getXLeft() - centerX;
 		else if (side == 2)
 			cycleDifference = camera.getXRight() - centerX;
-		speed = Math.abs(cycleDifference* .01);
+		speed = Math.abs(cycleDifference* .013);
 		if (side == 0) {
 			if (cycleDifference > 0)// im to the right
-				driveTrain.setSpeeds(-speed, 0);// turn left
+				driveTrain.setSpeeds(speed, 0);// turn left
 			else
-				driveTrain.setSpeeds(speed, 0);// turn right
+				driveTrain.setSpeeds(-speed, 0);// turn right
 		} else if (side == 2) {
-			if (cycleDifference > 0)// im to the right
-				driveTrain.setSpeeds(0, speed);// turn left
+			if (cycleDifference < 0)// im to the right
+				driveTrain.setSpeeds(0, -speed);// turn left
 			else
-				driveTrain.setSpeeds(0, -speed);// turn right
+				driveTrain.setSpeeds(0, speed);// turn right
 		}
 	}
 

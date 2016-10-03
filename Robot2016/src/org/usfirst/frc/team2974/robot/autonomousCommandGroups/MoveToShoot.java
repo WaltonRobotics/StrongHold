@@ -12,12 +12,11 @@ import org.usfirst.frc.team2974.robot.autonomousCommands.TurnToAngle;
 import edu.wpi.first.wpilibj.command.CommandGroup;
 
 public class MoveToShoot extends CommandGroup {
-	private final double speed = 0.7;
 	public MoveToShoot(AutonLocator location){
 		//addSequential(new DriveLocate());
-		addSequential(new TurnToAngle(location.getAngle(location.getLocation(), location.getLocationShoot())));
+		//addSequential(new TurnToAngle(location.getAngle(location.getLocation(), location.getLocationShoot())));
 		//addSequential(new DriveDistance(speed,location.getDistance(location.getLocation(), location.getLoca0tionShoot())));
-		new DriveStraightMC(location.getDistance(location.getLocation(), location.getLocationShoot()), speed, 0.15);
-		addSequential(new TurnToAngle(location.getAngle(location.getLocationShoot(), location.getLocationGoal())));
+		addSequential(new DriveStraightMC(location.getLocationDistance().getY(), location.getLocationDistance().getX(), 0.3));
+		addSequential(new TurnToAngle(location.getAngleDead()));
 	}
 }

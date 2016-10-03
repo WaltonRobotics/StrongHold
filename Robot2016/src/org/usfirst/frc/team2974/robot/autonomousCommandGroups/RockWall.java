@@ -18,6 +18,6 @@ public class RockWall extends CommandGroup {
     	//addSequential(new FlapDownTime(.2));
     	
     	addParallel(new ArmDown());
-    	addSequential(new DriveStraight(3,-.5)); //Test this number
+    	addSequential(new DriveStraight(3.5,-.5)); //Test this number
     }
 }

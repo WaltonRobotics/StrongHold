@@ -1,6 +1,13 @@
 package org.usfirst.frc.team2974.robot;
 
+import org.usfirst.frc.team2974.robot.autonomousCommandGroups.ActivateAuton;
+import org.usfirst.frc.team2974.robot.autonomousCommandGroups.LowBar;
+import org.usfirst.frc.team2974.robot.autonomousCommandGroups.Moat;
+import org.usfirst.frc.team2974.robot.autonomousCommandGroups.MoveToShoot;
+import org.usfirst.frc.team2974.robot.autonomousCommandGroups.RockWall;
+import org.usfirst.frc.team2974.robot.autonomousCommandGroups.ShootParts;
 import org.usfirst.frc.team2974.robot.autonomousCommands.DriveStraightMC;
+import org.usfirst.frc.team2974.robot.autonomousCommands.DriveStraightMCSpecial;
 import org.usfirst.frc.team2974.robot.autonomousCommands.TurnLeft;
 import org.usfirst.frc.team2974.robot.autonomousCommands.TurnRight;
 import org.usfirst.frc.team2974.robot.commands.DriveStraitSpecial;
@@ -95,11 +102,22 @@ public class OI {
 		//testAuton = new JoystickButton(gamepad, 6);//remove l8er TODO
 		//testAuton.whenPressed(new TestAuton());
 		SmartDashboard.putData("Drive Forward 1m", new DriveStraightMC(1.0, 0.5, 0.1));
-		SmartDashboard.putData("Drive to Obstiqle", new DriveStraightMC(-1.4, 0.7, 0.7));
+		SmartDashboard.putData("Drive to Obstiqle", new DriveStraightMC(-1.1, 0.7, 0.7));
 		SmartDashboard.putData("DriveStraitSpecial", new DriveStraitSpecial());
+		SmartDashboard.putData("DriveStraitMCSpecial", new DriveStraightMCSpecial());
 		SmartDashboard.putNumber("SpecialPower", 1);
 		SmartDashboard.putNumber("SpecialTime", 1);
+		SmartDashboard.putNumber("SpecialAccel", .3);
 		SmartDashboard.putData("Turn180",new TurnLeft());		
+		SmartDashboard.putData("MoveToShootA",new MoveToShoot(new AutonLocator(AutonPossibleLocation.A)));
+		SmartDashboard.putData("MoveToShootB",new MoveToShoot(new AutonLocator(AutonPossibleLocation.B)));
+		SmartDashboard.putData("MoveToShootC",new MoveToShoot(new AutonLocator(AutonPossibleLocation.C)));
+		SmartDashboard.putData("MoveToShootD",new MoveToShoot(new AutonLocator(AutonPossibleLocation.D)));
+		SmartDashboard.putData("MoveToShootE",new MoveToShoot(new AutonLocator(AutonPossibleLocation.E)));
+		SmartDashboard.putData("AutonLowBar",new ActivateAuton(new LowBar(), new AutonLocator(AutonPossibleLocation.A)));
+		SmartDashboard.putData("AutonRockB",new ActivateAuton(new RockWall(), new AutonLocator(AutonPossibleLocation.B)));
+		SmartDashboard.putData("ShootParts",new ShootParts());
+		SmartDashboard.putData("AutonMoatC",new ActivateAuton(new Moat(), new AutonLocator(AutonPossibleLocation.C)));
 	}
 
 }

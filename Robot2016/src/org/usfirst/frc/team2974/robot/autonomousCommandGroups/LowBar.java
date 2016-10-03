@@ -13,7 +13,7 @@ public class LowBar extends CommandGroup {
 
 	public LowBar() {
 		addSequential(new ShiftDown());   
-		addSequential(new DriveStraight(2.15,-.5));
+		addSequential(new DriveStraight(2.4,-.5));
 //		addSequential(new TurnLeft());
 //		addSequential(new Aim());
 //		addSequential(new DriveStraight(2, .5));
