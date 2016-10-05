@@ -11,11 +11,13 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  */
 public class Drive extends Command {
 	private final double deadband = .05;
-    
+    public static boolean isTank;
 	
     public Drive() {
         requires(Robot.driveTrain);
-        SmartDashboard.putBoolean("Tank", true);
+        isTank = true;
+        
+        SmartDashboard.getString("Drive mode: ", "Tank");
     }
 
     // Called just before this Command runs the first time
@@ -25,8 +27,14 @@ public class Drive extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
+    	SmartDashboard.putBoolean("Tank", isTank);
     	
     	if (SmartDashboard.getBoolean("Tank")){
+    		isTank = true;
+    		
+    		if(SmartDashboard.getString("Drive mode: ").equals("cheesy"))
+    			SmartDashboard.putString("Drive mode: ", "tank");
+    		
     		double left = Robot.oi.left.getY();
     		double right = Robot.oi.right.getY();
     	
@@ -38,6 +46,10 @@ public class Drive extends Command {
     	
 
     	}else{
+    		isTank = false;
+    		
+    		if(SmartDashboard.getString("Drive mode: ").equals("tank"))
+    			SmartDashboard.putString("Drive mode: ", "cheesy");
     		double throttle = (-Robot.oi.left.getY()+1)/2;
     		double forward = Robot.oi.right.getY();
     		double turn = Robot.oi.right.getX();

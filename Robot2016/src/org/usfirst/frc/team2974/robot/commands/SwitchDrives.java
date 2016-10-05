@@ -21,10 +21,8 @@ public class SwitchDrives extends Command {
 		requires(Robot.driveTrain);
 		if (Drive.isTank) {
 			Drive.isTank = false;
-			Drive.driveMode = "Cheesy";
 		} else {
 			Drive.isTank = true;
-			Drive.driveMode = "Tank";
 		}
 	}
 
