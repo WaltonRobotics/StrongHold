@@ -10,7 +10,7 @@ public class MethodCallDebugger extends Thread
             	for(StackTraceElement ss: ste)
                 for (String str : s)
                     if (!ss.toString().trim().isEmpty() && ss.toString().contains(str) && !ss.toString().contains(MethodCallDebugger.class.getName()) && !ss.toString().contains("addMethodCall"))
-                        Message.addMethodCall(ste.toString());
+                        Message.addMethodCall(ss.toString());
             try {
                 Thread.sleep(1);
             } catch (InterruptedException e) {
