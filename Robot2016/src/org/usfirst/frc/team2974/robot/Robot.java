@@ -176,11 +176,8 @@ public class Robot extends IterativeRobot {
 		// not use aim");
 		// e.printStackTrace();
 		// }
-		new Thread(){
-			@Override
-			public void run() {
-				MethodCallDebugger.record();	
-			}}.start();
+		
+		new	MethodCallDebugger().start();	
 		
 		RobotMap.init();
 
