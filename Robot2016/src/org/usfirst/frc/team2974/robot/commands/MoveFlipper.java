@@ -13,7 +13,7 @@ public class MoveFlipper extends Command {
 	private double time;
 
 	public MoveFlipper() {
-		requires(Robot.getFlipper());
+		requires(Robot.flipper);
 	}
 
 	// Called once after isFinished returns true
@@ -24,16 +24,16 @@ public class MoveFlipper extends Command {
 	// Called repeatedly when this Command is scheduled to run
 	@Override
 	protected void execute() {
-		if (Robot.getOi().getFlapperDown().get()) {
+		if (Robot.oi.flapperDown.get()) {
 			// if(Robot.intake.getState() == Intake.IntakeExtenderState.out)
 			if (!bool) {
-				Robot.getIntake().extend();
+				Robot.intake.extend();
 				time = Timer.getFPGATimestamp();
 				bool = true;
 			} else if (Timer.getFPGATimestamp() - time > .4)
 				bool = false;
 			else if (Timer.getFPGATimestamp() - time > .2) {
-				Robot.getFlipper().setFlapper(Flipper.FlipperState.down);
+				Robot.flipper.setFlapper(Flipper.FlipperState.down);
 				bool = false;
 			}
 		} else
@@ -46,7 +46,7 @@ public class MoveFlipper extends Command {
 			// if (Timer.getFPGATimestamp() - time2 > .4) {
 			// bool2 = false;
 			// } else if (Timer.getFPGATimestamp() - time2 > .1) {
-			Robot.getFlipper().setFlapper(Flipper.FlipperState.up);
+			Robot.flipper.setFlapper(Flipper.FlipperState.up);
 		// bool2 = false;
 		// }
 

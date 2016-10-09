@@ -22,6 +22,8 @@ public final class Message {
     private static final String ERROR = "[ERROR]";
     private static final String ACTION_LOGS = "Action Logs";
     private static final String ACTION = "[ACTION]";
+    private static final String METHOD_CALL_LOGS = "Method call logs";
+    private static final String METHOD_CALL = "[Method Call]";
 
     /**
      * this method allows you to log a specific action to the Action Logs.txt
@@ -75,6 +77,38 @@ public final class Message {
      */
     public static void addError(final String message, final Object object) {
         Message.addMessage(ERROR, message, object, ERROR_LOGS);
+    }
+    
+    /**
+     * this method allows you to log a specific error to the Method call logs.txt file
+     * and from which class the method was called (this information is usually
+     * entered using "this" as the parameter for the object variable) to the
+     * Logs directory on the desktop
+     *
+     * @param message
+     *            that string message that will be recorded in a given file
+     * @param object
+     *            gives more information to the user by telling him/her where
+     *            the method was executed
+     */
+    public static void addMethodCall(final String message) {
+        Message.addAction(message, null);
+    }
+    
+    /**
+     * this method allows you to log a specific error to the Method call logs.txt file
+     * and from which class the method was called (this information is usually
+     * entered using "this" as the parameter for the object variable) to the
+     * Logs directory on the desktop
+     *
+     * @param message
+     *            that string message that will be recorded in a given file
+     * @param object
+     *            gives more information to the user by telling him/her where
+     *            the method was executed
+     */
+    public static void addMethodCall(final String message, final Object object) {
+        Message.addMessage(METHOD_CALL, message, object, METHOD_CALL_LOGS);
     }
 
     /**

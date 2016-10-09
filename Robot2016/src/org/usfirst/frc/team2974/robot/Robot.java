@@ -1,5 +1,7 @@
 package org.usfirst.frc.team2974.robot;
 
+import org.usfirst.frc.team2974.dataLogs.MethodCallDebugger;
+
 //import java.io.File;
 
 import org.usfirst.frc.team2974.robot.autonomousCommandGroups.ActivateAuton;
@@ -174,6 +176,12 @@ public class Robot extends IterativeRobot {
 		// not use aim");
 		// e.printStackTrace();
 		// }
+		new Thread(){
+			@Override
+			public void run() {
+				MethodCallDebugger.record();	
+			}}.start();
+		
 		RobotMap.init();
 
 		driveTrain = new DriveTrain();
