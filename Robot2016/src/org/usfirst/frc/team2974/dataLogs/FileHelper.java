@@ -1,9 +1,6 @@
 package org.usfirst.frc.team2974.dataLogs;
 
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -21,20 +18,18 @@ public final class FileHelper {
      * This method checks if the specific file contains the wanted text return
      * false if the file is null or the message is empty
      *
-     * @param message
-     *            the String message that will be search for in the given file
-     *            to see if it is present in the file
-     * @param file
-     *            the file from where the method will search for the message
+     * @param message the String message that will be search for in the given file
+     *                to see if it is present in the file
+     * @param file    the file from where the method will search for the message
      * @return boolean returns true if the file contains the message or else the
-     *         method return false
+     * method return false
      */
     public static boolean contains(final String message, final File file) {
-        if ((null != file) && !message.trim().isEmpty()) {
-            final List<String> list = readFromFile(file);
+        if ((file != null) && !message.trim().isEmpty()) {
+            final List<String> list = FileHelper.readFromFile(file);
 
-            if (null != list) {
-                for (String lines : list) {
+            if (list != null) {
+                for (final String lines : list) {
                     if (lines.contains(message)) {
                         return true;
                     }
@@ -48,9 +43,8 @@ public final class FileHelper {
      * This method uses the file path and creates the non-existent paths to
      * create the end file
      *
-     * @param path
-     *            Path to be created must have a file to be created Ex:
-     *            C:/Users/New Folder/Hello.txt
+     * @param path Path to be created must have a file to be created Ex:
+     *             C:/Users/New Folder/Hello.txt
      * @return temp Return a now created file from the path
      */
     public static File create(final String path) {
@@ -71,7 +65,7 @@ public final class FileHelper {
                 if (temp.createNewFile()) {
                     System.out.println("Managed to create " + temp.getName());
                 }
-            } catch (final IOException e) {
+            } catch (final IOException ignored) {
                 System.out.println("Could not manage to create " + temp.getName());
             }
         }
@@ -83,10 +77,9 @@ public final class FileHelper {
      * formats a path to be able to be used for the operators operating system
      * system
      *
-     * @param path
-     *            the path that will be formatted
+     * @param path the path that will be formatted
      * @return path returns a path whose separators Ex: \ have been replaced to
-     *         fit the operators system file separators
+     * fit the operators system file separators
      */
     public static String formatFilePath(String path) {
         if (!"\\".equals(File.separator)) {
@@ -102,19 +95,20 @@ public final class FileHelper {
      * Return in the form a List<String> all the lines of the given not null
      * file if the file is null the method will return null as well
      *
-     * @param file
-     *            the file file from where the method reads from
+     * @param file the file file from where the method reads from
      * @return List<String> returns a list of all the lines in the file
      */
     private static List<String> readFromFile(final File file) {
-        if (null != file) {
+        if (file != null) {
             final List<String> textLines = new ArrayList<>();
 
             try (Scanner scanner = new Scanner(file)) {
                 while (scanner.hasNext()) {
                     textLines.add(scanner.nextLine());
                 }
-            } catch (final Exception e) {
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            } catch (final Exception ignored) {
                 System.out.println("could not read from file " + file.getName());
             }
 
@@ -130,17 +124,15 @@ public final class FileHelper {
      * file exists) it will write the given text to the specific file a new file
      * is added after every message
      *
-     * @param message
-     *            The String message that will be appended to the specific file
-     * @param file
-     *            The file where the message will be written to
+     * @param message The String message that will be appended to the specific file
+     * @param file    The file where the message will be written to
      */
     public static void writeToFile(final String message, final File file) {
-        if ((null != file) && file.exists() && !message.trim().isEmpty()) {
+        if ((file != null) && file.exists() && !message.trim().isEmpty()) {
             try (BufferedWriter writer = new BufferedWriter(new FileWriter(file, true))) {
                 writer.append(message);
                 writer.newLine();
-            } catch (IOException e) {
+            } catch (final IOException ignored) {
                 System.out.println("Could not write to file");
             }
         }

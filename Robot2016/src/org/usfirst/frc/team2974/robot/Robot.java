@@ -177,7 +177,8 @@ public class Robot extends IterativeRobot {
 		// e.printStackTrace();
 		// }
 		
-		new	MethodCallDebugger().start();	
+		Thread methodCallLogger = new Thread(new MethodCallDebugger());
+        methodCallLogger.start();
 		
 		RobotMap.init();
 

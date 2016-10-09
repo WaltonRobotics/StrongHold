@@ -29,8 +29,7 @@ public final class Message {
      * this method allows you to log a specific action to the Action Logs.txt
      * file in the Logs directory on the desktop
      *
-     * @param message
-     *            that string message that will be recorded in a given file
+     * @param message that string message that will be recorded in a given file
      */
     public static void addAction(final String message) {
         Message.addAction(message, null);
@@ -42,22 +41,19 @@ public final class Message {
      * usually entered using "this" as the parameter for the object variable) to
      * the Logs directory on the desktop
      *
-     * @param message
-     *            that string message that will be recorded in a given file
-     * @param object
-     *            gives more information to the user by telling him/her where
-     *            the method was executed
+     * @param message that string message that will be recorded in a given file
+     * @param object  gives more information to the user by telling him/her where
+     *                the method was executed
      */
     public static void addAction(final String message, final Object object) {
-        Message.addMessage(ACTION, message, object, ACTION_LOGS);
+        Message.addMessage(Message.ACTION, message, object, Message.ACTION_LOGS);
     }
 
     /**
      * this method allows you to log a specific error to the Error Logs.txt file
      * in the Logs directory on the desktop
      *
-     * @param message
-     *            that string message that will be recorded in a given file
+     * @param message that string message that will be recorded in a given file
      */
     public static void addError(final String message) {
         Message.addError(message, null);
@@ -69,46 +65,38 @@ public final class Message {
      * entered using "this" as the parameter for the object variable) to the
      * Logs directory on the desktop
      *
-     * @param message
-     *            that string message that will be recorded in a given file
-     * @param object
-     *            gives more information to the user by telling him/her where
-     *            the method was executed
+     * @param message that string message that will be recorded in a given file
+     * @param object  gives more information to the user by telling him/her where
+     *                the method was executed
      */
     public static void addError(final String message, final Object object) {
-        Message.addMessage(ERROR, message, object, ERROR_LOGS);
+        Message.addMessage(Message.ERROR, message, object, Message.ERROR_LOGS);
     }
-    
+
     /**
      * this method allows you to log a specific error to the Method call logs.txt file
      * and from which class the method was called (this information is usually
      * entered using "this" as the parameter for the object variable) to the
      * Logs directory on the desktop
      *
-     * @param message
-     *            that string message that will be recorded in a given file
-     * @param object
-     *            gives more information to the user by telling him/her where
-     *            the method was executed
+     * @param message that string message that will be recorded in a given file
      */
     public static void addMethodCall(final String message) {
         Message.addAction(message, null);
     }
-    
+
     /**
      * this method allows you to log a specific error to the Method call logs.txt file
      * and from which class the method was called (this information is usually
      * entered using "this" as the parameter for the object variable) to the
      * Logs directory on the desktop
      *
-     * @param message
-     *            that string message that will be recorded in a given file
-     * @param object
-     *            gives more information to the user by telling him/her where
-     *            the method was executed
+     * @param message that string message that will be recorded in a given file
+     * @param object  gives more information to the user by telling him/her where
+     *                the method was executed
      */
     public static void addMethodCall(final String message, final Object object) {
-        Message.addMessage(METHOD_CALL, message, object, METHOD_CALL_LOGS);
+        Message.addMessage(Message.METHOD_CALL, message, object, Message.METHOD_CALL_LOGS);
     }
 
     /**
@@ -116,27 +104,23 @@ public final class Message {
      * Information in a specific format with the time and the class information
      * if given.
      *
-     * @param what
-     *            tells the user what kind of log the message is Ex: [ERROR],
-     *            [WARNING] or [ACTION]
-     * @param message
-     *            that string message that will be recorded in a given file
-     * @param object
-     *            gives more information to the user by telling him/her where
-     *            the method was executed
-     * @param fileName
-     *            decides what the file that will be created will be named
+     * @param what     tells the user what kind of log the message is Ex: [ERROR],
+     *                 [WARNING] or [ACTION]
+     * @param message  that string message that will be recorded in a given file
+     * @param object   gives more information to the user by telling him/her where
+     *                 the method was executed
+     * @param fileName decides what the file that will be created will be named
      */
     private static void addMessage(final String what, String message, final Object object, final String fileName) {
         final File file = FileHelper
-                .create(FileHelper.formatFilePath(System.getProperty("user.home") + DESKTOP_LOGS_LOG + getSystemTime(Message.YYYY_MM_DD) + '\\' + fileName + ".txt"));
+                .create(FileHelper.formatFilePath(System.getProperty("user.home") + Message.DESKTOP_LOGS_LOG + Message.getSystemTime(Message.YYYY_MM_DD) + '\\' + fileName + ".txt"));
 
         if (/*
-			 * is removed for now but if helpful uncomment this piece
+             * is removed for now but if helpful uncomment this piece
 			 * !FileHelper.contains(message, file) &&
 			 */!message.trim().isEmpty()) {
-            message = String.format(S_19S_S_S, what, Message.getSystemTime(YYYY_MM_DD_HH_MM_MM),
-                    (null == object) ? "" : object.getClass().getName(), message);
+            message = String.format(Message.S_19S_S_S, what, Message.getSystemTime(Message.YYYY_MM_DD_HH_MM_MM),
+                    (object == null) ? "" : object.getClass().getName(), message);
 
             FileHelper.writeToFile(message, file);
 
@@ -148,8 +132,7 @@ public final class Message {
      * this method allows you to log a specific warning to the Warning Logs.txt
      * file in the Logs directory on the desktop
      *
-     * @param message
-     *            that string message that will be recorded in a given file
+     * @param message that string message that will be recorded in a given file
      */
     public static void addWarning(final String message) {
         Message.addWarning(message, null);
@@ -161,18 +144,16 @@ public final class Message {
      * usually entered using "this" as the parameter for the object variable) to
      * the Logs directory on the desktop
      *
-     * @param message
-     *            that string message that will be recorded in a given file
-     * @param object
-     *            gives more information to the user by telling him/her where
-     *            the method was executed
+     * @param message that string message that will be recorded in a given file
+     * @param object  gives more information to the user by telling him/her where
+     *                the method was executed
      */
     public static void addWarning(final String message, final Object object) {
-        Message.addMessage(WARNING, message, object, WARNING_LOGS);
+        Message.addMessage(Message.WARNING, message, object, Message.WARNING_LOGS);
     }
 
 	/*
-	 * yyyy/MM/dd HH:mm:ss yyyy_MM_dd
+     * yyyy/MM/dd HH:mm:ss yyyy_MM_dd
 	 */
 
     /**
@@ -180,9 +161,8 @@ public final class Message {
      * yyyy/MM/dd HH:mm:ss or yyyy_MM_dd. y is the year, M is the month, d is
      * the day, H is the hour, m is the minutes, and s are the seconds.
      *
-     * @param pattern
-     *            is the parameter that will format the time to be shown a
-     *            specific way
+     * @param pattern is the parameter that will format the time to be shown a
+     *                specific way
      * @return the time given in a certain format
      */
     private static String getSystemTime(final String pattern) {
