@@ -6,9 +6,10 @@ public class MethodCallDebugger
         String[] s = ClassChecker.getJavaClasses();
 
         for (;;) {
-            for (StackTraceElement ste : Thread.currentThread().getStackTrace())
+            for (StackTraceElement[] ste : Thread.getAllStackTraces().values())
+            	for(StackTraceElement ss: ste)
                 for (String str : s)
-                    if (ste.toString().contains(str) && !str.contains(MethodCallDebugger.class.getName()) && !str.contains("addMethodCall"))
+                    if (ss.toString().contains(str) && !ss.toString().contains(MethodCallDebugger.class.getName()) && !ss.toString().contains("addMethodCall"))
                         Message.addMethodCall(ste.toString());
             try {
                 Thread.sleep(1);
