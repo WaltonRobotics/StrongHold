@@ -12,7 +12,7 @@ import java.util.Arrays;
  * might not be possible
  * if somebody has the knowledge of doing so please try and do it i believe that you have to
  * get the information for the current thread and read all the data passing throughout
- * problem is when the data returned is a class and you want to record the data from that class
+ * problem is when the data returned is an object and you want to record the data from that class, i don't know how to retrieve the data that returned from a method called, also have to make the program fast enought that it get the method calls in time (might be able to work with MethodCallDebugger if we manage to make it work)
  */
 public class DataLog {
 	public static void getJavaClasses() {
