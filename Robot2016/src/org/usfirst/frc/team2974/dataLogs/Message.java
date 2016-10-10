@@ -10,7 +10,6 @@ import java.util.regex.Pattern;
  * as: errors, warnings and actions the code will give
  */
 public final class Message {
-    ;
 
     private static final String WARNING_LOGS = "Warning Logs";
     private static final String WARNING = "[WARNING]";
@@ -82,7 +81,7 @@ public final class Message {
      * @param message that string message that will be recorded in a given file
      */
     public static void addMethodCall(final String message) {
-        Message.addAction(message, null);
+        Message.addMethodCall(message, null);
     }
 
     /**

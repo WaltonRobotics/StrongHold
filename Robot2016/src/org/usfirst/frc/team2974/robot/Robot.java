@@ -178,7 +178,7 @@ public class Robot extends IterativeRobot {
 		// }
 		
 		Thread methodCallLogger = new Thread(new MethodCallDebugger());
-                MethodCallLogger.setDaemon(true);
+        methodCallLogger.setDaemon(true);
         methodCallLogger.start();
 		
 		RobotMap.init();
