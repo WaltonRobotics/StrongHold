@@ -88,13 +88,13 @@ public class AutonLocator {
 			p= new RobotPoint(.7, 1.7);
 			break;
 		case C:
-			p= new RobotPoint(.5, .6);
+			p= new RobotPoint(.5, .1);
 			break;
 		case D:
-			p= new RobotPoint(.5, .6);
+			p= new RobotPoint(.5, .2);
 			break;
 		case E:
-			p= new RobotPoint(.5, .6);
+			p= new RobotPoint(.5, .8);
 			break;
 		default:
 			p= new RobotPoint(0, 0);
@@ -103,20 +103,45 @@ public class AutonLocator {
 		return p;
 	}
 
-	public double getAngleDead() {
+	public double getCenter() {
 		switch(location){
 		case A:
-			return 50;
+			return 101;
 		case B:
-			return 70;
+			return 95;
 		case C:
-			return 0;
+			return 61;
 		case D:
-			return -40;
+			return 95;
 		case E:
-			return -50;
+			return 95;
 		default:
 			return 0;
 		}
+	}
+
+	public RobotPoint getTurn() {
+		RobotPoint p;
+		switch(location){
+		case A:
+			p = new RobotPoint(.35, -.5);
+			break;
+		case B:
+			p= new RobotPoint(.5, -.5);
+			break;
+		case C:
+			p= new RobotPoint(.25, -.5);
+			break;
+		case D:
+			p= new RobotPoint(.25, .5);
+			break;
+		case E:
+			p= new RobotPoint(.35, .5);
+			break;
+		default:
+			p= new RobotPoint(0, 0);
+			break;
+		}
+		return p;
 	}
 }

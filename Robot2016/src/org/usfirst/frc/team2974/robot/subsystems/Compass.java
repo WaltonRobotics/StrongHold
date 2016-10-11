@@ -15,7 +15,7 @@ public class Compass extends Subsystem {
 	
 	private final double PITCHOFFSET = 2.5;
 	private double pitchOffset = 0;
-	//private double yawOffset = 0;
+	private double yawOffset = 0;
 	
     BNO055 compass = RobotMap.compass;
 
@@ -36,8 +36,9 @@ public class Compass extends Subsystem {
 			e.printStackTrace();
 		}
     }
-    public void zeroRobot(){
-    	//yawOffset = getYaw();
+    public void zeroRobot(double currentAngle){
+    	yawOffset = 0;
+    	yawOffset = getYaw() - currentAngle;
     	pitchOffset = PITCHOFFSET;
     }
     /**
@@ -47,13 +48,17 @@ public class Compass extends Subsystem {
      */
     public double getYaw() //Horizonal tilt
     {
+    	double yaw = 0;
     	try {
-			return compass.getVector(BNO055.VectorType.VECTOR_EULER)[0];// - yawOffset;
+			yaw = (compass.getVector(BNO055.VectorType.VECTOR_EULER)[0] - yawOffset)%360;
 		} catch (BNO055Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-    	return 0;
+    	if(yaw < 0){
+    		yaw += 360;
+    	}
+    	return yaw;
     }
     /**
      * down positive

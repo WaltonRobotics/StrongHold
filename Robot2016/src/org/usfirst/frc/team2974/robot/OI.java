@@ -6,10 +6,12 @@ import org.usfirst.frc.team2974.robot.autonomousCommandGroups.Moat;
 import org.usfirst.frc.team2974.robot.autonomousCommandGroups.MoveToShoot;
 import org.usfirst.frc.team2974.robot.autonomousCommandGroups.RockWall;
 import org.usfirst.frc.team2974.robot.autonomousCommandGroups.ShootParts;
+import org.usfirst.frc.team2974.robot.autonomousCommands.CompassZero;
 import org.usfirst.frc.team2974.robot.autonomousCommands.DriveStraightMC;
 import org.usfirst.frc.team2974.robot.autonomousCommands.DriveStraightMCSpecial;
 import org.usfirst.frc.team2974.robot.autonomousCommands.TurnLeft;
 import org.usfirst.frc.team2974.robot.autonomousCommands.TurnRight;
+import org.usfirst.frc.team2974.robot.autonomousCommands.TurnToAngle;
 import org.usfirst.frc.team2974.robot.commands.DriveStraitSpecial;
 import org.usfirst.frc.team2974.robot.commands.ShooterReset;
 import org.usfirst.frc.team2974.robot.commands.Tension;
@@ -114,10 +116,10 @@ public class OI {
 		SmartDashboard.putData("MoveToShootC",new MoveToShoot(new AutonLocator(AutonPossibleLocation.C)));
 		SmartDashboard.putData("MoveToShootD",new MoveToShoot(new AutonLocator(AutonPossibleLocation.D)));
 		SmartDashboard.putData("MoveToShootE",new MoveToShoot(new AutonLocator(AutonPossibleLocation.E)));
-		SmartDashboard.putData("AutonLowBar",new ActivateAuton(new LowBar(), new AutonLocator(AutonPossibleLocation.A)));
-		SmartDashboard.putData("AutonRockB",new ActivateAuton(new RockWall(), new AutonLocator(AutonPossibleLocation.B)));
 		SmartDashboard.putData("ShootParts",new ShootParts());
-		SmartDashboard.putData("AutonMoatC",new ActivateAuton(new Moat(), new AutonLocator(AutonPossibleLocation.C)));
+		SmartDashboard.putData("Turn30",new TurnToAngle(30));
+		SmartDashboard.putData("Turn-30",new TurnToAngle(-30));
+		SmartDashboard.putData("Zero Compass",new CompassZero());
 	}
 
 }

@@ -12,11 +12,13 @@ import edu.wpi.first.wpilibj.command.Command;
  */
 public class AimOnboard extends Command {
 	// 0 =left, 2 = right
+	
 	double time;
 	int side;
-	private double speed = .35;
+	//private double speed = .35;
+	private double speed = .4;
 	private double brakingSpeed = 0.05;
-	public static final double centerX = 95;
+	public static double centerX = 95;
 	private double threshold = 3;
 	double cycleDifference;
 	DriveTrain driveTrain = Robot.driveTrain;

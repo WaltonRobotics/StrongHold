@@ -29,8 +29,8 @@ public class TurnLeft extends Command {
 	// Called just before this Command runs the first time
 	protected void initialize() {
 		startTime = Timer.getFPGATimestamp();
-		time = SmartDashboard.getNumber("SpecialTime");
-		speed = SmartDashboard.getNumber("SpecialPower");
+//		time = SmartDashboard.getNumber("SpecialTime");
+//		speed = SmartDashboard.getNumber("SpecialPower");
 	}
 
 	// Called repeatedly when this Command is scheduled to run
