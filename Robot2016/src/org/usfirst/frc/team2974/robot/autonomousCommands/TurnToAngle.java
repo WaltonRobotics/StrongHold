@@ -36,7 +36,8 @@ public class TurnToAngle extends Command {
     	if(isFinished()) return;
     	double deltaYaw = errorAngle();
     	double direction = Math.signum(deltaYaw);
-    	double speedMag = Math.abs(deltaYaw)/PROPORTIONAL_ZONE;
+    	//double speedMag = Math.abs(deltaYaw)/PROPORTIONAL_ZONE;
+    	double speedMag = .3;
     	System.out.println("Speed Mag " + speedMag);
     	System.out.println("\t\tDelta Yaw " + deltaYaw);
     	Robot.driveTrain.setSpeeds(-speedMag * direction, speedMag * direction);
@@ -46,13 +47,13 @@ public class TurnToAngle extends Command {
     protected boolean isFinished() {
     	double deltaYaw = errorAngle();
 
-    	if(Math.abs(deltaYaw) <= tolerance||Timer.getFPGATimestamp() - startTime > deltaTime)
+    	if(Math.abs(deltaYaw) <= tolerance||(Timer.getFPGATimestamp() - startTime) > deltaTime)
     		return true;
     	return false;
     }
     
     private double errorAngle(){
-    	double deltaYaw = Robot.compass.getYaw()-goalAngle-startYaw;
+    	double deltaYaw = Robot.compass.getYaw()-goalAngle;//-startYaw;
     	if(deltaYaw > 180){
 			deltaYaw -= 360;
 		}

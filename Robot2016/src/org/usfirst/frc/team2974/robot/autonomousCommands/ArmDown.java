@@ -12,7 +12,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 public class ArmDown extends Command {
 
 	double startTime;
-	double totalTime = .2;
+	double totalTime = .55;
 	double armPower = -1;
 
 	public ArmDown() {

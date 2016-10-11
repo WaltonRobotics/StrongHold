@@ -18,7 +18,7 @@ public class RoughTerrain extends CommandGroup {
     	
     	//addSequential(new FlapDownTime(.2));
     	
-    	addParallel(new ArmDown());
+    	//addParallel(new ArmDown());
     	addSequential(new DriveStraight(2.7,-.5)); //Test this number
     }
 }

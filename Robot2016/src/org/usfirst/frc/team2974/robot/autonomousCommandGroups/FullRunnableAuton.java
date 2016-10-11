@@ -12,7 +12,7 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
 
 public class FullRunnableAuton extends CommandGroup {
 	public FullRunnableAuton(final CommandGroup obstacleCommand, final AutonLocator location) {
-		Robot.compass.zeroRobot();
+		Robot.compass.zeroRobot(100);
 
 		if (obstacleCommand.getName().equals("RockWall")) {
 			addSequential(new TurnToAngle(180));
