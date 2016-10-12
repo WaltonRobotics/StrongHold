@@ -4,30 +4,30 @@ import java.io.File;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 
-public final class ClassChecker {
-    public static String[] getJavaClasses() {
-        final ArrayList<String> p = new ArrayList<>();
+final class ClassChecker {
 
-        ClassChecker.getFiles(p, Paths.get("").toAbsolutePath().toString(), ".java", 0);
+	private static final String JAVA_FILE_EXTENSION_ID = ".java";
 
-        return p.toArray(new String[p.size()]);
-    }
+	private static void getFiles(final ArrayList<String> toLoad, final String path, final String extension) {
+		final File f = new File(path);
 
-    public static void getFiles(final ArrayList<String> toLoad, final String path, final String extension, final int i) {
-        final File f = new File(path);
+		if (f.exists()) {
+			final File[] files = f.listFiles();
 
-        if (f.exists()) {
-            final File[] files = f.listFiles();
+			if (files != null && files.length > 0)
+				for (final File file : files)
+					if (file.getName().contains(extension))
+						toLoad.add(file.getName().substring(0, file.getName().indexOf(extension)));
+					else
+						getFiles(toLoad, file.getAbsolutePath(), extension);
+		}
+	}
 
-            if ((files != null) && (files.length > 0)) {
-                for (final File file : files) {
-                    if (file.getName().contains(extension)) {
-                        toLoad.add(file.getName().substring(0, file.getName().indexOf(extension)));
-                    } else {
-                        ClassChecker.getFiles(toLoad, file.getAbsolutePath(), extension, i);
-                    }
-                }
-            }
-        }
-    }
+	public static String[] getJavaClasses() {
+		final ArrayList<String> p = new ArrayList<>();
+
+		getFiles(p, Paths.get("").toAbsolutePath().toString(), JAVA_FILE_EXTENSION_ID);
+
+		return p.toArray(new String[p.size()]);
+	}
 }

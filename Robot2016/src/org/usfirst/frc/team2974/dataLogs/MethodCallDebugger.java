@@ -1,26 +1,69 @@
-package org.usfirst.frc.team2974.dataLogs;
+package org.usfirst.frc.team2974.dataLogs;//package org.usfirst.frc.team2974.dataLogs;
 
-public final class MethodCallDebugger implements Runnable {
-    @Override
-    public final void run() {
-        final String[] s = ClassChecker.getJavaClasses();
+final class MethodCallDebugger implements Runnable {
+	private final String[] availableJavaClasses;
 
-        for (; ; ) {
-            for (final StackTraceElement[] ste : Thread.getAllStackTraces().values()) {
-                for (StackTraceElement ss : ste) {
-                    for (String str : s) {
-                        if (!ss.toString().trim().isEmpty() && ss.toString().contains(str) && !ss.toString().contains(MethodCallDebugger.class.getName()) && !ss.toString().contains("Message") && !ss.toString().contains("FileHelper")) {
-                            Message.addMethodCall(ss.toString());
-                        }
-                    }
-                }
-            }
-            try {
-                Thread.sleep(1L);
-            } catch (final InterruptedException e) {
-                e.printStackTrace();
-            }
-        }
+	public MethodCallDebugger() {
+		availableJavaClasses = ClassChecker.getJavaClasses();
+	}
 
-    }
+	@Override
+	public final void run() {
+
+		// StackTraceElement prev = null;
+		// Thread prev = null;
+
+		// while (true) {
+		// for (final StackTraceElement[] ste :
+		// Thread.getAllStackTraces().values()) {
+		// if(ste.length > 0 ) {
+		// StackTraceElement ss = ste[0];
+		//
+		// if (prev != null && !ss.equals(prev))
+		// for (String str : s) {
+		// if (!ss.toString().trim().isEmpty() &&
+		// !ss.toString().contains(MethodCallDebugger.class.getPackage().getName()))
+		// {
+		// dataLogs.Message.addMethodCall(ss.toString());
+		// }
+		// }
+		//
+		// prev = ss;
+		// }
+
+		// for (final Thread ste : Thread.getAllStackTraces().keySet()) {
+		// if(ste.isAlive()) {
+		// if (prev != null && !ste.equals(prev))
+		// for (String str : s) {
+		// if (!ss.toString().trim().isEmpty()) {
+		// dataLogs.Message.addMethodCall(ss.toString());
+		// }
+		// }
+		//
+		// prev = ste;
+		// }
+		// }
+		// try {
+		// Thread.sleep(0L);
+		// } catch (final InterruptedException e) {
+		// e.printStackTrace();
+		// }
+		// }
+		// final String[] s = ClassChecker.getJavaClasses();
+
+		for (;;) {
+			for (final StackTraceElement[] ste : Thread.getAllStackTraces().values())
+				for (final StackTraceElement ss : ste)
+					if (!ss.toString().trim().isEmpty()
+							&& !ss.toString().contains(MethodCallDebugger.class.getPackage().getName()))
+						Message.addMethodCall(ss.toString());
+
+			try {
+				Thread.sleep(1L);
+			} catch (final InterruptedException e) {
+				e.printStackTrace();
+			}
+		}
+
+	}
 }
