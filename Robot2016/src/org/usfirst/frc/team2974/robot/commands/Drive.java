@@ -11,11 +11,17 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  */
 public class Drive extends Command {
 	private final double deadband = .05;
+    public static boolean isTank;
     
+    public final String keyTank = "Tank";
+    public final String keyDriveTrain = "Drive Train:";
+    public final String keyCheesy = "Cheesy";
 	
     public Drive() {
         requires(Robot.driveTrain);
-        SmartDashboard.putBoolean("Tank", true);
+        isTank = true;
+        
+        SmartDashboard.putBoolean(keyTank, isTank); //$NON-NLS-1$ //$NON-NLS-2$
     }
 
     // Called just before this Command runs the first time
@@ -25,8 +31,12 @@ public class Drive extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	
-    	if (SmartDashboard.getBoolean("Tank")){
+    	SmartDashboard.putBoolean(keyTank, isTank); //$NON-NLS-1$
+    	String driveTrain = SmartDashboard.getString(keyDriveTrain);
+    	if (SmartDashboard.getBoolean(keyTank)){ //$NON-NLS-1$
+    		if(driveTrain.equals(keyCheesy)) //$NON-NLS-1$ //$NON-NLS-2$
+    			SmartDashboard.putString(keyDriveTrain, keyTank); //$NON-NLS-1$ //$NON-NLS-2$
+    		
     		double left = Robot.oi.left.getY();
     		double right = Robot.oi.right.getY();
     	
@@ -38,6 +48,8 @@ public class Drive extends Command {
     	
 
     	}else{
+    		if(driveTrain.equals(keyTank)) //$NON-NLS-1$ //$NON-NLS-2$
+    			SmartDashboard.putString(keyDriveTrain, keyCheesy); //$NON-NLS-1$ //$NON-NLS-2$
     		double throttle = (-Robot.oi.left.getY()+1)/2;
     		double forward = Robot.oi.right.getY();
     		double turn = Robot.oi.right.getX();
