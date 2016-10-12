@@ -203,14 +203,6 @@ public enum Message {
 		myFile = file;
 	}
 
-	/*
-	 * yyyy/MM/dd HH:mm:ss yyyy_MM_dd
-	 */
-
-	private final String getId() {
-		return getID();
-	}
-
 	private String getID() {
 		return ID;
 	}

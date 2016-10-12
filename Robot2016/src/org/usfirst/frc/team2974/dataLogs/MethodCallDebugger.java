@@ -1,10 +1,10 @@
 package org.usfirst.frc.team2974.dataLogs;//package org.usfirst.frc.team2974.dataLogs;
 
 final class MethodCallDebugger implements Runnable {
-	private final String[] availableJavaClasses;
+//	private final String[] availableJavaClasses;
 
 	public MethodCallDebugger() {
-		availableJavaClasses = ClassChecker.getJavaClasses();
+//		availableJavaClasses = ClassChecker.getJavaClasses();
 	}
 
 	@Override
