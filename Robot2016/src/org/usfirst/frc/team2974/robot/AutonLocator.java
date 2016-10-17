@@ -85,13 +85,13 @@ public class AutonLocator {
 			p = new RobotPoint(.5, 1.2);
 			break;
 		case B:
-			p= new RobotPoint(.7, 1.7);
+			p= new RobotPoint(.7, 1.8);
 			break;
 		case C:
-			p= new RobotPoint(.5, .1);
+			p= new RobotPoint(.3, .3);
 			break;
 		case D:
-			p= new RobotPoint(.5, .2);
+			p= new RobotPoint(.3, .3);
 			break;
 		case E:
 			p= new RobotPoint(.5, .8);
@@ -106,7 +106,7 @@ public class AutonLocator {
 	public double getCenter() {
 		switch(location){
 		case A:
-			return 101;
+			return 95;
 		case B:
 			return 95;
 		case C:
@@ -133,7 +133,7 @@ public class AutonLocator {
 			p= new RobotPoint(.25, -.5);
 			break;
 		case D:
-			p= new RobotPoint(.25, .5);
+			p= new RobotPoint(.1, .5);
 			break;
 		case E:
 			p= new RobotPoint(.35, .5);

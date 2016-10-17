@@ -11,11 +11,13 @@ import org.usfirst.frc.team2974.robot.autonomousCommandGroups.Ramparts;
 import org.usfirst.frc.team2974.robot.autonomousCommandGroups.RockWall;
 import org.usfirst.frc.team2974.robot.autonomousCommandGroups.RoughTerrain;
 import org.usfirst.frc.team2974.robot.autonomousCommands.AutoTension;
+import org.usfirst.frc.team2974.robot.autonomousCommands.AutoTensionDelay;
 import org.usfirst.frc.team2974.robot.autonomousCommands.DoNothing;
 import org.usfirst.frc.team2974.robot.autonomousCommands.DriveLocate;
 import org.usfirst.frc.team2974.robot.autonomousCommands.MoveToObstacle;
 import org.usfirst.frc.team2974.robot.autonomousCommands.Shoot;
 import org.usfirst.frc.team2974.robot.autonomousCommands.TurnToAngle;
+import org.usfirst.frc.team2974.robot.autonomousCommands.Wait;
 import org.usfirst.frc.team2974.robot.commands.Aim;
 import org.usfirst.frc.team2974.robot.commands.ControlAim.aimState;
 import org.usfirst.frc.team2974.robot.commands.Drive;
@@ -54,7 +56,10 @@ public class Robot extends IterativeRobot {
 	public static IntakeWheels intakeWheels;
 	private static SendableChooser autoChooser;
 	private static SendableChooser locationChooser;
+	private static SendableChooser shootChooser;
 	private static Command autonomousCommand;
+	private static final double WAIT_BEFORE_TENSION = 8;
+	private AutonLocator doRunAuton;
 
 	/**
 	 * This autonomous (along with the chooser code above) shows how to select
@@ -70,10 +75,15 @@ public class Robot extends IterativeRobot {
 	@Override
 	public void autonomousInit() {
 		compass.initializeCompass();
-		autonomousCommand = new ActivateAuton((CommandGroup) autoChooser.getSelected(),
-				(AutonLocator) locationChooser.getSelected());
+		doRunAuton = (AutonLocator) locationChooser.getSelected();
+		if(doRunAuton.location != AutonPossibleLocation.NO_AUTON_TAKEN){
+			autonomousCommand = new ActivateAuton((CommandGroup) autoChooser.getSelected(),
+					(AutonLocator) locationChooser.getSelected(),(ObjBool) shootChooser.getSelected());
+		}else{
+			autonomousCommand = new Wait(2);
+		}
 		autonomousCommand.start();
-		new AutoTension().start();
+		new AutoTensionDelay(WAIT_BEFORE_TENSION).start();
 		Scheduler.getInstance().add(new ShowInputs());
 		SmartDashboard.putBoolean("aimed", Math.abs(Robot.camera.getXLeft() - Aim.centerX) < Aim.threshold);
 
@@ -102,7 +112,6 @@ public class Robot extends IterativeRobot {
 		locationChooser.addDefault("E", new AutonLocator(AutonPossibleLocation.E));
 
 		autoChooser = new SendableChooser();
-		autoChooser.addDefault("Do Nothing", new DoNothing());
 		// autoChooser.addObject("Lowbar", new LowBar());
 		// autoChooser.addObject("Lowbar + shoot", new LowBarShoot());
 		// autoChooser.addObject("LowBar return", new LowBarReturn());
@@ -125,10 +134,15 @@ public class Robot extends IterativeRobot {
 		autoChooser.addObject("Rock wall", new RockWall());
 		autoChooser.addObject("Rough Terain", new RoughTerrain());
 		autoChooser.addObject("Low Bar", new LowBar());
-		autoChooser.addObject("ChivalDeFreze", new ChivalDeFreze());
+		//autoChooser.addObject("ChivalDeFreze", new ChivalDeFreze());
 		autoChooser.addObject("Moat", new Moat());
-		autoChooser.addObject("Ramparts", new Ramparts());
+		//autoChooser.addObject("Ramparts", new Ramparts());
 
+		shootChooser = new SendableChooser();
+		shootChooser.addObject("Shoot", new ObjBool(true));
+		shootChooser.addObject("Don't Shoot", new ObjBool(false));
+		
+		SmartDashboard.putData("Pick Shooting", shootChooser);
 		SmartDashboard.putData("Pick Location", locationChooser);
 		SmartDashboard.putData("Pick Obsticle", autoChooser);
 

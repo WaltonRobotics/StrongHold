@@ -15,6 +15,6 @@ public class Moat extends CommandGroup{
     	
     	//addSequential(new FlapDownTime(.2));
     	//addParallel(new ArmDown());
-    	addSequential(new DriveStraight(4.5,-.5)); //Test this number
+    	addSequential(new DriveStraight(4.8,-.5)); //Test this number
     }
 }

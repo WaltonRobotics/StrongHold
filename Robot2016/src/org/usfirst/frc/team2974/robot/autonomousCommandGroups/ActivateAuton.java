@@ -2,8 +2,10 @@ package org.usfirst.frc.team2974.robot.autonomousCommandGroups;
 
 import org.usfirst.frc.team2974.robot.AutonLocator;
 import org.usfirst.frc.team2974.robot.AutonPossibleLocation;
+import org.usfirst.frc.team2974.robot.ObjBool;
 import org.usfirst.frc.team2974.robot.Robot;
 import org.usfirst.frc.team2974.robot.autonomousCommands.AimOnboard;
+import org.usfirst.frc.team2974.robot.autonomousCommands.AimOnboardPrec;
 import org.usfirst.frc.team2974.robot.autonomousCommands.ArmDown;
 import org.usfirst.frc.team2974.robot.autonomousCommands.DriveStraight;
 import org.usfirst.frc.team2974.robot.autonomousCommands.DriveStraightMC;
@@ -23,11 +25,13 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
 public class ActivateAuton extends CommandGroup {
 	CommandGroup obstacleCommand;
 	AutonLocator location;
+	ObjBool doShoot;
 	//double back;
-	public ActivateAuton(CommandGroup obstacleCommand, AutonLocator location) {
+	public ActivateAuton(CommandGroup obstacleCommand, AutonLocator location, ObjBool doShoot) {
 		Robot.compass.zeroRobot(180);
 		this.obstacleCommand = obstacleCommand;
 		this.location = location;
+		this.doShoot = doShoot;
 		runAuton();
 	}
 	public void runAuton(){
@@ -49,24 +53,26 @@ public class ActivateAuton extends CommandGroup {
 			addSequential(obstacleCommand);
 		}
 		addSequential(new Turn180DeadRecon());
-		if (location.getAutonPossibleLocation().equals(AutonPossibleLocation.B)){
-			addSequential(new TurnLeft(.25,.5));//back = Robot.compass.getYaw();
-		}
+		
 		addSequential(new MoveToShoot(location));
 		if (!location.getAutonPossibleLocation().equals(AutonPossibleLocation.A)){
 			addSequential(new ArmDown());//back = Robot.compass.getYaw();
-		}else{
-			addSequential(new DriveStraight(.5,.5));
 		}
 		addSequential(new IntakeOut());	
-		addParallel(new FlapDownTime(4));
+		addParallel(new FlapDownTime(6));
 		AimOnboard.centerX = location.getCenter();
-		addSequential(new AimOnboard(0));
-		addSequential(new AimOnboard(0));
-		addSequential(new AimOnboard(0));
-		addSequential(new Wait(1));
-		addSequential(new Shoot());
-		addSequential(new Wait(2));
+		AimOnboardPrec.centerX = location.getCenter();
+		if(doShoot.getValue()){
+			addSequential(new AimOnboard(0));
+			addSequential(new AimOnboard(0));
+			addSequential(new AimOnboard(0));
+			addSequential(new AimOnboard(0));
+		//	addSequential(new AimOnboardPrec(0));
+		//	addSequential(new AimOnboardPrec(0));
+			addSequential(new Wait(.5));
+			addSequential(new Shoot());
+			addSequential(new Wait(2));
+		}
 		//addSequential(new TurnToAngleAbsolute(back));
 		//addSequential(new DriveStraightMC(-location.getLocationDistance().getY(), location.getLocationDistance().getX(), 0.3));
 		//addSequential(obstacleCommand);
