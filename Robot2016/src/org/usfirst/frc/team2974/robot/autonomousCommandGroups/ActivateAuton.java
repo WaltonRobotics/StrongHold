@@ -7,6 +7,7 @@ import org.usfirst.frc.team2974.robot.Robot;
 import org.usfirst.frc.team2974.robot.autonomousCommands.AimOnboard;
 import org.usfirst.frc.team2974.robot.autonomousCommands.AimOnboardPrec;
 import org.usfirst.frc.team2974.robot.autonomousCommands.ArmDown;
+import org.usfirst.frc.team2974.robot.autonomousCommands.AutoTensionDelay;
 import org.usfirst.frc.team2974.robot.autonomousCommands.DriveStraight;
 import org.usfirst.frc.team2974.robot.autonomousCommands.DriveStraightMC;
 import org.usfirst.frc.team2974.robot.autonomousCommands.FlapDown;
@@ -20,9 +21,13 @@ import org.usfirst.frc.team2974.robot.autonomousCommands.TurnLeft;
 import org.usfirst.frc.team2974.robot.autonomousCommands.TurnToAngle;
 import org.usfirst.frc.team2974.robot.autonomousCommands.Wait;
 
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.CommandGroup;
 
 public class ActivateAuton extends CommandGroup {
+	
+	double startTime;
+	
 	CommandGroup obstacleCommand;
 	AutonLocator location;
 	ObjBool doShoot;
@@ -32,6 +37,7 @@ public class ActivateAuton extends CommandGroup {
 		this.obstacleCommand = obstacleCommand;
 		this.location = location;
 		this.doShoot = doShoot;
+		startTime = Timer.getFPGATimestamp();
 		runAuton();
 	}
 	public void runAuton(){
@@ -54,24 +60,26 @@ public class ActivateAuton extends CommandGroup {
 		}
 		addSequential(new Turn180DeadRecon());
 		
-		addSequential(new MoveToShoot(location));
+		
 		if (!location.getAutonPossibleLocation().equals(AutonPossibleLocation.A)){
 			addSequential(new ArmDown());//back = Robot.compass.getYaw();
 		}
-		addSequential(new IntakeOut());	
-		addParallel(new FlapDownTime(6));
 		AimOnboard.centerX = location.getCenter();
-		AimOnboardPrec.centerX = location.getCenter();
+		//AimOnboardPrec.centerX = location.getCenter();
 		if(doShoot.getValue()){
-			addSequential(new AimOnboard(0));
+			addSequential(new MoveToShoot(location));
 			addSequential(new AimOnboard(0));
 			addSequential(new AimOnboard(0));
 			addSequential(new AimOnboard(0));
 		//	addSequential(new AimOnboardPrec(0));
 		//	addSequential(new AimOnboardPrec(0));
-			addSequential(new Wait(.5));
-			addSequential(new Shoot());
-			addSequential(new Wait(2));
+			if(Timer.getFPGATimestamp() - startTime < 12){
+				addSequential(new IntakeOut());	
+				addParallel(new FlapDownTime(6));
+				addSequential(new Wait(.5));
+				addSequential(new Shoot());
+			}
+			addSequential(new Wait(5));
 		}
 		//addSequential(new TurnToAngleAbsolute(back));
 		//addSequential(new DriveStraightMC(-location.getLocationDistance().getY(), location.getLocationDistance().getX(), 0.3));

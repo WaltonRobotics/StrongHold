@@ -58,7 +58,7 @@ public class Robot extends IterativeRobot {
 	private static SendableChooser locationChooser;
 	private static SendableChooser shootChooser;
 	private static Command autonomousCommand;
-	private static final double WAIT_BEFORE_TENSION = 8;
+	public static final double WAIT_BEFORE_TENSION = 3;
 	private AutonLocator doRunAuton;
 
 	/**
@@ -83,7 +83,7 @@ public class Robot extends IterativeRobot {
 			autonomousCommand = new Wait(2);
 		}
 		autonomousCommand.start();
-		new AutoTensionDelay(WAIT_BEFORE_TENSION).start();
+		new AutoTensionDelay(Robot.WAIT_BEFORE_TENSION).start();
 		Scheduler.getInstance().add(new ShowInputs());
 		SmartDashboard.putBoolean("aimed", Math.abs(Robot.camera.getXLeft() - Aim.centerX) < Aim.threshold);
 

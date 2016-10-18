@@ -110,7 +110,7 @@ public class AutonLocator {
 		case B:
 			return 95;
 		case C:
-			return 61;
+			return 95;
 		case D:
 			return 95;
 		case E:
