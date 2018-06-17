@@ -6,25 +6,12 @@ import edu.wpi.first.wpilibj.command.Subsystem;
 // imports
 
 public class LoggingSubsystem extends Subsystem {
-	
+
 //	static SeverityFilter severityFilter;
-	
+
 	public LoggingSubsystem() {
 //    	establishLoggingChooser();
 //		establishLogging();
-	}
-	
-	public void establishLoggingChooser() {
-//		SmartDashboard.putString("Information", "true");
-//
-//		SmartDashboard.putString("Error", "true");
-//	
-//		SmartDashboard.putString("Warning", "true");
-//
-//		SmartDashboard.putString("Debug", "true");
-//
-//		SmartDashboard.putString("Audit", "true");
-//// put strings on smart dashboard
 	}
 
 	public static void changeLogPassthrough() {
@@ -54,8 +41,22 @@ public class LoggingSubsystem extends Subsystem {
 //			severityFilter.Passthrough(Severity.AUDIT);
 //		}
 	}
-	/** booleans represented by strings
-	 * determine what gets writtn to file
+
+	public void establishLoggingChooser() {
+//		SmartDashboard.putString("Information", "true");
+//
+//		SmartDashboard.putString("Error", "true");
+//
+//		SmartDashboard.putString("Warning", "true");
+//
+//		SmartDashboard.putString("Debug", "true");
+//
+//		SmartDashboard.putString("Audit", "true");
+//// put strings on smart dashboard
+	}
+
+	/**
+	 * booleans represented by strings determine what gets writtn to file
 	 */
 
 	public void establishLogging() {
@@ -91,13 +92,13 @@ public class LoggingSubsystem extends Subsystem {
 //		// End test messages
 //		SmartDashboard.putData("update", new UpdateFiltration());
 	}
-    
-    // Put methods for controlling this subsystem
-    // here. Call these from Commands.
 
-    public void initDefaultCommand() {
-        // Set the default command for a subsystem here.
-        //setDefaultCommand(new MySpecialCommand());
-    }
+	// Put methods for controlling this subsystem
+	// here. Call these from Commands.
+
+	public void initDefaultCommand() {
+		// Set the default command for a subsystem here.
+		//setDefaultCommand(new MySpecialCommand());
+	}
 }
 

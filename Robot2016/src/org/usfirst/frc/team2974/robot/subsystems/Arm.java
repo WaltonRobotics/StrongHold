@@ -1,40 +1,39 @@
 package org.usfirst.frc.team2974.robot.subsystems;
 
-import org.usfirst.frc.team2974.robot.RobotMap;
-import org.usfirst.frc.team2974.robot.commands.MoveArm;
-
 import edu.wpi.first.wpilibj.AnalogPotentiometer;
 import edu.wpi.first.wpilibj.CANTalon;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import org.usfirst.frc.team2974.robot.RobotMap;
+import org.usfirst.frc.team2974.robot.commands.MoveArm;
 
 /**
  *
  */
 public class Arm extends Subsystem {
-    private CANTalon arm = RobotMap.arm;
-    private AnalogPotentiometer armPot = RobotMap.armPot;
-    //private final double zeroPosition = 0;
-    //private PIDController pid = new PIDController(1, 0, 0, armPot, arm);
-    //private double absoluteTolerance = 10;
-    public Arm()
-    {
-    	//pid.enable();
-    	//pid.setAbsoluteTolerance(absoluteTolerance);
-    	arm.enable();
-    }
 
-    public void initDefaultCommand() {
-        setDefaultCommand(new MoveArm());
-    }
+	private CANTalon arm = RobotMap.arm;
+	private AnalogPotentiometer armPot = RobotMap.armPot;
 
-    public void moveArmPower(double power)
-    {
-    	//if(pid.isEnabled())
-    		//pid.disable();
-    	arm.set(power);
-    }    
-        
+	//private final double zeroPosition = 0;
+	//private PIDController pid = new PIDController(1, 0, 0, armPot, arm);
+	//private double absoluteTolerance = 10;
+	public Arm() {
+		//pid.enable();
+		//pid.setAbsoluteTolerance(absoluteTolerance);
+		arm.enable();
+	}
+
+	public void initDefaultCommand() {
+		setDefaultCommand(new MoveArm());
+	}
+
+	public void moveArmPower(double power) {
+		//if(pid.isEnabled())
+		//pid.disable();
+		arm.set(power);
+	}
+
 //    public void disablePID()
 //    {
 //    	//pid.disable();
@@ -53,13 +52,12 @@ public class Arm extends Subsystem {
 //    	//pid.setSetpoint(position);
 //    }
 
-    public double getPotValue()
-    {
-    	return armPot.get();
-    }
-    public void dumpSmartDashboardValues()
-    {
-    	SmartDashboard.putNumber("Arm Potentiometer", armPot.get());
-    }
+	public double getPotValue() {
+		return armPot.get();
+	}
+
+	public void dumpSmartDashboardValues() {
+		SmartDashboard.putNumber("Arm Potentiometer", armPot.get());
+	}
 }
 

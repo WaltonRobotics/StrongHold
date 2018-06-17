@@ -1,4 +1,3 @@
-
 package org.usfirst.frc.team2974.robot;
 
 import edu.wpi.first.wpilibj.CameraServer;
@@ -7,14 +6,21 @@ import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-
-import org.usfirst.frc.team2974.robot.autonomousCommandGroups.*;
+import org.usfirst.frc.team2974.robot.autonomousCommandGroups.RockWall;
+import org.usfirst.frc.team2974.robot.autonomousCommandGroups.RoughTerrain;
 import org.usfirst.frc.team2974.robot.autonomousCommands.DoNothing;
 import org.usfirst.frc.team2974.robot.commands.Aim;
 import org.usfirst.frc.team2974.robot.commands.ControlAim.aimState;
-
 import org.usfirst.frc.team2974.robot.commands.ShowInputs;
-import org.usfirst.frc.team2974.robot.subsystems.*;
+import org.usfirst.frc.team2974.robot.subsystems.Arm;
+import org.usfirst.frc.team2974.robot.subsystems.Camera;
+import org.usfirst.frc.team2974.robot.subsystems.Compass;
+import org.usfirst.frc.team2974.robot.subsystems.DriveTrain;
+import org.usfirst.frc.team2974.robot.subsystems.Flipper;
+import org.usfirst.frc.team2974.robot.subsystems.Inputs;
+import org.usfirst.frc.team2974.robot.subsystems.Intake;
+import org.usfirst.frc.team2974.robot.subsystems.IntakeWheels;
+import org.usfirst.frc.team2974.robot.subsystems.Shooter;
 
 public class Robot extends IterativeRobot {
 
@@ -35,9 +41,9 @@ public class Robot extends IterativeRobot {
 
 	public static double startAngle;
 	public static aimState aimingState = aimState.onbaord;
+
 	/**
-	 * This function is run when the robot is first started up and should be
-	 * used for any initialization code.
+	 * This function is run when the robot is first started up and should be used for any initialization code.
 	 */
 	public void robotInit() {
 		// try{
@@ -60,14 +66,14 @@ public class Robot extends IterativeRobot {
 		flipper = new Flipper();
 		intake = new Intake();
 		intakeWheels = new IntakeWheels();
-	
+
 		createAutonomousChooser();
 		oi = new OI();
-		
+
 		CameraServer server = CameraServer.getInstance();
 		server.setQuality(0);
 		server.startAutomaticCapture("cam1");
-		
+
 		startAngle = compass.getPitch();
 	}
 
@@ -88,51 +94,48 @@ public class Robot extends IterativeRobot {
 //		autoChooser.addObject("Rock wall shoot left", new RockWallShootLeft());
 //		autoChooser.addObject("Rock wall shoot center", new RockwallShootStraight());
 //		autoChooser.addObject("Rock Wall Return", new RockWallReturn());
-		autoChooser.addObject("Rock wall",new RockWall());
+		autoChooser.addObject("Rock wall", new RockWall());
 		autoChooser.addObject("Rough Terain", new RoughTerrain());
 		SmartDashboard.putData("PICK AN ", autoChooser);
 
 	}
 
 	/**
-	 * This function is called once each time the robot enters Disabled mode.
-	 * You can use it to reset any subsystem information you want to clear when
-	 * the robot is disabled.
+	 * This function is called once each time the robot enters Disabled mode. You can use it to reset any subsystem
+	 * information you want to clear when the robot is disabled.
 	 */
 	public void disabledInit() {
 	}
 
 	public void disabledPeriodic() {
-		
+
 		Robot.inputs.updateSmartDashboard();
 		Robot.compass.dumpSmartDashboardValues();
 		Robot.camera.setNetTable();
 		Robot.camera.dumpSmartDshboardValues();
 		Robot.arm.dumpSmartDashboardValues();
 		Robot.shooter.dumpSmartDashboardValues();
-		
-		SmartDashboard.putBoolean("aimed", Math.abs(Robot.camera.getXLeft()-Aim.centerX)<Aim.threshold);
-		SmartDashboard.putBoolean("left", Robot.camera.getXRight()-Aim.centerX > 0);
-		SmartDashboard.putBoolean("right", Robot.camera.getXRight()-Aim.centerX < 0);
+
+		SmartDashboard.putBoolean("aimed", Math.abs(Robot.camera.getXLeft() - Aim.centerX) < Aim.threshold);
+		SmartDashboard.putBoolean("left", Robot.camera.getXRight() - Aim.centerX > 0);
+		SmartDashboard.putBoolean("right", Robot.camera.getXRight() - Aim.centerX < 0);
 	}
 
 	/**
-	 * This autonomous (along with the chooser code above) shows how to select
-	 * between different autonomous modes using the dashboard. The sendable
-	 * chooser code works with the Java SmartDashboard. If you prefer the
-	 * LabVIEW Dashboard, remove all of the chooser code and uncomment the
-	 * getString code to get the auto name from the text box below the Gyro
+	 * This autonomous (along with the chooser code above) shows how to select between different autonomous modes using
+	 * the dashboard. The sendable chooser code works with the Java SmartDashboard. If you prefer the LabVIEW Dashboard,
+	 * remove all of the chooser code and uncomment the getString code to get the auto name from the text box below the
+	 * Gyro
 	 *
-	 * You can add additional auto modes by adding additional commands to the
-	 * chooser code above (like the commented example) or additional comparisons
-	 * to the switch structure below with additional strings & commands.
+	 * You can add additional auto modes by adding additional commands to the chooser code above (like the commented
+	 * example) or additional comparisons to the switch structure below with additional strings & commands.
 	 */
 	public void autonomousInit() {
 		// compass.initializeCompass();
 		autonomousCommand = (Command) autoChooser.getSelected();
 		autonomousCommand.start();
 		Scheduler.getInstance().add(new ShowInputs());
-		SmartDashboard.putBoolean("aimed", Math.abs(Robot.camera.getXLeft()-Aim.centerX)<Aim.threshold);
+		SmartDashboard.putBoolean("aimed", Math.abs(Robot.camera.getXLeft() - Aim.centerX) < Aim.threshold);
 
 	}
 
@@ -141,19 +144,20 @@ public class Robot extends IterativeRobot {
 	 */
 	public void autonomousPeriodic() {
 		Scheduler.getInstance().run();
-		SmartDashboard.putBoolean("aimed", Math.abs(Robot.camera.getXRight()-Aim.centerX)<Aim.threshold);
+		SmartDashboard.putBoolean("aimed", Math.abs(Robot.camera.getXRight() - Aim.centerX) < Aim.threshold);
 
 	}
 
 	public void teleopInit() {
 		compass.initializeCompass();
-		if (autonomousCommand != null)
+		if (autonomousCommand != null) {
 			autonomousCommand.cancel();
+		}
 		Scheduler.getInstance().add(new ShowInputs());
-		
-		SmartDashboard.putBoolean("aimed", Math.abs(Robot.camera.getXRight()-Aim.centerX)<Aim.threshold);
-		SmartDashboard.putBoolean("left", Robot.camera.getXRight()-Aim.centerX > 0);
-		SmartDashboard.putBoolean("right", Robot.camera.getXRight()-Aim.centerX < 0);
+
+		SmartDashboard.putBoolean("aimed", Math.abs(Robot.camera.getXRight() - Aim.centerX) < Aim.threshold);
+		SmartDashboard.putBoolean("left", Robot.camera.getXRight() - Aim.centerX > 0);
+		SmartDashboard.putBoolean("right", Robot.camera.getXRight() - Aim.centerX < 0);
 	}
 
 	/**
@@ -161,9 +165,9 @@ public class Robot extends IterativeRobot {
 	 */
 	public void teleopPeriodic() {
 		Scheduler.getInstance().run();
-		
-		SmartDashboard.putBoolean("aimed", Math.abs(Robot.camera.getXRight()-Aim.centerX)<Aim.threshold);
-		SmartDashboard.putBoolean("left", Robot.camera.getXRight()-Aim.centerX > 0);
-		SmartDashboard.putBoolean("right", Robot.camera.getXRight()-Aim.centerX < 0);
+
+		SmartDashboard.putBoolean("aimed", Math.abs(Robot.camera.getXRight() - Aim.centerX) < Aim.threshold);
+		SmartDashboard.putBoolean("left", Robot.camera.getXRight() - Aim.centerX > 0);
+		SmartDashboard.putBoolean("right", Robot.camera.getXRight() - Aim.centerX < 0);
 	}
 }

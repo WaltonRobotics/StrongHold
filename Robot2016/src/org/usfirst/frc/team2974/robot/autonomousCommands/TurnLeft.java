@@ -1,23 +1,23 @@
 package org.usfirst.frc.team2974.robot.autonomousCommands;
 
-import org.usfirst.frc.team2974.robot.Robot;
-
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Command;
+import org.usfirst.frc.team2974.robot.Robot;
 
 /**
  *
  */
 public class TurnLeft extends Command {
-	double time ;
+
+	double time;
 	double startTime;
 	double speed;
 
 	public TurnLeft() {
-		this(1.25,.5);
+		this(1.25, .5);
 	}
-	public TurnLeft(double time, double speed)
-	{
+
+	public TurnLeft(double time, double speed) {
 		requires(Robot.driveTrain);
 		//SmartDashboard.putNumber("timeTurn", time);
 		//SmartDashboard.putNumber("speedTurn", speed);
@@ -39,7 +39,7 @@ public class TurnLeft extends Command {
 
 	// Make this return true when this Command no longer needs to run execute()
 	protected boolean isFinished() {
-		return ( Timer.getFPGATimestamp() - startTime > time);
+		return (Timer.getFPGATimestamp() - startTime > time);
 	}
 
 	// Called once after isFinished returns true

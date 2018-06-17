@@ -1,18 +1,15 @@
 package org.usfirst.frc.team2974.robot.commands;
 
-import org.usfirst.frc.team2974.robot.Robot;
-import org.usfirst.frc.team2974.robot.autonomousCommands.IntakeOut;
-import org.usfirst.frc.team2974.robot.subsystems.Flipper;
-import org.usfirst.frc.team2974.robot.subsystems.Intake;
-
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Command;
-import edu.wpi.first.wpilibj.command.Scheduler;
+import org.usfirst.frc.team2974.robot.Robot;
+import org.usfirst.frc.team2974.robot.subsystems.Flipper;
 
 /**
  *
  */
 public class MoveFlipper extends Command {
+
 	boolean bool;
 	double time;
 	boolean bool2;
@@ -56,14 +53,14 @@ public class MoveFlipper extends Command {
 //				if (Timer.getFPGATimestamp() - time2 > .4) {
 //					bool2 = false;
 //				} else if (Timer.getFPGATimestamp() - time2 > .1) {
-					Robot.flipper.setFlapper(Flipper.FlipperState.up);
+			Robot.flipper.setFlapper(Flipper.FlipperState.up);
 //					bool2 = false;
 //				}
 
-			}
+		}
 
-			// else
-			// Scheduler.getInstance().add(new IntakeOut());
+		// else
+		// Scheduler.getInstance().add(new IntakeOut());
 //		}
 
 	}

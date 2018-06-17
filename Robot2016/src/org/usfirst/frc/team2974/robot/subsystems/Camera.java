@@ -1,18 +1,16 @@
 package org.usfirst.frc.team2974.robot.subsystems;
 
+import edu.wpi.first.wpilibj.command.Subsystem;
+import edu.wpi.first.wpilibj.networktables.NetworkTable;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import java.util.Arrays;
-
-//import org.usfirst.frc.team2974.robot.Robot;
-//import org.usfirst.frc.team2974.robot.commands.ControlAim;
-//import org.usfirst.frc.team2974.robot.commands.ControlAim.aimState;
-
 import org.usfirst.frc.team2974.robot.Robot;
 import org.usfirst.frc.team2974.robot.commands.ControlAim;
 import org.usfirst.frc.team2974.robot.commands.ControlAim.aimState;
 
-import edu.wpi.first.wpilibj.command.Subsystem;
-import edu.wpi.first.wpilibj.networktables.NetworkTable;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+//import org.usfirst.frc.team2974.robot.Robot;
+//import org.usfirst.frc.team2974.robot.commands.ControlAim;
+//import org.usfirst.frc.team2974.robot.commands.ControlAim.aimState;
 
 /**
  *
@@ -24,13 +22,13 @@ public class Camera extends Subsystem {
 	double centerX;
 //	double centerY;
 
-	public void initDefaultCommand() {
-		setDefaultCommand(new ControlAim());
+	public Camera() {
+		defaultValue = new double[]{-1};
+		setNetTable();
 	}
 
-	public Camera() {
-		defaultValue = new double[] { -1 };
-		setNetTable();
+	public void initDefaultCommand() {
+		setDefaultCommand(new ControlAim());
 	}
 
 //	private int setMaximums() {
@@ -72,67 +70,54 @@ public class Camera extends Subsystem {
 	}
 
 	public void setNetTable() {
-		if(Robot.aimingState == aimState.cpu)
-		{
+		if (Robot.aimingState == aimState.cpu) {
 			try {
 				table = NetworkTable.getTable("GRIP/report");
 			} catch (Exception e) {
 				table = null;
 			}
-		}
-		else
-		{
-			try
-			{
+		} else {
+			try {
 				table = NetworkTable.getTable("GRIP/reportOnboard");
-			}catch(Exception e)
-			{
+			} catch (Exception e) {
 				table = null;
 			}
 		}
 	}
 
-//	public double getX() {
+	//	public double getX() {
 //		setMaximums();// TODO make this better
 //		return centerX;
 //	}
 //	
-	public double getXLeft()
-	{
+	public double getXLeft() {
 		setNetTable();
 		double left = -1;
-		try
-		{
+		try {
 			double[] X = getNetTable().getNumberArray("centerX", defaultValue);
 			Arrays.sort(X);
 			left = X[0];
-		}
-		catch(Exception e)
-		{
-			
+		} catch (Exception e) {
+
 		}
 		return left;
-		
+
 	}
-	public double getXRight()
-	{
+
+	public double getXRight() {
 		setNetTable();
 		double right = -1;
-		try
-		{
+		try {
 			double[] X = getNetTable().getNumberArray("centerX", defaultValue);
-			if(X.length>1)
-			{
+			if (X.length > 1) {
 				Arrays.sort(X);
 				right = X[1];
-				
-			}
-			else
+
+			} else {
 				right = X[0];
-		}
-		catch(Exception e)
-		{
-			
+			}
+		} catch (Exception e) {
+
 		}
 		return right;
 	}

@@ -1,27 +1,24 @@
 package org.usfirst.frc.team2974.robot.subsystems;
 
-import org.usfirst.frc.team2974.robot.Robot;
-import org.usfirst.frc.team2974.robot.RobotMap;
-import org.usfirst.frc.team2974.robot.commands.Shoot;
-
 import edu.wpi.first.wpilibj.CANTalon;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import org.usfirst.frc.team2974.robot.Robot;
+import org.usfirst.frc.team2974.robot.RobotMap;
+import org.usfirst.frc.team2974.robot.commands.Shoot;
 
 /**
  *
  */
 public class Shooter extends Subsystem {
-	Solenoid latch = RobotMap.latch;
-	CANTalon tensioner = RobotMap.tensioner;
-
-	boolean isInit = false;
 
 	private final double maxTensionerPower = 0.450;
 	private final double holdTensionerPower = .030;
-
+	Solenoid latch = RobotMap.latch;
+	CANTalon tensioner = RobotMap.tensioner;
+	boolean isInit = false;
 	private TensionerState state;
 
 	// private final double ForwardThreshold = 1000;
@@ -40,10 +37,6 @@ public class Shooter extends Subsystem {
 
 		tensioner.reset();
 		tensioner.enable();
-	}
-
-	public enum TensionerState {
-		tensioned, untensioned, tensioning, untensioning
 	}
 
 	public void initDefaultCommand() {
@@ -79,10 +72,11 @@ public class Shooter extends Subsystem {
 		// else if (getTensionerValue() < ReverseLimit + ReverseThreshold ||
 		// isReverseLimit())
 		// state = TensionerState.untensioned;
-		if (isForwardLimit())
+		if (isForwardLimit()) {
 			state = TensionerState.tensioned;
-		else if (isReverseLimit())
+		} else if (isReverseLimit()) {
 			state = TensionerState.untensioned;
+		}
 		return state;
 	}
 
@@ -130,6 +124,10 @@ public class Shooter extends Subsystem {
 	public void dumpSmartDashboardValues() {
 		SmartDashboard.putNumber("Tensioner Encoder", Robot.shooter.getTensionerValue());
 		SmartDashboard.putNumber("Raw tensioner encoder value", tensioner.getAnalogInPosition());
+	}
+
+	public enum TensionerState {
+		tensioned, untensioned, tensioning, untensioning
 	}
 
 }
